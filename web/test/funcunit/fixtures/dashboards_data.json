@@ -1,5 +1,5 @@
 [
-  {"name": "first dashboard"},
-  {"name": "second dashboard"},
-  {"name": "another dashboard"}
+  {"id": "dashboard_1", "name": "first dashboard"},
+  {"id": "dashboard_2", "name": "second dashboard"},
+  {"id": "dashboard_3", "name": "another dashboard"}
 ]

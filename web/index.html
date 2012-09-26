@@ -19,11 +19,15 @@
       </div>
     </div>
   </div>
-  <div class="container">
+  <div class="container" data-ng-controller="DashboardController">
     <div id="dashboard-navbar">
-      <ul class="nav nav-tabs" data-ng-controller="DashboardController">
-        <li class="active" data-ng-repeat="dashboard in dashboards"><a href="#dashboard1" data-toggle="tab">{{dashboard.name}}</a></li>
+      <ul class="nav nav-tabs">
+        <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards"><a href="#{{dashboard.id}}" data-toggle="tab">{{dashboard.name}}</a></li>
       </ul>
+    </div>
+    <div id="dashboard-container" class="tab-content">
+      <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
+      </div>
     </div>
   </div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'> </script>

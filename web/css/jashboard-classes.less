@@ -1,0 +1,149 @@
+.logo img {
+  margin: 3px 5px 0 0;
+}
+
+.navbar-inverse {
+  .divider-vertical {
+    border-right-color: #2C2C2C;
+  }
+}
+
+.table-row-like {
+  display: table-row;
+  * {
+    display: table-cell;
+    padding: 2px 5px 2px 0;
+  }
+}
+
+.scrolling {
+  height: 100%;
+  overflow: auto;
+}
+
+.dashboard-actions {
+  height: 22px;
+  padding: 5px 10px 0 0;
+  div {
+    margin-left: 10px;
+    float: right;
+  }
+}
+
+.dashboard-content {
+  position: relative;
+  height: 600px;
+  overflow-y: auto;
+}
+
+.monitor-panel {
+  overflow: hidden;
+  float: left;
+  padding: 5px;
+  min-width: 250px;
+  min-height: 130px;
+  box-shadow: 1px 1px 1px 1px #acacac ;
+  .gradient-bg(#fff, #fff, #f1f1f1);
+  .rounded-corners;
+}
+
+.monitor-title {
+  font-size: 16px;
+  line-height: 16px;
+  white-space: nowrap;
+  border-bottom: 1px solid;
+  padding: 5px;
+  overflow: hidden;
+  clear: both;
+  text-overflow: ellipsis;
+}
+.monitor-bar {
+  height: 16px;
+  background: #d1f0ff;
+  padding: 0 3px;
+}
+
+.monitor-details {
+  height: 100%;
+  font-size: @base_font_size;
+  line-height: @base_line_height;
+  padding: 5px;
+}
+
+.drag-handle {
+  float: left;
+  width: 16px;
+  height: 16px;
+  cursor: move;
+  background: url("@{img_path_prefix}/icon-draggable.png") no-repeat;
+}
+
+.right-icon {
+  float: right;
+  width: 16px;
+  height: 16px;
+}
+
+.build-panel {
+  display: table;
+  p {
+    .table-row-like;
+  }
+}
+
+.service-panel {
+  table {
+    caption {
+      text-align: left;
+      border-bottom: 1px solid #acacac;
+      padding: 5px;
+      * {
+      font-size: @base_font_size + 1;
+      line-height: @base_line_height + 1;
+      }
+    }
+    th, td {
+      font-size: inherit;
+      line-height: inherit;
+      border: 1px solid #acacac;
+      text-align: left;
+      padding: 5px;
+    }
+  }
+}
+
+.vcs-panel {
+  .gradient-bg(#000, #3f3f3f, #000);
+  .rounded-corners;
+}
+
+.vcs-info {
+  padding: 10px;
+  color: #e9e9e9;
+  .color-selection(#e9e9e9, #4c4c4c);
+  font-size: @base_font_size;
+  line-height: @base_line_height + 1;
+  white-space: nowrap;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+.vcs-commit {
+  color: #D6D633;
+}
+
+.vcs-author-date {
+  display: table;
+  p {
+    white-space: normal;
+    .table-row-like;
+    label {
+      font-weight: normal;
+    }
+  }
+}
+
+.vcs-comment {
+  white-space: normal;
+  margin: 10px 0 10px 30px;
+}
+

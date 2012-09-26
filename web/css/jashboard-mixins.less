@@ -1,0 +1,32 @@
+.gradient-bg (@bgcolor, @color-bottom, @color-top) {
+  background: @bgcolor;
+  background:-webkit-gradient(linear, left top, left bottom, from(@color-top), to(@color-bottom));
+  background:-moz-linear-gradient(top,  @color-top,  @color-bottom);
+}
+
+.top-rounded-corners (@radius: 5px) {
+  border-top-left-radius: @radius;
+  border-top-right-radius: @radius;
+}
+
+.bottom-rounded-corners (@radius: 5px) {
+  border-bottom-left-radius: @radius;
+  border-bottom-right-radius: @radius;
+}
+
+.rounded-corners (@radius: 5px) {
+  .top-rounded-corners(@radius);
+  .bottom-rounded-corners(@radius);
+}
+
+.color-selection (@fgcolor, @bgcolor) {
+  ::selection {
+    color: @fgcolor;
+    background-color: @bgcolor;
+  }
+  ::-moz-selection {
+    color: @fgcolor;
+    background-color: @bgcolor;
+  }
+}
+

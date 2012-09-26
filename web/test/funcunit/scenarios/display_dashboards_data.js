@@ -1,1 +1,2 @@
-$.fixture("GET /dashboards", "//test/funcunit/fixtures/dashboards_data.json")
+$.fixture("GET /ajax/dashboards.json", "//test/funcunit/fixtures/dashboards_data.json")
+

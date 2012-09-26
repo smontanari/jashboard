@@ -6,6 +6,7 @@ steal(
   "jquery"
 ).then(
   { src: 'lib/jquery-ui-1.8.23.custom.min.js', packaged: false },
+  { src: 'lib/angular-1.0.2/angular.js', packaged: false },
   { src: 'lib/bootstrap.min.js', packaged: false }
 );
 
@@ -17,4 +18,6 @@ steal.dev.log("Loading application files");
 // application files
 steal('steal/less')
 .then("css/jashboard.less")
-.then('jashboard/init-layout.js');
+.then("jashboard/modules.js");
+
+

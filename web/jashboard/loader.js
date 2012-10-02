@@ -7,6 +7,7 @@ steal(
 ).then(
   { src: 'lib/jquery-ui-1.8.23.custom.min.js', packaged: false },
   { src: 'lib/angular-1.0.2/angular.js', packaged: false },
+  { src: 'lib/underscore-min.js', packaged: false },
   { src: 'lib/bootstrap.min.js', packaged: false }
 );
 

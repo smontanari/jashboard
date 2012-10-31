@@ -1,0 +1,9 @@
+{
+  "id": "monitor_2",
+  "type": 1,
+  "name": "Epic build",
+  "last_build_time": "28-08-2012 11:25:10",
+  "duration": 596,
+  "success": true,
+  "status": 1
+}

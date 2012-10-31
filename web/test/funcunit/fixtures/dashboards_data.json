@@ -1,22 +1,14 @@
 [
   {
     "id": "dashboard_1", "name": "first dashboard",
-    "monitorData": [
-      {
-        "id": "monitor_1", "type": 1, "name": "Zombie-Dash build", "last_build_time": "23-08-2012 14:32:23", "duration": 752, "success": true, "status": 0
-      }
-    ]
+    "monitorRefs": ["monitor_1"]
   },
   {
     "id": "dashboard_2", "name": "second dashboard",
-    "monitorData": [
-      {
-        "id": "monitor_2", "type": 1, "name": "Epic build", "last_build_time": "28-08-2012 11:25:10", "duration": 596, "success": true, "status": 1
-      },
-      {
-        "id": "monitor_3", "type": 1, "name": "Forum build", "last_build_time": "25-08-2012 15:56:45", "duration": 126, "success": false, "status": 0
-      }
-    ]
+    "monitorRefs": ["monitor_2", "monitor_3"]
   },
-  {"id": "dashboard_3", "name": "another dashboard"}
+  {
+    "id": "dashboard_3", "name": "another dashboard",
+    "monitorRefs": []
+  }
 ]

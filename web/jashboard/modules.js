@@ -5,9 +5,13 @@ var jashboard = {
 };
 steal.dev.log("loading jashboard modules");
 steal(
+  'jashboard/constants.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
   'jashboard/services/HttpService.js'
 )
-.then('jashboard/controllers/DashboardController.js');
+.then(
+  'jashboard/controllers/DashboardController.js',
+  'jashboard/controllers/MonitorController.js'
+);
 

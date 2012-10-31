@@ -1,5 +1,5 @@
 jashboard.functional_tests.push(function () {
-  module("Tabs functionality",{
+  module("Tabs view functionality",{
     setup: function() {
       jashboard.test_utils.openPageForTest("display_dashboards_data");
     }

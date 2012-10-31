@@ -1,0 +1,10 @@
+{
+  "id": "monitor_3",
+  "type": 1,
+  "name": "Forum build",
+  "last_build_time": "25-08-2012 15:56:45",
+  "duration": 126,
+  "success": false,
+  "status": 0
+}
+

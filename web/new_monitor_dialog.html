@@ -1,0 +1,24 @@
+<div id="new-monitor-form" class="hide" title="Create a new Monitor">
+  <form class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="monitorName">Name</label>
+      <div class="controls">
+        <input type="text" id="monitorName" class="input-xlarge" placeholder="monitor name" data-ng-model="newMonitor.name">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="monitorType">Type</label>
+      <div class="controls">
+        <select id="monitorType" class="input-small" data-ng-model="newMonitor.type">
+          <option value="1" selected="selected">build</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="monitorRefresh">Refresh interval</label>
+      <div class="controls">
+        <input class="input-mini" id="monitorRefresh" type="text" data-ng-model="newMonitor.refreshInterval"><span> seconds</span>
+      </div>
+    </div>
+</form>
+</div>

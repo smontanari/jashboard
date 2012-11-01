@@ -1,0 +1,11 @@
+source :rubygems
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'nokogiri'
+gem 'fsdb'
+gem "uuidtools"
+
+group :test do
+  gem "rspec"
+  gem "json_spec"
+end

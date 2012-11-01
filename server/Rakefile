@@ -1,0 +1,12 @@
+require 'rake'
+require 'rspec/core/rake_task'
+
+desc "Run specs matching the pattern (or all of them if no pattern specified)"
+task :test, [:file_pattern] do |t, args|
+  RSpec::Core::RakeTask.new(:pattern_spec) do |task|
+    task.rspec_opts = '-c -fd'
+    task.verbose = false
+    task.pattern = args.file_pattern if args.file_pattern
+  end
+  Rake::Task[:pattern_spec].invoke
+end

@@ -15,8 +15,8 @@ jashboard.DashboardController = function(scope, http) {
     scope.dashboards = [];
     _.each(data, function(dashboard_data) {
       scope.dashboards.push(new jashboard.model.Dashboard(dashboard_data));
-      _.each(dashboard_data.monitorRefs, function(ref) {
-        loadMonitor(dashboard_data.id, ref);
+      _.each(dashboard_data.monitor_ids, function(monitor_id) {
+        loadMonitor(dashboard_data.id, monitor_id);
       });
     });
     scope.$apply();

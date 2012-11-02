@@ -1,14 +1,14 @@
 [
   {
     "id": "dashboard_1", "name": "first dashboard",
-    "monitorRefs": ["monitor_1"]
+    "monitor_ids": ["monitor_1"]
   },
   {
     "id": "dashboard_2", "name": "second dashboard",
-    "monitorRefs": ["monitor_2", "monitor_3"]
+    "monitor_ids": ["monitor_2", "monitor_3"]
   },
   {
     "id": "dashboard_3", "name": "another dashboard",
-    "monitorRefs": []
+    "monitor_ids": []
   }
 ]

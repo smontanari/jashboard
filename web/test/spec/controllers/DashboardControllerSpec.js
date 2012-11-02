@@ -29,7 +29,7 @@ describe("DashboardController", function() {
   });
 
   describe("Monitors data retrieval", function() {
-    var dashboards_data = [{id:"id1", monitorRefs: ["test.monitor.1", "test.monitor.2"]}, {id:"id2", monitorRefs: ["test.monitor.3"]}];
+    var dashboards_data = [{id:"id1", monitor_ids: ["test.monitor.1", "test.monitor.2"]}, {id:"id2", monitor_ids: ["test.monitor.3"]}];
     beforeEach(function() {
       httpService.getJSON = jasmine.createSpy("httpService").andCallFake(function(url) {
         var regexp = /\/ajax\/monitor\/(test\.monitor\.\d)/;

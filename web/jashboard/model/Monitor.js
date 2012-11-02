@@ -1,26 +1,5 @@
 jashboard.model.Monitor = function(monitorData) {
-  var formatTo2Digits = function(number) {
-    if (number < 10) {
-      return "0" + number;
-    }
-    return number.toString();
-  };
-  var secondsToTime = function(seconds) {
-    var time = [];
-    var secs = seconds % 60;
-    var mins = ((seconds - secs) / 60) % 60;
-    var hours = (seconds - secs - mins * 60) / 3600;
-    if (hours > 0) {
-      time.push(formatTo2Digits(hours));
-    }
-    if (hours> 0 || mins > 0) {
-      time.push(formatTo2Digits(mins));
-    }
-    time.push(formatTo2Digits(secs));
-    return time.join(":");
-  };
-
-  var convertStatus = function(status) {
+  var getBuildStatus = function(status) {
     switch(status) {
       case 0:
         return "idle";
@@ -58,19 +37,13 @@ jashboard.model.Monitor = function(monitorData) {
     return result ? "success" : "failure";
   };
 
-  var validateData = function(data, undefinedValue, convertFunction) {
-    if (_.isUndefined(data)) return undefinedValue;
-    if (_.isFunction(convertFunction)) return convertFunction(data);
-    return data;
-  }
-
   this.id = monitorData.id;
   this.type = "build";
   this.title = monitorData.name;
   this.ciServerSettings = getServerSettings(monitorData.ciserver_settings);
-  this.lastBuildTime = validateData(monitorData.runtime_info.last_build_time, "n/a");
-  this.lastBuildDuration = validateData(monitorData.runtime_info.duration, "n/a", secondsToTime);
-  this.lastBuildSuccess = validateData(monitorData.runtime_info.success, "n/a");
-  this.lastBuildResult = validateData(monitorData.runtime_info.success, "n/a", getBuildResult);
-  this.currentBuildStatus = validateData(monitorData.runtime_info.status, "n/a", convertStatus);
+  this.lastBuildTime = jashboard.variableProcessor.validateData(monitorData.runtime_info.last_build_time, "n/a");
+  this.lastBuildDuration = jashboard.variableProcessor.validateData(monitorData.runtime_info.duration, "n/a", jashboard.timeConverter.secondsToTime);
+  this.lastBuildSuccess = jashboard.variableProcessor.validateData(monitorData.runtime_info.success, "n/a");
+  this.lastBuildResult = jashboard.variableProcessor.validateData(monitorData.runtime_info.success, "n/a", getBuildResult);
+  this.currentBuildStatus = jashboard.variableProcessor.validateData(monitorData.runtime_info.status, "n/a", getBuildStatus);
 };

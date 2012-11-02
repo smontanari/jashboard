@@ -35,10 +35,7 @@ describe("Monitor", function() {
     _.each([
             { property: "lastBuildTime", expectedValue: "test.buildTime", data: {ciserver_settings: {type: 1}, runtime_info: {last_build_time: "test.buildTime"}}},
             { testCase: "when runtime info is not available", property: "lastBuildTime", expectedValue: "n/a", data: {ciserver_settings: {type: 1}, runtime_info: {}}},
-            { testCase: "when duration is less than 10 minutes", property: "lastBuildDuration", expectedValue: "02:02", data: {ciserver_settings: {type: 1}, runtime_info: {duration: 122}}},
-            { testCase: "when duration is longer than 10 minutes", property: "lastBuildDuration", expectedValue: "12:32", data: {ciserver_settings: {type: 1}, runtime_info: {duration: 752}}},
-            { testCase: "when duration is longer than 1 hour", property: "lastBuildDuration", expectedValue: "01:00:32", data: {ciserver_settings: {type: 1}, runtime_info: {duration: 3632}}},
-            { testCase: "when duration is longer than 2 hours", property: "lastBuildDuration", expectedValue: "02:12:32", data: {ciserver_settings: {type: 1}, runtime_info: {duration: 7952}}},
+            { property: "lastBuildDuration", expectedValue: "02:02", data: {ciserver_settings: {type: 1}, runtime_info: {duration: 122}}},
             { testCase: "when runtime info is not available" , property: "lastBuildDuration", expectedValue: "n/a", data: {ciserver_settings: {type: 1}, runtime_info: {}}},
             { testCase: "when build successful", property: "lastBuildSuccess", expectedValue: true, data: {ciserver_settings: {type: 1}, runtime_info: {success: true}}},
             { testCase: "when build not successful", property: "lastBuildSuccess", expectedValue: false, data: {ciserver_settings: {type: 1}, runtime_info: {success: false}}},

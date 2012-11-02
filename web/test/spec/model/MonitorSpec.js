@@ -7,9 +7,9 @@ describe("Monitor", function() {
 
   describe("Constructor from JSON object", function() {
   _.each([
-            { property: "id", expectedValue: "test.id", data: {id: "test.id"}},
-            { property: "type", expectedValue: "build", data: {type: 1}},
-            { property: "title", expectedValue: "test.name", data: {name: "test.name"}},
+            { property: "id", expectedValue: "test.id", data: {id: "test.id", runtime_info: {}}},
+            { property: "type", expectedValue: "build", data: {type: 1, runtime_info: {}}},
+            { property: "title", expectedValue: "test.name", data: {name: "test.name", runtime_info: {}}},
             { property: "lastBuildTime", expectedValue: "test.buildTime", data: {runtime_info: {last_build_time: "test.buildTime"}}},
             { property: "lastBuildDuration", expectedValue: "02:02", data: {runtime_info: {duration: 122}}},
             { property: "lastBuildDuration", expectedValue: "12:32", data: {runtime_info: {duration: 752}}},

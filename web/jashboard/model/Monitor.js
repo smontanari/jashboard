@@ -34,9 +34,9 @@ jashboard.model.Monitor = function(monitorData) {
   this.id = monitorData.id;
   this.type = "build";
   this.title = monitorData.name;
-  this.lastBuildTime = monitorData.last_build_time;
-  this.lastBuildDuration = secondsToTime(monitorData.duration);
-  this.lastBuildSuccess = monitorData.success;
-  this.lastBuildResult = monitorData.success ? "success" : "failure";
-  this.currentBuildStatus = convertStatus(monitorData.status);
+  this.lastBuildTime = monitorData.runtime_info.last_build_time;
+  this.lastBuildDuration = secondsToTime(monitorData.runtime_info.duration);
+  this.lastBuildSuccess = monitorData.runtime_info.success;
+  this.lastBuildResult = monitorData.runtime_info.success ? "success" : "failure";
+  this.currentBuildStatus = convertStatus(monitorData.runtime_info.status);
 };

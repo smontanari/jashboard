@@ -31,12 +31,46 @@ jashboard.model.Monitor = function(monitorData) {
     }
   };
 
+  var getServerSettings = function(settings) {
+    switch(settings.type) {
+      case 1: 
+        return {
+          server: "Jenkins",
+          hostname: settings.hostname,
+          port: settings.port,
+          build_id: settings.build_id
+        };
+      case 2:
+        return {
+          server: "GO",
+          hostname: settings.hostname,
+          port: settings.port,
+          pipeline: settings.pipeline,
+          stage: settings.stage,
+          job: settings.job,
+        };
+      default:
+        throw "Invalid CI server type: " + settings.type;
+    }
+  }
+
+  var getBuildResult = function(result) {
+    return result ? "success" : "failure";
+  };
+
+  var validateData = function(data, undefinedValue, convertFunction) {
+    if (_.isUndefined(data)) return undefinedValue;
+    if (_.isFunction(convertFunction)) return convertFunction(data);
+    return data;
+  }
+
   this.id = monitorData.id;
   this.type = "build";
   this.title = monitorData.name;
-  this.lastBuildTime = monitorData.runtime_info.last_build_time;
-  this.lastBuildDuration = secondsToTime(monitorData.runtime_info.duration);
-  this.lastBuildSuccess = monitorData.runtime_info.success;
-  this.lastBuildResult = monitorData.runtime_info.success ? "success" : "failure";
-  this.currentBuildStatus = convertStatus(monitorData.runtime_info.status);
+  this.ciServerSettings = getServerSettings(monitorData.ciserver_settings);
+  this.lastBuildTime = validateData(monitorData.runtime_info.last_build_time, "n/a");
+  this.lastBuildDuration = validateData(monitorData.runtime_info.duration, "n/a", secondsToTime);
+  this.lastBuildSuccess = validateData(monitorData.runtime_info.success, "n/a");
+  this.lastBuildResult = validateData(monitorData.runtime_info.success, "n/a", getBuildResult);
+  this.currentBuildStatus = validateData(monitorData.runtime_info.status, "n/a", convertStatus);
 };

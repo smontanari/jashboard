@@ -3,7 +3,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'nokogiri'
 gem 'fsdb'
-gem "uuidtools"
+gem 'uuidtools'
 
 group :test do
   gem "rspec"

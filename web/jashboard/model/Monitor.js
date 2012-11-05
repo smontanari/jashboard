@@ -26,7 +26,7 @@ jashboard.model.Monitor = function(monitorData) {
           port: settings.port,
           pipeline: settings.pipeline,
           stage: settings.stage,
-          job: settings.job,
+          job: settings.job
         };
       default:
         throw "Invalid CI server type: " + settings.type;

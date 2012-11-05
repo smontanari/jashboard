@@ -1,5 +1,5 @@
-//steal({src: "./less_engine.js",ignore: true},function(){
-steal({src: "./less-1.3.0.min.js",ignore: true},function(){
+steal({src: "./less_engine.js",ignore: true},function(){
+//steal({src: "./less-1.3.0.min.js",ignore: true},function(){
 	
 	/**
 	 * @page steal.less Less

@@ -6,14 +6,14 @@ steal(
   "jquery"
 ).then(
   { src: 'lib/jquery-ui-1.8.23.custom.min.js', packaged: false },
-  { src: 'lib/angular-1.0.2/angular.js', packaged: false },
+  { src: 'lib/angular-1.0.2/angular.min.js', packaged: false },
+  //{ src: 'lib/angular.min.js', packaged: false },
+  //{ src: 'lib/angular.js', packaged: false },
   { src: 'lib/underscore-min.js', packaged: false },
   { src: 'lib/bootstrap.min.js', packaged: false }
 );
 
-//!steal-remove-start
-steal('test/funcunit/jashboard_test_scenario_loader.js');
-//!steal-remove-end
+steal({src: 'test/funcunit/jashboard_test_scenario_loader.js', ignore: true });
 
 steal.dev.log("Loading application files");
 // application files

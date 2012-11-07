@@ -16,6 +16,10 @@ id: !ruby/object:UUIDTools::UUID
   string: b5a152e7-1fb4-4338-b02d-fa3ae30052a6
 name: test new_name
 refresh_interval: 456
-ciserver_type: 3
-hostname: some.host.com
-port: 20
+ciserver_settings: !ruby/struct:Jashboard::CIServer::GOServerSettings
+  hostname: another.host.com
+  port: 34
+  pipeline: test.another.pipeline
+  stage: test.another.stage
+  job: test.another.job
+  type: 2

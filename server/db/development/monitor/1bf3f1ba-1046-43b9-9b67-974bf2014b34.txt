@@ -16,6 +16,8 @@ id: !ruby/object:UUIDTools::UUID
   string: 1bf3f1ba-1046-43b9-9b67-974bf2014b34
 name: test new_name
 refresh_interval: 456
-ciserver_type: 3
-hostname: some.host.com
-port: 20
+ciserver_settings: !ruby/struct:Jashboard::CIServer::JenkinsServerSettings
+  hostname: some.host.com
+  port: 20
+  build_id: 123
+  type: 1

@@ -3,6 +3,7 @@ require 'uuidtools'
 require 'yaml'
 require 'model/dashboard'
 require 'model/build_monitor'
+require 'model/ciserver_settings'
 
 module Jashboard
   class FileRepository

@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'dashboard_builder'
 require 'monitor_builder'
-require 'model/ciserver_settings'
 require 'service/repository'
 
 module Jashboard
@@ -51,16 +50,18 @@ module Jashboard
         with_id("test-new_monitor-id").
         with_name("test new_name").
         with_refresh_interval(456).
-        with_ciserver_settings(CIServer::JenkinsServerSettings.new("test.host.name", 1234, "test.build.id")).
+        with_ciserver_settings(CIServer::GOServerSettings.new("test.host.name", 1234, "test.pipeline", "test.stage", "test.job")).
         build
 
       serialize_yaml("monitor/test-new_monitor-id.txt", monitor)
 
       monitor.name = "test change name"
       monitor.refresh_interval = 123
-      monitor.ciserver_settings.build_id = "test.build.id"
       monitor.ciserver_settings.hostname = "another.host.com"
       monitor.ciserver_settings.port = 34
+      monitor.ciserver_settings.pipeline = "test.another.pipeline"
+      monitor.ciserver_settings.stage = "test.another.stage"
+      monitor.ciserver_settings.job = "test.another.job"
 
       subject.save_monitor(monitor)
 

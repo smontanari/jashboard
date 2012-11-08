@@ -68,6 +68,23 @@ module Jashboard
       verify_yaml("monitor/test-new_monitor-id.txt", monitor)
     end
 
+    it("should load a dashboard from a yaml file") do
+      serialize_yaml("dashboard/test-dashboard-id.txt",
+        DashboardBuilder.new.
+          with_id("test-dashboard-id").
+          with_name("test dashboard-name").
+          with_monitor_id("test-mon-1").
+          with_monitor_id("test-mon-2").
+          build
+      )
+
+      dashboard = subject.load_dashboard("test-dashboard-id")
+
+      dashboard.id.should == "test-dashboard-id"
+      dashboard.name.should == "test dashboard-name"
+      dashboard.monitor_ids.should == ["test-mon-1", "test-mon-2"]
+    end
+
     it("should load all dashboards") do
       serialize_yaml("dashboard/test-dashboard-id1.txt",
         DashboardBuilder.new.
@@ -90,10 +107,10 @@ module Jashboard
       dashboards.size.should == 2
       dashboards[0].id.should == "test-dashboard-id1"
       dashboards[0].name.should == "test dashboard-name1"
-      dashboards[0].monitor_ids == ["test-mon-1", "test-mon-2"]
+      dashboards[0].monitor_ids.should == ["test-mon-1", "test-mon-2"]
       dashboards[1].id.should == "test-dashboard-id2"
       dashboards[1].name.should == "test dashboard-name2"
-      dashboards[1].monitor_ids == ["test-mon-3"]
+      dashboards[1].monitor_ids.should == ["test-mon-3"]
     end
 
     it("should store a dashboard as yaml into a new file") do

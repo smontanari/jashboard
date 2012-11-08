@@ -18,6 +18,10 @@ module Jashboard
       @db[DASHBOARD_NAMESPACE].map {|id| YAML.load(@db["#{DASHBOARD_NAMESPACE}/#{id}"])}
     end
 
+    def load_dashboard(dashboard_id)
+      YAML.load(@db["#{DASHBOARD_NAMESPACE}/#{dashboard_id}.txt"])
+    end
+
     def load_monitor(monitor_id)
       YAML.load(@db["#{MONITOR_NAMESPACE}/#{monitor_id}.txt"])
     end

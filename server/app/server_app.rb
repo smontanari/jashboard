@@ -14,25 +14,44 @@ module Jashboard
       set :static_cache_control, "no-cache"
     end
 
+    def initialize(*args)
+      super(*args)
+      @repository = FileRepository.new
+    end
+
     get '/ajax/dashboards' do
-      json(FileRepository.new.load_dashboards)
+      #json(FileRepository.new.load_dashboards)
+      json(@repository.load_dashboards)
     end
 
     get '/ajax/monitor/:id' do
-      monitor = FileRepository.new.load_monitor(params[:id])
+      #monitor = FileRepository.new.load_monitor(params[:id])
+      monitor = @repository.load_monitor(params[:id])
       monitor_view = MonitorRuntimeService.new.get_monitor_view(monitor)
       json(monitor_view)
     end
 
     post '/ajax/dashboard/:dashboard_id/monitor' do
-      monitor = BuildMonitor.new
-      params = JSON.parse(request.body.read)
-      monitor.name = params['name']
-      monitor.refresh_interval = params['refresh_interval']
-      settings = params['ciserver_settings']
-      monitor.ciserver_settings = CIServer::ServerSettingsFactory.get_settings(settings)
+      #@repository = FileRepository.new
+      monitor = create_monitor(JSON.parse(request.body.read))
+      add_monitor_to_dashboard(params[:dashboard_id], monitor)
+    end
 
-      FileRepository.new.save_monitor(monitor)
+    private
+
+    def create_monitor(monitor_json)
+      new_monitor = BuildMonitor.new
+      new_monitor.name = monitor_json['name']
+      new_monitor.refresh_interval = monitor_json['refresh_interval']
+      settings = monitor_json['ciserver_settings']
+      new_monitor.ciserver_settings = CIServer::ServerSettingsFactory.get_settings(settings)
+      @repository.save_monitor(new_monitor)
+    end
+
+    def add_monitor_to_dashboard(dashboard_id, monitor)
+      dashboard = @repository.load_dashboard(dashboard_id)
+      dashboard.monitor_ids << monitor.id
+      @repository.save_dashboard(dashboard)
     end
   end
 end

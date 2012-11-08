@@ -16,16 +16,14 @@ module Jashboard
   end
   module BuilderHelper
     include BuilderHelperUtils
-    def builder_for(object = nil)
-      if object.is_a? Class
-        the_instance = object.new
-      elsif !object.nil?
-        the_instance = object
+    def builder_for(clazz = nil, &block)
+      if clazz.is_a? Class
+        create_instance = Proc.new { clazz.new }
       elsif block_given?
-        the_instance = yield
+        create_instance = block
       end
       define_method :initialize do
-        @instance = the_instance
+        @instance = create_instance.call
       end
       define_method :build do
         @instance

@@ -1,6 +1,9 @@
 require 'spec_helper'
 require 'rack/test'
 require 'sinatra'
+require 'json_spec'
+require 'dashboard_builder'
+require 'monitor_builder'
 require 'server_app'
 require 'service/repository'
 require 'service/monitor_runtime_service'
@@ -10,13 +13,13 @@ set :environment, :test
 module Jashboard
   describe ServerApp do
     include Rack::Test::Methods
-    def app
-      ServerApp
-    end
 
     before(:each) do
       @mock_repository = double("repository")
       FileRepository.stub(:new).and_return(@mock_repository)
+      def app
+        subject
+      end
     end
 
     context "Retrieving data" do
@@ -51,9 +54,23 @@ module Jashboard
       end
     end
 
-    context "Inserting data" do
+    context "Creating monitors" do
       describe("POST /ajax/dashboard/:dashboard_id/monitor") do
-        it("should save the monitor to the repository") do
+        before(:each) do
+          @monitor = MonitorBuilder.as_build_monitor.
+            with_id("789").
+            build
+          @mock_repository.stub(:save_monitor).and_return(@monitor)
+          @dashboard = DashboardBuilder.new.
+            with_monitor_id("123").
+            with_monitor_id("456").
+            build
+          @mock_repository.stub(:load_dashboard).with("test.dashboard.id").and_return(@dashboard)
+          @mock_repository.stub(:save_dashboard)
+          CIServer::ServerSettingsFactory.stub(:get_settings)
+        end
+
+        it("should persist the monitor to the repository") do
           monitor = double("monitor")
           settings = double("server_settings")
           BuildMonitor.stub(:new => monitor)
@@ -75,6 +92,21 @@ module Jashboard
                 "build_id": "test-build"
               }
             })
+        end
+
+        it("should add the monitor id to the specified dashboard") do
+          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+
+          @dashboard.monitor_ids.length.should == 3
+          @dashboard.monitor_ids.should include "123"
+          @dashboard.monitor_ids.should include "456"
+          @dashboard.monitor_ids.should include "789"
+        end
+
+        it("should persist the dashboard to the repository") do
+          @mock_repository.should_receive(:save_dashboard).with(@dashboard)
+
+          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
         end
       end
     end

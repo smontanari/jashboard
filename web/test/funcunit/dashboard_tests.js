@@ -6,8 +6,10 @@ jashboard.functional_tests.push(function () {
 	});
 
   test("should create a new dashboard and display the new tab", function() {
-    S(".menu-dashboard-new").click();
-    S("#new-dashboard-form").visible("show new dashboard input dialog");
+    S("#menuActions").click();
+    S("#menuAction-new-dashboard").visible("display new dashboard menu action link");
+    S("#menuAction-new-dashboard").click();
+    S("#form-new-dashboard").visible("show new dashboard input dialog");
   });
 
 });

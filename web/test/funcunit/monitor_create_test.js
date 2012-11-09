@@ -1,7 +1,7 @@
 jashboard.functional_tests.push(function () {
-  module("create monitor functionality",{
+  module("Monitor create functionality",{
     setup: function() {
-      jashboard.test_utils.openPageForTest("create_monitor");
+      jashboard.test_utils.openPageForTestScenario("create_monitor");
     }
 	});
 

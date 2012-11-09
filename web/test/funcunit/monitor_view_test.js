@@ -7,9 +7,9 @@ jashboard.functional_tests.push(function () {
     });
   };
 
-  module("view monitor functionality",{
+  module("Monitor display functionality",{
     setup: function() {
-      jashboard.test_utils.openPageForTest("display_dashboards_data");
+      jashboard.test_utils.openPageForTestScenario("display_dashboards_data");
     }
 	});
 

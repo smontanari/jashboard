@@ -1,7 +1,7 @@
 jashboard.functional_tests.push(function () {
   module("Tabs view functionality",{
     setup: function() {
-      jashboard.test_utils.openPageForTest("display_dashboards_data");
+      jashboard.test_utils.openPageForTestScenario("display_dashboards_data");
     }
 	});
 

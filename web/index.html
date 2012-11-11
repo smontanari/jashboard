@@ -7,7 +7,7 @@
 <body>
   <div class="navbar navbar-static-top navbar-inverse">
     <div class="navbar-inner">
-      <div class="container">
+      <div class="container" data-ng-controller="MenuController">
         <ul class="nav">
           <li>
             <span class="logo"><img src="img/logo.png" alt="logo"></span>
@@ -58,8 +58,9 @@
         </div>
       </div>
     </div>
+    <div data-ng-include="'html/new_dashboard_dialog.html'" data-ng-controller="DialogController" data-onload="initDashboardFormDialog()"></div>
+    <div data-ng-include="'html/new_monitor_dialog.html'" data-ng-controller="DialogController" data-onload="initMonitorFormDialog()"></div>
   </div>
-  <div data-ng-include="'html/new_monitor_dialog.html'" data-ng-controller="MonitorController" data-onload="initMonitorFormDialog()"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'> </script>
 </body>
 </html>

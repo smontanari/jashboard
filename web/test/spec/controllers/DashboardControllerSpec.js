@@ -1,22 +1,29 @@
 describe("DashboardController", function() {
-  var scope = {};
+  var scope;
   var httpService = {};
   var controller;
   var ajaxCallback = function(content) {
     return {success: function(callBack) { callBack(content); }}
   };
+  var resetScope = function() {
+    scope = {};
+    scope.$apply = jasmine.createSpy();
+  };
 
   beforeEach(function() {
-    scope.$apply = jasmine.createSpy();
+    resetScope();
     spyOn(jashboard.model, "Monitor").andCallFake(function(data) {
-    this.monitorName = data.name;
+      this.monitorName = data.name;
     });
   });
 
   describe("Dashboards data retrieval", function() {
-    var dashboards_data = [{id: "test.id.1", name: "test.dashboard.1"}, {id: "test.id.2", name: "test.dashboard.2"}];
     beforeEach(function() {
-      httpService.getJSON = jasmine.createSpy("httpService").andReturn(ajaxCallback(dashboards_data));
+      httpService.getJSON = jasmine.createSpy("httpService").andReturn(ajaxCallback(
+        [
+          {id: "test.id.1", name: "test.dashboard.1"}, {id: "test.id.2", name: "test.dashboard.2"}
+        ]
+      ));
       controller = new jashboard.DashboardController(scope, httpService);
     });
 
@@ -29,11 +36,13 @@ describe("DashboardController", function() {
   });
 
   describe("Monitors data retrieval", function() {
-    var dashboards_data = [{id:"id1", monitor_ids: ["test.monitor.1", "test.monitor.2"]}, {id:"id2", monitor_ids: ["test.monitor.3"]}];
     beforeEach(function() {
       httpService.getJSON = jasmine.createSpy("httpService").andCallFake(function(url) {
         var regexp = /\/ajax\/monitor\/(test\.monitor\.\d)/;
-        if (url === "/ajax/dashboards") return ajaxCallback(dashboards_data);
+        if (url === "/ajax/dashboards") return ajaxCallback(
+          [
+            {id:"id1", monitor_ids: ["test.monitor.1", "test.monitor.2"]}, {id:"id2", monitor_ids: ["test.monitor.3"]}
+          ]);
         else if (regexp.test(url)) {
           var monitor_id = regexp.exec(url)[1];
           return ajaxCallback({id: monitor_id, name: monitor_id + "_name"});
@@ -57,6 +66,7 @@ describe("DashboardController", function() {
     it("should open the dialog form", function() {
       var $stub = testHelper.stubJQuery(["#new-monitor-form"]);
       $stub.dialog = jasmine.createSpy("$.dialog()");
+      controller = new jashboard.DashboardController(scope, httpService);
 
       scope.actionNewMonitor();
 

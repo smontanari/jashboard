@@ -4,7 +4,12 @@ jashboard.DialogController = function(scope) {
   };
 
   scope.initDashboardFormDialog = function() {
-    var dialogOptions = {autoOpen: false, modal: true, resizable: false, width: 500, height: 100};
+    var dialogOptions = {autoOpen: false, modal: true, resizable: false, width: 500, height: 200, buttons: [
+      {
+        text: "Save",
+        id: "saveDashboard"
+      }
+    ]};
     jQuery(jashboard.constants.dashboardFormSelector).dialog(dialogOptions);
   };
 

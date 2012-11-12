@@ -17,7 +17,12 @@ describe("DialogController", function() {
 
     it("should initialize the dialog form with the correct width and height", function() {
       expect($stub.dialog.mostRecentCall.args[0].width).toEqual(500);
-      expect($stub.dialog.mostRecentCall.args[0].height).toEqual(100);
+      expect($stub.dialog.mostRecentCall.args[0].height).toEqual(200);
+    });
+    it("should initialize the dialog form with Save button", function() {
+      var button = $stub.dialog.mostRecentCall.args[0].buttons[0];
+      expect(button.text).toEqual("Save");
+      expect(button.id).toEqual("saveDashboard");
     });
   });
 

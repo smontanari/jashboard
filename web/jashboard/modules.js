@@ -13,7 +13,7 @@ steal(
 )
 .then(
   'jashboard/controllers/MenuController.js',
-  'jashboard/controllers/DashboardController.js',
+  'jashboard/controllers/MainController.js',
   'jashboard/controllers/DialogController.js'
 );
 

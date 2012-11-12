@@ -1,4 +1,4 @@
-describe("DashboardController", function() {
+describe("MainController", function() {
   var scope;
   var httpService = {};
   var controller;
@@ -24,7 +24,7 @@ describe("DashboardController", function() {
           {id: "test.id.1", name: "test.dashboard.1"}, {id: "test.id.2", name: "test.dashboard.2"}
         ]
       ));
-      controller = new jashboard.DashboardController(scope, httpService);
+      controller = new jashboard.MainController(scope, httpService);
     });
 
     it("should invoke the http service to load the dashboard data", function() {
@@ -48,7 +48,7 @@ describe("DashboardController", function() {
           return ajaxCallback({id: monitor_id, name: monitor_id + "_name"});
         }
       });
-      controller = new jashboard.DashboardController(scope, httpService);
+      controller = new jashboard.MainController(scope, httpService);
     });
 
     it("should invoke the http service to load monitor data", function() {
@@ -66,7 +66,7 @@ describe("DashboardController", function() {
     it("should open the dialog form", function() {
       var $stub = testHelper.stubJQuery(["#new-monitor-form"]);
       $stub.dialog = jasmine.createSpy("$.dialog()");
-      controller = new jashboard.DashboardController(scope, httpService);
+      controller = new jashboard.MainController(scope, httpService);
 
       scope.actionNewMonitor();
 

@@ -1,10 +1,15 @@
 describe("DialogController", function() {
-  var scope = {};
+  var scope;
   var controller;
   var $stub;
   var dialogWidget = {};
 
+  var resetScope = function() {
+    scope = {};
+  };
+
   beforeEach(function() {
+    resetScope();
     controller = new jashboard.DialogController(scope);
   });
 
@@ -23,6 +28,8 @@ describe("DialogController", function() {
       var button = $stub.dialog.mostRecentCall.args[0].buttons[0];
       expect(button.text).toEqual("Save");
       expect(button.id).toEqual("saveDashboard");
+      //button.click.apply(dialogWidget);
+      //expect
     });
   });
 

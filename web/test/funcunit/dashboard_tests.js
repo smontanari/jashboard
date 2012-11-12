@@ -14,6 +14,7 @@ jashboard.functional_tests.push(function () {
     S("#new-dashboard-form").visible("show new dashboard input dialog");
     S("#dashboardName").type("test new-dashboard");
     S("#saveDashboard").visible().click();
+    S(".dashboard-tab").size(4);
   });
 
 });

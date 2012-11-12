@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Jashboard</title>
 </head>
-<body>
+<body data-ng-controller="MainController">
   <div class="navbar navbar-static-top navbar-inverse">
     <div class="navbar-inner">
       <div class="container" data-ng-controller="MenuController">
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div class="container" data-ng-controller="DashboardController">
+  <div class="container">
     <div id="dashboard-navbar">
       <ul class="nav nav-tabs">
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards"><a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a></li>

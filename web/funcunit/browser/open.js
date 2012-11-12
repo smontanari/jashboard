@@ -81,7 +81,8 @@ $.extend(FuncUnit,{
 			else{
 				// giving a large height forces it to not open in a new tab and just opens to the window's height
 				var width = $(window).width();
-				FuncUnit.win = window.open(url, "funcunit",  "height=1000,toolbar=yes,status=yes,width="+width/2+",left="+width/2);
+        FuncUnit.win = window.open(url, "funcunit",  "height=1000,toolbar=yes,status=yes,width="+width/2+",left="+width/2);
+				//FuncUnit.win = window.open(url, "funcunit",  "height=1000,toolbar=yes,status=yes,width="+width);
 				// This is mainly for opera. Other browsers will hit the unload event and close the popup.
 				// This block breaks in IE (which never reaches it) because after closing a window, it throws access 
 				// denied any time you try to access it, even after reopening.

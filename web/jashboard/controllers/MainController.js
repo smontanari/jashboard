@@ -35,10 +35,6 @@ jashboard.MainController = function(scope, http) {
   //});
 
   loadDashboards();
-
-  scope.actionNewMonitor = function() {
-    $(jashboard.constants.monitorFormSelector).dialog("open");
-  };
 };
 
 jashboard.application.controller("MainController", ['$scope', 'httpService', jashboard.MainController]).run(function() {

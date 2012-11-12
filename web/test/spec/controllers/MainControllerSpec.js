@@ -61,16 +61,4 @@ describe("MainController", function() {
       expect(scope.dashboards[1].monitors).toEqual([{monitorName: "test.monitor.3_name"}]);
     });
   });
-
-  describe("Dashboard menu actions", function() {
-    it("should open the dialog form", function() {
-      var $stub = testHelper.stubJQuery(["#new-monitor-form"]);
-      $stub.dialog = jasmine.createSpy("$.dialog()");
-      controller = new jashboard.MainController(scope, httpService);
-
-      scope.actionNewMonitor();
-
-      expect($stub.dialog).toHaveBeenCalledWith("open");
-    });
-  });
 });

@@ -12,8 +12,9 @@ steal(
   'jashboard/services/HttpService.js'
 )
 .then(
-  'jashboard/controllers/MenuController.js',
   'jashboard/controllers/MainController.js',
+  'jashboard/controllers/MenuController.js',
+  'jashboard/controllers/DashboardController.js',
   'jashboard/controllers/DialogController.js'
 );
 

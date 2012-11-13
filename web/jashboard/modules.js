@@ -9,7 +9,10 @@ steal(
   'jashboard/misc-functions.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
-  'jashboard/services/HttpService.js'
+  'jashboard/model/MonitorBuildSettings.js',
+  'jashboard/model/MonitorBuildRuntime.js',
+  'jashboard/services/HttpService.js',
+  'jashboard/services/Repository.js'
 )
 .then(
   'jashboard/controllers/MainController.js',

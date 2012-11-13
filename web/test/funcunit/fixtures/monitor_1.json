@@ -1,17 +1,6 @@
 {
-  "id": "monitor_1",
-  "type": 1,
-  "name": "Zombie-Dash build",
-  "ciserver_settings": {
-    "type": 1,
-    "hostname": "zombie-dev.host.com",
-    "port": 9080,
-    "build_id": "zombie_build"
-  },
-  "runtime_info": {
-    "last_build_time": "23-08-2012 14:32:23",
-    "duration": 752,
-    "success": true,
-    "status": 0
-  }
+  "last_build_time": "23-08-2012 14:32:23",
+  "duration": 752,
+  "success": true,
+  "status": 0
 }

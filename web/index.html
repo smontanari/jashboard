@@ -48,10 +48,10 @@
           <div class="monitor-title">{{monitor.title}}</div>
             <div class="monitor-details">
               <div class="build-panel">
-                <p><label>last build:</label><span class="build-time">{{monitor.lastBuildTime}}</span></p>
-                <p><label>duration:</label><span class="build-duration">{{monitor.lastBuildDuration}}</span></p>
-                <p><label>result:</label><span class="build-result label" data-ng-class="{'label-success': monitor.lastBuildSuccess, 'label-important': !monitor.lastBuildSuccess}">{{monitor.lastBuildResult}}</span></p>
-                <p><label>current status:</label><span class="build-status alert-info">{{monitor.currentBuildStatus}}</span></p>
+                <p><label>last build:</label><span class="build-time">{{monitor.runtimeInfo.lastBuildTime}}</span></p>
+                <p><label>duration:</label><span class="build-duration">{{monitor.runtimeInfo.lastBuildDuration}}</span></p>
+                <p><label>result:</label><span class="build-result label" data-ng-class="{'label-success': monitor.runtimeInfo.lastBuildSuccess, 'label-important': !monitor.runtimeInfo.lastBuildSuccess}">{{monitor.runtimeInfo.lastBuildResult}}</span></p>
+                <p><label>current status:</label><span class="build-status alert-info">{{monitor.runtimeInfo.currentBuildStatus}}</span></p>
               </div>
             </div>
           </div>

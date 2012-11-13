@@ -17,6 +17,6 @@ jashboard.HttpService = function() {
   };
 };
 
-jashboard.services.service('httpService', [jashboard.HttpService]).run(function() {
+jashboard.services.service('HttpService', [jashboard.HttpService]).run(function() {
   steal.dev.log("HttpService initialized");
 });

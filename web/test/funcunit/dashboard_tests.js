@@ -10,11 +10,13 @@ jashboard.functional_tests.push(function () {
 
   test("should create a new dashboard and display the new tab", function() {
     S("#menuActions").click();
-    S("#menuAction-new-dashboard").visible("display new dashboard menu action link").click();
+    S("#navbarMenu .menuAction-new-dashboard").visible("display new dashboard menu action link").click();
     S("#new-dashboard-form").visible("show new dashboard input dialog");
-    S("#dashboardName").type("test new-dashboard");
+    var name = "test new-dashboard";
+    S("input[name='dashboardName']").visible().click().type(name);
     S("#saveDashboard").visible().click();
     S(".dashboard-tab").size(4);
+    S(".dashboard-tab").last().text(name, "dashboard name should be equal to " + name);
   });
 
 });

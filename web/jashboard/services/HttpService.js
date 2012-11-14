@@ -1,19 +1,25 @@
 jashboard.HttpService = function() {
-  var ajaxRequest = function(url, type, data, dataType) {
-    var settings = {
-      type: type,
-      data: data,
-      dataType: dataType
-    };
+  var ajaxRequest = function(url, settings) {
     return jQuery.ajax(url, settings);
   };
 
   this.getJSON = function(url, params) {
-    return ajaxRequest(url, "GET", params, 'json');
+    return ajaxRequest(url, {
+      type: 'GET',
+      data: params,
+      dataType: 'json'
+    });
   };
 
-  this.postJSON = function(url, data) {
-    return ajaxRequest(url, "POST", data, 'json');
+  this.postJSON = function(url, obj) {
+    var data = JSON.stringify(obj);
+    return ajaxRequest(url, {
+      type: 'POST',
+      data: data,
+      processData: false,
+      contentType: "application/json",
+      dataType: 'json'
+    });
   };
 };
 

@@ -18,6 +18,7 @@ steal(
   'jashboard/controllers/MainController.js',
   'jashboard/controllers/MenuController.js',
   'jashboard/controllers/DashboardController.js',
-  'jashboard/controllers/DialogController.js'
+  'jashboard/controllers/DashboardFormController.js',
+  'jashboard/controllers/MonitorFormController.js'
 );
 

@@ -21,14 +21,18 @@ describe("HttpService", function() {
     });
   });
   it("should invoke jQuery.ajax to perform a JSON POST request", function() {
-    var expectedData = "test.json.data";
-
-    httpService.postJSON("/test/path/to/resource", expectedData);
+    var data = {
+      param1: "test.value",
+      param2: 123
+    };
+    httpService.postJSON("/test/path/to/resource", data);
 
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
     expect($stub.ajax.mostRecentCall.args[1]).toEqual({
       type: 'POST',
-      data: expectedData,
+      data: '{"param1":"test.value","param2":123}',
+      processData: false,
+      contentType: 'application/json',
       dataType: 'json'
     });
   });

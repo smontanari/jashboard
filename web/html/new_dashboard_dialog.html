@@ -1,10 +1,20 @@
-<div id="new-dashboard-form" class="hide" title="New Dashboard">
-  <form class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="dashboardName">Name</label>
-      <div class="controls">
-        <input type="text" id="dashboardName" class="input-xlarge" placeholder="dashboard name" data-ng-model="newDashboard.name">
+<div id="new-dashboard-form" class="modal hide fade" role="dialog" aria-labelledby="dashboardModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button id="closeDialog" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="dashboardModalLabel">Create new dashboard</h3>
+  </div>
+  <form class="form-horizontal" data-ng-controller="DashboardFormController">
+    <div class="modal-body">
+      <div class="control-group">
+        <label class="control-label" for="dashboardName">Name</label>
+        <div class="controls">
+          <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" data-ng-model="dashboardForm.name">
+        </div>
       </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" id="saveDashboard" class="btn btn-primary" data-ng-click="saveDashboard(dashboardForm)">Save</a>
+      <a href="#" id="cancelDashboard" data-dismiss="modal" class="btn">Cancel</a>
     </div>
   </form>
 </div>

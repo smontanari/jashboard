@@ -8,11 +8,17 @@ jashboard.Repository = function(http) {
       handler(dashboards);
     });
   };
-  //this.saveDashboard = function(
   this.loadMonitorRuntime = function(monitor_id, handler) {
     http.getJSON("/ajax/monitor/" + monitor_id + "/runtime")
     .success(function(monitor_data) {
       handler(new jashboard.model.MonitorBuildRuntime(monitor_data));
+    });
+  };
+
+  this.createDashboard = function(dashboardParameters, handler) {
+    http.postJSON("/ajax/dashboard", dashboardParameters)
+    .success(function(dashboard_data) {
+      handler(new jashboard.model.Dashboard(dashboard_data));
     });
   };
 };

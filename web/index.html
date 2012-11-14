@@ -7,7 +7,7 @@
 <body data-ng-controller="MainController">
   <div class="navbar navbar-static-top navbar-inverse">
     <div class="navbar-inner">
-      <div class="container" data-ng-controller="MenuController">
+      <div id="navbarMenu" class="container" data-ng-controller="MenuController">
         <ul class="nav">
           <li>
             <span class="logo"><img src="img/logo.png" alt="logo"></span>
@@ -18,7 +18,9 @@
           <li class="divider-vertical dropdown">
             <a id="menuActions" class="dropdown-toggle" data-toggle="dropdown" href="#">Actions <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menuActions">
-              <li><a id="menuAction-new-dashboard" href="#" data-ng-click="actionNewDashboard()">Create new dashboard</a></li>
+              <li>
+                <a class="menuAction-new-dashboard" href="#new-dashboard-form" data-toggle="modal">Create new dashboard</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -36,9 +38,9 @@
         <div class="menubar">
           <div class="dashboard-actions">
             <div class="dropdown">
-              <a id="{{dashboard.id}}-settings" class="dropdown-toggle" data-toggle="dropdown" href="">Dashboard actions<span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="{{dashboard.id}}-settings">
-                <li><a class="action-new-monitor" href="#" data-ng-click="actionNewMonitor()">New monitor</a></li>
+              <a id="{{dashboard.id}}-settings" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-settings">
+                <li><a class="dashboardAction-new-monitor" href="#new-monitor-form" data-toggle="modal">New Monitor</a></li>
               </ul>
             </div>
           </div>
@@ -58,8 +60,8 @@
         </div>
       </div>
     </div>
-    <div data-ng-include="'html/new_dashboard_dialog.html'" data-ng-controller="DialogController" data-onload="initDashboardFormDialog()"></div>
-    <div data-ng-include="'html/new_monitor_dialog.html'" data-ng-controller="DialogController" data-onload="initMonitorFormDialog()"></div>
+    <div data-ng-include="'html/new_dashboard_dialog.html'"></div>
+    <div data-ng-include="'html/new_monitor_dialog.html'"></div>
   </div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'> </script>
 </body>

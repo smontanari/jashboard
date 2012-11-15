@@ -61,6 +61,32 @@ module Jashboard
       end
     end
 
+    context "Dashboard create" do
+      describe("POST /ajax/dashboard") do
+        before(:each) do
+          @dashboard = double
+          Dashboard.stub(:new).with("test.dashboard.name").and_return(@dashboard)
+          DashboardView.stub(:new).and_return("something")
+        end
+        it("should persist the dashboard to the repository") do
+          @mock_repository.should_receive(:save_dashboard).with(@dashboard)
+
+          post '/ajax/dashboard', %({"name": "test.dashboard.name"})
+        end
+        it("should return the dashboard view as json") do
+          new_dashboard = double
+          @mock_repository.stub(:save_dashboard).and_return(new_dashboard)
+          DashboardView.should_receive(:new).with(new_dashboard).and_return({id: "test-dashboard"})
+
+          post '/ajax/dashboard', %({"name": "test.dashboard.name"})
+
+          last_response.status.should == 201
+          last_response.content_type.should include('application/json')
+          last_response.body.should be_json_eql %({"id": "test-dashboard"})
+        end
+      end
+    end
+
     context "Creating monitors" do
       describe("POST /ajax/dashboard/:dashboard_id/monitor") do
         before(:each) do

@@ -2,6 +2,7 @@ require 'sinatra/base'
 require "sinatra/json"
 require 'json'
 require 'service/repository'
+require 'model/dashboard_view'
 require 'service/monitor_runtime_service'
 
 module Jashboard
@@ -32,6 +33,13 @@ module Jashboard
     get '/ajax/monitor/:id/runtime' do
       monitor = @repository.load_monitor(params[:id])
       json(MonitorRuntimeService.new.get_monitor_runtime_info(monitor))
+    end
+
+    post '/ajax/dashboard' do
+      dashboard_params = JSON.parse(request.body.read)
+      dashboard = @repository.save_dashboard(Dashboard.new(dashboard_params['name']))
+      status 201
+      json(DashboardView.new(dashboard))
     end
 
     post '/ajax/dashboard/:dashboard_id/monitor' do

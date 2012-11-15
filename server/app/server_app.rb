@@ -45,16 +45,18 @@ module Jashboard
     post '/ajax/dashboard/:dashboard_id/monitor' do
       monitor = create_monitor(JSON.parse(request.body.read))
       add_monitor_to_dashboard(params[:dashboard_id], monitor)
+      status 201
+      json(monitor)
     end
 
     private
 
     def create_monitor(monitor_json)
-      new_monitor = BuildMonitor.new
-      new_monitor.name = monitor_json['name']
-      new_monitor.refresh_interval = monitor_json['refresh_interval']
-      settings = monitor_json['ciserver_settings']
-      new_monitor.ciserver_settings = CIServer::ServerSettingsFactory.get_settings(settings)
+      new_monitor = BuildMonitor.new(
+        monitor_json['name'],
+        monitor_json['refresh_interval'],
+        CIServer::ServerSettingsFactory.get_settings(monitor_json['ciserver_settings'])
+      )
       @repository.save_monitor(new_monitor)
     end
 

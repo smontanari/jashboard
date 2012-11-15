@@ -22,7 +22,7 @@ module Jashboard
       end
     end
 
-    context "Retrieving data" do
+    context "Data retrieval" do
       before(:each) do
         @mock_monitor_service = double
         MonitorRuntimeService.stub(:new).and_return(@mock_monitor_service)
@@ -41,9 +41,10 @@ module Jashboard
 
           get '/ajax/dashboards'
 
+          expected_response = %(["test.dashboardview1","test.dashboardview2"])
           last_response.should be_ok
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %(["test.dashboardview1", "test.dashboardview2"])
+          last_response.body.should be_json_eql expected_response
         end
       end
 
@@ -56,7 +57,7 @@ module Jashboard
 
           last_response.should be_ok
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %({"id": "test-monitor-runtime"})
+          last_response.body.should be_json_eql %({"id":"test-monitor-runtime"})
         end
       end
     end
@@ -71,28 +72,27 @@ module Jashboard
         it("should persist the dashboard to the repository") do
           @mock_repository.should_receive(:save_dashboard).with(@dashboard)
 
-          post '/ajax/dashboard', %({"name": "test.dashboard.name"})
+          post '/ajax/dashboard', %({"name":"test.dashboard.name"})
         end
         it("should return the dashboard view as json") do
           new_dashboard = double
           @mock_repository.stub(:save_dashboard).and_return(new_dashboard)
-          DashboardView.should_receive(:new).with(new_dashboard).and_return({id: "test-dashboard"})
+          DashboardView.should_receive(:new).with(new_dashboard).and_return({id:"test-dashboard"})
 
-          post '/ajax/dashboard', %({"name": "test.dashboard.name"})
+          post '/ajax/dashboard', %({"name":"test.dashboard.name"})
 
           last_response.status.should == 201
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %({"id": "test-dashboard"})
+          last_response.body.should be_json_eql %({"id":"test-dashboard"})
         end
       end
     end
 
-    context "Creating monitors" do
+    context "Monitor create" do
       describe("POST /ajax/dashboard/:dashboard_id/monitor") do
         before(:each) do
-          @monitor = MonitorBuilder.as_build_monitor.
-            with_id("789").
-            build
+          @monitor = double
+          @monitor.stub(:id => "789")
           @mock_repository.stub(:save_monitor).and_return(@monitor)
           @dashboard = DashboardBuilder.new.
             with_monitor_id("123").
@@ -104,14 +104,10 @@ module Jashboard
         end
 
         it("should persist the monitor to the repository") do
-          monitor = double("monitor")
-          settings = double("server_settings")
-          BuildMonitor.stub(:new => monitor)
-          CIServer::ServerSettingsFactory.should_receive(:get_settings).with({"type" => 1, "hostname" => "test.host", "port" => 567, "build_id" => "test-build"}).and_return(settings)
-          monitor.should_receive(:name=).with("test.monitor.name")
-          monitor.should_receive(:refresh_interval=).with(345)
-          monitor.should_receive(:ciserver_settings=).with(settings)
-          @mock_repository.should_receive(:save_monitor).with(monitor)
+          mock_settings = double("server_settings")
+          CIServer::ServerSettingsFactory.should_receive(:get_settings).with({"type" => 1, "hostname" => "test.host", "port" => 567, "build_id" => "test-build"}).and_return(mock_settings)
+          BuildMonitor.should_receive(:new).with("test.monitor.name", 345, mock_settings).and_return(@monitor)
+          @mock_repository.should_receive(:save_monitor).with(@monitor)
 
           post '/ajax/dashboard/test.dashboard.id/monitor', %(
             {
@@ -140,6 +136,14 @@ module Jashboard
           @mock_repository.should_receive(:save_dashboard).with(@dashboard)
 
           post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+        end
+        it("should return the monitor as json") do
+          @monitor.stub(:to_json => '{"id":"test-monitor"}')
+          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+
+          last_response.status.should == 201
+          last_response.content_type.should include('application/json')
+          last_response.body.should be_json_eql %({"id":"test-monitor"})
         end
       end
     end

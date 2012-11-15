@@ -11,18 +11,30 @@ describe("DashboardFormController", function() {
 
   beforeEach(function() {
     resetScope();
+    $stub = testHelper.stubJQuery(["#new-dashboard-form", dialogWidget]);
+    $stub.modal = jasmine.createSpy("$.modal()");
+  });
+
+  describe("resetForm", function() {
+    it("should reset the dashboardForm variable in the scope", function() {
+      controller = new jashboard.DashboardFormController(scope, repository);
+      scope.dashboardForm = {test: "test"};
+
+      scope.resetForm();
+
+      expect(scope.dashboardForm).toEqual({});
+    });
   });
 
   describe("saveDashboard", function() {
     beforeEach(function() {
-      $stub = testHelper.stubJQuery(["#new-dashboard-form", dialogWidget]);
-      $stub.modal = jasmine.createSpy("$.modal()");
       repository.createDashboard = jasmine.createSpy("repository.createDashboard").andCallFake(function(input, handler) {
         handler("test.dashboard");
       });
       controller = new jashboard.DashboardFormController(scope, repository);
 
-      scope.saveDashboard({name: "test.name"});
+      scope.dashboardForm = {name: "test.name"};
+      scope.saveDashboard();
     });
 
     it("should call the repository to create a dashboard", function() {

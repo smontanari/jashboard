@@ -1,9 +1,13 @@
 jashboard.DashboardFormController = function(scope, repository) {
-  scope.saveDashboard = function(dashboardFormData) {
-    repository.createDashboard(dashboardFormData, function(dashboard) {
+  scope.saveDashboard = function() {
+    repository.createDashboard(scope.dashboardForm, function(dashboard) {
       scope.$emit("NewDashboardEvent", dashboard);
     });
     $('#new-dashboard-form').modal('hide');
+  };
+
+  scope.resetForm = function() {
+    scope.dashboardForm = {};
   };
 
   // crap... angular does not detect some of the ui changes triggered by funcunit, so we have to force the scope change

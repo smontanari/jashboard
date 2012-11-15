@@ -3,6 +3,6 @@ selenium.log
 testresults.xml
 .rvmrc
 server/db/test/dashboard/*.txt
-server/db/development/*.*
+server/db/development/dashboard/*.txt
 server/db/*/*/..fsdb*
 

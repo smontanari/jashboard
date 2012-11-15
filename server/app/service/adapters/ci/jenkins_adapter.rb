@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'model/runtime_info'
 
 module Jashboard
   module CIServer
@@ -7,7 +8,7 @@ module Jashboard
       def fetch_build_info(settings)
         @base_url = "http://#{settings.hostname}:#{settings.port}/job/#{settings.build_id}"
         @doc = Nokogiri::XML(open("#{@base_url}/lastSuccessfulBuild/api/xml"))
-        Runtime::BuildInfo.new(get_time, get_duration, get_result, get_current_status)
+        Runtime::BuildRuntimeInfo.new(get_time, get_duration, get_result, get_current_status)
       end
 
       private

@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'rack/test'
 require 'sinatra'
 require 'json_spec'
-require 'dashboard_builder'
-require 'monitor_builder'
+require 'builder/dashboard_builder'
+require 'builder/monitor_builder'
 require 'server_app'
 require 'service/repository'
 require 'service/monitor_runtime_service'
@@ -29,27 +29,34 @@ module Jashboard
       end
 
       describe("GET /ajax/dashboards") do
-        it("should return the dashboard view data as loaded from the repository") do
-          @mock_repository.should_receive(:load_dashboards).and_return({test: "test.dashboardData"})
+        it("should return the dashboard and monitor data from the repository and return the view") do
+          dashboard1 = DashboardBuilder.new.with_id("dashboard1").with_monitor_id("monitor1").with_monitor_id("monitor2").build
+          dashboard2 = DashboardBuilder.new.with_id("dashboard2").with_monitor_id("monitor3").build
+          @mock_repository.should_receive(:load_dashboards).and_return([dashboard1, dashboard2])
+          @mock_repository.should_receive(:load_monitor).with("monitor1").and_return("test.monitor.1")
+          @mock_repository.should_receive(:load_monitor).with("monitor2").and_return("test.monitor.2")
+          @mock_repository.should_receive(:load_monitor).with("monitor3").and_return("test.monitor.3")
+          DashboardView.stub(:new).with(dashboard1, ["test.monitor.1", "test.monitor.2"]).and_return("test.dashboardview1")
+          DashboardView.stub(:new).with(dashboard2, ["test.monitor.3"]).and_return("test.dashboardview2")
 
           get '/ajax/dashboards'
 
           last_response.should be_ok
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %({"test": "test.dashboardData"})
+          last_response.body.should be_json_eql %(["test.dashboardview1", "test.dashboardview2"])
         end
       end
 
-      describe("GET /ajax/monitor/:id") do
-        it("should load monitor settings from the repository and create the view through the service") do
+      describe("GET /ajax/monitor/:id/runtime") do
+        it("should load monitor from the repository and return the runtime info from the service") do
           @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return("test-monitor")
-          @mock_monitor_service.should_receive(:get_monitor_view).with("test-monitor").and_return({id: "test-monitor-view"})
+          @mock_monitor_service.should_receive(:get_monitor_runtime_info).with("test-monitor").and_return({id: "test-monitor-runtime"})
 
-          get '/ajax/monitor/test-monitor-id'
+          get '/ajax/monitor/test-monitor-id/runtime'
 
           last_response.should be_ok
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %({"id": "test-monitor-view"})
+          last_response.body.should be_json_eql %({"id": "test-monitor-runtime"})
         end
       end
     end

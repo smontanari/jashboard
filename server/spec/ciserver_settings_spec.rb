@@ -1,3 +1,7 @@
+require 'spec_helper'
+require 'json_spec'
+require 'model/ciserver_settings'
+
 module Jashboard
   module CIServer
     describe JenkinsServerSettings do

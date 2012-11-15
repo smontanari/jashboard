@@ -6,9 +6,5 @@ module Jashboard
       @id = id
       @monitor_ids = []
     end
-
-    def to_json(*args)
-      {id: @id, name: @name, monitor_ids: @monitor_ids}.to_json(*args)
-    end
   end
 end

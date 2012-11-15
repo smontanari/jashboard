@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'open-uri'
 require 'stringio'
 require 'service/adapters/ci/jenkins_adapter'

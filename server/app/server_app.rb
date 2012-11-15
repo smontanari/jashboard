@@ -20,19 +20,21 @@ module Jashboard
     end
 
     get '/ajax/dashboards' do
-      #json(FileRepository.new.load_dashboards)
-      json(@repository.load_dashboards)
+      dashboard_views = @repository.load_dashboards.map do |dashboard|
+        monitors = dashboard.monitor_ids.map do |monitor_id|
+          @repository.load_monitor(monitor_id)
+        end
+        DashboardView.new(dashboard, monitors)
+      end
+      json(dashboard_views)
     end
 
-    get '/ajax/monitor/:id' do
-      #monitor = FileRepository.new.load_monitor(params[:id])
+    get '/ajax/monitor/:id/runtime' do
       monitor = @repository.load_monitor(params[:id])
-      monitor_view = MonitorRuntimeService.new.get_monitor_view(monitor)
-      json(monitor_view)
+      json(MonitorRuntimeService.new.get_monitor_runtime_info(monitor))
     end
 
     post '/ajax/dashboard/:dashboard_id/monitor' do
-      #@repository = FileRepository.new
       monitor = create_monitor(JSON.parse(request.body.read))
       add_monitor_to_dashboard(params[:dashboard_id], monitor)
     end

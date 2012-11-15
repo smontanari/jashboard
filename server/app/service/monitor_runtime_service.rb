@@ -3,10 +3,9 @@ require 'service/adapters/ci/go_adapter'
 
 module Jashboard
   class MonitorRuntimeService
-    def get_monitor_view(monitor)
+    def get_monitor_runtime_info(monitor)
       adapter_class = get_adapter_class(monitor.ciserver_settings.class)
-      runtime_info = adapter_class.new.fetch_build_info(monitor.ciserver_settings)
-      BuildMonitorView.new(monitor, runtime_info)
+      adapter_class.new.fetch_build_info(monitor.ciserver_settings)
     end
 
     private

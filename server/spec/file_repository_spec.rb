@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'dashboard_builder'
-require 'monitor_builder'
 require 'service/repository'
 
 module Jashboard

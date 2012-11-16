@@ -9,10 +9,10 @@ var jashboard = {
 
 steal("funcunit", "lib/underscore-min.js")
 .then(
+  "./browser_close.js",
   "./dashboard_tests.js",
-  "./monitor_view_test.js",
-  "./monitor_create_test.js",
-  "./dashboard_tabs_view_test.js"
+  "./monitor_tests.js",
+  "./tabs_tests.js"
 )
 .then(function() {
   S.each(jashboard.functional_tests, function(index, test) {

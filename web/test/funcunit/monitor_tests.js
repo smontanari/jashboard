@@ -7,7 +7,7 @@ jashboard.functional_tests.push(function () {
     });
   };
 
-  module("Monitor display functionality",{
+  module("Feature: Monitor display",{
     setup: function() {
       jashboard.test_utils.openPageForTestScenario("display_dashboards_data");
     }
@@ -45,6 +45,18 @@ jashboard.functional_tests.push(function () {
         '.build-status': "idle"
       }
     );
+  });
+
+  module("Feature: Monitor create",{
+    setup: function() {
+      jashboard.test_utils.openPageForTestScenario("create_monitor");
+    }
+	});
+
+  test("should create a new build monitor", function() {
+    S("#dashboard_1-settings").click();
+    S("#dashboard_1 .dashboardAction-new-monitor").visible("display new monitor menu action").click();
+    S("#new-monitor-form").visible("show new monitor modal");
   });
 });
 

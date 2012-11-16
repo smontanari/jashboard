@@ -1,11 +1,8 @@
 jashboard.functional_tests.push(function () {
-  module("Dashboard functionality",{
+  module("Feature: Dashboard create",{
     setup: function() {
       jashboard.test_utils.openPageForTestScenario("create_dashboard");
     }
-    //teardown: function() {
-      //S.win.close();
-    //}
 	});
 
   test("should create a new dashboard and display the new tab", function() {

@@ -6,6 +6,11 @@ jashboard.MonitorFormController = function(scope, repository) {
     $('#new-monitor-form').modal('hide');
   };
 
+  scope.$on("OpenMonitorDialog", function(event) {
+    scope.monitorForm = {};
+    $(jashboard.constants.monitorFormSelector).modal('show');
+  });
+
   // crap... angular does not detect some of the ui changes triggered by funcunit, so we have to force the scope change
   // this code is supposed to execute only during functional testing
   if (_.isObject(jashboard.AngularTestHelper)) {

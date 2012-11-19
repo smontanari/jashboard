@@ -34,14 +34,14 @@
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards"><a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a></li>
       </ul>
     </div>
-    <div id="dashboard-container" class="tab-content">
-      <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards" data-ng-controller="DashboardController">
+    <div id="dashboard-container" class="tab-content" data-ng-controller="DashboardActionsController">
+      <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
         <div class="menubar">
           <div class="dashboard-actions">
             <div class="dropdown">
               <a id="{{dashboard.id}}-settings" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-settings">
-                <li><a class="dashboardAction-new-monitor" href="#new-monitor-form" data-toggle="modal">New Monitor</a></li>
+                <li><a class="dashboardAction-new-monitor" href="#" data-ng-click="actionNewMonitor()">New Monitor</a></li>
               </ul>
             </div>
           </div>
@@ -60,8 +60,8 @@
           </div>
         </div>
       </div>
+      <div data-ng-include="'html/new_monitor_dialog.html'"></div>
     </div>
-    <div data-ng-include="'html/new_monitor_dialog.html'"></div>
   </div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'> </script>
 </body>

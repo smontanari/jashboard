@@ -3,20 +3,38 @@ describe("MonitorFormController", function() {
   var controller;
   var $stub;
   var repository = {};
-  var dialogWidget = {};
 
   var resetScope = function() {
-    scope = jasmine.createSpyObj("scope", ['$emit']);
+    $stub = testHelper.stubJQuery(["#new-monitor-form"]);
+    $stub.modal = jasmine.createSpy("$.modal()");
   };
 
   beforeEach(function() {
     resetScope();
   });
 
+  describe("'OpenMonitorDialog' event listener", function() {
+    beforeEach(function() {
+      scope = {};
+      scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+        handler();
+      });
+    });
+    it("should open the modal dialog", function() {
+      controller = new jashboard.MonitorFormController(scope, repository);
+      expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
+      expect($stub.modal).toHaveBeenCalledWith("show");
+    });
+    it("should reset the monitorForm variable in the scope", function() {
+      scope.monitorForm = {test: "test"};
+      controller = new jashboard.MonitorFormController(scope, repository);
+      expect(scope.monitorForm).toEqual({});
+    });
+  });
+
   describe("saveMonitor", function() {
     beforeEach(function() {
-      $stub = testHelper.stubJQuery(["#new-monitor-form", dialogWidget]);
-      $stub.modal = jasmine.createSpy("$.modal()");
+      scope = jasmine.createSpyObj("scope", ['$on', '$emit']);
       repository.createMonitor = jasmine.createSpy("repository.createMonitor").andCallFake(function(input, handler) {
         handler("test.monitor");
       });

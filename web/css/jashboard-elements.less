@@ -46,3 +46,44 @@
   .rounded-corners;
 }
 
+#new-monitor-form {
+  form {
+    .table-like > .controls {
+      label {
+        padding: 4px 5px 4px 0;
+      }
+    }
+  }
+}
+
+#buildMonitorInput {
+  .buildFormOptions {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    padding: 30px 0 10px 0;
+    &:after {
+      background-color: #F5F5F5;
+      content: "Build Settings";
+      border: 1px solid #DDDDDD;
+      /*border: 1px solid #9DA0A4;*/
+      border-radius: 4px 0 4px 0;
+      color: #9DA0A4;
+      margin: 1px;
+      font-weight: bold;
+      left: -1px;
+      padding: 3px 7px;
+      position: absolute;
+      top: -1px;
+    }
+    .controls {
+      margin: 10px 0px 10px 20px;
+      label {
+        padding: 4px 6px 4px 0;
+      }
+    }
+    li > a {
+      padding-top: 0;
+    }
+  }
+}
+

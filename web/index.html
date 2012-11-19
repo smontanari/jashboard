@@ -50,7 +50,7 @@
           <div id="{{monitor.id}}" class="monitor-panel" data-ng-repeat="monitor in dashboard.monitors">
           <div class="monitor-title">{{monitor.title}}</div>
             <div class="monitor-details">
-              <div class="build-panel">
+              <div class="build-panel table-like">
                 <p><label>last build:</label><span class="build-time">{{monitor.runtimeInfo.lastBuildTime}}</span></p>
                 <p><label>duration:</label><span class="build-duration">{{monitor.runtimeInfo.lastBuildDuration}}</span></p>
                 <p><label>result:</label><span class="build-result label" data-ng-class="{'label-success': monitor.runtimeInfo.lastBuildSuccess, 'label-important': !monitor.runtimeInfo.lastBuildSuccess}">{{monitor.runtimeInfo.lastBuildResult}}</span></p>

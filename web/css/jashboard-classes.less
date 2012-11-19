@@ -8,11 +8,28 @@
   }
 }
 
+/*.table-like {*/
+  /*display: table;*/
+  /*.table-row-like {*/
+    /*display: table-row;*/
+    /** {*/
+    /*.table-cell-like {*/
+      /*display: table-cell;*/
+    /*}*/
+  /*}*/
+/*}*/
+
 .table-row-like {
   display: table-row;
   * {
     display: table-cell;
-    padding: 2px 5px 2px 0;
+  }
+}
+
+.table-like {
+  display: table;
+  * {
+    .table-row-like;
   }
 }
 
@@ -86,9 +103,10 @@
 }
 
 .build-panel {
-  display: table;
   p {
-    .table-row-like;
+    * {
+      padding: 2px 5px 2px 0;
+    }
   }
 }
 
@@ -133,10 +151,11 @@
 }
 
 .vcs-author-date {
-  display: table;
   p {
+    * {
+      padding: 2px 5px 2px 0;
+    }
     white-space: normal;
-    .table-row-like;
     label {
       font-weight: normal;
     }

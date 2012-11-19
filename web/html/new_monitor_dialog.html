@@ -3,31 +3,73 @@
     <button id="closeDialog" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
-  <form class="form-horizontal" data-ng-controller="MonitorFormController">
+  <form data-ng-controller="MonitorFormController">
     <div class="modal-body">
-      <div class="control-group">
-        <label class="control-label" for="monitorName">Name</label>
+      <div class="table-like">
         <div class="controls">
-          <input type="text" name="monitorName" class="input-xlarge" placeholder="monitor name" data-ng-model="monitorForm.name">
+          <label for="monitorName">Name</label>
+          <input type="text" name="monitorName" class="input-large" placeholder="monitor name" data-ng-model="monitorForm.name">
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="monitorType">Type</label>
         <div class="controls">
-          <select name="monitorType" class="input-small" data-ng-model="monitorForm.type">
-            <option value="1" selected="selected">Build</option>
+          <label for="monitorType">Type</label>
+          <select name="monitorType" class="input-small" data-ng-model="monitorForm.type" data-ng-change="displayMonitorOptions()">
+            <option value="build" selected="selected">Build</option>
           </select>
         </div>
       </div>
+      <div id="buildMonitorInput" class="collapse">
+        <div class="buildFormOptions">
+          <div class="controls table-like">
+            <div>
+              <label class="control-label" for="serverName">Hostname</label>
+              <input name="serverName" type="text" class="input-large" placeholder="ci server name" class="input-large" data-ng-model="buildMonitorForm.hostname">
+            </div>
+            <div>
+              <label class="control-label" for="serverPort">Port</label>
+              <input name="serverPort" type="text" placeholder="port" class="input-mini" data-ng-model="buildMonitorForm.port">
+            </div>
+          </div>
+          <div class="controls">
+            <ul class="nav nav-tabs">
+              <li><label>CI Server</label></li>
+              <li><a data-toggle="tab" href="#buildSettings-Jenkins">Jenkins</a></li>
+              <li><a data-toggle="tab" href="#buildSettings-GO">GO</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active table-like" id="buildSettings-Jenkins">
+                <div>
+                  <label class="control-label" for="buildSettings-Jenkins-build_id">build_id</label>
+                  <input name="buildSettings-Jenkins-build_id" type="text" placeholder="build_id" class="input-medium">
+                </div>
+              </div>
+              <div class="tab-pane table-like" id="buildSettings-GO">
+                <div>
+                  <label class="control-label" for="buildSettings-GO-pipeline">Pipeline</label>
+                  <input name="buildSettings-GO-pipeline" class="input-medium" type="text" placeholder="pipeline name">
+                </div>
+                <div>
+                  <label class="control-label" for="buildSettings-GO-job">Job</label>
+                  <input name="buildSettings-GO-job" type="text" placeholder="job name" class="input-medium">
+                </div>
+                <div>
+                  <label class="control-label" for="buildSettings-GO-stage">Stage</label>
+                  <input name="buildSettings-GO-stage" type="text" placeholder="stage name" class="input-small">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
       <div class="control-group">
-      <label class="control-label" for="monitorRefresh">Refresh interval</label>
         <div class="controls">
+          <label class="control-label" for="monitorRefresh">Refresh interval</label>
           <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorForm.refreshInterval"><span> seconds</span>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#" id="saveMonitor" class="btn btn-primary" data-ng-click="saveMonitor(monitorForm)">Save</a>
+      <a href="#" id="saveMonitor" class="btn btn-primary" data-ng-click="saveMonitor()">Save</a>
       <a href="#" id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</a>
     </div>
   </form>

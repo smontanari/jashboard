@@ -14,6 +14,7 @@ jashboard.functional_tests.push(function () {
   test("should create a new dashboard and display the new tab", function() {
     openDashboardDialog();
     var name = "test new-dashboard";
+    funcunitHelper.sleep(2);
     S("input[name='dashboardName']").visible().click().type(name);
     S("#saveDashboard").visible().click();
     S(".dashboard-tab").size(4);

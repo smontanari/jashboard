@@ -4,13 +4,9 @@ describe("MonitorFormController", function() {
   var $stub;
   var repository = {};
 
-  var resetScope = function() {
+  beforeEach(function() {
     $stub = testHelper.stubJQuery(["#new-monitor-form"]);
     $stub.modal = jasmine.createSpy("$.modal()");
-  };
-
-  beforeEach(function() {
-    resetScope();
   });
 
   describe("'OpenMonitorDialog' event listener", function() {
@@ -39,8 +35,9 @@ describe("MonitorFormController", function() {
         handler("test.monitor");
       });
       controller = new jashboard.MonitorFormController(scope, repository);
+      scope.monitorForm = {name: "test.name"};
 
-      scope.saveMonitor({name: "test.name"});
+      scope.saveMonitor();
     });
 
     it("should call the repository to create a monitor", function() {
@@ -51,6 +48,21 @@ describe("MonitorFormController", function() {
     });
     it("should close the dialog", function() {
       expect($stub.modal).toHaveBeenCalledWith("hide");
+    });
+  });
+
+  describe("displayMonitorOptions", function() {
+    beforeEach(function() {
+      $stub = testHelper.stubJQuery(["#buildMonitorInput"]);
+      $stub.collapse = jasmine.createSpy("$.collapse()");
+      controller = new jashboard.MonitorFormController(scope, repository);
+    });
+
+    it("should toggle the build monitor options", function() {
+      scope.monitorForm.type = 'build';
+      scope.displayMonitorOptions();
+
+      expect($stub.collapse).toHaveBeenCalledWith('toggle');
     });
   });
 });

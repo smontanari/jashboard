@@ -20,7 +20,7 @@ var testHelper = {
   },
   stubJQuery: function(selectors) {
     var jQueryStub = sinon.stub();
-    if (selectors) {
+    if (_.isArray(selectors)) {
       _.each(selectors, function(selector) {
         jQueryStub.withArgs(selector).returns(jQueryStub);
       });

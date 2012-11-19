@@ -3,31 +3,35 @@ describe("DashboardFormController", function() {
   var controller;
   var $stub;
   var repository = {};
-  var dialogWidget = {};
-
-  var resetScope = function() {
-    scope = jasmine.createSpyObj("scope", ['$emit']);
-  };
 
   beforeEach(function() {
-    resetScope();
-    $stub = testHelper.stubJQuery(["#new-dashboard-form", dialogWidget]);
+    $stub = testHelper.stubJQuery(["#new-dashboard-form"]);
+    $stub.on = jasmine.createSpy("$.on()");
     $stub.modal = jasmine.createSpy("$.modal()");
   });
 
-  describe("resetForm", function() {
-    it("should reset the dashboardForm variable in the scope", function() {
+  describe("'OpenDashboardDialog' event listener", function() {
+    beforeEach(function() {
+      scope = {};
+      scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+        handler();
+      });
+    });
+    it("should open the modal dialog", function() {
       controller = new jashboard.DashboardFormController(scope, repository);
+      expect(scope.$on).toHaveBeenCalledWith("OpenDashboardDialog", jasmine.any(Function));
+      expect($stub.modal).toHaveBeenCalledWith("show");
+    });
+    it("should reset the dashboardForm variable in the scope", function() {
       scope.dashboardForm = {test: "test"};
-
-      scope.resetForm();
-
+      controller = new jashboard.DashboardFormController(scope, repository);
       expect(scope.dashboardForm).toEqual({});
     });
   });
 
   describe("saveDashboard", function() {
     beforeEach(function() {
+      scope = jasmine.createSpyObj("scope", ['$on', '$emit']);
       repository.createDashboard = jasmine.createSpy("repository.createDashboard").andCallFake(function(input, handler) {
         handler("test.dashboard");
       });

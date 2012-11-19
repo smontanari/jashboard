@@ -1,6 +1,6 @@
 jashboard.MenuController = function(scope) {
   scope.actionNewDashboard = function() {
-    $(jashboard.constants.dashboardFormSelector).dialog("open");
+    scope.$broadcast("OpenDashboardDialog");
   };
 };
 

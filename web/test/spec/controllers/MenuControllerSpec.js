@@ -4,17 +4,13 @@ describe("MenuController", function() {
 
   describe("Menu actions", function() {
     beforeEach(function() {
-      scope = {};
+      scope = jasmine.createSpyObj("scope", ["$broadcast"]);
       controller = new jashboard.MenuController(scope);
     });
 
-    it("should open the dashboard dialog form", function() {
-      var $stub = testHelper.stubJQuery(["#new-dashboard-form"]);
-      $stub.dialog = jasmine.createSpy("$.dialog()");
-
+    it("should broadcast the 'OpenDashboardDialog' event", function() {
       scope.actionNewDashboard();
-
-      expect($stub.dialog).toHaveBeenCalledWith("open");
+      expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog");
     });
   });
 });

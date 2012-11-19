@@ -8,10 +8,11 @@ var jashboard = {
 };
 
 steal("funcunit", "lib/underscore-min.js")
+.then("./funcunit_helper.js")
 .then(
   "./browser_close.js",
-  "./dashboard_tests.js",
   "./monitor_tests.js",
+  "./dashboard_tests.js",
   "./tabs_tests.js"
 )
 .then(function() {

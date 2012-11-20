@@ -10,12 +10,12 @@ steal(
   'jashboard/misc-functions.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
-  //'jashboard/model/MonitorBuildSettings.js',
   'jashboard/model/MonitorBuildRuntime.js',
   'jashboard/model/TypeAdapter.js',
   'jashboard/services/HttpService.js',
   'jashboard/services/Repository.js',
-  'jashboard/plugins/plugins.js'
+  'jashboard/plugins/plugins.js',
+  'jashboard/plugins/BuildMonitorPlugin.js'
 )
 .then(
   'jashboard/controllers/MainController.js',

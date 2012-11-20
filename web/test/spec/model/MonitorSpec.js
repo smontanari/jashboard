@@ -7,8 +7,8 @@ describe("Monitor", function() {
   };
 
   beforeEach(function() {
-    jashboard.types.buildSettingsTypeManager.toObject = jasmine.createSpy("jashboard.types.buildTypeManager.toObject()").andCallFake(function(data) {
-      return {buildSettings: data};
+    jashboard.types.monitorSettingsTypeManager.toObject = jasmine.createSpy("jashboard.types.monitorSettingsTypeManager.toObject()").andCallFake(function(data) {
+      return {buildSettings: data.settings};
     });
   });
 
@@ -16,7 +16,7 @@ describe("Monitor", function() {
     _.each([
             { property: "id", expectedValue: "test.id", data: {id: "test.id", type: 1, settings: {}}},
             { property: "title", expectedValue: "test.name", data: {name: "test.name", type: 1, settings: {}}},
-            //{ property: "type", expectedValue: "Build", data: {type: 1}},
+            { property: "type", expectedValue: 1, data: {type: 1}},
             { property: "refreshInterval", expectedValue: 123, data: {refresh_interval: 123, type: 1, settings: {}}},
             { property: "runtimeInfo", expectedValue: {}, data: {type: 1, settings: {}}}
     ], verifyProperty);

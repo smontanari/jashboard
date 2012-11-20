@@ -10,7 +10,7 @@ jashboard.plugin.GOPlugin = function() {
     };
   };
 
-  this.run = function() {
+  this.initialize = function() {
     jashboard.types.buildSettingsTypeManager.registerTypeHandler(2, handler);
   }
 };

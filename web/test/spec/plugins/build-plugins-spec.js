@@ -3,6 +3,7 @@ describe("Build plugins", function() {
   var plugin;
 
   beforeEach(function() {
+    jashboard.types.buildSettingsTypeManager = {};
     jashboard.types.buildSettingsTypeManager.registerTypeHandler = jasmine.createSpy("buildSettingsTypeManager.registerTypeHandler").andCallFake(function(id, handler) {
       mockHandler = handler;
     });
@@ -10,7 +11,7 @@ describe("Build plugins", function() {
 
   describe("JenkinsPlugin", function() {
     beforeEach(function() {
-      new jashboard.plugin.JenkinsPlugin().run();
+      new jashboard.plugin.JenkinsPlugin().initialize();
     });
 
     it("should register a build type handler", function() {
@@ -28,7 +29,7 @@ describe("Build plugins", function() {
 
   describe("GOPlugin", function() {
     beforeEach(function() {
-      new jashboard.plugin.GOPlugin().run();
+      new jashboard.plugin.GOPlugin().initialize();
     });
 
     it("should register a build type handler", function() {

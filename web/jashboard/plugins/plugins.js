@@ -1,5 +1,5 @@
 jashboard.types = {
-  buildTypeManager: new jashboard.model.TypeAdapter()
+  buildSettingsTypeManager: new jashboard.model.TypeAdapter()
 };
 jashboard.plugin.pluginManager = {
   addPlugin: function(name, pluginConstructor) {

@@ -2,7 +2,7 @@ jashboard.model.Monitor = function(monitorData) {
   var getSettings = function(type, settings) {
     switch(type) {
       case 1:
-        return jashboard.types.buildTypeManager.toObject(settings);
+        return jashboard.types.buildSettingsTypeManager.toObject(settings);
       default:
         throw("Undefined monitor type: " + type);
     }

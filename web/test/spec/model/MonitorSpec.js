@@ -7,7 +7,7 @@ describe("Monitor", function() {
   };
 
   beforeEach(function() {
-    jashboard.types.buildTypeManager.toObject = jasmine.createSpy("jashboard.types.buildTypeManager.toObject()").andCallFake(function(data) {
+    jashboard.types.buildSettingsTypeManager.toObject = jasmine.createSpy("jashboard.types.buildTypeManager.toObject()").andCallFake(function(data) {
       return {buildSettings: data};
     });
   });

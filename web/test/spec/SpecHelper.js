@@ -14,7 +14,7 @@ var jashboard = {
     pluginManager: { addPlugin: function(){}},
   },
   types: {
-    buildTypeManager: {}
+    buildSettingsTypeManager: {}
   }
 };
 

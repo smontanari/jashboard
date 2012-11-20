@@ -7,8 +7,8 @@ describe("Monitor", function() {
   };
 
   beforeEach(function() {
-    spyOn(jashboard.model, "MonitorBuildSettings").andCallFake(function(data) {
-      this.buildSettings = data;
+    jashboard.types.buildTypeManager.toObject = jasmine.createSpy("jashboard.types.buildTypeManager.toObject()").andCallFake(function(data) {
+      return {buildSettings: data};
     });
   });
 
@@ -18,7 +18,6 @@ describe("Monitor", function() {
             { property: "title", expectedValue: "test.name", data: {name: "test.name", type: 1, settings: {}}},
             //{ property: "type", expectedValue: "Build", data: {type: 1}},
             { property: "refreshInterval", expectedValue: 123, data: {refresh_interval: 123, type: 1, settings: {}}},
-            //{ property: "settings", expectedValue: {}, data: {}},
             { property: "runtimeInfo", expectedValue: {}, data: {type: 1, settings: {}}}
     ], verifyProperty);
   });

@@ -5,10 +5,17 @@ var MockModule = function() {
   this.controller =
   this.run = function(){return this};
 };
+
 var jashboard = {
   model: {},
   application: new MockModule(),
-  services: new MockModule()
+  services: new MockModule(),
+  plugin: {
+    pluginManager: { addPlugin: function(){}},
+  },
+  types: {
+    buildTypeManager: {}
+  }
 };
 
 var $, jQuery = function() {throw "you must stub or mock any call to jQuery!"};

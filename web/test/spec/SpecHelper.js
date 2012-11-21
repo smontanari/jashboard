@@ -14,8 +14,8 @@ var jashboard = {
     pluginManager: { addPlugin: function(){}},
   },
   types: {
-    monitorSettingsTypeManager: {},
-    monitorRuntimeTypeManager: {}
+    monitorSettingsTypeAdapter: {},
+    monitorRuntimeTypeAdapter: {}
   }
 };
 

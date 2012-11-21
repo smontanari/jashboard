@@ -4,28 +4,28 @@ describe("BuildMonitorPlugin", function() {
   var plugin;
 
   beforeEach(function() {
-    jashboard.types.monitorSettingsTypeManager.registerTypeHandler = jasmine.createSpy("monitorSettingsTypeManager.registerTypeHandler").andCallFake(function(id, handler) {
+    jashboard.types.monitorSettingsTypeAdapter.registerTypeHandler = jasmine.createSpy("monitorSettingsTypeAdapter.registerTypeHandler").andCallFake(function(id, handler) {
       mockSettingsHandler = handler;
     });
-    jashboard.types.monitorRuntimeTypeManager.registerTypeHandler = jasmine.createSpy("monitorRuntimeTypeManager.registerTypeHandler").andCallFake(function(id, handler) {
+    jashboard.types.monitorRuntimeTypeAdapter.registerTypeHandler = jasmine.createSpy("monitorRuntimeTypeAdapter.registerTypeHandler").andCallFake(function(id, handler) {
       mockRuntimeHandler = handler;
     });
     new jashboard.plugin.BuildMonitorPlugin().initialize();
   });
 
   it("should register a monitor settings type handler", function() {
-    expect(jashboard.types.monitorSettingsTypeManager.registerTypeHandler).toHaveBeenCalledWith(1, mockSettingsHandler);
+    expect(jashboard.types.monitorSettingsTypeAdapter.registerTypeHandler).toHaveBeenCalledWith(1, mockSettingsHandler);
   });
   it("should define a buildSettingsTypeManager", function() {
-    expect(jashboard.types.buildSettingsTypeManager).toBeDefined();
+    expect(jashboard.types.buildSettingsTypeAdapter).toBeDefined();
   });
   it("should register a monitor runtime type handler", function() {
-    expect(jashboard.types.monitorRuntimeTypeManager.registerTypeHandler).toHaveBeenCalledWith(1, mockRuntimeHandler);
+    expect(jashboard.types.monitorRuntimeTypeAdapter.registerTypeHandler).toHaveBeenCalledWith(1, mockRuntimeHandler);
   });
 
   describe("monitor settings handler", function() {
     it("should return the build settings data", function() {
-      jashboard.types.buildSettingsTypeManager.toObject = jasmine.createSpy("jashboard.types.buildSettingsTypeManager.toObject()").andCallFake(function(data) {
+      jashboard.types.buildSettingsTypeAdapter.toObject = jasmine.createSpy("buildSettingsTypeAdapter.toObject()").andCallFake(function(data) {
         return {buildSettings: data};
       });
       var settings = mockSettingsHandler({type: 1, settings: "test.settings"});

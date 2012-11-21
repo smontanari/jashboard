@@ -28,15 +28,15 @@ describe("Repository", function() {
       expect(handler).toHaveBeenCalledWith([{data: "test.dashboard.1"}, {data: "test.dashboard.2"}]);
     });
     it("should invoke the http service to load and return the monitor runtime data", function() {
-      spyOn(jashboard.model, "MonitorBuildRuntime").andCallFake(function(data) {
-        this.data = data;
+      jashboard.types.monitorRuntimeTypeAdapter.toObject = jasmine.createSpy("jashboard.types.monitorRuntimeTypeAdapter.toObject()").andCallFake(function(data) {
+        return {runtimeInfo: data};
       });
       httpService.getJSON = jasmine.createSpy("httpService.getJSON").andReturn(ajaxCallback("test.monitor.data"));
 
       repository.loadMonitorRuntime("test.monitor.id", handler);
 
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/monitor/test.monitor.id/runtime");
-      expect(handler).toHaveBeenCalledWith({data: "test.monitor.data"});
+      expect(handler).toHaveBeenCalledWith({runtimeInfo: "test.monitor.data"});
     });
   });
 

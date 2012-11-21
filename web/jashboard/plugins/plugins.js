@@ -1,6 +1,6 @@
 jashboard.types = {
-  monitorSettingsTypeManager: new jashboard.model.TypeAdapter(),
-  monitorRuntimeTypeManager: new jashboard.model.TypeAdapter()
+  monitorSettingsTypeAdapter: new jashboard.model.TypeAdapter(),
+  monitorRuntimeTypeAdapter: new jashboard.model.TypeAdapter()
 };
 jashboard.plugin.pluginManager = {
   addPlugin: function(name, pluginConstructor) {

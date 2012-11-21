@@ -3,8 +3,8 @@ describe("Build plugins", function() {
   var plugin;
 
   beforeEach(function() {
-    jashboard.types.buildSettingsTypeManager = {};
-    jashboard.types.buildSettingsTypeManager.registerTypeHandler = jasmine.createSpy("buildSettingsTypeManager.registerTypeHandler").andCallFake(function(id, handler) {
+    jashboard.types.buildSettingsTypeAdapter = {};
+    jashboard.types.buildSettingsTypeAdapter.registerTypeHandler = jasmine.createSpy("buildSettingsTypeAdapter.registerTypeHandler").andCallFake(function(id, handler) {
       mockHandler = handler;
     });
   });
@@ -15,7 +15,7 @@ describe("Build plugins", function() {
     });
 
     it("should register a build type handler", function() {
-      expect(jashboard.types.buildSettingsTypeManager.registerTypeHandler).toHaveBeenCalledWith(1, mockHandler);
+      expect(jashboard.types.buildSettingsTypeAdapter.registerTypeHandler).toHaveBeenCalledWith(1, mockHandler);
     });
     it("should capture the build settings for Jenkins", function() {
       var settings = mockHandler({type: 1, hostname: "test.host.name", port: 123, build_id: "test.build"});
@@ -33,7 +33,7 @@ describe("Build plugins", function() {
     });
 
     it("should register a build type handler", function() {
-      expect(jashboard.types.buildSettingsTypeManager.registerTypeHandler).toHaveBeenCalledWith(2, mockHandler);
+      expect(jashboard.types.buildSettingsTypeAdapter.registerTypeHandler).toHaveBeenCalledWith(2, mockHandler);
     });
     it("should capture the build settings for GO", function() {
       var settings = mockHandler({type: 2, hostname: "test.host.name", port: 123, pipeline: "test.pipeline", stage: "test.stage", job: "test.job"});

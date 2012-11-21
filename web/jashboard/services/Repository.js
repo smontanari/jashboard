@@ -11,7 +11,7 @@ jashboard.Repository = function(http) {
   this.loadMonitorRuntime = function(monitor_id, handler) {
     http.getJSON("/ajax/monitor/" + monitor_id + "/runtime")
     .success(function(monitor_data) {
-      handler(new jashboard.model.MonitorBuildRuntime(monitor_data));
+      handler(jashboard.types.monitorRuntimeTypeAdapter.toObject(monitor_data));
     });
   };
 

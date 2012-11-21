@@ -11,7 +11,7 @@ jashboard.plugin.GOPlugin = function() {
   };
 
   this.initialize = function() {
-    jashboard.types.buildSettingsTypeManager.registerTypeHandler(2, handler);
+    jashboard.types.buildSettingsTypeAdapter.registerTypeHandler(2, handler);
   }
 };
 

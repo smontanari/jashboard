@@ -7,7 +7,7 @@ describe("Monitor", function() {
   };
 
   beforeEach(function() {
-    jashboard.types.monitorSettingsTypeManager.toObject = jasmine.createSpy("jashboard.types.monitorSettingsTypeManager.toObject()").andCallFake(function(data) {
+    jashboard.types.monitorSettingsTypeAdapter.toObject = jasmine.createSpy("jashboard.types.monitorSettingsTypeAdapter.toObject()").andCallFake(function(data) {
       return {buildSettings: data.settings};
     });
   });

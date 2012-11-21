@@ -3,6 +3,6 @@ jashboard.model.Monitor = function(monitorData) {
   this.type = monitorData.type;
   this.title = monitorData.name;
   this.refreshInterval = monitorData.refresh_interval;
-  this.settings = jashboard.types.monitorSettingsTypeManager.toObject(monitorData);
+  this.settings = jashboard.types.monitorSettingsTypeAdapter.toObject(monitorData);
   this.runtimeInfo = {};
 };

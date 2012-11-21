@@ -9,7 +9,7 @@ jashboard.plugin.JenkinsPlugin = function() {
   };
 
   this.initialize = function() {
-    jashboard.types.buildSettingsTypeManager.registerTypeHandler(1, handler);
+    jashboard.types.buildSettingsTypeAdapter.registerTypeHandler(1, handler);
   }
 };
 

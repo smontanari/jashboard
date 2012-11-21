@@ -1,6 +1,6 @@
 jashboard.plugin.BuildMonitorPlugin = function() {
   var settingsHandler = function(data) {
-    return jashboard.types.buildSettingsTypeManager.toObject(data.settings);
+    return jashboard.types.buildSettingsTypeAdapter.toObject(data.settings);
   };
   var runtimeHandler = function(data) {
     var getBuildStatus = function(status) {
@@ -28,9 +28,9 @@ jashboard.plugin.BuildMonitorPlugin = function() {
   };
 
   this.initialize = function() {
-    jashboard.types.buildSettingsTypeManager = new jashboard.model.TypeAdapter();
-    jashboard.types.monitorSettingsTypeManager.registerTypeHandler(1, settingsHandler);
-    jashboard.types.monitorRuntimeTypeManager.registerTypeHandler(1, runtimeHandler);
+    jashboard.types.buildSettingsTypeAdapter = new jashboard.model.TypeAdapter();
+    jashboard.types.monitorSettingsTypeAdapter.registerTypeHandler(1, settingsHandler);
+    jashboard.types.monitorRuntimeTypeAdapter.registerTypeHandler(1, runtimeHandler);
   };
 };
 

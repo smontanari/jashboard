@@ -2,11 +2,11 @@ require 'spec_helper'
 require 'rack/test'
 require 'sinatra'
 require 'json_spec'
+require 'extensions/jashboard_extensions'
 require 'builder/dashboard_builder'
 require 'builder/monitor_builder'
 require 'server_app'
 require 'service/repository'
-require 'service/monitor_runtime_service'
 
 set :environment, :test
 
@@ -17,25 +17,20 @@ module Jashboard
     before(:each) do
       @mock_repository = double("repository")
       FileRepository.stub(:new).and_return(@mock_repository)
+      @mock_monitor_adapter = double("monitor_adapter")
+      Plugin::MonitorAdapter.stub(:new).and_return(@mock_monitor_adapter)
       def app
         subject
       end
     end
 
     context "Data retrieval" do
-      before(:each) do
-        @mock_monitor_service = double
-        MonitorRuntimeService.stub(:new).and_return(@mock_monitor_service)
-      end
-
       describe("GET /ajax/dashboards") do
         it("should return the dashboard and monitor data from the repository and return the view") do
           dashboard1 = DashboardBuilder.new.with_id("dashboard1").with_monitor_id("monitor1").with_monitor_id("monitor2").build
           dashboard2 = DashboardBuilder.new.with_id("dashboard2").with_monitor_id("monitor3").build
           @mock_repository.should_receive(:load_dashboards).and_return([dashboard1, dashboard2])
-          @mock_repository.should_receive(:load_monitor).with("monitor1").and_return("test.monitor.1")
-          @mock_repository.should_receive(:load_monitor).with("monitor2").and_return("test.monitor.2")
-          @mock_repository.should_receive(:load_monitor).with("monitor3").and_return("test.monitor.3")
+          (1..3).each {|n| @mock_repository.should_receive(:load_monitor).with("monitor#{n}").and_return("test.monitor.#{n}")}
           DashboardView.stub(:new).with(dashboard1, ["test.monitor.1", "test.monitor.2"]).and_return("test.dashboardview1")
           DashboardView.stub(:new).with(dashboard2, ["test.monitor.3"]).and_return("test.dashboardview2")
 
@@ -51,7 +46,7 @@ module Jashboard
       describe("GET /ajax/monitor/:id/runtime") do
         it("should load monitor from the repository and return the runtime info from the service") do
           @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return("test-monitor")
-          @mock_monitor_service.should_receive(:get_monitor_runtime_info).with("test-monitor").and_return({id: "test-monitor-runtime"})
+          @mock_monitor_adapter.should_receive(:get_runtime_info).with("test-monitor").and_return({id: "test-monitor-runtime"})
 
           get '/ajax/monitor/test-monitor-id/runtime'
 
@@ -91,40 +86,47 @@ module Jashboard
     context "Monitor create" do
       describe("POST /ajax/dashboard/:dashboard_id/monitor") do
         before(:each) do
-          @monitor = double
-          @monitor.stub(:id => "789")
-          @mock_repository.stub(:save_monitor).and_return(@monitor)
           @dashboard = DashboardBuilder.new.
             with_monitor_id("123").
             with_monitor_id("456").
             build
           @mock_repository.stub(:load_dashboard).with("test.dashboard.id").and_return(@dashboard)
+          @mock_repository.stub(:load_dashboard).with("test.dashboard.id").and_return(@dashboard)
           @mock_repository.stub(:save_dashboard)
-          CIServer::ServerSettingsFactory.stub(:get_settings)
+          monitor = Monitor.new.tap {|m| m.id = "789"}
+          @mock_repository.stub(:save_monitor).and_return(monitor)
+          @mock_monitor_adapter.stub(:get_settings)
         end
 
         it("should persist the monitor to the repository") do
-          mock_settings = double("server_settings")
-          CIServer::ServerSettingsFactory.should_receive(:get_settings).with({"type" => 1, "hostname" => "test.host", "port" => 567, "build_id" => "test-build"}).and_return(mock_settings)
-          BuildMonitor.should_receive(:new).with("test.monitor.name", 345, mock_settings).and_return(@monitor)
-          @mock_repository.should_receive(:save_monitor).with(@monitor)
+          mock_settings = Object.new
+          @mock_monitor_adapter.should_receive(:get_settings).
+            with(123, {"attr1" => "test_attr1", "attr2" => "test_attr2"}).
+            and_return(mock_settings)
+
+          @mock_repository.should_receive(:save_monitor) do |monitor|
+            monitor.type.should == 123
+            monitor.name.should == "test.monitor.name"
+            monitor.refresh_interval.should == 345
+            monitor.settings.should == mock_settings
+            monitor
+          end
 
           post '/ajax/dashboard/test.dashboard.id/monitor', %(
             {
               "name": "test.monitor.name",
               "refresh_interval": 345,
-              "type": 1,
-              "ciserver_settings": {
-                "type": 1,
-                "hostname": "test.host",
-                "port": 567,
-                "build_id": "test-build"
+              "type": 123,
+              "settings": {
+                "attr1": "test_attr1",
+                "attr2": "test_attr2"
               }
             })
         end
 
         it("should add the monitor id to the specified dashboard") do
           post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+
 
           @dashboard.monitor_ids.length.should == 3
           @dashboard.monitor_ids.should include "123"
@@ -138,12 +140,13 @@ module Jashboard
           post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
         end
         it("should return the monitor as json") do
-          @monitor.stub(:to_json => '{"id":"test-monitor"}')
+          @mock_repository.stub(:save_monitor).and_return(Struct.new(:id, :attr).new("test_id", "test_attr"))
+
           post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
 
           last_response.status.should == 201
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %({"id":"test-monitor"})
+          last_response.body.should be_json_eql %({"id": "test_id", "attr": "test_attr"})
         end
       end
     end

@@ -13,30 +13,32 @@ module Jashboard
     end
 
     it("should load a build monitor from a yaml file") do
-      serialize_yaml("monitor/test-monitor-id.txt", MonitorBuilder.as_build_monitor.
+      serialize_yaml("monitor/test-monitor-id.txt", MonitorBuilder.new.
         with_id("test-monitor-id").
+        with_type(123).
         with_name("test monitor-name").
         with_refresh_interval(12).
-        with_ciserver_settings(CIServer::JenkinsServerSettings.new("test.host.name", 1234, "test.build.id")).
+        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build)
 
       monitor = subject.load_monitor("test-monitor-id")
 
       monitor.id.should == "test-monitor-id"
       monitor.name.should == "test monitor-name"
-      monitor.type.should == 1
+      monitor.type.should == 123
       monitor.refresh_interval.should == 12
-      monitor.ciserver_settings.build_id.should == "test.build.id"
-      monitor.ciserver_settings.hostname.should == "test.host.name"
-      monitor.ciserver_settings.port.should == 1234
+      monitor.settings.attr1.should == "test_attr1"
+      monitor.settings.attr2.should == 1234
     end
 
     it("should store a build monitor as yaml into a file") do
       monitor = subject.save_monitor(
-        MonitorBuilder.as_build_monitor.
+        MonitorBuilder.new.
+        with_id("test-monitor-id").
+        with_type(123).
         with_name("test new_name").
         with_refresh_interval(456).
-        with_ciserver_settings(CIServer::JenkinsServerSettings.new("test.host.name", 1234, "test.build.id")).
+        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build)
 
       monitor.id.should_not be_nil
@@ -44,22 +46,20 @@ module Jashboard
     end
 
     it("should store a build monitor as yaml into an existing file") do
-      monitor = MonitorBuilder.as_build_monitor.
+      monitor = MonitorBuilder.new.
         with_id("test-new_monitor-id").
+        with_type(123).
         with_name("test new_name").
         with_refresh_interval(456).
-        with_ciserver_settings(CIServer::GOServerSettings.new("test.host.name", 1234, "test.pipeline", "test.stage", "test.job")).
+        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build
 
       serialize_yaml("monitor/test-new_monitor-id.txt", monitor)
 
       monitor.name = "test change name"
       monitor.refresh_interval = 123
-      monitor.ciserver_settings.hostname = "another.host.com"
-      monitor.ciserver_settings.port = 34
-      monitor.ciserver_settings.pipeline = "test.another.pipeline"
-      monitor.ciserver_settings.stage = "test.another.stage"
-      monitor.ciserver_settings.job = "test.another.job"
+      monitor.settings.attr1 = "test_changed_attr1"
+      monitor.settings.attr2 = 9876
 
       subject.save_monitor(monitor)
 

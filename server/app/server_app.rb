@@ -2,8 +2,8 @@ require 'sinatra/base'
 require "sinatra/json"
 require 'json'
 require 'service/repository'
+require 'plugins/monitor_adapter'
 require 'model/dashboard_view'
-require 'service/monitor_runtime_service'
 
 module Jashboard
   class ServerApp < Sinatra::Base
@@ -18,6 +18,7 @@ module Jashboard
     def initialize(*args)
       super(*args)
       @repository = FileRepository.new
+      @monitor_adapter = Plugin::MonitorAdapter.new
     end
 
     get '/ajax/dashboards' do
@@ -32,7 +33,7 @@ module Jashboard
 
     get '/ajax/monitor/:id/runtime' do
       monitor = @repository.load_monitor(params[:id])
-      json(MonitorRuntimeService.new.get_monitor_runtime_info(monitor))
+      json(@monitor_adapter.get_runtime_info(monitor))
     end
 
     post '/ajax/dashboard' do
@@ -52,11 +53,12 @@ module Jashboard
     private
 
     def create_monitor(monitor_json)
-      new_monitor = BuildMonitor.new(
-        monitor_json['name'],
-        monitor_json['refresh_interval'],
-        CIServer::ServerSettingsFactory.get_settings(monitor_json['ciserver_settings'])
-      )
+      new_monitor = Monitor.new.tap do |monitor|
+        monitor.name = monitor_json['name']
+        monitor.refresh_interval = monitor_json['refresh_interval']
+        monitor.type = monitor_json['type']
+        monitor.settings = @monitor_adapter.get_settings(monitor_json['type'], monitor_json['settings'])
+      end
       @repository.save_monitor(new_monitor)
     end
 

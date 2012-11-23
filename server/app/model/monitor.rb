@@ -1,10 +1,16 @@
 module Jashboard
   class Monitor
-    def initialize(name = nil, refresh_interval = nil)
-      @name = name
-      @refresh_interval = refresh_interval
+    attr_accessor :id, :type, :name, :refresh_interval, :settings, :runtime_info
+
+    def to_json(*args)
+      {
+        id: @id,
+        name: @name,
+        type: @type,
+        refresh_interval: @refresh_interval,
+        settings: @settings,
+        runtime_info: @runtime_info
+      }.to_json(*args)
     end
-    attr_reader :type
-    attr_accessor :id, :name, :refresh_interval
   end
 end

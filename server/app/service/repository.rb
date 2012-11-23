@@ -2,8 +2,7 @@ require 'fsdb'
 require 'uuidtools'
 require 'yaml'
 require 'model/dashboard'
-require 'model/build_monitor'
-require 'model/ciserver_settings'
+require 'model/monitor'
 
 module Jashboard
   class FileRepository

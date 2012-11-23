@@ -1,14 +1,9 @@
-require 'model/build_monitor'
+require 'model/monitor'
 
 module Jashboard
   class MonitorBuilder
-    def self.as_build_monitor
-      c = Class.new do
-        extend BuilderHelper
-        builder_for BuildMonitor
-        attr_builder :id, :name, :refresh_interval, :ciserver_settings
-      end
-      c.new
-    end
+    extend BuilderHelper
+    builder_for Monitor
+    attr_builder :id, :type, :name, :refresh_interval, :settings, :runtime_info
   end
 end

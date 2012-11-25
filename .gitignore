@@ -2,7 +2,6 @@
 selenium.log
 testresults.xml
 .rvmrc
-server/db/test/dashboard/*.txt
-server/db/development/dashboard/*.txt
+server/db/*/*/*.txt
 server/db/*/*/..fsdb*
 

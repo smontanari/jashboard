@@ -1,10 +1,4 @@
-jashboard.functional_tests.push(function () {
-  module("Feature: Tabs display",{
-    setup: function() {
-      jashboard.test_utils.openPageForTestScenario("display_dashboards_data");
-    }
-	});
-
+funcunitHelper.testFeature("Tabs display", "display_dashboards_data", function() {
   test("should load dashboards data and display the navigation tabs", function() {
     var expectedTabs = ["first dashboard", "second dashboard", "another dashboard"];
     S(".dashboard-tab").size(3, function() {

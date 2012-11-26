@@ -8,4 +8,4 @@ $.fixture("POST /dashboard", function(orig, settings, headers) {
     }
   }
   throw("invalid dashboard data in the POST request: " + settings.data);
-})
+});

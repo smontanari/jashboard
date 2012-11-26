@@ -13,5 +13,15 @@ var funcunitHelper = {
   },
   sleep: function(seconds) {
     funcunitHelper.sleeper.run(seconds);
+  },
+  testFeature: function(description, scenario, testExecution) {
+    jashboard.functional_tests.push(function () {
+      module("Feature: " +  description, {
+        setup: function() {
+          jashboard.test_utils.openPageForTestScenario(scenario);
+        }
+      });
+      testExecution();
+    });
   }
 };

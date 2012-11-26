@@ -1,4 +1,4 @@
-jashboard.functional_tests.push(function () {
+funcunitHelper.testFeature("Monitor display", "display_dashboards_data", function() {
   var verifyMonitorData = function(monitor_id, expectedData) {
     S(monitor_id).visible(function() {
       _.each(_.keys(expectedData), function(propertySelector) {
@@ -6,12 +6,6 @@ jashboard.functional_tests.push(function () {
       });
     });
   };
-
-  module("Feature: Monitor display",{
-    setup: function() {
-      jashboard.test_utils.openPageForTestScenario("display_dashboards_data");
-    }
-	});
 
   test("should load and display build monitor data", function() {
     S(".dashboard-tab a[href='#dashboard_3']").click();
@@ -46,31 +40,4 @@ jashboard.functional_tests.push(function () {
       }
     );
   });
-
-  var openMonitorDialog = function() {
-    S("#dashboard_1-settings").click();
-    S("#dashboard_1 .dashboardAction-new-monitor").visible("display new monitor menu action").click();
-    S("#new-monitor-form").visible("show new monitor modal");
-  };
-
-  module("Feature: Monitor create",{
-    setup: function() {
-      jashboard.test_utils.openPageForTestScenario("create_monitor");
-    }
-	});
-
-  test("should create a new build monitor", function() {
-    //console.log(S.win);
-    //console.log(S.win.$);
-    //console.log(S.win.$("select[name='monitorType']"));
-    //console.log(S.win.$("select[name='monitorType']").val());
-    openMonitorDialog();
-    //funcunitHelper.sleep(3);
-    //S.win.$("select[name='monitorType']").val('build');
-    //S.win.$("select[name='monitorType']").trigger('change');
-    S("select[name='monitorType']").visible().click();
-    S("select[name='monitorType'] option:eq(1)").visible().click();
-    S("input[name='serverName']").visible().click().type("test server-name");
-  });
 });
-

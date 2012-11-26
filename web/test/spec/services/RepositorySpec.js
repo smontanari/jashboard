@@ -46,11 +46,19 @@ describe("Repository", function() {
       spyOn(jashboard.model, "Dashboard").andCallFake(function(data) {
         this.data = data;
       });
+      spyOn(jashboard.model, "Monitor").andCallFake(function(data) {
+        this.data = data;
+      });
     });
 
-    it("should invoke the http service to save and return the dashboard data", function() {
+    it("should use the http service to save the dashboard data and invoke the callback", function() {
       repository.createDashboard({name: "test.dashboard"}, handler);
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard", {name: "test.dashboard"});
+      expect(handler).toHaveBeenCalledWith({data: "test.return.data"});
+    });
+    it("should use the http service to save the monitor data and invoke the callback", function() {
+      repository.createMonitor({name: "test.monitor"}, handler);
+      expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/monitor", {name: "test.monitor"});
       expect(handler).toHaveBeenCalledWith({data: "test.return.data"});
     });
   });

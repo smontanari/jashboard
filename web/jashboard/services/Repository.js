@@ -8,6 +8,7 @@ jashboard.Repository = function(http) {
       handler(dashboards);
     });
   };
+  
   this.loadMonitorRuntime = function(monitor_id, handler) {
     http.getJSON("/ajax/monitor/" + monitor_id + "/runtime")
     .success(function(monitor_data) {
@@ -21,6 +22,13 @@ jashboard.Repository = function(http) {
       handler(new jashboard.model.Dashboard(dashboard_data));
     });
   };
+
+  this.createMonitor = function(monitorParameters, handler) {
+    http.postJSON("/ajax/monitor", monitorParameters)
+    .success(function(monitor_data) {
+      handler(new jashboard.model.Monitor(monitor_data));
+    });    
+  }
 };
 
 jashboard.services.service('Repository', ['HttpService', jashboard.Repository]).run(function() {

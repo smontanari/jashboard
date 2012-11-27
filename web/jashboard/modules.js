@@ -6,7 +6,6 @@ var jashboard = {
 };
 steal.dev.log("loading jashboard modules");
 steal(
-  'jashboard/constants.js',
   'jashboard/misc-functions.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',

@@ -6,9 +6,9 @@
         "id": "monitor_1",
         "name": "Zombie-Dash build",
         "refresh_interval": 10,
-        "type": 1,
+        "type": "build",
         "settings": {
-          "type": 1,
+          "type": "jenkins",
           "hostname": "zombie-dev.host.com",
           "port": 9080,
           "build_id": "zombie_build"
@@ -23,9 +23,9 @@
         "id": "monitor_2",
         "name": "Epic build",
         "refresh_interval": 15,
-        "type": 1,
+        "type": "build",
         "settings": {
-          "type": 2,
+          "type": "go",
           "hostname": "epic-ci.test.com",
           "port": 81,
           "pipeline": "epic main",
@@ -37,9 +37,9 @@
         "id": "monitor_3",
         "name": "Forum build",
         "refresh_interval": 30,
-        "type": 1,
+        "type": "build",
         "settings": {
-          "type": 1,
+          "type": "jenkins",
           "hostname": "cibuild.host.com",
           "port": 8080,
           "build_id": "forum_trunk"

@@ -1,45 +1,33 @@
-describe("BuildMonitorPlugin", function() {
-  var mockSettingsHandler;
-  var mockRuntimeHandler;
-  var plugin;
+describe("BuildMonitorAdapter", function() {
+  var plugin, mockTypeAdapter;
 
   beforeEach(function() {
-    jashboard.types.monitorSettingsTypeAdapter.registerTypeHandler = jasmine.createSpy("monitorSettingsTypeAdapter.registerTypeHandler").andCallFake(function(id, handler) {
-      mockSettingsHandler = handler;
-    });
-    jashboard.types.monitorRuntimeTypeAdapter.registerTypeHandler = jasmine.createSpy("monitorRuntimeTypeAdapter.registerTypeHandler").andCallFake(function(id, handler) {
-      mockRuntimeHandler = handler;
-    });
-    new jashboard.plugin.BuildMonitorPlugin().initialize();
+    mockTypeAdapter = jasmine.createSpyObj("typeAdapter", ["registerTypeHandler", "toObject"]);
+    spyOn(jashboard.plugin, "TypeAdapter").andReturn(mockTypeAdapter);
+    plugin = new jashboard.plugin.build.BuildMonitorAdapter();
   });
 
-  it("should register a monitor settings type handler", function() {
-    expect(jashboard.types.monitorSettingsTypeAdapter.registerTypeHandler).toHaveBeenCalledWith(1, mockSettingsHandler);
-  });
-  it("should define a buildSettingsTypeManager", function() {
-    expect(jashboard.types.buildSettingsTypeAdapter).toBeDefined();
-  });
-  it("should register a monitor runtime type handler", function() {
-    expect(jashboard.types.monitorRuntimeTypeAdapter.registerTypeHandler).toHaveBeenCalledWith(1, mockRuntimeHandler);
+  it("should add itself to the plugin manager", function() {
+    expect(jashboard.plugin.pluginManager.findMonitorAdapter('build')).toBeDefined();
   });
 
-  describe("monitor settings handler", function() {
-    it("should return the build settings data", function() {
-      jashboard.types.buildSettingsTypeAdapter.toObject = jasmine.createSpy("buildSettingsTypeAdapter.toObject()").andCallFake(function(data) {
-        return {buildSettings: data};
-      });
-      var settings = mockSettingsHandler({type: 1, settings: "test.settings"});
+  it("should invoke a build settings type handler", function() {
+    plugin.parseSettings("test");
 
-      expect(settings).toEqual({buildSettings: "test.settings"});
-    });
+    expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
+  });
+
+  it("should create a buildSettingsTypeAdapter at initialisation", function() {
+    plugin.init();
+    expect(jashboard.plugin.build.buildSettingsTypeAdapter).toBeDefined();
   });
 
   describe("monitor runtime handler", function() {
     var verifyProperty = function(testData) {
       testCase = testData.testCase || "";
       it("should create a build runtime object with correct " + testData.property + " " + testCase, function() {
-        var obj = mockRuntimeHandler(testData.data);
-        expect(obj[testData.property]).toEqual(testData.expectedValue);
+        var runtimeInfo = plugin.parseRuntimeInfo(testData.data);
+        expect(runtimeInfo[testData.property]).toEqual(testData.expectedValue);
       });
     };
     _.each([

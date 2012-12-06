@@ -8,7 +8,7 @@ jashboard.MainController = function(scope, repository) {
   };
 
   var updateMonitorRuntime = function(monitor) {
-    repository.loadMonitorRuntime(monitor.id, function(runtimeInfo) {
+    repository.loadMonitorRuntimeInfo(monitor.id, monitor.type, function(runtimeInfo) {
       monitor.runtimeInfo = runtimeInfo;
       scope.$apply();
     });

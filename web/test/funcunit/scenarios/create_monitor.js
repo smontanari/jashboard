@@ -7,9 +7,9 @@ $.fixture("GET /ajax/dashboards", function(orig, settings, headers){
         "id": "monitor_1",
         "name": "Zombie-Dash build",
         "refresh_interval": 10,
-        "type": 1,
+        "type": "build",
         "settings": {
-          "type": 1,
+          "type": "go",
           "hostname": "zombie-dev.host.com",
           "port": 9080,
           "build_id": "zombie_build"

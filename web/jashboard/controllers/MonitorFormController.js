@@ -13,7 +13,7 @@ jashboard.MonitorFormController = function(scope, repository) {
   });
 
   scope.displayMonitorOptions = function() {
-    $("#buildMonitorInput").collapse("toggle");
+    $("#" + scope.monitorForm.type + "MonitorInput").collapse("toggle");
   };
 
   // $('#buildMonitorInput a[data-toggle="tab"]').on('shown', function (e) {

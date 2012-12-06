@@ -1,0 +1,43 @@
+<div id="buildMonitorInput" class="collapse">
+  <div class="buildFormOptions">
+    <div class="controls table-like">
+      <div>
+        <label class="control-label" for="serverName">Hostname</label>
+        <input name="serverName" type="text" class="input-large" placeholder="ci hostname" class="input-large" data-ng-model="monitorForm.settings.hostname">
+      </div>
+      <div>
+        <label class="control-label" for="serverPort">Port</label>
+        <input name="serverPort" type="text" class="input-mini" data-ng-model="monitorForm.settings.port">
+      </div>
+    </div>
+    <div class="controls">
+      <ul class="nav nav-tabs">
+        <li><label>CI Server</label></li>
+        <li class="active"><a data-toggle="tab" href="#buildSettings-Jenkins">Jenkins</a></li>
+        <li><a data-toggle="tab" href="#buildSettings-GO">GO</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active table-like" id="buildSettings-Jenkins">
+          <div>
+            <label class="control-label" for="buildSettings-Jenkins-build_id">build_id</label>
+            <input name="buildSettings-Jenkins-build_id" type="text" placeholder="build_id" class="input-medium" data-ng-model="monitorForm.settings.build_id">
+          </div>
+        </div>
+        <div class="tab-pane table-like" id="buildSettings-GO">
+          <div>
+            <label class="control-label" for="buildSettings-GO-pipeline">Pipeline</label>
+            <input name="buildSettings-GO-pipeline" class="input-medium" type="text" placeholder="pipeline name" data-ng-model="monitorForm.settings.pipeline">
+          </div>
+          <div>
+            <label class="control-label" for="buildSettings-GO-stage">Stage</label>
+            <input name="buildSettings-GO-stage" type="text" placeholder="stage name" class="input-small" data-ng-model="monitorForm.settings.stage">
+          </div>
+          <div>
+            <label class="control-label" for="buildSettings-GO-job">Job</label>
+            <input name="buildSettings-GO-job" type="text" placeholder="job name" class="input-medium" data-ng-model="monitorForm.settings.job">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 describe("TypeAdapter", function() {
   var typeAdapter;
   beforeEach(function() {
-    typeAdapter = new jashboard.model.TypeAdapter();
+    typeAdapter = new jashboard.plugin.TypeAdapter();
   });
   it("should register a new type handler", function() {
     var testHandler = function(data){ return {test: data.test};}

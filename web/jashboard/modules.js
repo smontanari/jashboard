@@ -9,11 +9,10 @@ steal(
   'jashboard/misc-functions.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
-  'jashboard/model/TypeAdapter.js',
   'jashboard/services/HttpService.js',
   'jashboard/services/Repository.js',
-  'jashboard/plugins/plugins.js',
-  'jashboard/plugins/BuildMonitorPlugin.js'
+  'jashboard/plugins/TypeAdapter.js',
+  'jashboard/services/PluginManager.js'
 )
 .then(
   'jashboard/controllers/MainController.js',
@@ -23,7 +22,6 @@ steal(
   'jashboard/controllers/MonitorFormController.js'
 )
 .then(
-  'jashboard/plugins/build-plugin-jenkins.js',
-  'jashboard/plugins/build-plugin-go.js'
+  'jashboard/plugins.js'
 );
 

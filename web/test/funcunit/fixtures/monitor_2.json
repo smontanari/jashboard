@@ -1,5 +1,5 @@
 {
-  "type": 1,
+  "type": "go",
   "last_build_time": "28-08-2012 11:25:10",
   "duration": 596,
   "success": true,

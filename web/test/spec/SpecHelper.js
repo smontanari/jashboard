@@ -10,13 +10,10 @@ var jashboard = {
   model: {},
   application: new MockModule(),
   services: new MockModule(),
-  plugin: {
-    pluginManager: { addPlugin: function(){}},
-  },
-  types: {
-    monitorSettingsTypeAdapter: {},
-    monitorRuntimeTypeAdapter: {}
-  }
+  plugin: {}
+};
+steal = {
+  dev: jasmine.createSpyObj("steal.dev", ["log"])
 };
 
 var $, jQuery = function() {throw "you must stub or mock any call to jQuery!"};

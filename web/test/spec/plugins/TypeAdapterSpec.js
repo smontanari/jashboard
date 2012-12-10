@@ -8,6 +8,13 @@ describe("TypeAdapter", function() {
     typeAdapter.registerTypeHandler(123, testHandler);
     expect(typeAdapter.toObject({type: 123, test: "test.data"})).toEqual({test: "test.data"});
   });
+  it("should return all registered types", function() {
+    var testHandler = function(data){}
+    typeAdapter.registerTypeHandler("type1", testHandler);
+    typeAdapter.registerTypeHandler("type2", testHandler);
+
+    expect(typeAdapter.getAllRegisteredTypes()).toEqual(['type1', 'type2']);
+  });
   it("should throw an error if a handler already exists for the same type", function() {
     typeAdapter.registerTypeHandler(456, function(){});
     var errorThrowing = function() {

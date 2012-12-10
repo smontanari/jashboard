@@ -11,19 +11,21 @@
           <input type="text" name="monitorName" class="input-large" placeholder="monitor name" data-ng-model="monitorForm.name">
         </div>
         <div class="controls">
+          <label class="control-label" for="monitorRefresh">Refresh interval</label>
+          <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorForm.refreshInterval"> seconds
+        </div>
+        <div class="controls">
           <label for="monitorType">Type</label>
-          <select name="monitorType" class="input-small" data-ng-model="monitorForm.type" data-ng-model="monitorForm.type" data-ng-change="displayMonitorOptions()">
-            <option value="build" selected="selected">Build</option>
+          <select name="monitorType" class="input-medium" 
+            data-ng-model="monitorForm.type" 
+            data-ng-options="t for t in availableMonitorTypes" 
+            data-ng-change="displayMonitorOptions()">
+            <option value="">choose type</option>
           </select>
         </div>
       </div>
-      <div data-ng-include="'html/plugins/build_monitor_form.html'"></div>
-      <hr/>
-      <div class="control-group">
-        <div class="controls">
-          <label class="control-label" for="monitorRefresh">Refresh interval</label>
-          <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorForm.refreshInterval"><span> seconds</span>
-        </div>
+      <div data-ng-repeat="type in availableMonitorTypes">
+        <div data-ng-include="monitorConfigurationFormView(type)"></div>
       </div>
     </div>
     <div class="modal-footer">

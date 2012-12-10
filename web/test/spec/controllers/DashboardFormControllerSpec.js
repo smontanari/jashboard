@@ -25,7 +25,7 @@ describe("DashboardFormController", function() {
     it("should reset the dashboardForm variable in the scope", function() {
       scope.dashboardForm = {test: "test"};
       controller = new jashboard.DashboardFormController(scope, repository);
-      expect(scope.dashboardForm).toEqual({});
+      expect(scope.dashboardForm).toEqual({name: "", refreshInterval: ""});
     });
   });
 

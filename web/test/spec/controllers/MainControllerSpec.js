@@ -1,10 +1,24 @@
 describe("MainController", function() {
-  var scope;
   var repository = {};
-  var controller;
+  var pluginManager = {};
+  var controller, scope;
+
   var resetScope = function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
   };
+
+  describe("Initialisation", function() {
+    it("should inject the array of available monitor types into the scope", function() {
+      resetScope();
+      repository = jasmine.createSpyObj("repository", ['loadDashboards']);
+      pluginManager.getAllMonitorTypes = jasmine.createSpy("pluginManager.getAllMonitorTypes()")
+        .andReturn(['test_type1', 'test_type2']);
+
+      controller = new jashboard.MainController(scope, repository, pluginManager);
+
+      expect(scope.availableMonitorTypes).toEqual(["test_type1", "test_type2"]);
+    });
+  });
 
   describe("Loading data", function() {
     var test_dashboards = [
@@ -15,6 +29,7 @@ describe("MainController", function() {
     ];
     beforeEach(function() {
       resetScope();
+      pluginManager.getAllMonitorTypes = jasmine.createSpy();
       repository.loadDashboards = jasmine.createSpy("repository.loadDashboards").andCallFake(function(handler) {
         handler(test_dashboards);
       });
@@ -22,7 +37,7 @@ describe("MainController", function() {
         .andCallFake(function(monitor_id, monitor_type, handler) {
         handler("runtimeInfo_" + monitor_id + "_" + monitor_type);
       });
-      controller = new jashboard.MainController(scope, repository);
+      controller = new jashboard.MainController(scope, repository, pluginManager);
     });
 
     it("should populate the model with dashboard data returned from the repository", function() {
@@ -45,12 +60,13 @@ describe("MainController", function() {
   describe("Event registration", function() {
     beforeEach(function() {
       resetScope();
+      pluginManager.getAllMonitorTypes = jasmine.createSpy();
       repository = jasmine.createSpyObj("repository", ["loadDashboards", "loadMonitorRuntime"]);
 
       scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
         handler({}, {dashboardData: "test.new.dashboard", monitors: []});
       });
-      controller = new jashboard.MainController(scope, repository);
+      controller = new jashboard.MainController(scope, repository, pluginManager);
     });
     it("should register a listener to the 'NewDashboardEvent'", function() {
       expect(scope.$on).toHaveBeenCalledWith("NewDashboardEvent", jasmine.any(Function));

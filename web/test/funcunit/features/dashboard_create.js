@@ -11,8 +11,9 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     funcunitHelper.sleep(1);
     S("input[name='dashboardName']").visible().click().type(name);
     S("#saveDashboard").visible().click();
-    S(".dashboard-tab").size(4);
-    S(".dashboard-tab").last().text(name, "dashboard name should be equal to " + name);
+    S(".dashboard-tab").size(4, function() {
+      equal(S(".dashboard-tab").last().text().trim(), name, "dashboard name should be equal to " + name);    
+    });
   });
 
   test("should reset the input fields on opening", function() {
@@ -21,7 +22,7 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     S("#cancelDashboard").visible().click();
     funcunitHelper.sleep(2);
     openDashboardDialog();
-    funcunitHelper.sleep(3);
+    funcunitHelper.sleep(4);
     S("input[name='dashboardName']").visible().val("");
   });
 

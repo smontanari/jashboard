@@ -18,7 +18,7 @@ var funcunitHelper = {
     jashboard.functional_tests.push(function () {
       module("Feature: " +  description, {
         setup: function() {
-          jashboard.test_utils.openPageForTestScenario(scenario);
+          S.open('index.html?test_scenario=' + scenario);
         }
       });
       testExecution();

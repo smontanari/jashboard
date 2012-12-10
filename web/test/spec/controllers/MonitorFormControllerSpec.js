@@ -58,6 +58,10 @@ describe("MonitorFormController", function() {
       controller = new jashboard.MonitorFormController(scope, repository);
     });
 
+    it("should return the form view corresponding to the type", function() {
+      expect(scope.monitorConfigurationFormView("test_type")).toEqual("html/plugins/test_type/monitor_configuration_form_view.html");
+    });
+
     it("should toggle the build monitor options", function() {
       scope.monitorForm.type = 'build';
       scope.displayMonitorOptions();

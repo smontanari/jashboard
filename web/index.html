@@ -31,10 +31,12 @@
   <div class="container">
     <div id="dashboard-navbar">
       <ul class="nav nav-tabs">
-        <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards"><a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a></li>
+        <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
+          <a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a>
+        </li>
       </ul>
     </div>
-    <div id="dashboard-container" class="tab-content" data-ng-controller="DashboardActionsController">
+    <div id="dashboard-container" class="tab-content" data-ng-controller="DashboardContentController">
       <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
         <div class="menubar">
           <div class="dashboard-actions">
@@ -50,12 +52,7 @@
           <div id="{{monitor.id}}" class="monitor-panel" data-ng-repeat="monitor in dashboard.monitors">
           <div class="monitor-title">{{monitor.name}}</div>
             <div class="monitor-details">
-              <div class="build-panel table-like">
-                <p><label>last build:</label><span class="build-time">{{monitor.runtimeInfo.lastBuildTime}}</span></p>
-                <p><label>duration:</label><span class="build-duration">{{monitor.runtimeInfo.lastBuildDuration}}</span></p>
-                <p><label>result:</label><span class="build-result label" data-ng-class="{'label-success': monitor.runtimeInfo.lastBuildSuccess, 'label-important': !monitor.runtimeInfo.lastBuildSuccess}">{{monitor.runtimeInfo.lastBuildResult}}</span></p>
-                <p><label>current status:</label><span class="build-status alert-info">{{monitor.runtimeInfo.currentBuildStatus}}</span></p>
-              </div>
+              <div data-ng-include="monitorRuntimeView()"></div>
             </div>
           </div>
         </div>

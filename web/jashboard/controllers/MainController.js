@@ -1,4 +1,4 @@
-jashboard.MainController = function(scope, repository) {
+jashboard.MainController = function(scope, repository, pluginManager) {
   scope.dashboards = [];
 
   var addDashboard = function(dashboard) {
@@ -26,8 +26,9 @@ jashboard.MainController = function(scope, repository) {
     _.each(data, addDashboard);
   });
 
+  scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
 };
 
-jashboard.application.controller("MainController", ['$scope', 'Repository', jashboard.MainController]).run(function() {
+jashboard.application.controller("MainController", ['$scope', 'Repository', 'PluginManager', jashboard.MainController]).run(function() {
   steal.dev.log("MainController initialized");
 });

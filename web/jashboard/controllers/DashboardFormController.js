@@ -1,5 +1,10 @@
 jashboard.DashboardFormController = function(scope, repository) {
   var dashboardFormSelector = "#new-dashboard-form";
+  
+  var resetForm = function() {
+    scope.dashboardForm = {name: "", refreshInterval: ""};
+  };
+
   scope.saveDashboard = function() {
     repository.createDashboard(scope.dashboardForm, function(dashboard) {
       scope.$emit("NewDashboardEvent", dashboard);
@@ -9,7 +14,7 @@ jashboard.DashboardFormController = function(scope, repository) {
   };
 
   scope.$on("OpenDashboardDialog", function(event) {
-    scope.dashboardForm = {};
+    resetForm();
     $(dashboardFormSelector).modal('show');
   });
 
@@ -21,6 +26,7 @@ jashboard.DashboardFormController = function(scope, repository) {
       scope.$apply();
     });
   }
+  resetForm();
 };
 
 jashboard.application.controller("DashboardFormController", ['$scope', 'Repository', jashboard.DashboardFormController]).run(function() {

@@ -1,15 +1,21 @@
 jashboard.plugin.TypeAdapter = function() {
-  var handlers = {};
+  var typeHandlers = {};
+  
   this.registerTypeHandler = function(type, handler) {
-    if (!_.isUndefined(handlers[type])) {
+    if (!_.isUndefined(typeHandlers[type])) {
       throw("Handler for type '" + type + "' is already registered");
     }
-    handlers[type] = handler;
+    typeHandlers[type] = handler;
   };
+
+  this.getAllRegisteredTypes = function() {
+    return _.keys(typeHandlers);
+  };
+
   this.toObject = function(data) {
-    if (_.isUndefined(data.type) || _.isUndefined(handlers[data.type])) {
+    if (_.isUndefined(data.type) || _.isUndefined(typeHandlers[data.type])) {
       throw("Invalid type or handler not registered [" + data.type + "]");
     }
-    return handlers[data.type](data);
+    return typeHandlers[data.type](data);
   };
 };

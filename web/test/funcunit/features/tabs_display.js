@@ -3,7 +3,7 @@ funcunitHelper.testFeature("Tabs display", "display_dashboards_data", function()
     var expectedTabs = ["first dashboard", "second dashboard", "another dashboard"];
     S(".dashboard-tab").size(3, function() {
       S(this).each(function(index, element) {
-        equal(S(element).text(), expectedTabs[index], "tab text should match the tab name");
+        equal(S(element).text().trim(), expectedTabs[index], "tab text should match the tab name");
       });
     });
   });

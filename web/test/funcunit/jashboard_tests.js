@@ -1,9 +1,4 @@
 var jashboard = {
-  test_utils: {
-    openPageForTestScenario: function(scenarioName) {
-      S.open('index.html?test_scenario=' + scenarioName);
-    }
-  },
   functional_tests: []
 };
 

@@ -1,8 +1,8 @@
 require 'open-uri'
 require 'nokogiri'
 require 'extensions/jashboard_extensions'
-require 'plugins/ci/ciserver_type_manager'
-require 'plugins/ci/build_runtime_info'
+require 'plugins/build/ciserver_type_manager'
+require 'plugins/build/build_runtime_info'
 
 module Jashboard
   module Plugin
@@ -10,7 +10,7 @@ module Jashboard
       JenkinsServerSettings = Struct.new(:hostname, :port, :build_id).tap do |clazz|
         clazz.module_eval do
           extend ServerSettings
-          ciserver_type 1
+          ciserver_type "jenkins"
         end
       end
 

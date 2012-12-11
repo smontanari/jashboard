@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'json_spec'
 require 'open-uri'
 require 'stringio'
-require 'plugins/ci/build_monitor_adapter'
-require 'plugins/ci/jenkins_plugin'
+require 'plugins/build/build_monitor_adapter'
+require 'plugins/build/jenkins_plugin'
 
 module Jashboard
   module Plugin
@@ -11,7 +11,7 @@ module Jashboard
       describe JenkinsServerSettings do
         it("should serialize to a json with type = 1") do
           JenkinsServerSettings.new("test.host.name", 40, "test-build-id").to_json.
-            should be_json_eql %({"type": 1, "hostname": "test.host.name", "port": 40, "build_id": "test-build-id"})
+            should be_json_eql %({"type": "jenkins", "hostname": "test.host.name", "port": 40, "build_id": "test-build-id"})
         end
       end
 

@@ -1,6 +1,6 @@
 require 'extensions/jashboard_extensions'
-require 'plugins/ci/ciserver_type_manager'
-require 'plugins/ci/build_runtime_info'
+require 'plugins/build/ciserver_type_manager'
+require 'plugins/build/build_runtime_info'
 
 module Jashboard
   module Plugin
@@ -8,7 +8,7 @@ module Jashboard
       GOServerSettings = Struct.new(:hostname, :port, :pipeline, :stage, :job).tap do |clazz|
         clazz.module_eval do
           extend ServerSettings
-          ciserver_type 2
+          ciserver_type "go"
         end
       end
       class GOAdapter

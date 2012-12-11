@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'plugins/ci/ciserver_type_manager'
-require 'plugins/ci/build_monitor_adapter'
+require 'plugins/build/ciserver_type_manager'
+require 'plugins/build/build_monitor_adapter'
 
 module Jashboard
   module Plugin
@@ -10,8 +10,8 @@ module Jashboard
         is_ciserver_adapter_for_type 123
       end
 
-      it("should register as monitor type handler for type 1") do
-        MonitorAdapter.class_variable_get('@@type_handlers')[1].should == BuildMonitorAdapter
+      it("should register as monitor type handler for type 'build'") do
+        MonitorAdapter.class_variable_get('@@type_handlers')['build'].should == BuildMonitorAdapter
       end
 
       it("should register a ciserver type handler") do

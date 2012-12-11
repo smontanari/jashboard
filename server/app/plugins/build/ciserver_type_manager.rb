@@ -1,4 +1,4 @@
-require 'plugins/ci/build_monitor_adapter'
+require 'plugins/build/build_monitor_adapter'
 
 module Jashboard
   module Plugin

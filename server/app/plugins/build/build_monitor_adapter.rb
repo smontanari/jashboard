@@ -4,7 +4,7 @@ module Jashboard
   module Plugin
     class BuildMonitorAdapter
       extend PluginManager
-      is_monitor_plugin_for_type 1
+      is_monitor_plugin_for_type 'build'
 
       @@ciserver_type_handlers = {}
 

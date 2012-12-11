@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'json_spec'
 require 'open-uri'
 require 'stringio'
-require 'plugins/ci/go_plugin'
+require 'plugins/build/go_plugin'
 
 module Jashboard
   module Plugin
@@ -11,7 +11,7 @@ module Jashboard
         it("should serialize to a json with type = 2") do
           GOServerSettings.new("test.host.name", 1234, "test-pipeline", "test-stage", "test-job").to_json.
             should be_json_eql %({
-                "type": 2,
+                "type": "go",
                 "hostname": "test.host.name",
                 "port": 1234,
                 "pipeline": "test-pipeline",

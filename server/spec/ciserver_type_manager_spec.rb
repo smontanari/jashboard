@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json_spec'
-require 'plugins/ci/build_monitor_adapter'
-require 'plugins/ci/ciserver_type_manager'
+require 'plugins/build/build_monitor_adapter'
+require 'plugins/build/ciserver_type_manager'
 
 module Jashboard
   module Plugin

@@ -6,6 +6,7 @@ jashboard.DashboardFormController = function(scope, repository) {
   };
 
   scope.saveDashboard = function() {
+    console.log(scope.dashboardForm.name);
     repository.createDashboard(scope.dashboardForm, function(dashboard) {
       scope.$emit("NewDashboardEvent", dashboard);
     });
@@ -13,8 +14,9 @@ jashboard.DashboardFormController = function(scope, repository) {
     $(dashboardFormSelector).modal('hide');
   };
 
+  scope.resetDashboard = resetForm;
+
   scope.$on("OpenDashboardDialog", function(event) {
-    resetForm();
     $(dashboardFormSelector).modal('show');
   });
 

@@ -1,5 +1,15 @@
 module("funcunit-open")
 
+test('S.open accepts a window', function() {
+	S.open(window);
+	S('#tester').click();
+	S("#tester").text("Changed", "Changed link")
+	
+	S.open(frames["myapp"]);
+	S("#typehere").type("javascriptmvc")
+	S("#seewhatyoutyped").text("typed javascriptmvc","typing");
+})
+
 test("URL Test", function(){
 	var path = FuncUnit.getAbsolutePath("http://foo.com")
 	equals(path, "http://foo.com", "paths match");
@@ -18,9 +28,8 @@ test("Back to back opens", function(){
 	S.open("//funcunit/test/myotherapp.html");
 	S.open("//funcunit/test/myapp.html");
 
-	S("#changelink").click(function(){
-		equals(S("#changelink").text(), "Changed","href javascript run")
-	})
+	S("#changelink").click()
+	S("#changelink").text("Changed","href javascript run")
 })
 
 

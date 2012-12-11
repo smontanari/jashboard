@@ -1,9 +1,22 @@
 (function($){
+	
+	if(steal.options.browser === "phantomjs"){
+		FuncUnit.frameMode = true;
+	}
+	
+	if(FuncUnit.frameMode){
+		var ifrm = document.createElement("iframe");
+		ifrm.id = 'funcunit_app';
+		document.body.insertBefore(ifrm, document.body.firstChild);
+	}
+
 
 var confirms = [], 
 	prompts = [], 
 	currentDocument,
 	currentHref,
+	// pointer to the popup window
+	appWin, 
 	lookingForNewDocument = false,
 	urlWithoutHash = function(url){
 		return url.replace(/\#.*$/, "");
@@ -47,19 +60,23 @@ $.extend(FuncUnit,{
 	 * @param {Number} timeout
 	 */
 	open: function( path, success, timeout ) {
-		var fullPath = FuncUnit.getAbsolutePath(path), 
-		temp;
 		if(typeof success != 'function'){
 			timeout = success;
 			success = undefined;
 		}
 		FuncUnit.add({
 			method: function(success, error){ //function that actually does stuff, if this doesn't call success by timeout, error will be called, or can call error itself
-				steal.dev.log("Opening " + path)
-				FuncUnit._open(fullPath, error);
-				FuncUnit._onload(function(){
-					success()
-				}, error);
+				if(typeof path === "string"){
+					var fullPath = FuncUnit.getAbsolutePath(path);
+					steal.dev.log("Opening " + path)
+					FuncUnit._open(fullPath, error);
+					FuncUnit._onload(function(){
+						success()
+					}, error);
+				} else {
+					FuncUnit.win = path;
+					success();
+				}
 			},
 			success: success,
 			error: "Page " + path + " not loaded in time!",
@@ -67,6 +84,7 @@ $.extend(FuncUnit,{
 		});
 	},
 	_open: function(url){
+		FuncUnit.win = appWin;
 		hasSteal = false;
 		// this will determine if this is supposed to open within a frame
 		FuncUnit.frame =  $('#funcunit_app').length? $('#funcunit_app')[0]: null;
@@ -81,8 +99,7 @@ $.extend(FuncUnit,{
 			else{
 				// giving a large height forces it to not open in a new tab and just opens to the window's height
 				var width = $(window).width();
-        FuncUnit.win = window.open(url, "funcunit",  "height=1000,toolbar=yes,status=yes,width="+width/2+",left="+width/2);
-				//FuncUnit.win = window.open(url, "funcunit",  "height=1000,toolbar=yes,status=yes,width="+width);
+				FuncUnit.win = window.open(url, "funcunit",  "height=1000,toolbar=yes,status=yes,width="+width/2+",left="+width/2);
 				// This is mainly for opera. Other browsers will hit the unload event and close the popup.
 				// This block breaks in IE (which never reaches it) because after closing a window, it throws access 
 				// denied any time you try to access it, even after reopening.
@@ -96,11 +113,16 @@ $.extend(FuncUnit,{
 					throw "Could not open a popup window.  Your popup blocker is probably on.  Please turn it off and try again";
 				}
 			}
+			appWin = FuncUnit.win;
 		}
 		// otherwise, change the frame's url
 		else {
 			lookingForNewDocument = true;
 			if(isCurrentPage(url)){
+				/*Sometimes readyState does not correctly reset itself, so we remove the
+				body from the document we are navigating away from, which will get set again
+				when the page has reloaded*/
+				FuncUnit.win.document.body.parentNode.removeChild(FuncUnit.win.document.body);
 				// set the hash and reload
 				FuncUnit.win.location.hash = url.split('#')[1] || '';
 				FuncUnit.win.location.reload(true);
@@ -202,15 +224,14 @@ $.extend(FuncUnit,{
 	},
 	/**
 	 * @attribute win
-	 * Use this to refer to the window of the application page.  You can also 
-	 * reference window.document.
+	 * Use this to refer to the window of the application page.
 	 * @codestart
 	 * S(S.window).innerWidth(function(w){
 	 *   ok(w > 1000, "window is more than 1000 px wide")
 	 * })
 	 * @codeend
 	 */
-	win: null,
+	win: window,
 	// for feature detection
 	support: {
 		readystate: "readyState" in document
@@ -227,7 +248,8 @@ $.extend(FuncUnit,{
 	// actions check this
 	documentLoaded: function(){
 		var loaded = FuncUnit.win.document.readyState === "complete" && 
-				     FuncUnit.win.location.href != "about:blank";
+				     FuncUnit.win.location.href != "about:blank" &&
+				     FuncUnit.win.document.body;
 		return loaded;
 	},
 	// return true if new document found
@@ -259,7 +281,6 @@ $.extend(FuncUnit,{
 	}
 	
 	
-	FuncUnit.win = null;
 	var newPage = true, 
 		hasSteal = false,
 		unloadLoader, 

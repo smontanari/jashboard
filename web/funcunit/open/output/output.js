@@ -11,7 +11,7 @@
  * 
  */
  
-steal('funcunit/commandline/output/json2.js', function(){
+steal('funcunit/open/output/json2.js', function(){
 	var classPrefix,
 		filename,
 		fstream, out;
@@ -59,9 +59,10 @@ steal('funcunit/commandline/output/json2.js', function(){
 	var streamClosed = false;
 
 	steal.extend(FuncUnit,{
-		begin: function(){
+		begin: function(name){
+			print("Starting " + name + "...")
 			classPrefix = 'QUnit.';
-			filename = 'testresults.xml';
+			filename = FuncUnit.outputFile;
 			if(filename) {
 				fstream = new java.io.FileWriter(filename, false);
 				out = new java.io.BufferedWriter(fstream);
@@ -72,7 +73,7 @@ steal('funcunit/commandline/output/json2.js', function(){
 		testStart: function(name){
 			print('  ' + name);
 			// Prefix class to have a destinct namespace
-			moduleLogOutput += '    <testcase class="' + xmlEncode(classPrefix + moduleName) + '" name="' + xmlEncode(name) + '">' + "\n";
+			moduleLogOutput += '    <testcase class="' + xmlEncode(classPrefix + FuncUnit.browserName+':'+moduleName) + '" name="' + xmlEncode(name) + '">' + "\n";
 			moduleTestCounter++;
 			globalTestCounter++;
 			failureArr = [];
@@ -157,12 +158,6 @@ steal('funcunit/commandline/output/json2.js', function(){
 				java.lang.System.exit(1);
 			}
 		},
-		browserStart: function(name){
-			print("Starting " + name + "...")
-		},
-		browserDone: function(name, failures, total){
-			print("\n" + name+" done :-)");
-		},
 		coverage: function(stats){
 			var percentage = function(num){
 				return Math.round(num*1000)/10+"%";
@@ -183,7 +178,7 @@ steal('funcunit/commandline/output/json2.js', function(){
 				out = new java.io.BufferedWriter(fstream);
 			out.write(JSON.stringify(stats));
 			out.close();
-			this.convertCoverageToCobertura(stats);
+			// this.convertCoverageToCobertura(stats);
 		},
 		convertCoverageToCobertura: function(stats){
 			// eval('stats = '+readFile('funcunit/coverage/coverage.json'))

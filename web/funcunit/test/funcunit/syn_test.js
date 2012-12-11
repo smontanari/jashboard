@@ -3,25 +3,27 @@ module("funcunit-syn integration")
 
 test("Type and slow Click", function(){
 	S.open("//funcunit/test/myapp.html");
-	S("#typehere").type("javascriptmvc", function(){
-		equals(S("#seewhatyoutyped").text(), "typed javascriptmvc","typing");
-	})
+	S("#typehere").type("javascriptmvc")
+	S("#seewhatyoutyped").text("typed javascriptmvc","typing");
 	
-	S("#copy").click(function(){
-		equals(S("#seewhatyoutyped").text(), "copied javascriptmvc","copy");
-	});
+	S("#copy").click();
+	S("#seewhatyoutyped").text("copied javascriptmvc","copy");
+})
+
+test("Type and clear", function(){
+	S.open("//funcunit/test/myapp.html");
+	S("#typehere").type("javascriptmvc").type("")
+	S("#seewhatyoutyped").text("typed ","clear works");
 })
 
 test("Nested actions", function(){
 	S.open("//funcunit/test/myapp.html");
 	
 	S("#typehere").exists(function(){
-		this.type("[ctrl]a\b[ctrl-up]javascriptmvc", function(){
-			equals(S("#seewhatyoutyped").text(), "typed javascriptmvc","typing");
-		})
-		S("#copy").click(function(){
-			equals(S("#seewhatyoutyped").text(), "copied javascriptmvc","copy");
-		});
+		this.type("[ctrl]a\b[ctrl-up]javascriptmvc")
+		S("#seewhatyoutyped").text("typed javascriptmvc","typing");
+		S("#copy").click();
+		S("#seewhatyoutyped").text("copied javascriptmvc","copy");
 	})
 })
 

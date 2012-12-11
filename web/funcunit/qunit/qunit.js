@@ -268,7 +268,6 @@ Test.prototype = {
 		// defer when previous test run passed, if storage is available
 		var bad = QUnit.config.reorder && defined.sessionStorage && +sessionStorage.getItem("qunit-" + this.module + "-" + this.testName);
 		if (bad) {
-			console.log("bad")
 			run();
 		} else {
 			synchronize(run, true);
@@ -749,17 +748,11 @@ QUnit.load = function() {
 	var urlConfigHtml = '', len = config.urlConfig.length;
 	for ( var i = 0, val; i < len, val = config.urlConfig[i]; i++ ) {
 		var disable = false;
-		if(val === "coverage"){
-			if(QUnit.urlParams["noautorun"]){
-				disable = true;
-			}
-			config["coverage"] = QUnit.urlParams["steal[instrument]"];
-		} else {
-			config[val] = QUnit.urlParams[val];
-		}
-		if(val === "noautorun" && QUnit.urlParams["steal[instrument]"]){
+		if( (val === "coverage" && QUnit.urlParams["noautorun"]) || 
+			(val === "noautorun" && QUnit.urlParams["coverage"])){
 			disable = true;
 		}
+		config[val] = QUnit.urlParams[val];
 		urlConfigHtml += '<label><input name="' + val + '" type="checkbox"' + ( config[val] ? ' checked="checked"' : '' ) + ( disable ? ' disabled="disabled"' : '' ) + '>' + val + '</label>';
 	}
 
@@ -774,10 +767,6 @@ QUnit.load = function() {
 			var params = {};
 			var name = event.target.name;
 			var val = true;
-			if(event.target.name === "coverage"){
-				name = "steal[instrument]";
-				val = "jquery,funcunit,steal,documentjs,*/test,*_test.js,mxui,*funcunit.js"
-			}
 			params[ name ] = event.target.checked ? val : undefined;
 			window.location = QUnit.url( params );
 		});
@@ -833,7 +822,6 @@ QUnit.load = function() {
 steal.bind("ready", function(){
 	QUnit.config.autorun = false;
 	QUnit.config.reorder = false;
-	QUnit.config.testTimeout = false;
 	QUnit.config.urlConfig.push('coverage', 'noautorun');
 	QUnit.load();
 })
@@ -1639,14 +1627,58 @@ QUnit.diff = (function() {
 	};
 })();
 
-if(steal.options.instrument){
-	steal("funcunit/coverage", function(){
-		QUnit.done(function(){
-			var data = steal.instrument.compileStats()
-			QUnit.coverage(data);
+if(QUnit.urlParams["coverage"]){
+	steal("steal/instrument", function(){
+		// default ignores
+		var ignores = ["jquery","funcunit","steal","documentjs","*/test","*_test.js","mxui","*funcunit.js"] 
+		if(typeof FuncUnit !== "undefined"){
+			ignores = FuncUnit.coverageIgnore ;
+		}
+		// overwrite with our own ignores
+		steal.instrument.ignores = ignores;
+		steal("funcunit/coverage", function(){
+			var reportBuilt = false;
+			QUnit.done(function(){
+				if(!reportBuilt){
+					reportBuilt = true;
+					var data = steal.instrument.compileStats()
+					QUnit.coverage(data);
+				}
+			})
 		})
-	});
+	})
 }
 
+var appendToBody = function(type, id){
+	var el = document.createElement(type);
+	el.setAttribute("id", id);
+	document.body.appendChild( el );
+}
+
+// set up page if it hasn't been
+if(!document.getElementsByTagName("link").length){
+	steal("funcunit/qunit/qunit.css")
+}
+if(!id("qunit-header")){
+	appendToBody("h1", "qunit-header");
+}
+if(!id("qunit-banner")){
+	appendToBody("h2", "qunit-banner");
+}
+if(!id("qunit-testrunner-toolbar")){
+	appendToBody("div", "qunit-testrunner-toolbar");
+}
+if(!id("qunit-userAgent")){
+	appendToBody("h2", "qunit-userAgent");
+}
+if(!id("test-content")){
+	appendToBody("div", "test-content");
+}
+if(!id("qunit-tests")){
+	appendToBody("ol", "qunit-tests");
+}
+if(!id("qunit-test-area")){
+	appendToBody("div", "qunit-test-area");
+}
 })
 .then('funcunit/browser/events.js')

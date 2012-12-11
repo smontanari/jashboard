@@ -13,8 +13,9 @@ jashboard.DashboardFormController = function(scope, repository) {
     $(dashboardFormSelector).modal('hide');
   };
 
+  scope.resetDashboard = resetForm;
+
   scope.$on("OpenDashboardDialog", function(event) {
-    resetForm();
     $(dashboardFormSelector).modal('show');
   });
 

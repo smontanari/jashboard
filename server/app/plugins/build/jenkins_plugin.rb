@@ -10,13 +10,13 @@ module Jashboard
       JenkinsServerSettings = Struct.new(:hostname, :port, :build_id).tap do |clazz|
         clazz.module_eval do
           extend ServerSettings
-          ciserver_type "jenkins"
+          ciserver_type 'jenkins'
         end
       end
 
       class JenkinsAdapter
         extend CIServerTypeManager
-        is_ciserver_adapter_for_type 1
+        is_ciserver_adapter_for_type 'jenkins'
 
         def create_settings(input_settings)
           JenkinsServerSettings.new(input_settings['hostname'], input_settings['port'], input_settings['build_id'])

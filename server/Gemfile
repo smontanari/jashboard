@@ -6,6 +6,7 @@ gem 'fsdb'
 gem 'uuidtools'
 
 group :test do
-  gem "rspec"
-  gem "json_spec"
+  gem 'rspec'
+  gem 'json_spec'
+  gem 'cucumber'
 end

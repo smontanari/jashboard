@@ -26,7 +26,7 @@ module Jashboard
 
     context "Data retrieval" do
       describe("GET /ajax/dashboards") do
-        it("should return the dashboard and monitor data from the repository and return the view") do
+        it("should return the dashboard and monitor data from the repository as json") do
           dashboard1 = DashboardBuilder.new.with_id("dashboard1").with_monitor_id("monitor1").with_monitor_id("monitor2").build
           dashboard2 = DashboardBuilder.new.with_id("dashboard2").with_monitor_id("monitor3").build
           @mock_repository.should_receive(:load_dashboards).and_return([dashboard1, dashboard2])

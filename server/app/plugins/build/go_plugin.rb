@@ -12,7 +12,8 @@ module Jashboard
         end
       end
       class GOAdapter
-
+        extend CIServerTypeManager
+        is_ciserver_adapter_for_type 'go'
       end
     end
   end

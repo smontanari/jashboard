@@ -23,10 +23,6 @@ module Jashboard
         "settings": {
           "attr1": "test_attr1",
           "attr2": "test_attr2"
-        },
-        "runtime_info": {
-          "attr3": "test_attr3",
-          "attr4": "test_attr4"
         }
       })
 

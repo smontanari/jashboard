@@ -1,5 +1,6 @@
 require 'rake'
 require 'rspec/core/rake_task'
+require 'cucumber/rake/task'
 
 desc "Run specs matching the pattern (or all of them if no pattern specified)"
 task :test, [:file_pattern] do |t, args|
@@ -9,4 +10,8 @@ task :test, [:file_pattern] do |t, args|
     task.pattern = args.file_pattern if args.file_pattern
   end
   Rake::Task[:pattern_spec].invoke
+end
+
+Cucumber::Rake::Task.new do |t|
+  t.cucumber_opts = %w{--format pretty}
 end

@@ -8,8 +8,7 @@ module Jashboard
         name: @name,
         type: @type,
         refresh_interval: @refresh_interval,
-        settings: @settings,
-        runtime_info: @runtime_info
+        settings: @settings
       }.to_json(*args)
     end
   end

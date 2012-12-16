@@ -9,15 +9,15 @@ module Jashboard
   module Plugin
     module CIServer
       describe JenkinsServerSettings do
-        it("should serialize to a json with type = 1") do
+        it("should serialize to a json with type = 'jenkins'") do
           JenkinsServerSettings.new("test.host.name", 40, "test-build-id").to_json.
             should be_json_eql %({"type": "jenkins", "hostname": "test.host.name", "port": 40, "build_id": "test-build-id"})
         end
       end
 
       describe JenkinsAdapter do
-        it("should register as ci server type handler for type 1") do
-          BuildMonitorAdapter.class_variable_get('@@ciserver_type_handlers')[1].should == JenkinsAdapter
+        it("should register as ci server type handler for type 'jenkins'") do
+          BuildMonitorAdapter.class_variable_get('@@ciserver_type_handlers')['jenkins'].should == JenkinsAdapter
         end
 
         context("Build settings creation") do

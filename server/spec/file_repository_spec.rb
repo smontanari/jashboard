@@ -5,15 +5,12 @@ module Jashboard
   describe FileRepository do
     before(:each) do
       ENV['JASHBOARD_ENV'] = 'test'
-      @db_path = "db/test"
-      FileUtils.rm Dir.glob("#{@db_path}/monitor/..fsdb.meta.*.txt")
-      FileUtils.rm Dir.glob("#{@db_path}/monitor/*.txt")
-      FileUtils.rm Dir.glob("#{@db_path}/dashboard/..fsdb.meta.*.txt")
-      FileUtils.rm Dir.glob("#{@db_path}/dashboard/*.txt")
+      @db_helper = FSDBHelper.new("db/test")
+      @db_helper.clean_data
     end
 
     it("should load a build monitor from a yaml file") do
-      serialize_yaml("monitor/test-monitor-id.txt", MonitorBuilder.new.
+      @db_helper.serialize_monitor(MonitorBuilder.new.
         with_id("test-monitor-id").
         with_type(123).
         with_name("test monitor-name").
@@ -42,7 +39,7 @@ module Jashboard
         build)
 
       monitor.id.should_not be_nil
-      verify_yaml("monitor/#{monitor.id}.txt", monitor)
+      @db_helper.verify_monitor(monitor)
     end
 
     it("should store a build monitor as yaml into an existing file") do
@@ -54,7 +51,7 @@ module Jashboard
         with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build
 
-      serialize_yaml("monitor/test-new_monitor-id.txt", monitor)
+      @db_helper.serialize_monitor(monitor)
 
       monitor.name = "test change name"
       monitor.refresh_interval = 123
@@ -63,12 +60,11 @@ module Jashboard
 
       subject.save_monitor(monitor)
 
-      verify_yaml("monitor/test-new_monitor-id.txt", monitor)
+      @db_helper.verify_monitor(monitor)
     end
 
     it("should load a dashboard from a yaml file") do
-      serialize_yaml("dashboard/test-dashboard-id.txt",
-        DashboardBuilder.new.
+      @db_helper.serialize_dashboard(DashboardBuilder.new.
           with_id("test-dashboard-id").
           with_name("test dashboard-name").
           with_monitor_id("test-mon-1").
@@ -84,16 +80,14 @@ module Jashboard
     end
 
     it("should load all dashboards") do
-      serialize_yaml("dashboard/test-dashboard-id1.txt",
-        DashboardBuilder.new.
+      @db_helper.serialize_dashboard(DashboardBuilder.new.
           with_id("test-dashboard-id1").
           with_name("test dashboard-name1").
           with_monitor_id("test-mon-1").
           with_monitor_id("test-mon-2").
           build
       )
-      serialize_yaml("dashboard/test-dashboard-id2.txt",
-        DashboardBuilder.new.
+      @db_helper.serialize_dashboard(DashboardBuilder.new.
           with_id("test-dashboard-id2").
           with_name("test dashboard-name2").
           with_monitor_id("test-mon-3").
@@ -121,20 +115,7 @@ module Jashboard
       )
 
       dashboard.id.should_not be_nil
-      verify_yaml("dashboard/#{dashboard.id}.txt", dashboard)
-    end
-
-    def serialize_yaml(file_path, obj)
-      File.open("#{@db_path}/#{file_path}", "w") do |f|
-        f.write(YAML.dump(obj))
-      end
-    end
-
-    def verify_yaml(file_path, obj)
-      File.exist?("#{@db_path}/#{file_path}").should be_true
-      File.open("#{@db_path}/#{file_path}") do |f|
-        f.read.should == obj.to_yaml
-      end
+      @db_helper.verify_dashboard(dashboard)
     end
   end
 end

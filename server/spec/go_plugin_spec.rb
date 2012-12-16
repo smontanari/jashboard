@@ -20,6 +20,11 @@ module Jashboard
             })
         end
       end
+      describe GOAdapter do
+        it("should register as ci server type handler for type 'go'") do
+          BuildMonitorAdapter.class_variable_get('@@ciserver_type_handlers')['go'].should == GOAdapter
+        end
+      end
     end
   end
 end

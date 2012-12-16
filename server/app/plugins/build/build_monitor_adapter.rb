@@ -12,14 +12,14 @@ module Jashboard
         @@ciserver_type_handlers[type] = clazz
       end
 
-      def get_settings(input_settings)
-        clazz =  @@ciserver_type_handlers[input_settings[:type]]
-        clazz.new.create_settings(input_settings)
+      def get_configuration(input_configuration)
+        clazz =  @@ciserver_type_handlers[input_configuration[:type]]
+        clazz.new.create_configuration(input_configuration)
       end
 
       def get_runtime_info(monitor)
-        clazz =  @@ciserver_type_handlers[monitor.settings.type]
-        clazz.new.fetch_build_runtime_info(monitor.settings)
+        clazz =  @@ciserver_type_handlers[monitor.configuration.type]
+        clazz.new.fetch_build_runtime_info(monitor.configuration)
       end
     end
   end

@@ -15,7 +15,7 @@ module Jashboard
         with_type(123).
         with_name("test monitor-name").
         with_refresh_interval(12).
-        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
+        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build)
 
       monitor = subject.load_monitor("test-monitor-id")
@@ -24,8 +24,8 @@ module Jashboard
       monitor.name.should == "test monitor-name"
       monitor.type.should == 123
       monitor.refresh_interval.should == 12
-      monitor.settings.attr1.should == "test_attr1"
-      monitor.settings.attr2.should == 1234
+      monitor.configuration.attr1.should == "test_attr1"
+      monitor.configuration.attr2.should == 1234
     end
 
     it("should store a build monitor as yaml into a file") do
@@ -35,7 +35,7 @@ module Jashboard
         with_type(123).
         with_name("test new_name").
         with_refresh_interval(456).
-        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
+        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build)
 
       monitor.id.should_not be_nil
@@ -48,15 +48,15 @@ module Jashboard
         with_type(123).
         with_name("test new_name").
         with_refresh_interval(456).
-        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
+        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build
 
       @db_helper.serialize_monitor(monitor)
 
       monitor.name = "test change name"
       monitor.refresh_interval = 123
-      monitor.settings.attr1 = "test_changed_attr1"
-      monitor.settings.attr2 = 9876
+      monitor.configuration.attr1 = "test_changed_attr1"
+      monitor.configuration.attr2 = 9876
 
       subject.save_monitor(monitor)
 

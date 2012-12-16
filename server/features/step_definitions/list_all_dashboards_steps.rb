@@ -1,14 +1,14 @@
 Given /^the following monitors$/ do |test_monitor_data|
   test_monitor_data.hashes.each do |monitor_data|
-    settings_hash = eval(monitor_data[:settings])
+    configuration_hash = eval(monitor_data[:configuration])
     @db_helper.serialize_monitor(
       Jashboard::MonitorBuilder.new.
         with_id(monitor_data[:id]).
         with_name(monitor_data[:name]).
         with_type(monitor_data[:type]).
         with_refresh_interval(monitor_data[:refresh_interval].to_i).
-        with_settings(
-          Jashboard::MonitorConfigurationHelper.send("create_#{monitor_data[:type]}_monitor_settings", settings_hash)
+        with_configuration(
+          Jashboard::MonitorConfigurationHelper.send("create_#{monitor_data[:type]}_monitor_configuration", configuration_hash)
         ).build
     )
   end

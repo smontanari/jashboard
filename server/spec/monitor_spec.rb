@@ -11,7 +11,7 @@ module Jashboard
         with_name("test.name").
         with_type(123).
         with_refresh_interval(9876).
-        with_settings(Struct.new(:attr1, :attr2).new("test_attr1", "test_attr2")).
+        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", "test_attr2")).
         with_runtime_info(Struct.new(:attr3, :attr4).new("test_attr3", "test_attr4")).
         build
 
@@ -20,7 +20,7 @@ module Jashboard
         "name": "test.name",
         "type": 123,
         "refresh_interval": 9876,
-        "settings": {
+        "configuration": {
           "attr1": "test_attr1",
           "attr2": "test_attr2"
         }

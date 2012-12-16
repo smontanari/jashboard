@@ -7,12 +7,12 @@ module Jashboard
         @@type_handlers[type] = handler_class
       end
 
-      def get_settings(type, settings)
-         @@type_handlers[type].new.get_settings(settings)
+      def get_configuration(type, configuration)
+         @@type_handlers[type].new.get_configuration(configuration)
       end
 
       def get_runtime_info(monitor)
-        @@type_handlers[monitor.type].new.get_runtime_info(monitor.settings)
+        @@type_handlers[monitor.type].new.get_runtime_info(monitor.configuration)
       end
     end
   end

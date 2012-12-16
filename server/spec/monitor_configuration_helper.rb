@@ -7,7 +7,7 @@ module Jashboard
       'jenkins' => Plugin::CIServer::JenkinsServerSettings,
       'go' => Plugin::CIServer::GOServerSettings,
     }
-    def self.create_build_monitor_settings(data)
+    def self.create_build_monitor_configuration(data)
       type = data.delete :type
       @configuration_types[type].new(*data.values)
     end

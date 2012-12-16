@@ -95,20 +95,20 @@ module Jashboard
           @mock_repository.stub(:save_dashboard)
           monitor = Monitor.new.tap {|m| m.id = "789"}
           @mock_repository.stub(:save_monitor).and_return(monitor)
-          @mock_monitor_adapter.stub(:get_settings)
+          @mock_monitor_adapter.stub(:get_configuration)
         end
 
         it("should persist the monitor to the repository") do
-          mock_settings = Object.new
-          @mock_monitor_adapter.should_receive(:get_settings).
+          mock_configuration = Object.new
+          @mock_monitor_adapter.should_receive(:get_configuration).
             with(123, {"attr1" => "test_attr1", "attr2" => "test_attr2"}).
-            and_return(mock_settings)
+            and_return(mock_configuration)
 
           @mock_repository.should_receive(:save_monitor) do |monitor|
             monitor.type.should == 123
             monitor.name.should == "test.monitor.name"
             monitor.refresh_interval.should == 345
-            monitor.settings.should == mock_settings
+            monitor.configuration.should == mock_configuration
             monitor
           end
 
@@ -117,7 +117,7 @@ module Jashboard
               "name": "test.monitor.name",
               "refresh_interval": 345,
               "type": 123,
-              "settings": {
+              "configuration": {
                 "attr1": "test_attr1",
                 "attr2": "test_attr2"
               }

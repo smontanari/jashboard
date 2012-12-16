@@ -4,6 +4,6 @@ module Jashboard
   class MonitorBuilder
     extend BuilderHelper
     builder_for Monitor
-    attr_builder :id, :type, :name, :refresh_interval, :settings, :runtime_info
+    attr_builder :id, :type, :name, :refresh_interval, :configuration, :runtime_info
   end
 end

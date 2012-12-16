@@ -57,7 +57,7 @@ module Jashboard
         monitor.name = monitor_json['name']
         monitor.refresh_interval = monitor_json['refresh_interval']
         monitor.type = monitor_json['type']
-        monitor.settings = @monitor_adapter.get_settings(monitor_json['type'], monitor_json['settings'])
+        monitor.configuration = @monitor_adapter.get_configuration(monitor_json['type'], monitor_json['configuration'])
       end
       @repository.save_monitor(new_monitor)
     end

@@ -9,7 +9,7 @@ jashboard.MonitorFormController = function(scope, repository) {
   };
 
   scope.$on("OpenMonitorDialog", function(event) {
-    scope.monitorForm = {settings: {}};
+    scope.monitorForm = {configuration: {}};
     $(monitorFormSelector).modal('show');
   });
 

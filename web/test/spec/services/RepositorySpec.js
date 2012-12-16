@@ -12,8 +12,8 @@ describe("Repository", function() {
     repository = new jashboard.Repository(httpService, pluginManager);
     handler = jasmine.createSpy("handler callback");
     pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andReturn(monitorAdapter);
-    monitorAdapter.parseSettings = jasmine.createSpy("monitorAdapter.parseSettings()").andCallFake(function(data) {
-      return {test_settings: data};
+    monitorAdapter.parseConfiguration = jasmine.createSpy("monitorAdapter.parseConfiguration()").andCallFake(function(data) {
+      return {test_configuration: data};
     });
     spyOn(jashboard.model, "Dashboard").andCallFake(function(data) {
       this.id = data.id;
@@ -21,7 +21,7 @@ describe("Repository", function() {
     });
     spyOn(jashboard.model, "Monitor").andCallFake(function(data) {
       this.type = data.type;
-      this.settings = {};
+      this.configuration = {};
     });
   });
 
@@ -30,8 +30,8 @@ describe("Repository", function() {
       httpService.getJSON = jasmine.createSpy("httpService.getJSON()").andReturn(ajaxCallback(
         [
           {id: "test.dashboard.1", monitors: [
-            {type: "monitor_type1", settings: "test_settings1"},
-            {type: "monitor_type2", settings: "test_settings2"}
+            {type: "monitor_type1", configuration: "test_configuration1"},
+            {type: "monitor_type2", configuration: "test_configuration2"}
           ]},
           {id: "test.dashboard.2", monitors: []}
         ]
@@ -42,12 +42,12 @@ describe("Repository", function() {
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/dashboards");
       expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("monitor_type1");
       expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("monitor_type2");
-      expect(monitorAdapter.parseSettings).toHaveBeenCalledWith("test_settings1");
-      expect(monitorAdapter.parseSettings).toHaveBeenCalledWith("test_settings2");
+      expect(monitorAdapter.parseConfiguration).toHaveBeenCalledWith("test_configuration1");
+      expect(monitorAdapter.parseConfiguration).toHaveBeenCalledWith("test_configuration2");
       expect(handler).toHaveBeenCalledWith([
         {id: "test.dashboard.1", monitors: [
-          {type: "monitor_type1", settings: {test_settings: "test_settings1"}},
-          {type: "monitor_type2", settings: {test_settings: "test_settings2"}}
+          {type: "monitor_type1", configuration: {test_configuration: "test_configuration1"}},
+          {type: "monitor_type2", configuration: {test_configuration: "test_configuration2"}}
         ]},
         {id: "test.dashboard.2", monitors: []}
       ]);
@@ -71,18 +71,18 @@ describe("Repository", function() {
     it("should use the http service to save the dashboard data and invoke the callback", function() {
       httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(ajaxCallback(
         {id: "test.dashboard.1", monitors: [
-          {type: "monitor_type1", settings: "test_settings1"}
+          {type: "monitor_type1", configuration: "test_configuration1"}
         ]}
       ));
 
       repository.createDashboard({name: "test.dashboard"}, handler);
 
       expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("monitor_type1");
-      expect(monitorAdapter.parseSettings).toHaveBeenCalledWith("test_settings1");
+      expect(monitorAdapter.parseConfiguration).toHaveBeenCalledWith("test_configuration1");
 
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard", {name: "test.dashboard"});
       expect(handler).toHaveBeenCalledWith({id: "test.dashboard.1", monitors: [
-          {type: "monitor_type1", settings: {test_settings: "test_settings1"}}]});
+          {type: "monitor_type1", configuration: {test_configuration: "test_configuration1"}}]});
     });
 
     it("should use the http service to save the monitor data and invoke the callback", function() {
@@ -90,16 +90,16 @@ describe("Repository", function() {
         {
           id: "monitor_1",
           type: "monitor_type1",
-          settings: "test_settings1"
+          configuration: "test_configuration1"
         }
       ));
 
       repository.createMonitor({name: "test.monitor"}, handler);
 
       expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("monitor_type1");
-      expect(monitorAdapter.parseSettings).toHaveBeenCalledWith("test_settings1");
+      expect(monitorAdapter.parseConfiguration).toHaveBeenCalledWith("test_configuration1");
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/monitor", {name: "test.monitor"});
-      expect(handler).toHaveBeenCalledWith({type: "monitor_type1", settings: {test_settings: "test_settings1"}});
+      expect(handler).toHaveBeenCalledWith({type: "monitor_type1", configuration: {test_configuration: "test_configuration1"}});
     });
   });
 });

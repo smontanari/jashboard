@@ -1,7 +1,7 @@
 jashboard.plugin.build = {};
 
 jashboard.plugin.build.BuildMonitorAdapter = function() {
-  var buildSettingsTypeAdapter = new jashboard.plugin.TypeAdapter();
+  var buildConfigurationTypeAdapter = new jashboard.plugin.TypeAdapter();
 
   var getBuildStatus = function(status) {
     switch(status) {
@@ -18,8 +18,8 @@ jashboard.plugin.build.BuildMonitorAdapter = function() {
     return result ? "success" : "failure";
   };
 
-  this.parseSettings = function(settings_data) {
-    return buildSettingsTypeAdapter.toObject(settings_data);    
+  this.parseConfiguration = function(configuration_data) {
+    return buildConfigurationTypeAdapter.toObject(configuration_data);    
   };
 
   this.parseRuntimeInfo = function(runtimeInfo_data) {
@@ -33,7 +33,7 @@ jashboard.plugin.build.BuildMonitorAdapter = function() {
   };
 
   this.init = function() {
-    jashboard.plugin.build.buildSettingsTypeAdapter = buildSettingsTypeAdapter;
+    jashboard.plugin.build.buildConfigurationTypeAdapter = buildConfigurationTypeAdapter;
   };
 };
 

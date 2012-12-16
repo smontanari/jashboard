@@ -9,7 +9,7 @@ jashboard.Repository = function(http, pluginManager) {
   var createMonitor = function(monitor_data) {
     return _.tap(new jashboard.model.Monitor(monitor_data), function(monitor) {
       var monitorAdapter = pluginManager.findMonitorAdapter(monitor.type);
-      monitor.settings = monitorAdapter.parseSettings(monitor_data.settings);
+      monitor.configuration = monitorAdapter.parseConfiguration(monitor_data.configuration);
     });
   };
 

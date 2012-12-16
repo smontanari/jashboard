@@ -3,7 +3,7 @@ jashboard.PluginManager = function() {
 
   this.addMonitorAdapter = function(typeIdentifier, adapterConstructor) {
     var validateAdapter = function(adapter) {
-      _.each(["parseSettings", "parseRuntimeInfo"], function(method) {
+      _.each(["parseConfiguration", "parseRuntimeInfo"], function(method) {
         if(!_.contains(_.functions(adapter), method)) {
           throw "Adapter for [" + typeIdentifier + "] does not implement a " + method + " method";
         };

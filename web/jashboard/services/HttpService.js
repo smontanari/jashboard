@@ -1,6 +1,6 @@
 jashboard.HttpService = function() {
-  var ajaxRequest = function(url, settings) {
-    return jQuery.ajax(url, settings);
+  var ajaxRequest = function(url, configuration) {
+    return jQuery.ajax(url, configuration);
   };
 
   this.getJSON = function(url, params) {

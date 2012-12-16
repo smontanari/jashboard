@@ -24,7 +24,7 @@ describe("MonitorFormController", function() {
     it("should reset the monitorForm variable in the scope", function() {
       scope.monitorForm = {test: "test"};
       controller = new jashboard.MonitorFormController(scope, repository);
-      expect(scope.monitorForm).toEqual({settings: {}});
+      expect(scope.monitorForm).toEqual({configuration: {}});
     });
   });
 

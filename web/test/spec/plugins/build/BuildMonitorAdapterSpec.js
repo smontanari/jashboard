@@ -11,15 +11,15 @@ describe("BuildMonitorAdapter", function() {
     expect(jashboard.plugin.pluginManager.findMonitorAdapter('build')).toBeDefined();
   });
 
-  it("should invoke a build settings type handler", function() {
-    plugin.parseSettings("test");
+  it("should invoke a build configuration type handler", function() {
+    plugin.parseConfiguration("test");
 
     expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
   });
 
-  it("should create a buildSettingsTypeAdapter at initialisation", function() {
+  it("should create a buildConfigurationTypeAdapter at initialisation", function() {
     plugin.init();
-    expect(jashboard.plugin.build.buildSettingsTypeAdapter).toBeDefined();
+    expect(jashboard.plugin.build.buildConfigurationTypeAdapter).toBeDefined();
   });
 
   describe("monitor runtime handler", function() {

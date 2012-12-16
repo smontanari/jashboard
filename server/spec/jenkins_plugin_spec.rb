@@ -8,9 +8,9 @@ require 'plugins/build/jenkins_plugin'
 module Jashboard
   module Plugin
     module CIServer
-      describe JenkinsServerSettings do
+      describe JenkinsServerConfiguration do
         it("should serialize to a json with type = 'jenkins'") do
-          JenkinsServerSettings.new("test.host.name", 40, "test-build-id").to_json.
+          JenkinsServerConfiguration.new("test.host.name", 40, "test-build-id").to_json.
             should be_json_eql %({"type": "jenkins", "hostname": "test.host.name", "port": 40, "build_id": "test-build-id"})
         end
       end
@@ -20,15 +20,15 @@ module Jashboard
           BuildMonitorAdapter.class_variable_get('@@ciserver_type_handlers')['jenkins'].should == JenkinsAdapter
         end
 
-        context("Build settings creation") do
-          it("should create an instance of JenkinsServerSettings") do
-            input_settings = ({"hostname" => "test.host", "port" => 123, "build_id" => "test-build"})
+        context("Build configuration creation") do
+          it("should create an instance of JenkinsServerConfiguration") do
+            input_configuration = ({"hostname" => "test.host", "port" => 123, "build_id" => "test-build"})
 
-            settings = subject.create_settings(input_settings)
-            settings.class.should == JenkinsServerSettings
-            settings.hostname.should == "test.host"
-            settings.port.should == 123
-            settings.build_id.should == "test-build"
+            configuration = subject.create_configuration(input_configuration)
+            configuration.class.should == JenkinsServerConfiguration
+            configuration.hostname.should == "test.host"
+            configuration.port.should == 123
+            configuration.build_id.should == "test-build"
           end
         end
 
@@ -44,10 +44,10 @@ module Jashboard
           it("should invoke the correct url to retrieve last build information") do
             URI.should_receive(:parse).with("http://test.host:1234/job/test.build/lastSuccessfulBuild/api/xml")
 
-            subject.fetch_build_runtime_info(JenkinsServerSettings.new("test.host", 1234, "test.build"))
+            subject.fetch_build_runtime_info(JenkinsServerConfiguration.new("test.host", 1234, "test.build"))
           end
           it("should use parse the xml response to retrieve last build information") do
-            runtime_info = subject.fetch_build_runtime_info(JenkinsServerSettings.new("test.host", 1234, "test.build"))
+            runtime_info = subject.fetch_build_runtime_info(JenkinsServerConfiguration.new("test.host", 1234, "test.build"))
 
             runtime_info.last_build_time.should == "05-11-2012 09:35:08"
             runtime_info.duration.should == 25
@@ -60,7 +60,7 @@ module Jashboard
             end
             URI.stub(:parse).with("http://test.host:1234/job/test.build/7/api/xml").and_return(next_build_uri)
 
-            runtime_info = subject.fetch_build_runtime_info(JenkinsServerSettings.new("test.host", 1234, "test.build"))
+            runtime_info = subject.fetch_build_runtime_info(JenkinsServerConfiguration.new("test.host", 1234, "test.build"))
 
             runtime_info.status.should == 0
           end
@@ -71,7 +71,7 @@ module Jashboard
             end
             URI.stub(:parse).with("http://test.host:1234/job/test.build/7/api/xml").and_return(next_build_uri)
 
-            runtime_info = subject.fetch_build_runtime_info(JenkinsServerSettings.new("test.host", 1234, "test.build"))
+            runtime_info = subject.fetch_build_runtime_info(JenkinsServerConfiguration.new("test.host", 1234, "test.build"))
 
             runtime_info.status.should == 1
           end
@@ -82,7 +82,7 @@ module Jashboard
             end
             URI.stub(:parse).with("http://test.host:1234/job/test.build/7/api/xml").and_return(next_build_uri)
 
-            runtime_info = subject.fetch_build_runtime_info(JenkinsServerSettings.new("test.host", 1234, "test.build"))
+            runtime_info = subject.fetch_build_runtime_info(JenkinsServerConfiguration.new("test.host", 1234, "test.build"))
 
             runtime_info.status.should be_nil
           end

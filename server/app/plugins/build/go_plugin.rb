@@ -5,9 +5,9 @@ require 'plugins/build/build_runtime_info'
 module Jashboard
   module Plugin
     module CIServer
-      GOServerSettings = Struct.new(:hostname, :port, :pipeline, :stage, :job).tap do |clazz|
+      GOServerConfiguration = Struct.new(:hostname, :port, :pipeline, :stage, :job).tap do |clazz|
         clazz.module_eval do
-          extend ServerSettings
+          extend ServerConfiguration
           ciserver_type "go"
         end
       end

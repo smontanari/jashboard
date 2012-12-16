@@ -3,7 +3,7 @@ require 'plugins/build/build_monitor_adapter'
 module Jashboard
   module Plugin
     module CIServer
-      module ServerSettings
+      module ServerConfiguration
         def ciserver_type(type)
           define_method :to_map do |*args|
             super(*args).tap do |map|

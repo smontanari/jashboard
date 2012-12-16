@@ -7,9 +7,9 @@ require 'plugins/build/build_runtime_info'
 module Jashboard
   module Plugin
     module CIServer
-      JenkinsServerSettings = Struct.new(:hostname, :port, :build_id).tap do |clazz|
+      JenkinsServerConfiguration = Struct.new(:hostname, :port, :build_id).tap do |clazz|
         clazz.module_eval do
-          extend ServerSettings
+          extend ServerConfiguration
           ciserver_type 'jenkins'
         end
       end
@@ -18,12 +18,12 @@ module Jashboard
         extend CIServerTypeManager
         is_ciserver_adapter_for_type 'jenkins'
 
-        def create_settings(input_settings)
-          JenkinsServerSettings.new(input_settings['hostname'], input_settings['port'], input_settings['build_id'])
+        def create_configuration(input_configuration)
+          JenkinsServerConfiguration.new(input_configuration['hostname'], input_configuration['port'], input_configuration['build_id'])
         end
 
-        def fetch_build_runtime_info(settings)
-          @base_url = "http://#{settings.hostname}:#{settings.port}/job/#{settings.build_id}"
+        def fetch_build_runtime_info(configuration)
+          @base_url = "http://#{configuration.hostname}:#{configuration.port}/job/#{configuration.build_id}"
           @doc = Nokogiri::XML(open("#{@base_url}/lastSuccessfulBuild/api/xml"))
           BuildRuntimeInfo.new(get_time, get_duration, get_result, get_current_status)
         end

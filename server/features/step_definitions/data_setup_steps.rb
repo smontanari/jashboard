@@ -32,15 +32,3 @@ Given /^a dashboard with id "(.*)" and name "(.*)" with no monitors$/ do |dashbo
       build
   )
 end
-
-When /^I request all the dashboard$/ do
-  get "/ajax/dashboards"
-end
-
-Then /^the app should return the json response "(.*)"$/ do |fixture_path|
-  last_response.should be_ok
-  File.open("#{$JSON_FIXTURE_PATH}/#{fixture_path}") do |f|
-    last_response.body.should be_json_eql f.read
-  end
-end
-

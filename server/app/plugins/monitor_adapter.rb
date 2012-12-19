@@ -8,7 +8,7 @@ module Jashboard
       end
 
       def get_configuration(type, configuration)
-         @@type_handlers[type].new.get_configuration(configuration)
+        @@type_handlers[type].new.get_configuration(configuration)
       end
 
       def get_runtime_info(monitor)

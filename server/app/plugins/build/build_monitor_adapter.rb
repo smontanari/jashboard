@@ -13,7 +13,7 @@ module Jashboard
       end
 
       def get_configuration(input_configuration)
-        clazz =  @@ciserver_type_handlers[input_configuration[:type]]
+        clazz = @@ciserver_type_handlers[input_configuration['type']]
         clazz.new.create_configuration(input_configuration)
       end
 

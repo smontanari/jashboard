@@ -19,7 +19,7 @@ module Jashboard
       end
 
       it("should return the build configuration from the type handler") do
-        input_configuration = Struct.new(:type).new(123)
+        input_configuration = {'type' => 123}
         mock_handler = double
         DummyHandler.stub(:new => mock_handler)
         mock_configuration = double

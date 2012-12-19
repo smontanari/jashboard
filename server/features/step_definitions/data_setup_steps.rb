@@ -14,12 +14,12 @@ Given /^the following monitors$/ do |test_monitor_data|
   end
 end
 
-Given /^a dashboard with id "(.*)" and name "(.*)" and monitors$/ do |dashboard_id, dashboard_name, monitor_ids|
+Given /^a dashboard with id "(.*)" and name "(.*)" and monitors "(.*)"$/ do |dashboard_id, dashboard_name, monitor_ids|
   builder = Jashboard::DashboardBuilder.new.
     with_id(dashboard_id).
     with_name(dashboard_name)
-  monitor_ids.cells_rows.each do |row|
-    builder.with_monitor_id(row.first.value)
+  monitor_ids.split(",").each do |id|
+    builder.with_monitor_id(id)
   end
   @db_helper.serialize_dashboard(builder.build)
 end

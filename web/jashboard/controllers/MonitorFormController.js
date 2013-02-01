@@ -1,9 +1,11 @@
 jashboard.MonitorFormController = function(scope, repository) {
   var monitorFormSelector = "#new-monitor-form";
+  scope.workflow = new jashboard.model.CreateMonitorWorkflow();
 
   scope.saveMonitor = function() {
-    repository.createMonitor(scope.monitorForm, function(monitor) {
-      scope.$emit("NewMonitorEvent", monitor);
+    var theScope = this;
+    repository.createMonitor(theScope.monitorForm, function(monitor) {
+      theScope.$emit("NewMonitorEvent", monitor);
     });
     $(monitorFormSelector).modal('hide');
   };
@@ -14,11 +16,11 @@ jashboard.MonitorFormController = function(scope, repository) {
   });
 
   scope.displayMonitorOptions = function() {
-    $("#" + this.monitorForm.type + "MonitorInput").collapse("toggle");
+    $("#" + this.monitorForm.type + "MonitorInput").collapse("show");
   };
 
-  scope.monitorConfigurationFormView = function(type) {
-    return "html/plugins/" + type + "/monitor_configuration_form_view.html";
+  scope.monitorConfigurationFormView = function() {
+    return "html/plugins/" + this.monitorType + "/monitor_configuration_form_view.html";
   };
 
   // $('#buildMonitorInput a[data-toggle="tab"]').on('shown', function (e) {

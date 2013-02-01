@@ -1,35 +1,39 @@
-<div id="new-monitor-form" class="modal hide fade" role="dialog" aria-labelledby="monitorModalLabel" aria-hidden="true">
+<div id="new-monitor-form" class="modal hide fade" role="dialog" 
+     aria-labelledby="monitorModalLabel" aria-hidden="true" data-ng-controller="MonitorFormController">
   <div class="modal-header">
     <button id="closeDialog" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
-  <form data-ng-controller="MonitorFormController">
-    <div class="modal-body">
-      <div class="table-like">
-        <div class="controls">
-          <label for="monitorName">Name</label>
-          <input type="text" name="monitorName" class="input-large" placeholder="monitor name" data-ng-model="monitorForm.name">
-        </div>
-        <div class="controls">
-          <label class="control-label" for="monitorRefresh">Refresh interval</label>
-          <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorForm.refreshInterval"> seconds
-        </div>
-        <div class="controls">
-          <label for="monitorType">Type</label>
-          <select name="monitorType" class="input-medium" 
-            data-ng-model="monitorForm.type" 
-            data-ng-options="t for t in availableMonitorTypes" 
-            data-ng-change="displayMonitorOptions()">
-            <option value="">choose type</option>
-          </select>
+  <form>
+    <div id="configurationInput" class="modal-body" data-ng-class="workflow.displayState">
+      <div class="genericConfiguration">
+        <div class="table-like">
+          <div class="controls">
+            <label for="monitorName">Name</label>
+            <input type="text" name="monitorName" class="input-large" placeholder="monitor name" data-ng-model="monitorForm.name">
+          </div>
+          <div class="controls">
+            <label class="control-label" for="monitorRefresh">Refresh interval</label>
+            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorForm.refreshInterval"> seconds
+          </div>
+          <div class="controls">
+            <label>Type</label>
+            <select name="monitorType" class="input-medium" 
+              data-ng-model="monitorForm.type" 
+              data-ng-options="t for t in availableMonitorTypes">
+              <option value="">choose type</option>
+            </select>
+           </div>
         </div>
       </div>
-      <div data-ng-repeat="type in availableMonitorTypes">
-        <div data-ng-include="monitorConfigurationFormView(type)"></div>
+      <div data-ng-repeat="monitorType in availableMonitorTypes">
+        <div data-ng-include="monitorConfigurationFormView()"></div>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#" id="saveMonitor" class="btn btn-primary" data-ng-click="saveMonitor()">Save</a>
+      <span data-ng-repeat="workflowAction in workflow.actions">
+        <a href="#" id="configuration-{{workflowAction}}" class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</a>
+      </span>
       <a href="#" id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</a>
     </div>
   </form>

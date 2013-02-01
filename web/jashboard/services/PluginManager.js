@@ -30,10 +30,13 @@ jashboard.PluginManager = function() {
   };
 };
 
-jashboard.plugin.pluginManager = new jashboard.PluginManager();
-
-jashboard.services.factory('PluginManager', function() {
-  return jashboard.plugin.pluginManager;
-}).run(function() {
-  steal.dev.log("PluginManager initialized");
+jashboard.defineNamespace("jashboard.plugin", function() {
+  jashboard.plugin.pluginManager = new jashboard.PluginManager();
+  
+  jashboard.services.factory('PluginManager', function() {
+    return jashboard.plugin.pluginManager;
+  }).run(function() {
+    steal.dev.log("PluginManager initialized");
+  });
 });
+

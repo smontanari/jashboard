@@ -31,4 +31,37 @@ describe("Miscellaneous functions", function() {
       expect(result).toEqual("some value");
     });
   });
+
+  describe("defineNamespace", function() {
+    beforeEach(function() {
+      testRootNamespace = undefined;
+    });
+    it("should create and populate a namespace", function() {
+      jashboard.defineNamespace("testRootNamespace", function() {
+        testRootNamespace.testValue = {};
+      });
+
+      expect(testRootNamespace.testValue).toBeDefined();
+    });
+    it("should create and populate the namespace recursively", function() {
+      jashboard.defineNamespace("testRootNamespace.testChildNamespace", function() {
+        testRootNamespace.testChildNamespace.testValue = {};
+      });
+
+      expect(testRootNamespace.testChildNamespace.testValue).toBeDefined();
+    });
+    it("should not re-create the namespace if already defined", function() {
+      testRootNamespace = {
+        testDefinedNamespace: {
+          testDefinedValue: {}
+        }
+      };
+      jashboard.defineNamespace("testRootNamespace.testDefinedNamespace.testChildNamespace", function() {
+        testRootNamespace.testDefinedNamespace.testChildNamespace.testValue = {};
+      });
+
+      expect(testRootNamespace.testDefinedNamespace.testDefinedValue).toBeDefined();
+      expect(testRootNamespace.testDefinedNamespace.testChildNamespace.testValue).toBeDefined();
+    });
+  });
 });

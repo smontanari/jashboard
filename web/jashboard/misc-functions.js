@@ -29,3 +29,18 @@ jashboard.variableProcessor = {
     return data;
   }
 };
+
+jashboard.defineNamespace = function(namespaceDefinition, defineFunction) {
+  var _defineNamespace = function(parent, namespace) {
+    var ns = _.isEmpty(parent)? namespace : parent + "." + namespace;
+    if (_.isUndefined(eval(ns))) {
+      eval(ns + " = {};");
+    }
+    return ns;
+  };
+
+  _.reduce(namespaceDefinition.split('.'), _defineNamespace, "");
+  if (_.isFunction(defineFunction)) {
+    defineFunction();
+  }
+};

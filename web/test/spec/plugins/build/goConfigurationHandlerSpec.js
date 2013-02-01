@@ -2,7 +2,6 @@ describe("goConfigurationHandler", function() {
   it("should capture the build configuration for GO", function() {
     var configuration = jashboard.plugin.build.goConfigurationHandler(
       {
-        type: 2,
         hostname: "test.host.name",
         port: 123,
         pipeline: "test.pipeline",

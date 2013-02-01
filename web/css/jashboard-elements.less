@@ -58,3 +58,22 @@
     }
   }
 }
+
+#configurationInput {
+  &.showGenericConfiguration {
+    .genericConfiguration {
+      display: block;
+    }
+    .specificConfiguration {
+      display: none;
+    }
+  }
+  &.showSpecificConfiguration {
+    .genericConfiguration {
+      display: none;
+    }
+    .specificConfiguration {
+      display: block;
+    }
+  }
+}

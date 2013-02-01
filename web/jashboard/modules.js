@@ -9,6 +9,7 @@ steal(
   'jashboard/misc-functions.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
+  'jashboard/model/CreateMonitorWorkflow.js',
   'jashboard/services/HttpService.js',
   'jashboard/services/Repository.js',
   'jashboard/plugins/TypeAdapter.js',

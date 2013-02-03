@@ -17,6 +17,4 @@ steal('steal/less')
 .then("css/jashboard.less")
 .then("jashboard/modules.js");
 
-steal({src: 'test/funcunit/jashboard_test_scenario_loader.js', ignore: true }).then(
-  {src: 'test/funcunit/angular_test_helper.js', ignore: true }
-);
+steal({ src: 'test/funcunit/test_scenario_loader.js', ignore: true });

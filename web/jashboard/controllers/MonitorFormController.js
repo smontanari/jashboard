@@ -1,6 +1,5 @@
 jashboard.MonitorFormController = function(scope, repository) {
   var monitorFormSelector = "#new-monitor-form";
-  scope.workflow = new jashboard.model.CreateMonitorWorkflow();
 
   scope.saveMonitor = function() {
     var theScope = this;
@@ -12,6 +11,7 @@ jashboard.MonitorFormController = function(scope, repository) {
 
   scope.$on("OpenMonitorDialog", function(event) {
     scope.monitorForm = {configuration: {}};
+    scope.workflow = new jashboard.model.CreateMonitorWorkflow();
     $(monitorFormSelector).modal('show');
   });
 

@@ -23,5 +23,5 @@ var funcunitHelper = {
       });
       testExecution();
     });
-  }
+  },
 };

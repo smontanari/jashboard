@@ -1,17 +1,20 @@
 jashboard.defineNamespace("jashboard.model", function() {
   jashboard.model.CreateMonitorWorkflow = function() {
-    this.actions = ["next"];
-    this.displayState = "showGenericConfiguration";
+    this.reset = function() {
+      this.actions = ["next"];
+      this.state = "showGenericConfiguration";
+    };
 
     this.next = function() {
-      this.displayState = "showSpecificConfiguration";
+      this.state = "showSpecificConfiguration";
       this.actions = ["back", "save"];
     };
 
     this.back = function() {
-      this.displayState = "showGenericConfiguration";
+      this.state = "showGenericConfiguration";
       this.actions = ["next"];
     };
 
+    this.reset();
   };
 });

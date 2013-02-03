@@ -21,7 +21,7 @@ funcunitHelper.testFeature("Monitor create", "create_monitor", function() {
     S("#configuration-save").visible().click()
 
     S(".monitor-panel").size("2");
-    S("#monitor_345").visible();
+    S("#monitor_2").visible();
   });
 });
 

@@ -1,4 +1,4 @@
-$.fixture("GET /ajax/dashboards", function(orig, configuration, headers){
+$.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers) {
   return [[
     {
       'id': "dashboard_1", 'name': "my dashboard",
@@ -21,6 +21,10 @@ $.fixture("GET /ajax/dashboards", function(orig, configuration, headers){
 
 $.fixture("GET /ajax/monitor/monitor_1/runtime", "//test/funcunit/fixtures/monitor_1.json");
 
-$.fixture("POST /dashboard/dashboard_1/monitor", function(orig, configuration, headers){
-  return [201, "success", null, {Location: '/monitor/monitor_123'} ]
+$.fixture("POST /dashboard/dashboard_1/monitor", ffunction(ajaxOriginalOptions, ajaxOptions, headers) {
+  var response = 201, "success", {json: {id: "monitor_2", name: "test new-monitor" } }, {} ];
+
+  return jashboard.test.validateAjaxRequest(ajaxOptions, response, function(data) {
+    return (data.name === "test new-monitor");
+  });
 });

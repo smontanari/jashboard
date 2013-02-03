@@ -26,6 +26,11 @@ describe("MonitorFormController", function() {
       controller = new jashboard.MonitorFormController(scope, repository);
       expect(scope.monitorForm).toEqual({configuration: {}});
     });
+    it("should put the workflow variable in the scope", function() {
+      var spy = spyOn(jashboard.model, "CreateMonitorWorkflow").andReturn({});
+      controller = new jashboard.MonitorFormController(scope, repository);
+      expect(scope.workflow).toEqual({});
+    });
   });
 
   describe("saveMonitor", function() {

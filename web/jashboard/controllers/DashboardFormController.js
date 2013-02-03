@@ -6,7 +6,7 @@ jashboard.DashboardFormController = function(scope, repository) {
   };
 
   scope.saveDashboard = function() {
-    repository.createDashboard(scope.dashboardForm, function(dashboard) {
+    repository.createDashboard(this.dashboardForm, function(dashboard) {
       scope.$emit("NewDashboardEvent", dashboard);
     });
 

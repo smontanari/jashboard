@@ -14,7 +14,7 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     });
   };
 
-  //scope.$on("NewMonitorEvent", function(event, dashboard_id, monitor_data) {
+  //scope.$on("NewMonitorCreated", function(event, dashboard_id, monitor_data) {
   //});
 
   scope.$on('NewDashboardEvent', function(event, dashboard) {

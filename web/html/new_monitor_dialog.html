@@ -5,7 +5,7 @@
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
   <form>
-    <div id="configurationInput" class="modal-body" data-ng-class="workflow.state">
+    <div id="configurationInput" class="modal-body" data-ng-class="workflowState">
       <div class="genericConfiguration">
         <div class="table-like">
           <div class="controls">
@@ -27,14 +27,14 @@
         </div>
       </div>
       <div data-ng-repeat="monitorType in availableMonitorTypes">
-        <div data-ng-include="monitorConfigurationFormView()"></div>
+        <div data-ng-include="'html/plugins/' + monitorType + '/monitor_configuration_form_view.html'"></div>
       </div>
     </div>
     <div class="modal-footer">
-      <span data-ng-repeat="workflowAction in workflow.actions">
-        <a href="#" id="configuration-{{workflowAction}}" class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</a>
+      <span data-ng-repeat="workflowAction in workflowActions">
+        <button id="configuration-{{workflowAction}}" class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</button>
       </span>
-      <a href="#" id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</a>
+      <button id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</button>
     </div>
   </form>
 </div>

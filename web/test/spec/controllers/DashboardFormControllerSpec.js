@@ -23,9 +23,9 @@ describe("DashboardFormController", function() {
       expect($stub.modal).toHaveBeenCalledWith("show");
     });
     it("should reset the dashboardForm variable in the scope", function() {
-      scope.dashboardForm = {test: "test"};
+      scope.dashboardName = "test";
       controller = new jashboard.DashboardFormController(scope, repository);
-      expect(scope.dashboardForm).toEqual({name: "", refreshInterval: ""});
+      expect(scope.dashboardName).toEqual("");
     });
   });
 
@@ -37,7 +37,7 @@ describe("DashboardFormController", function() {
       });
       controller = new jashboard.DashboardFormController(scope, repository);
 
-      scope.dashboardForm = {name: "test.name"};
+      scope.dashboardName = "test.name";
       scope.saveDashboard();
     });
 

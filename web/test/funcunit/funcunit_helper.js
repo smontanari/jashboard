@@ -14,6 +14,11 @@ var funcunitHelper = {
   sleep: function(seconds) {
     funcunitHelper.sleeper.run(seconds);
   },
+  inputText: function(selector, text) {
+    S(selector).visible().focus().type(text, function() {
+      S(selector).trigger('input');
+    });
+  },
   testFeature: function(description, scenario, testExecution) {
     jashboard.functional_tests.push(function () {
       module("Feature: " +  description, {

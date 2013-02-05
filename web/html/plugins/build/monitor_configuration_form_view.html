@@ -19,7 +19,7 @@
       </ul>
       <div class="tab-content">
           <div id="buildSettings-{{settingsType}}" class="tab-pane table-like" data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-            <div data-ng-include="buildSettingsFormView()"></div>
+            <div data-ng-include="'html/plugins/build/' + settingsType + '_monitor_settings_form_view.html'"></div>
           </div>
       </div>
     </div>

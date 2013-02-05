@@ -1,4 +1,4 @@
-jashboard.test = {
+var scenarioHelper = {
   validateAjaxRequest: function(ajaxOptions, response, validator) {
     if (ajaxOptions.data !== null) {
       var requestData = JSON.parse(ajaxOptions.data);

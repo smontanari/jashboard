@@ -9,16 +9,9 @@ describe("DashboardContentController", function() {
 
   describe("Dashboard actions", function() {
     it("should broadcast the 'OpenMonitorDialog' event", function() {
+      scope.dashboard = {id: "test_dashboard_id"};
       scope.actionNewMonitor();
-      expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog");
-    });
-  });
-
-  describe("Runtime View", function() {
-    it("should return the view corresponding to the current monitor in scope", function() {
-      scope.monitor = {type: "test_type"};
-
-      expect(scope.monitorRuntimeView()).toEqual("html/plugins/test_type/monitor_runtime_view.html");
+      expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", "test_dashboard_id");
     });
   });
 });

@@ -7,16 +7,16 @@ funcunitHelper.testFeature("Monitor create", "create_monitor", function() {
 
   test("should create a new build monitor", function() {
     openMonitorDialog();
-    S("input[name='monitorName']").visible().click().type("another monitor");
-    S("input[name='monitorRefresh']").visible().click().type("30");
+    funcunitHelper.inputText("input[name='monitorName']", "test new-monitor");
+    funcunitHelper.inputText("input[name='monitorRefresh']", "30");
     S("select[name='monitorType']").visible().click();
     S("select[name='monitorType'] option:eq(1)").visible().click();
 
     S("#configuration-next").visible().click();
 
-    S("input[name='serverName']").visible().click().type("test server-name");
-    S("input[name='serverPort']").visible().click().type("1234");
-    S("input[name='buildSettings-Jenkins-build_id']").visible().click().type("jenkins-build-123");
+    funcunitHelper.inputText("input[name='serverName']", "test server-name");
+    funcunitHelper.inputText("input[name='serverPort']", "1234");
+    funcunitHelper.inputText("input[name='buildSettings-Jenkins-build_id']", "jenkins-build-123");
 
     S("#configuration-save").visible().click()
 

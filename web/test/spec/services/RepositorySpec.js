@@ -94,11 +94,11 @@ describe("Repository", function() {
         }
       ));
 
-      repository.createMonitor({name: "test.monitor"}, handler);
+      repository.createMonitor({name: "test.monitor", dashboard_id: "123"}, handler);
 
       expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("monitor_type1");
+      expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard/123/monitor", {name: "test.monitor"});
       expect(monitorAdapter.parseConfiguration).toHaveBeenCalledWith("test_configuration1");
-      expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/monitor", {name: "test.monitor"});
       expect(handler).toHaveBeenCalledWith({type: "monitor_type1", configuration: {test_configuration: "test_configuration1"}});
     });
   });

@@ -6,8 +6,8 @@ steal(
 ).then(
   { src: 'lib/angular-1.0.2/angular.min.js', packaged: false },
   { src: 'lib/underscore-min.js', packaged: false },
-  { src: 'lib/bootstrap.js', packaged: false }
-  // { src: 'lib/bootstrap.min.js', packaged: false }
+  // { src: 'lib/bootstrap.js', packaged: false }
+  { src: 'lib/bootstrap.min.js', packaged: false }
 );
 
 

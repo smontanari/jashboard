@@ -21,10 +21,23 @@ $.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers
 
 $.fixture("GET /ajax/monitor/monitor_1/runtime", "//test/funcunit/fixtures/monitor_1.json");
 
-$.fixture("POST /dashboard/dashboard_1/monitor", ffunction(ajaxOriginalOptions, ajaxOptions, headers) {
-  var response = 201, "success", {json: {id: "monitor_2", name: "test new-monitor" } }, {} ];
+$.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
+  console.log(ajaxOptions.data);
+  var response = [201, "success", {json: {
+        "id": "monitor_2",
+        "name": "test new-monitor",
+        "refresh_interval": 10,
+        "type": "build",
+        "configuration": {
+          "type": "go",
+          "hostname": "test-dev.host.com",
+          "port": 9080,
+          "build_id": "zombie_build"
+        }
+      }
+    }, {} ];
 
-  return jashboard.test.validateAjaxRequest(ajaxOptions, response, function(data) {
+  return scenarioHelper.validateAjaxRequest(ajaxOptions, response, function(data) {
     return (data.name === "test new-monitor");
   });
 });

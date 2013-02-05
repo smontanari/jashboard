@@ -1,3 +1,5 @@
-steal(
-  'jashboard/plugins/build/build_plugins.js'
-);
+_.each(["build"], function(pluginType) {
+  steal(
+    "jashboard/plugins/" + pluginType + "/" + pluginType + "_plugins.js"
+  );  
+});

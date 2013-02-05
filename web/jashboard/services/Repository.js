@@ -28,15 +28,15 @@ jashboard.Repository = function(http, pluginManager) {
     });
   };
 
-  this.createDashboard = function(dashboardParameters, handler) {
-    http.postJSON("/ajax/dashboard", dashboardParameters)
+  this.createDashboard = function(parameters, handler) {
+    http.postJSON("/ajax/dashboard", parameters)
     .success(function(dashboard_data) {
       handler(createDashboard(dashboard_data));
     });
   };
 
-  this.createMonitor = function(monitorParameters, handler) {
-    http.postJSON("/ajax/monitor", monitorParameters)
+  this.createMonitor = function(parameters, handler) {
+    http.postJSON("/ajax/dashboard/" + parameters.dashboard_id + "/monitor", _.omit(parameters, "dashboard_id"))
     .success(function(monitor_data) {
       handler(createMonitor(monitor_data));
     });    

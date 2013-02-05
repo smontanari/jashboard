@@ -1,39 +1,15 @@
 jashboard.MonitorFormController = function(scope, repository) {
   var monitorFormSelector = "#new-monitor-form";
 
-  scope.saveMonitor = function() {
-    var theScope = this;
-    repository.createMonitor(theScope.monitorForm, function(monitor) {
-      theScope.$emit("NewMonitorEvent", monitor);
-    });
+  scope.$on("NewMonitorCreated", function(event) {
     $(monitorFormSelector).modal('hide');
-  };
-
-  scope.$on("OpenMonitorDialog", function(event) {
-    scope.monitorForm = {configuration: {}};
-    scope.workflow = new jashboard.model.CreateMonitorWorkflow();
-    $(monitorFormSelector).modal('show');
   });
 
-  scope.displayMonitorOptions = function() {
-    $("#" + this.monitorForm.type + "MonitorInput").collapse("show");
-  };
-
-  scope.monitorConfigurationFormView = function() {
-    return "html/plugins/" + this.monitorType + "/monitor_configuration_form_view.html";
-  };
-
-  // $('#buildMonitorInput a[data-toggle="tab"]').on('shown', function (e) {
-  //   $(e.target).attr('href');
-  // });
-
-  // crap... angular does not detect some of the ui changes triggered by funcunit, so we have to force the scope change
-  // this code is supposed to execute only during functional testing
-  if (_.isObject(jashboard.AngularTestHelper)) {
-    //jashboard.AngularTestHelper.detectChange("input[name='monitorName']", function(value) {
-       //scope.monitorForm.name = value;
-    //});
-  }
+  scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
+    scope.monitorForm = {dashboard_id: dashboard_id};
+    scope.workflow = new jashboard.CreateMonitorWorkflow(scope, repository);
+    $(monitorFormSelector).modal('show');
+  });
 };
 
 jashboard.application.controller("MonitorFormController", ['$scope', 'Repository', jashboard.MonitorFormController]).run(function() {

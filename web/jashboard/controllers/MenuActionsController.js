@@ -1,6 +1,7 @@
 jashboard.MenuActionsController = function(scope) {
+  scope.dashboardName = "";
   scope.actionNewDashboard = function() {
-    this.$broadcast("OpenDashboardDialog");
+    scope.$broadcast("OpenDashboardDialog");
   };
 };
 

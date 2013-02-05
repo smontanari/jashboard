@@ -1,5 +1,5 @@
 describe("MonitorFormController", function() {
-  var scope;
+  var scope = {};
   var controller;
   var $stub;
   var repository = {};
@@ -11,68 +11,56 @@ describe("MonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      scope = {};
       scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-        handler();
+        var event = {};
+        handler(event, "test_dashboard_id");
       });
+      repository.createMonitor = jasmine.createSpy("repository.createMonitor").andCallFake(function(input, handler) {
+        handler("test.monitor");
+      });
+    });
+    it("should listen to the 'OpenMonitorDialog' event", function() {
+      controller = new jashboard.MonitorFormController(scope, repository);
+      expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
     });
     it("should open the modal dialog", function() {
       controller = new jashboard.MonitorFormController(scope, repository);
-      expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
       expect($stub.modal).toHaveBeenCalledWith("show");
     });
     it("should reset the monitorForm variable in the scope", function() {
       scope.monitorForm = {test: "test"};
       controller = new jashboard.MonitorFormController(scope, repository);
-      expect(scope.monitorForm).toEqual({configuration: {}});
+      expect(scope.monitorForm).toEqual({dashboard_id: "test_dashboard_id"});
     });
-    it("should put the workflow variable in the scope", function() {
-      var spy = spyOn(jashboard.model, "CreateMonitorWorkflow").andReturn({});
+    it("should instantiate a new workflow", function() {
+      var workflow = spyOn(jashboard, "CreateMonitorWorkflow");
       controller = new jashboard.MonitorFormController(scope, repository);
-      expect(scope.workflow).toEqual({});
+      expect(workflow).toHaveBeenCalledWith(scope, repository);
     });
   });
 
-  describe("saveMonitor", function() {
+  describe("'NewMonitorCreated' event listener", function() {
     beforeEach(function() {
       scope = jasmine.createSpyObj("scope", ['$on', '$emit']);
+      scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+        handler();
+      });
       repository.createMonitor = jasmine.createSpy("repository.createMonitor").andCallFake(function(input, handler) {
         handler("test.monitor");
       });
-      controller = new jashboard.MonitorFormController(scope, repository);
+      spyOn(jashboard, "CreateMonitorWorkflow").andCallFake(function(handler) {
+        return {
+          save: handler
+        };
+      });
       scope.monitorForm = {name: "test.name"};
-
-      scope.saveMonitor();
+      controller = new jashboard.MonitorFormController(scope, repository);
     });
-
-    it("should call the repository to create a monitor", function() {
-      expect(repository.createMonitor).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Function));
-    });
-    it("should emit the 'NewMonitorEvent'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("NewMonitorEvent", "test.monitor");
+    it("should listen to the 'NewMonitorCreated' event", function() {
+      expect(scope.$on).toHaveBeenCalledWith("NewMonitorCreated", jasmine.any(Function));
     });
     it("should close the dialog", function() {
       expect($stub.modal).toHaveBeenCalledWith("hide");
-    });
-  });
-
-  describe("displayMonitorOptions", function() {
-    beforeEach(function() {
-      $stub = testHelper.stubJQuery(["#buildMonitorInput"]);
-      $stub.collapse = jasmine.createSpy("$.collapse()");
-      controller = new jashboard.MonitorFormController(scope, repository);
-    });
-
-    it("should return the form view corresponding to the type", function() {
-      scope.monitorType = "test_type";
-      expect(scope.monitorConfigurationFormView()).toEqual("html/plugins/test_type/monitor_configuration_form_view.html");
-    });
-
-    it("should toggle the build monitor options", function() {
-      scope.monitorForm.type = 'build';
-      scope.displayMonitorOptions();
-
-      expect($stub.collapse).toHaveBeenCalledWith('show');
     });
   });
 });

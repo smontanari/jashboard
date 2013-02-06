@@ -22,8 +22,19 @@ funcunitHelper.testFeature("Monitor create", "create_monitor", function() {
 
     S("#dashboard_1 .monitor-panel").size(2, function() {
       S("#monitor_2").visible();
+
+      funcunitHelper.sleep(1);
+
+      funcunitHelper.verifyMonitorData("#monitor_2",
+        {
+          '.monitor-title': "test new-monitor",
+          '.build-time': "28-08-2012 11:25:10",
+          '.build-duration': "09:56",
+          '.build-result': "success",
+          '.build-status': "building"
+        }
+      );
     });
-    funcunitHelper.sleep(1);
   });
 });
 

@@ -20,6 +20,7 @@ $.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers
 });
 
 $.fixture("GET /ajax/monitor/monitor_1/runtime", "//test/funcunit/fixtures/monitor_1.json");
+$.fixture("GET /ajax/monitor/monitor_2/runtime", "//test/funcunit/fixtures/monitor_2.json");
 
 $.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var monitorParams = JSON.parse(ajaxOptions.data);

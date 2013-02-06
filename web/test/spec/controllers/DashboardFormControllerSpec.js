@@ -44,8 +44,8 @@ describe("DashboardFormController", function() {
     it("should call the repository to create a dashboard", function() {
       expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Function));
     });
-    it("should emit the 'NewDashboardEvent'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("NewDashboardEvent", "test.dashboard");
+    it("should emit the 'NewDashboardCreated'", function() {
+      expect(scope.$emit).toHaveBeenCalledWith("NewDashboardCreated", "test.dashboard");
     });
     it("should close the dialog", function() {
       expect($stub.modal).toHaveBeenCalledWith("hide");

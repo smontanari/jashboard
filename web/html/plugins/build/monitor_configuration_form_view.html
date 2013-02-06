@@ -3,7 +3,7 @@
     <div class="controls table-like">
       <div>
         <label class="control-label" for="serverName">Hostname</label>
-        <input name="serverName" type="text" class="input-large" placeholder="ci hostname" class="input-large" data-ng-model="monitorForm.settings.hostname">
+        <input name="serverName" type="text" class="input-large" placeholder="ci hostname" class="input-large" data-ng-model="monitorForm.configuration.hostname">
       </div>
       <div>
         <label class="control-label" for="serverPort">Port</label>
@@ -11,16 +11,17 @@
       </div>
     </div>
     <div class="controls">
+      <input type="hidden" name="monitorForm.configuration.type" data-ng-model="monitorForm.configuration.type">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
         <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-          <a data-toggle="tab" href="#buildSettings-{{settingsType}}">{{settingsType}}</a>
+          <a data-toggle="tab" href="#buildSettings-{{settingsType}}" data-ng-click="setConfigurationType(settingsType)">{{settingsType}}</a>
         </li>
       </ul>
       <div class="tab-content">
-          <div id="buildSettings-{{settingsType}}" class="tab-pane table-like" data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-            <div data-ng-include="'html/plugins/build/' + settingsType + '_monitor_settings_form_view.html'"></div>
-          </div>
+        <div id="buildSettings-{{settingsType}}" class="tab-pane table-like" data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
+          <div data-ng-include="'html/plugins/build/' + settingsType + '_monitor_settings_form_view.html'"></div>
+        </div>
       </div>
     </div>
   </div>

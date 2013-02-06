@@ -35,8 +35,8 @@ jashboard.Repository = function(http, pluginManager) {
     });
   };
 
-  this.createMonitor = function(parameters, handler) {
-    http.postJSON("/ajax/dashboard/" + parameters.dashboard_id + "/monitor", _.omit(parameters, "dashboard_id"))
+  this.createMonitor = function(dashboard_id, monitorParameters, handler) {
+    http.postJSON("/ajax/dashboard/" + dashboard_id + "/monitor", monitorParameters)
     .success(function(monitor_data) {
       handler(createMonitor(monitor_data));
     });    

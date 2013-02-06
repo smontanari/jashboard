@@ -1,22 +1,23 @@
 jashboard.defineNamespace("jashboard", function() {
   jashboard.CreateMonitorWorkflow = function(scope, repository) {
-    scope.workflowActions = ["next"];
-    scope.workflowState = "showGenericConfiguration";
+    this.actions = ["next"];
+    this.state = "showGenericConfiguration";
 
     this.next = function() {
-      scope.workflowState = "showSpecificConfiguration";
-      scope.workflowActions = ["back", "save"];
+      this.state = "showSpecificConfiguration";
+      this.actions = ["back", "save"];
     };
 
     this.back = function() {
-      scope.workflowState = "showGenericConfiguration";
-      scope.workflowActions = ["next"];
+      this.state = "showGenericConfiguration";
+      this.actions = ["next"];
     };
 
     this.save = function() {
-      var theScope = scope;
-      repository.createMonitor(theScope.monitorForm, function(monitor) {
-        theScope.$emit("NewMonitorCreated", monitor);
+      var dashboard_id = scope.monitorForm.dashboard_id;
+      var monitorParameters = _.omit(scope.monitorForm, "dashboard_id");
+      repository.createMonitor(dashboard_id, monitorParameters, function(monitor) {
+        scope.$emit("NewMonitorCreated", dashboard_id, monitor);
       });
     };
   };

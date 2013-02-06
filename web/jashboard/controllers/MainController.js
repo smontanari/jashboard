@@ -1,6 +1,4 @@
 jashboard.MainController = function(scope, repository, pluginManager) {
-  scope.dashboards = [];
-
   var addDashboard = function(dashboard) {
     scope.dashboards.push(dashboard);
     _.each(dashboard.monitors, updateMonitorRuntime);
@@ -14,10 +12,15 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     });
   };
 
-  //scope.$on("NewMonitorCreated", function(event, dashboard_id, monitor_data) {
-  //});
+  scope.$on("NewMonitorCreated", function(event, dashboard_id, monitor) {
+    var dashboard = _.find(scope.dashboards, function(dashboard) {
+      return (dashboard.id === dashboard_id);
+    });
+    dashboard.monitors.push(monitor);
+    scope.$apply();
+  });
 
-  scope.$on('NewDashboardEvent', function(event, dashboard) {
+  scope.$on('NewDashboardCreated', function(event, dashboard) {
     addDashboard(dashboard);
   });
 

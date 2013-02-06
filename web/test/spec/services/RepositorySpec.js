@@ -20,6 +20,7 @@ describe("Repository", function() {
       this.monitors = [];
     });
     spyOn(jashboard.model, "Monitor").andCallFake(function(data) {
+      this.id = data.id;
       this.type = data.type;
       this.configuration = {};
     });
@@ -86,20 +87,25 @@ describe("Repository", function() {
     });
 
     it("should use the http service to save the monitor data and invoke the callback", function() {
-      httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(ajaxCallback(
-        {
-          id: "monitor_1",
-          type: "monitor_type1",
-          configuration: "test_configuration1"
-        }
-      ));
+      var createdMonitor = {
+        id: "monitor_1",
+        type: "monitor_type1",
+        configuration: "test_configuration1"
+      }
+      httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
+        ajaxCallback(createdMonitor)
+      );
 
-      repository.createMonitor({name: "test.monitor", dashboard_id: "123"}, handler);
+      repository.createMonitor("test_dashboard", {name: "test.monitor"}, handler);
 
       expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("monitor_type1");
-      expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard/123/monitor", {name: "test.monitor"});
+      expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard/monitor", {name: "test.monitor"});
       expect(monitorAdapter.parseConfiguration).toHaveBeenCalledWith("test_configuration1");
-      expect(handler).toHaveBeenCalledWith({type: "monitor_type1", configuration: {test_configuration: "test_configuration1"}});
+      expect(handler).toHaveBeenCalledWith({
+        id: "monitor_1",
+        type: "monitor_type1",
+        configuration: {test_configuration: "test_configuration1"}
+      });
     });
   });
 });

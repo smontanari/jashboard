@@ -20,8 +20,10 @@ funcunitHelper.testFeature("Monitor create", "create_monitor", function() {
 
     S("#configuration-save").visible().click()
 
-    S(".monitor-panel").size("2");
-    S("#monitor_2").visible();
+    S("#dashboard_1 .monitor-panel").size(2, function() {
+      S("#monitor_2").visible();
+    });
+    funcunitHelper.sleep(1);
   });
 });
 

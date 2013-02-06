@@ -30,7 +30,7 @@ funcunitHelper.testFeature("Monitor create", "create_monitor", function() {
           '.monitor-title': "test new-monitor",
           '.build-time': "28-08-2012 11:25:10",
           '.build-duration': "09:56",
-          '.build-result': "success",
+          '.build-result': "failure",
           '.build-status': "building"
         }
       );

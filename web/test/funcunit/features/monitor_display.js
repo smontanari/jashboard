@@ -8,7 +8,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
         '.monitor-title': "Epic build",
         '.build-time': "28-08-2012 11:25:10",
         '.build-duration': "09:56",
-        '.build-result': "success",
+        '.build-result': "failure",
         '.build-status': "building"
       }
     );

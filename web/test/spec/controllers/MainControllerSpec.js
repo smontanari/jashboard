@@ -89,13 +89,18 @@ describe("MainController", function() {
       beforeEach(function() {
         scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
           if (eventName === "NewMonitorCreated") {
-            handler({}, "dashboard2", {id: "m3", name: "test.new.monitor"});
+            handler({}, "dashboard2", {id: "m3", name: "test.new.monitor", type: "test_type"});
           }
         });
         scope.dashboards = [
           {id: "dashboard1", monitors: [{id: "m1"}]},
           {id: "dashboard2", monitors: [{id: "m2"}]}
         ];
+        repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo")
+          .andCallFake(function(monitor_id, monitor_type, handler) {
+          handler("runtimeInfo_" + monitor_id + "_" + monitor_type);
+        });
+
         controller = new jashboard.MainController(scope, repository, pluginManager);
       });
       it("should register a listener to the 'NewMonitorCreated'", function() {
@@ -104,7 +109,8 @@ describe("MainController", function() {
       it("should register a listener to the 'NewMonitorCreated' that adds the monitor to the dashboard", function() {
         expect(scope.dashboards[0].monitors.length).toEqual(1);
         expect(scope.dashboards[1].monitors.length).toEqual(2);
-        expect(scope.dashboards[1].monitors).toContain({id: "m3", name: "test.new.monitor"});
+        expect(scope.dashboards[1].monitors).toContain(
+          {id: "m3", name: "test.new.monitor", type: "test_type", runtimeInfo: "runtimeInfo_m3_test_type"});
         expect(scope.$apply).toHaveBeenCalled();
       });
     });

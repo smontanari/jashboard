@@ -18,6 +18,7 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     });
     dashboard.monitors.push(monitor);
     scope.$apply();
+    updateMonitorRuntime(monitor);
   });
 
   scope.$on('NewDashboardCreated', function(event, dashboard) {

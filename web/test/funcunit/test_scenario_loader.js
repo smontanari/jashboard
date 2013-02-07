@@ -7,7 +7,7 @@
     steal(
       { src: 'jquery/dom/fixture', ignore: true },
       { src: 'test/funcunit/angular_test_helper.js', ignore: true },
-      { src: 'test/funcunit/scenario_helper.js', ignore: true }
+      { src: 'test/funcunit/scenarios/scenario_helper.js', ignore: true }
     ).then("test/funcunit/scenarios/" + scenarioName + ".js");
   }
 })();

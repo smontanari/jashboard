@@ -3,7 +3,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
     S(".dashboard-tab a[href='#dashboard_3']").click();
     S(".build-panel").invisible("No build monitors are visible");
     S(".dashboard-tab a[href='#dashboard_2']").click();
-    funcunitHelper.verifyMonitorData("#monitor_2",
+    featureHelper.verifyMonitorData("#monitor_2",
       {
         '.monitor-title': "Epic build",
         '.build-time': "28-08-2012 11:25:10",
@@ -12,7 +12,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
         '.build-status': "building"
       }
     );
-    funcunitHelper.verifyMonitorData("#monitor_3",
+    featureHelper.verifyMonitorData("#monitor_3",
       {
         '.monitor-title': "Forum build",
         '.build-time': "25-08-2012 15:56:45",
@@ -22,7 +22,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
       }
     );
     S(".dashboard-tab a[href='#dashboard_1']").click();
-    funcunitHelper.verifyMonitorData("#monitor_1",
+    featureHelper.verifyMonitorData("#monitor_1",
       {
         '.monitor-title': "Zombie-Dash build",
         '.build-time': "23-08-2012 14:32:23",

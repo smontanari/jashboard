@@ -11,11 +11,11 @@
       </div>
     </div>
     <div class="controls">
-      <input type="hidden" name="monitorForm.configuration.type" data-ng-model="monitorForm.configuration.type">
+      <input type="hidden" name="configurationType" data-ng-model="monitorForm.configuration.type">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
         <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-          <a data-toggle="tab" href="#buildSettings-{{settingsType}}" data-ng-click="setConfigurationType(settingsType)">{{settingsType}}</a>
+          <a id="buildSettings-{{settingsType}}-tab" data-toggle="tab" href="#buildSettings-{{settingsType}}" data-ng-click="setConfigurationType(settingsType)">{{settingsType}}</a>
         </li>
       </ul>
       <div class="tab-content">

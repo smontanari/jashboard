@@ -5,7 +5,8 @@ var jashboard = {
 steal("funcunit", "lib/underscore-min.js")
 .then("./funcunit_helper.js")
 .then(
-  "./features/monitor_create.js",
+  "./features/feature_helper.js",
+  "./features/build_monitor_create.js",
   "./features/monitor_display.js",
   "./features/dashboard_create.js",
   "./features/tabs_display.js"

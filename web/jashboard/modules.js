@@ -1,8 +1,6 @@
 var jashboard = {
-  // model: {},
   services: angular.module('jashboard.services', []),
   application: angular.module('jashboard', ['jashboard.services'])
-  // plugin: {}
 };
 steal.dev.log("loading jashboard modules");
 steal(

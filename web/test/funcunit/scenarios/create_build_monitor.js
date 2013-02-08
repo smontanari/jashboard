@@ -25,7 +25,7 @@ _.each([1, 2, 3], function(index) {
 
 $.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var monitorParams = JSON.parse(ajaxOptions.data);
-  var response = [201, "success", scenarioHelper.buildMonitorJsonResponse("monitor_2", monitorParams), {} ];
+  var response = [201, "success", scenarioHelper.fixtureBuildMonitorJsonResponse("monitor_2", monitorParams), {} ];
 
   return scenarioHelper.validateAjaxRequest(ajaxOptions, response, function(data) {
     var verifyConfigurationTypeData = function(configuration) {

@@ -8,7 +8,7 @@ var scenarioHelper = {
     }
     throw("unexpected data in the POST request: " + ajaxOptions.data);
   },
-  buildMonitorJsonResponse: function(monitor_id, monitorParams) {
+  fixtureBuildMonitorJsonResponse: function(monitor_id, monitorParams) {
     return {json: {
         "id": monitor_id,
         "name": monitorParams.name,
@@ -22,5 +22,33 @@ var scenarioHelper = {
         }
       }
     };
+  },
+  SinonFakeServer: function() {
+    var fakeServer = sinon.fakeServer.create();
+    fakeServer.autoRespond = true;
+    fakeServer.old_processRequest = fakeServer.processRequest;
+    fakeServer.processRequest = function(request) {
+      request.readyState = 4;
+      this.old_processRequest(request);
+    };
+    // return fakeServer;
+    this.fakeResponse = function(method, url, responseOptions) {
+      responseOptions = responseOptions || {};
+      var options = _.defaults(responseOptions, {
+        returnCode: 200,
+        contentType: "application/json",
+        content: {},
+        timeout: 0
+      }); 
+
+      fakeServer.respondWith(method, url, function(xhr) {
+        if (options.timeout > 0) {
+          setTimeout(function() {
+            xhr.respond(options.returnCode, { "Content-Type": options.contentType }, JSON.stringify(options.content));
+          }, options.timeout);
+        }
+      });
+    };
+    return this;
   }
 };

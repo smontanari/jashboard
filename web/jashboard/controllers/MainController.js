@@ -7,7 +7,7 @@ jashboard.MainController = function(scope, repository, pluginManager) {
 
   var updateMonitorRuntime = function(monitor) {
     repository.loadMonitorRuntimeInfo(monitor.id, monitor.type, function(runtimeInfo) {
-      monitor.runtimeInfo = runtimeInfo;
+      monitor.updateRuntimeInfo(runtimeInfo);
       scope.$apply();
     });
   };
@@ -25,7 +25,9 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     addDashboard(dashboard);
   });
 
+  scope.pageLoadingStatus = jashboard.model.loadingStatus.waiting;
   repository.loadDashboards(function(data) {
+    scope.pageLoadingStatus = jashboard.model.loadingStatus.completed;
     scope.dashboards = [];
     _.each(data, addDashboard);
   });

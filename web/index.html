@@ -29,7 +29,13 @@
     </div>
   </div>
   <div class="container">
-    <div id="dashboard-navbar">
+    <div class="waiting-msg" data-ng-hide="pageLoadingStatus == 'completed'">
+      <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
+    </div>
+    <div class="no-dashboards hide alert alert-info" data-ng-show="dashboards.length == 0">
+      There are no configured dashboards.
+    </div>
+    <div id="dashboard-navbar" data-ng-show="dashboards.length > 0">
       <ul class="nav nav-tabs">
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
           <a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a>
@@ -51,7 +57,10 @@
         </div>
         <div class="dashboard-content">
           <div id="{{monitor.id}}" class="monitor-panel" data-ng-repeat="monitor in dashboard.monitors">
-          <div class="monitor-title">{{monitor.name}}</div>
+          <div class="monitor-title">
+            <span>{{monitor.name}}</span>
+            <span data-ng-hide="monitor.loadingStatus == 'completed'"><img src="img/ajax-loader-arrows.gif"></span>
+          </div>
             <div class="monitor-details">
               <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_view.html'"></div>
             </div>

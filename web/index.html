@@ -35,7 +35,7 @@
     <div class="no-dashboards hide alert alert-info" data-ng-show="dashboards.length == 0">
       There are no configured dashboards.
     </div>
-    <div id="dashboard-navbar" data-ng-show="dashboards.length > 0">
+    <div id="dashboard-navbar" data-ng-hide="pageLoadingStatus == 'loading'">
       <ul class="nav nav-tabs">
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
           <a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a>

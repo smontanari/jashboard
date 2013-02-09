@@ -31,7 +31,7 @@ var scenarioHelper = {
       request.readyState = 4;
       this.old_processRequest(request);
     };
-    // return fakeServer;
+
     this.fakeResponse = function(method, url, responseOptions) {
       responseOptions = responseOptions || {};
       var options = _.defaults(responseOptions, {
@@ -45,7 +45,7 @@ var scenarioHelper = {
         if (options.timeout > 0) {
           setTimeout(function() {
             xhr.respond(options.returnCode, { "Content-Type": options.contentType }, JSON.stringify(options.content));
-          }, options.timeout);
+          }, (options.timeout * 1000));
         }
       });
     };

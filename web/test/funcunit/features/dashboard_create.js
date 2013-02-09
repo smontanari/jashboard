@@ -8,7 +8,7 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
   test("should create a new dashboard and display the new tab", function() {
     openDashboardDialog();
     var name = "test new-dashboard";
-    funcunitHelper.inputText("input[name='dashboardName']", "test new-dashboard");
+    featureHelper.inputText("input[name='dashboardName']", "test new-dashboard");
 
     S("#saveDashboard").visible().click();
 
@@ -19,13 +19,14 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
 
   test("should reset the input fields on opening", function() {
     openDashboardDialog();
-    funcunitHelper.inputText("input[name='dashboardName']", "some text");
+    featureHelper.inputText("input[name='dashboardName']", "some text");
 
     S("#cancelDashboard").visible().click();
 
-    funcunitHelper.sleep(1);
-    openDashboardDialog();
-    S("input[name='dashboardName']").visible().text("");
+    FuncUnit.wait(1000, function() {
+      openDashboardDialog();
+      S("input[name='dashboardName']").visible().text("");
+    });
   });
 
   test("should close the dialog on Cancel", function() {

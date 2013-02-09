@@ -1,24 +1,4 @@
 var funcunitHelper = {
-  sleeper: new function() {
-    var sleepCount = 0;
-    var sleep = function(id, seconds) {
-      setTimeout(function() {
-        S('body').append('<div id="sleep' + id +'" style="display: none"></div>');
-      }, seconds * 1000);
-      S('#sleep' + id).size(1);
-    };
-    this.run = function(seconds) {
-      sleep(sleepCount++, seconds);
-    }
-  },
-  sleep: function(seconds) {
-    funcunitHelper.sleeper.run(seconds);
-  },
-  inputText: function(selector, text) {
-    S(selector).visible().focus().type(text, function() {
-      S(selector).trigger('input');
-    });
-  },
   testFeature: function(description, scenario, testExecution) {
     jashboard.functional_tests.push(function () {
       module("Feature: " +  description, {
@@ -27,13 +7,6 @@ var funcunitHelper = {
         }
       });
       testExecution();
-    });
-  },
-  verifyMonitorData: function(monitor_id, expectedData) {
-    S(monitor_id).visible(function() {
-      _.each(_.keys(expectedData), function(propertySelector) {
-        equal(S(monitor_id + " " + propertySelector).text(), expectedData[propertySelector], "verifying content of " + propertySelector);
-      });
     });
   }
 };

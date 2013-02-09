@@ -41,7 +41,7 @@ server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
     last_build_time: "23-08-2012 14:32:23",
     duration: 752,
     success: true,
-    status: 0
+    status: 1
   },
   timeout: 3
 });

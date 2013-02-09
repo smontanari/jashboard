@@ -25,13 +25,13 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     addDashboard(dashboard);
   });
 
-  scope.pageLoadingStatus = jashboard.model.loadingStatus.waiting;
   repository.loadDashboards(function(data) {
     scope.pageLoadingStatus = jashboard.model.loadingStatus.completed;
     scope.dashboards = [];
     _.each(data, addDashboard);
   });
 
+  scope.pageLoadingStatus = jashboard.model.loadingStatus.waiting;
   scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
 };
 

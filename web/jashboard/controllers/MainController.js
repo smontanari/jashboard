@@ -12,6 +12,17 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     });
   };
 
+  var init = function() {
+    scope.pageLoadingStatus = jashboard.model.loadingStatus.waiting;
+    scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+
+    repository.loadDashboards(function(data) {
+      scope.pageLoadingStatus = jashboard.model.loadingStatus.completed;
+      scope.dashboards = [];
+      _.each(data, addDashboard);
+    });
+  };
+
   scope.$on("NewMonitorCreated", function(event, dashboard_id, monitor) {
     var dashboard = _.find(scope.dashboards, function(dashboard) {
       return (dashboard.id === dashboard_id);
@@ -25,14 +36,7 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     addDashboard(dashboard);
   });
 
-  repository.loadDashboards(function(data) {
-    scope.pageLoadingStatus = jashboard.model.loadingStatus.completed;
-    scope.dashboards = [];
-    _.each(data, addDashboard);
-  });
-
-  scope.pageLoadingStatus = jashboard.model.loadingStatus.waiting;
-  scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+  init();
 };
 
 jashboard.application.controller("MainController", ['$scope', 'Repository', 'PluginManager', jashboard.MainController]).run(function() {

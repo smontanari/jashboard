@@ -1,13 +1,11 @@
 describe("DashboardFormController", function() {
   var scope;
   var controller;
-  var $stub;
+  var dialogService;
   var repository = {};
 
   beforeEach(function() {
-    $stub = testHelper.stubJQuery(["#new-dashboard-form"]);
-    $stub.on = jasmine.createSpy("$.on()");
-    $stub.modal = jasmine.createSpy("$.modal()");
+    dialogService = jasmine.createSpyObj("DialogService", ["showModal", "hideModal"]);
   });
 
   describe("'OpenDashboardDialog' event listener", function() {
@@ -18,13 +16,13 @@ describe("DashboardFormController", function() {
       });
     });
     it("should open the modal dialog", function() {
-      controller = new jashboard.DashboardFormController(scope, repository);
+      controller = new jashboard.DashboardFormController(scope, repository, dialogService);
       expect(scope.$on).toHaveBeenCalledWith("OpenDashboardDialog", jasmine.any(Function));
-      expect($stub.modal).toHaveBeenCalledWith("show");
+      expect(dialogService.showModal).toHaveBeenCalledWith("#new-dashboard-form");
     });
     it("should reset the dashboardForm variable in the scope", function() {
       scope.dashboardName = "test";
-      controller = new jashboard.DashboardFormController(scope, repository);
+      controller = new jashboard.DashboardFormController(scope, repository, dialogService);
       expect(scope.dashboardName).toEqual("");
     });
   });
@@ -35,7 +33,7 @@ describe("DashboardFormController", function() {
       repository.createDashboard = jasmine.createSpy("repository.createDashboard").andCallFake(function(input, handler) {
         handler("test.dashboard");
       });
-      controller = new jashboard.DashboardFormController(scope, repository);
+      controller = new jashboard.DashboardFormController(scope, repository, dialogService);
 
       scope.dashboardName = "test.name";
       scope.saveDashboard();
@@ -48,7 +46,7 @@ describe("DashboardFormController", function() {
       expect(scope.$emit).toHaveBeenCalledWith("NewDashboardCreated", "test.dashboard");
     });
     it("should close the dialog", function() {
-      expect($stub.modal).toHaveBeenCalledWith("hide");
+      expect(dialogService.hideModal).toHaveBeenCalledWith("#new-dashboard-form");
     });
   });
 });

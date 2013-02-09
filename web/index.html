@@ -28,8 +28,8 @@
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="waiting-msg" data-ng-hide="pageLoadingStatus == 'completed'">
+  <div class="container" class="ng-cloack">
+    <div class="waiting-msg" data-ng-show="pageLoadingStatus == 'waiting'">
       <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
     </div>
     <div class="no-dashboards hide alert alert-info" data-ng-show="dashboards.length == 0">

@@ -1,11 +1,13 @@
 describe("MainController", function() {
-  var repository = {};
   var pluginManager = {};
-  var controller, scope;
+  var controller, scope, repository, overlayService;
 
   var resetScope = function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
   };
+  beforeEach(function() {
+    overlayService = jasmine.createSpyObj("overlayService", ['show', 'hide']);
+  });
 
   describe("Initialisation", function() {
     beforeEach(function() {
@@ -14,13 +16,13 @@ describe("MainController", function() {
       pluginManager.getAllMonitorTypes = jasmine.createSpy("pluginManager.getAllMonitorTypes()")
         .andReturn(['test_type1', 'test_type2']);
 
-      controller = new jashboard.MainController(scope, repository, pluginManager);
+      controller = new jashboard.MainController(scope, repository, overlayService, pluginManager);
     });
     it("should inject the array of available monitor types into the scope", function() {
       expect(scope.availableMonitorTypes).toEqual(["test_type1", "test_type2"]);
     });
-    it("should set the pageLoadingStatus to 'waiting'", function() {
-      expect(scope.pageLoadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
+    it("should show the overlay with the waiting message", function() {
+      expect(overlayService.show).toHaveBeenCalledWith("#waiting-overlay");
     });
   });
 
@@ -50,15 +52,16 @@ describe("MainController", function() {
         .andCallFake(function(monitor_id, monitor_type, handler) {
         handler("runtimeInfo_" + monitor_id + "_" + monitor_type);
       });
-      controller = new jashboard.MainController(scope, repository, pluginManager);
+
+      controller = new jashboard.MainController(scope, repository, overlayService, pluginManager);
     });
 
     it("should populate the model with dashboard data returned from the repository", function() {
       expect(scope.dashboards).toEqual(test_dashboards);
       expect(scope.$apply).toHaveBeenCalled();
     });
-    it("should set the pageLoadingStatus to 'completed'", function() {
-      expect(scope.pageLoadingStatus).toEqual(jashboard.model.loadingStatus.completed);
+    it("should hide the overlay with the waiting message", function() {
+      expect(overlayService.hide).toHaveBeenCalled();
     });
     it("should update the monitor runtime info with data returned from the repository", function() {
       _.each(test_monitors, function(test_monitor, index) {
@@ -85,7 +88,7 @@ describe("MainController", function() {
           }
         });
         scope.dashboards = [];
-        controller = new jashboard.MainController(scope, repository, pluginManager);
+        controller = new jashboard.MainController(scope, repository, overlayService, pluginManager);
       });
       it("should register a listener to the 'NewDashboardCreated'", function() {
         expect(scope.$on).toHaveBeenCalledWith("NewDashboardCreated", jasmine.any(Function));
@@ -121,7 +124,7 @@ describe("MainController", function() {
           handler("runtimeInfo_" + monitor_id + "_" + monitor_type);
         });
 
-        controller = new jashboard.MainController(scope, repository, pluginManager);
+        controller = new jashboard.MainController(scope, repository, overlayService, pluginManager);
       });
       it("should register a listener to the 'NewMonitorCreated'", function() {
         expect(scope.$on).toHaveBeenCalledWith("NewMonitorCreated", jasmine.any(Function));

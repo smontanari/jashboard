@@ -29,13 +29,10 @@
     </div>
   </div>
   <div class="container" class="ng-cloack">
-    <div class="waiting-msg" data-ng-show="pageLoadingStatus == 'waiting'">
-      <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
-    </div>
-    <div class="no-dashboards hide alert alert-info" data-ng-show="dashboards.length == 0">
+    <div class="no-dashboards hide alert alert-info" data-ng-hide="dashboards.length > 0">
       There are no configured dashboards.
     </div>
-    <div id="dashboard-navbar" data-ng-show="pageLoadingStatus == 'completed'">
+    <div id="dashboard-navbar" data-ng-show="dashboards.length > 0">
       <ul class="nav nav-tabs">
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
           <a href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a>
@@ -69,6 +66,9 @@
       </div>
     </div>
   </div>
-  <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'> </script>
+  <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
+  <div id="waiting-overlay" class="hide">
+    <div class="waiting-msg"><img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.</div>
+  </div>
 </body>
 </html>

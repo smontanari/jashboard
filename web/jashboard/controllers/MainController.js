@@ -1,4 +1,4 @@
-jashboard.MainController = function(scope, repository, pluginManager) {
+jashboard.MainController = function(scope, repository, overlayService, pluginManager) {
   var addDashboard = function(dashboard) {
     scope.dashboards.push(dashboard);
     _.each(dashboard.monitors, updateMonitorRuntime);
@@ -13,11 +13,11 @@ jashboard.MainController = function(scope, repository, pluginManager) {
   };
 
   var init = function() {
-    scope.pageLoadingStatus = jashboard.model.loadingStatus.waiting;
+    overlayService.show("#waiting-overlay");
     scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
 
     repository.loadDashboards(function(data) {
-      scope.pageLoadingStatus = jashboard.model.loadingStatus.completed;
+      overlayService.hide();
       scope.dashboards = [];
       _.each(data, addDashboard);
     });
@@ -39,6 +39,6 @@ jashboard.MainController = function(scope, repository, pluginManager) {
   init();
 };
 
-jashboard.application.controller("MainController", ['$scope', 'Repository', 'PluginManager', jashboard.MainController]).run(function() {
+jashboard.application.controller("MainController", ['$scope', 'Repository', 'OverlayService', 'PluginManager', jashboard.MainController]).run(function() {
   steal.dev.log("MainController initialized");
 });

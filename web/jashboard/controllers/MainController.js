@@ -2,7 +2,6 @@ jashboard.MainController = function(scope, repository, overlayService, pluginMan
   var addDashboard = function(dashboard) {
     scope.dashboards.push(dashboard);
     _.each(dashboard.monitors, updateMonitorRuntime);
-    scope.$apply();
   };
 
   var updateMonitorRuntime = function(monitor) {
@@ -20,6 +19,7 @@ jashboard.MainController = function(scope, repository, overlayService, pluginMan
       overlayService.hide();
       scope.dashboards = [];
       _.each(data, addDashboard);
+      scope.$apply();
     });
   };
 
@@ -28,12 +28,13 @@ jashboard.MainController = function(scope, repository, overlayService, pluginMan
       return (dashboard.id === dashboard_id);
     });
     dashboard.monitors.push(monitor);
-    scope.$apply();
     updateMonitorRuntime(monitor);
+    scope.$apply();
   });
 
   scope.$on('NewDashboardCreated', function(event, dashboard) {
     addDashboard(dashboard);
+    scope.$apply();
   });
 
   init();

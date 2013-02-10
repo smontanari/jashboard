@@ -11,7 +11,8 @@ steal("funcunit", "lib/underscore-min.js")
   "./features/build_monitor_create.js",
   "./features/monitor_display.js",
   "./features/dashboard_create.js",
-  "./features/tabs_display.js"
+  "./features/tabs_display.js",
+  "./features/no_tabs_display.js"
 ).then("./browser_close.js")
 .then(function() {
   S.each(jashboard.functional_tests, function(index, test) {

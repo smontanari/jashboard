@@ -3,6 +3,7 @@ var MockModule = function() {
   this.factory =
   this.service =
   this.controller =
+  this.directive =
   this.run = function(){return this};
 };
 

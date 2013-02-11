@@ -1,17 +1,19 @@
-<div id="new-dashboard-form" class="modal hide fade" role="dialog" 
+<div id="new-dashboard-form" data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}" class="modal hide fade" role="dialog" 
      aria-labelledby="dashboardModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button id="closeDialog" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="dashboardModalLabel">Create new dashboard</h3>
   </div>
-  <form class="form-horizontal" data-ng-controller="DashboardFormController">
+  <form name="newDashboardForm" data-ng-controller="DashboardFormController">
     <div class="modal-body">
-      <div class="control-group">
-        <label class="control-label" for="dashboardName">Name</label>
+      <div class="control-group" data-ng-class="{'error': newDashboardForm.$invalid}">
+      <div class="table-like">
         <div class="controls">
+          <label class="control-label" for="dashboardName">Name</label>
           <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" data-ng-model="dashboardName">
         </div>
       </div>
+    </div>
     </div>
     <div class="modal-footer">
       <button type="submit" id="saveDashboard" class="btn btn-primary" data-ng-click="saveDashboard()">Save</button>

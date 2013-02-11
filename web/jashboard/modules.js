@@ -5,6 +5,7 @@ var jashboard = {
 steal.dev.log("loading jashboard modules");
 steal(
   'jashboard/misc-functions.js',
+  'jashboard/directives/DialogDirective.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
   'jashboard/model/LoadingStatus.js',

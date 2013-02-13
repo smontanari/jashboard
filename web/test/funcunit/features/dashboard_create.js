@@ -8,7 +8,7 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
   test("should create a new dashboard and display the new tab", function() {
     openDashboardDialog();
     var name = "test new-dashboard";
-    featureHelper.inputText("input[name='dashboardName']", "test new-dashboard");
+    featureHelper.inputText("input[name='dashboardName']", name);
 
     S("#saveDashboard").visible().click();
 
@@ -33,5 +33,13 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     openDashboardDialog();
     S("#cancelDashboard").visible().click();
     S("#new-dashboard-form").invisible("should not be visible");
+  });
+
+  test("should display a validation error if the dashboard name is empty", function() {
+    var message = "Please provide a dashboard name.";
+    openDashboardDialog();
+    S("#errorMsg").invisible("should display the error message");
+    S("#saveDashboard").visible().click();
+    equal(S("#errorMsg").visible().text().trim(), message, "The error message is equal to " + message);
   });
 });

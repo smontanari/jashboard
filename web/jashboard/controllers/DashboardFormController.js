@@ -1,5 +1,9 @@
 jashboard.DashboardFormController = function(scope, repository) {
   scope.saveDashboard = function() {
+    if (scope.dashboardName == "") {
+      scope.validationError = true;
+      return;
+    }
     repository.createDashboard({name: this.dashboardName}, function(dashboard) {
       scope.$emit("NewDashboardCreated", dashboard);
     });
@@ -8,6 +12,7 @@ jashboard.DashboardFormController = function(scope, repository) {
 
   scope.$on("OpenDashboardDialog", function(event) {
     scope.dashboardName = "";
+    scope.validationError = false;
   });
 };
 

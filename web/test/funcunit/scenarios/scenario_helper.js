@@ -1,14 +1,5 @@
 var scenarioHelper = {
-  validateAjaxRequest: function(ajaxOptions, response, validator) {
-    if (ajaxOptions.data !== null) {
-      var requestData = JSON.parse(ajaxOptions.data);
-      if (validator(JSON.parse(ajaxOptions.data))) {
-        return response;
-      }
-    }
-    throw("unexpected data in the POST request: " + ajaxOptions.data);
-  },
-  fixtureBuildMonitorJsonResponse: function(monitor_id, monitorParams) {
+  monitorJsonResponseFixture: function(monitor_id, monitorParams) {
     return {json: {
         "id": monitor_id,
         "name": monitorParams.name,
@@ -33,7 +24,6 @@ var scenarioHelper = {
     };
 
     this.fakeResponse = function(method, url, responseOptions) {
-      responseOptions = responseOptions || {};
       var options = _.defaults(responseOptions, {
         returnCode: 200,
         contentType: "application/json",
@@ -44,7 +34,11 @@ var scenarioHelper = {
       fakeServer.respondWith(method, url, function(xhr) {
         if (options.timeout > 0) {
           setTimeout(function() {
-            xhr.respond(options.returnCode, { "Content-Type": options.contentType }, JSON.stringify(options.content));
+            xhr.respond(
+              options.returnCode,
+              { "Content-Type": options.contentType },
+              JSON.stringify(options.content)
+            );
           }, (options.timeout * 1000));
         }
       });

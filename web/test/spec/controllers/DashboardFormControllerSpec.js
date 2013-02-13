@@ -14,12 +14,33 @@ describe("DashboardFormController", function() {
       controller = new jashboard.DashboardFormController(scope, repository);
       expect(scope.dashboardName).toEqual("");
     });
+    it("should set the validation error to false", function() {
+      controller = new jashboard.DashboardFormController(scope, repository);
+      expect(scope.validationError).toBeFalsy();      
+    });
   });
 
-  describe("saveDashboard", function() {
+  describe("form validation", function() {
+    beforeEach(function() {
+      scope = jasmine.createSpyObj("scope", ['$on']);
+      repository.createDashboard = jasmine.createSpy("repository.createDashboard()");
+      controller = new jashboard.DashboardFormController(scope, repository);
+      scope.dashboardName = "";
+      scope.saveDashboard();
+    });
+
+    it("should set the validation error to true", function() {
+      expect(scope.validationError).toBeTruthy();
+    });
+    it("should not invoke the repository", function() {
+      expect(repository.createDashboard).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("saveDashboard()", function() {
     beforeEach(function() {
       scope = jasmine.createSpyObj("scope", ['$on', '$emit']);
-      repository.createDashboard = jasmine.createSpy("repository.createDashboard").andCallFake(function(input, handler) {
+      repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handler) {
         handler("test.dashboard");
       });
       controller = new jashboard.DashboardFormController(scope, repository);

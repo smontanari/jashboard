@@ -1,16 +1,16 @@
-describe("DialogDirective", function() {
-  var linkFunction, dialogService, scope, attrs;
+describe("OverlayDirective", function() {
+  var linkFunction, overlayService, scope, attrs;
 
   beforeEach(function() {
-    dialogService = jasmine.createSpyObj("DialogService", ["showModal", "hideModal"]);
-    linkFunction = jashboard.dialogDirective(dialogService);
+    overlayService = jasmine.createSpyObj("OverlayService", ["show", "hide"]);
+    linkFunction = jashboard.overlayDirective(overlayService);
     scope = {
       $eval: jasmine.createSpy("scope.$eval()").andReturn({show: "testEventShow", hide: "testEventHide"}),
       $on: jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
         callback({});
       })
     };
-    attrs = {'jbDialog': "test-map"};
+    attrs = {'jbOverlay': "test-map"};
 
     linkFunction(scope, "test.element", attrs);
   });
@@ -23,8 +23,8 @@ describe("DialogDirective", function() {
     it("should register the event listener", function() {
       expect(scope.$on).toHaveBeenCalledWith("testEventShow", jasmine.any(Function));
     });
-    it("should invoke the dialogService", function() {
-      expect(dialogService.showModal).toHaveBeenCalledWith("test.element");
+    it("should invoke the overlayService", function() {
+      expect(overlayService.show).toHaveBeenCalledWith("test.element");
     });
   });
 
@@ -32,8 +32,8 @@ describe("DialogDirective", function() {
     it("should register the event listener", function() {
       expect(scope.$on).toHaveBeenCalledWith("testEventHide", jasmine.any(Function));
     });
-    it("should invoke the dialogService", function() {
-      expect(dialogService.hideModal).toHaveBeenCalledWith("test.element");
+    it("should invoke the overlayService", function() {
+      expect(overlayService.hide).toHaveBeenCalledWith("test.element");
     });
   });
 });

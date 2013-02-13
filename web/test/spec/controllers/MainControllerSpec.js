@@ -2,16 +2,13 @@ describe("MainController", function() {
   var pluginManager = {};
   var controller, scope, repository, overlayService;
 
-  var resetScope = function() {
-    scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
-  };
   beforeEach(function() {
+    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$emit', '$broadcast']);
     overlayService = jasmine.createSpyObj("overlayService", ['show', 'hide']);
   });
 
   describe("Initialisation", function() {
     beforeEach(function() {
-      resetScope();
       repository = jasmine.createSpyObj("repository", ['loadDashboards']);
       pluginManager.getAllMonitorTypes = jasmine.createSpy("pluginManager.getAllMonitorTypes()")
         .andReturn(['test_type1', 'test_type2']);
@@ -30,7 +27,6 @@ describe("MainController", function() {
     var test_dashboards = [];
     var test_monitors = [];
     beforeEach(function() {
-      resetScope();
       test_monitors = _.map([1, 2, 3], function(index) {
         return {
           id: "test.monitor." + index,
@@ -74,7 +70,6 @@ describe("MainController", function() {
 
   describe("Events handling", function() {
     beforeEach(function() {
-      resetScope();
       pluginManager.getAllMonitorTypes = jasmine.createSpy();
       repository = jasmine.createSpyObj("repository", ["loadDashboards", "loadMonitorRuntime"]);
 

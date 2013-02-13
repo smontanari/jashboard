@@ -69,7 +69,9 @@
   </div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
   <div id="waiting-overlay" class="hide">
-    <div class="waiting-msg"><img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.</div>
+    <div class="waiting-msg" data-jb-overlay="{show: 'DataLoadingStart', hide: 'DataLoadingComplete'}">
+      <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
+    </div>
   </div>
 </body>
 </html>

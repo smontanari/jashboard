@@ -75,7 +75,6 @@ describe("MainController", function() {
     beforeEach(function() {
       pluginManager.getAllMonitorTypes = jasmine.createSpy();
       repository = jasmine.createSpyObj("repository", ["loadDashboards", "loadMonitorRuntime"]);
-
     });
     
     describe("NewDashboardCreated event handler", function() {

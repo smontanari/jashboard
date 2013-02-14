@@ -1,7 +1,6 @@
 describe("MonitorFormController", function() {
   var scope = {};
   var controller;
-  var $stub;
   var repository = {};
 
   describe("'OpenMonitorDialog' event listener", function() {

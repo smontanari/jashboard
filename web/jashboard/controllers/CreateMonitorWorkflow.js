@@ -18,6 +18,7 @@ jashboard.defineNamespace("jashboard", function() {
       var monitorParameters = _.omit(scope.monitorForm, "dashboard_id");
       repository.createMonitor(dashboard_id, monitorParameters, function(monitor) {
         scope.$emit("NewMonitorCreated", dashboard_id, monitor);
+        scope.$emit("CloseMonitorDialog", dashboard_id, monitor);
       });
     };
   };

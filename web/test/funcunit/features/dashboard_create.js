@@ -40,6 +40,8 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     openDashboardDialog();
     S("#errorMsg").invisible("should display the error message");
     S("#saveDashboard").visible().click();
-    equal(S("#errorMsg").visible().text().trim(), message, "The error message is equal to " + message);
+    S("#errorMsg").visible(function() {
+      equal(S("#errorMsg").text().trim(), message, "The error message is equal to " + message);
+    });
   });
 });

@@ -1,4 +1,4 @@
-jashboard.defineNamespace("jashboard.plugin", function() {
+jashboard.defineModule("jashboard.plugin", function() {
   jashboard.plugin.TypeAdapter = function() {
     var typeHandlers = {};
     

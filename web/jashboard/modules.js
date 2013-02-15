@@ -1,12 +1,8 @@
-var jashboard = {
-  services: angular.module('jashboard.services', []),
-  application: angular.module('jashboard', ['jashboard.services'])
-};
 steal.dev.log("loading jashboard modules");
-steal(
-  'jashboard/misc-functions.js',
-  'jashboard/directives/DialogDirective.js',
-  'jashboard/directives/OverlayDirective.js',
+steal('jashboard/jashboard.js')
+.then('jashboard/jashboardUtils.js')
+.then(
+  'jashboard/directives.js',
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
   'jashboard/model/LoadingStatus.js',
@@ -14,7 +10,6 @@ steal(
   'jashboard/services/DialogService.js',
   'jashboard/services/HttpService.js',
   'jashboard/services/Repository.js',
-  'jashboard/plugins/TypeAdapter.js',
   'jashboard/services/PluginManager.js'
 )
 .then(
@@ -28,4 +23,3 @@ steal(
 .then(
   'jashboard/plugins.js'
 );
-

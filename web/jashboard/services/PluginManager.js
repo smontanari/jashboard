@@ -30,7 +30,7 @@ jashboard.PluginManager = function() {
   };
 };
 
-jashboard.defineNamespace("jashboard.plugin", function() {
+jashboard.defineModule("jashboard.plugin", function() {
   jashboard.plugin.pluginManager = new jashboard.PluginManager();
   
   jashboard.services.factory('PluginManager', function() {

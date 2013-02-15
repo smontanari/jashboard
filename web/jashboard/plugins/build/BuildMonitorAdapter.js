@@ -1,4 +1,4 @@
-jashboard.defineNamespace("jashboard.plugin.build", function() {
+jashboard.defineModule("jashboard.plugin.build", function() {
   jashboard.plugin.build.BuildMonitorAdapter = function() {
     var buildConfigurationTypeAdapter = new jashboard.plugin.TypeAdapter();
 

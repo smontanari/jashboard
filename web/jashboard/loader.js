@@ -13,6 +13,5 @@ steal(
 steal.dev.log("Loading application files");
 steal('steal/less')
 .then("css/jashboard.less")
-.then("jashboard/modules.js");
-
-steal({ src: 'test/funcunit/test_scenario_loader.js', ignore: true });
+.then("jashboard/modules.js")
+.then({ src: 'test/funcunit/test_scenario_loader.js', ignore: true });

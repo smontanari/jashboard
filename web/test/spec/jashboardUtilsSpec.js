@@ -1,4 +1,4 @@
-describe("Miscellaneous functions", function() {
+describe("Jashboard utility functions", function() {
   describe("timeConverter", function() {
     it("should convert a time duration of less than 10 minutes", function() {
       expect(jashboard.timeConverter.secondsToTime(122)).toEqual("02:02");
@@ -32,31 +32,31 @@ describe("Miscellaneous functions", function() {
     });
   });
 
-  describe("defineNamespace", function() {
+  describe("defineModule", function() {
     beforeEach(function() {
       testRootNamespace = undefined;
     });
-    it("should create and populate a namespace", function() {
-      jashboard.defineNamespace("testRootNamespace", function() {
+    it("should create and populate a module", function() {
+      jashboard.defineModule("testRootNamespace", function() {
         testRootNamespace.testValue = {};
       });
 
       expect(testRootNamespace.testValue).toBeDefined();
     });
-    it("should create and populate the namespace recursively", function() {
-      jashboard.defineNamespace("testRootNamespace.testChildNamespace", function() {
+    it("should create and populate the submodule recursively", function() {
+      jashboard.defineModule("testRootNamespace.testChildNamespace", function() {
         testRootNamespace.testChildNamespace.testValue = {};
       });
 
       expect(testRootNamespace.testChildNamespace.testValue).toBeDefined();
     });
-    it("should not re-create the namespace if already defined", function() {
+    it("should not re-create the module if already defined", function() {
       testRootNamespace = {
         testDefinedNamespace: {
           testDefinedValue: {}
         }
       };
-      jashboard.defineNamespace("testRootNamespace.testDefinedNamespace.testChildNamespace", function() {
+      jashboard.defineModule("testRootNamespace.testDefinedNamespace.testChildNamespace", function() {
         testRootNamespace.testDefinedNamespace.testChildNamespace.testValue = {};
       });
 

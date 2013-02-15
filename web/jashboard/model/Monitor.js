@@ -1,4 +1,4 @@
-jashboard.defineNamespace("jashboard.model", function() {
+jashboard.defineModule("jashboard.model", function() {
   jashboard.model.Monitor = function(monitorData) {
     this.id = monitorData.id;
     this.type = monitorData.type;

@@ -1,4 +1,4 @@
-jashboard.defineNamespace("jashboard.plugins.build", function() {
+jashboard.defineModule("jashboard.plugins.build", function() {
   jashboard.plugins.build.BuildMonitorFormController = function(scope) {
     var buildTypes = jashboard.plugin.build.buildConfigurationTypeAdapter.getAllRegisteredTypes();
     scope.availableBuildSettingsTypes = buildTypes;

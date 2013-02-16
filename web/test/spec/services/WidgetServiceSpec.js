@@ -9,11 +9,11 @@ describe("WidgetService", function() {
   });
 
   it("should invoke $.draggable()", function() {
-    service.makeDraggable("test-selector");
+    service.makeDraggable("test-selector", "test-handle-selector");
 
     expect($stub.draggable).toHaveBeenCalledWith(
       { containment: "parent",
-        handle: ".drag-handle",
+        handle: "test-handle-selector",
         scroll: true,
         stack: $stub
       });

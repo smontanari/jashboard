@@ -6,7 +6,7 @@ describe("DraggableDirective", function() {
     
     linkFunction = jashboard.angular.draggableDirective(widgetService);
 
-    linkFunction({}, "test-element");
-    expect(widgetService.makeDraggable).toHaveBeenCalledWith("test-element");
+    linkFunction({}, "test-element", {"jbDraggable": "test-handle-selector"});
+    expect(widgetService.makeDraggable).toHaveBeenCalledWith("test-element", "test-handle-selector");
   });
 });

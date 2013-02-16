@@ -1,7 +1,7 @@
 jashboard.defineModule("jashboard.angular", function() {
   jashboard.angular.draggableDirective = function factory(widgetService) {
     return function(scope, element, attrs) {
-      widgetService.makeDraggable(element);
+      widgetService.makeDraggable(element, attrs["jbDraggable"]);
     };
   };
 });

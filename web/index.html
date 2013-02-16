@@ -54,11 +54,14 @@
           </div>
         </div>
         <div class="dashboard-content">
-          <div id="{{monitor.id}}" class="monitor-panel" data-ng-repeat="monitor in dashboard.monitors">
-          <div class="monitor-title">
-            <span>{{monitor.name}}</span>
-            <span data-ng-hide="monitor.loadingStatus == 'completed'"><img src="img/ajax-loader-arrows.gif"></span>
-          </div>
+          <div id="{{monitor.id}}" class="monitor-panel" data-ng-repeat="monitor in dashboard.monitors" data-jb-draggable>
+            <div class="monitor-bar">
+              <span class="drag-handle"></span>
+            </div>
+            <div class="monitor-title">
+              <span>{{monitor.name}}</span>
+              <span data-ng-hide="monitor.loadingStatus == 'completed'"><img src="img/ajax-loader-arrows.gif"></span>
+            </div>
             <div class="monitor-details">
               <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_view.html'"></div>
             </div>

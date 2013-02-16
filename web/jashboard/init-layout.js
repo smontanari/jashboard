@@ -15,7 +15,7 @@ var resizeMonitorDetails = function() {
 $(function() {
   $(".monitor-panel").draggable(
     { containment: "parent",
-      handle: "span.drag-handle",
+      handle: ".drag-handle",
       scroll: true,
       stack: ".monitor-panel",
       stop: logGeometry

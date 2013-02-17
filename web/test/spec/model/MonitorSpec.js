@@ -9,7 +9,6 @@ describe("Monitor", function() {
           name: "test_name",
           type: "test_type",
           refresh_interval: 123,
-          position: {top: 20, left: 50},
           configuration: {testConfiguration: "test"}
         });
     });
@@ -18,7 +17,6 @@ describe("Monitor", function() {
       expect(monitor.id).toEqual("test_id");
       expect(monitor.name).toEqual("test_name");
       expect(monitor.refreshInterval).toEqual(123);
-      expect(monitor.position).toEqual({top: 20, left: 50});
       expect(monitor.type).toEqual("test_type");
     });
     it("should create a monitor with initial loading status as 'waiting'", function() {
@@ -30,6 +28,29 @@ describe("Monitor", function() {
     it("should create a monitor with empty runtime info", function() {
       expect(monitor.runtimeInfo).toEqual({});
     });
+  });
+
+  describe("setting the initial position", function() {
+    var monitorData = {
+      id: "test_id",
+      name: "test_name",
+      type: "test_type",
+      refresh_interval: 123,
+      configuration: {testConfiguration: "test"}
+    };
+
+    it("should create a monitor with undefined initial position", function() {
+      var monitor = new jashboard.model.Monitor(monitorData);
+
+      expect(monitor.position).toBeUndefined();
+    });
+    it("should create a monitor with an absolute position", function() {
+      monitorData.position = {top: 20, left: 50};
+      var monitor = new jashboard.model.Monitor(monitorData);
+
+      expect(monitor.position).toEqual({position: 'absolute', top: 20, left: 50});
+    });
+
   });
   
   describe("Updating runtime info", function() {

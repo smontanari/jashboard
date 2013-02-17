@@ -5,6 +5,7 @@ jashboard.defineModule("jashboard.model", function() {
         return {position: 'absolute', top: position.top, left: position.left};
       }
     };
+    
     this.id = monitorData.id;
     this.type = monitorData.type;
     this.name = monitorData.name;

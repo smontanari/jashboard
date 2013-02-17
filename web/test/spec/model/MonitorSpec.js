@@ -9,6 +9,7 @@ describe("Monitor", function() {
           name: "test_name",
           type: "test_type",
           refresh_interval: 123,
+          position: {top: 20, left: 50},
           configuration: {testConfiguration: "test"}
         });
     });
@@ -17,6 +18,7 @@ describe("Monitor", function() {
       expect(monitor.id).toEqual("test_id");
       expect(monitor.name).toEqual("test_name");
       expect(monitor.refreshInterval).toEqual(123);
+      expect(monitor.position).toEqual({top: 20, left: 50});
       expect(monitor.type).toEqual("test_type");
     });
     it("should create a monitor with initial loading status as 'waiting'", function() {

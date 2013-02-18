@@ -1,12 +1,13 @@
 jashboard.WidgetService = function() {
-  this.makeDraggable = function(draggableSelector, handleSelector) {
+  this.makeDraggable = function(draggableSelector, options) {
     var element = $(draggableSelector);
-    element.draggable({ 
+    var defaultOptions = { 
       containment: "parent",
-      handle: handleSelector,
       scroll: true,
       stack: element
-    });
+    };
+
+    element.draggable(_.extend(defaultOptions, options));
   };
 };
 

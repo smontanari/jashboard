@@ -39,6 +39,11 @@ jashboard.MainController = function(scope, repository, pluginManager) {
     scope.$apply();
   });
 
+  // scope.$on("MonitorPositionChanged", function(event, monitorElement, monitorPosition) {
+  //   steal.dev.log(monitorElement.getAttribute("id"));
+  //   steal.dev.log(monitorPosition);
+  // });
+
   init();
 };
 

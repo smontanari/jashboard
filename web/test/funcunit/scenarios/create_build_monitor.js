@@ -53,5 +53,5 @@ $.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, a
             {} 
           ];
   }
-  throw "unexpected data in the POST request: " + ajaxOptions.data;
+  throw "unexpected data in the POST request: " + data;
 });

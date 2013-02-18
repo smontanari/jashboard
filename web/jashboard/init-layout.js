@@ -1,7 +1,8 @@
 var logGeometry = function(event, ui) {
-  console.log($(this).width());
-  console.log($(this).height());
-  console.log($(this).position());
+  var element = event.target;
+  console.log($(element).width());
+  console.log($(element).height());
+  console.log($(element).position());
 };
 
 var resizeMonitorDetails = function() {

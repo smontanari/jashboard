@@ -8,14 +8,25 @@ describe("WidgetService", function() {
     service = new jashboard.WidgetService();
   });
 
-  it("should invoke $.draggable()", function() {
-    service.makeDraggable("test-selector", "test-handle-selector");
+  it("should invoke $.draggable() with default options", function() {
+    service.makeDraggable("test-selector");
 
     expect($stub.draggable).toHaveBeenCalledWith(
       { containment: "parent",
-        handle: "test-handle-selector",
         scroll: true,
         stack: $stub
+      });
+  });
+
+  it("should invoke $.draggable() with additional options", function() {
+    service.makeDraggable("test-selector", {option1: "test1", option2: "test2"});
+
+    expect($stub.draggable).toHaveBeenCalledWith(
+      { containment: "parent",
+        scroll: true,
+        stack: $stub,
+        option1: "test1",
+        option2: "test2"
       });
   });
 });

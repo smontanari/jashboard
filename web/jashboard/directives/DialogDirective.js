@@ -1,5 +1,5 @@
 jashboard.defineModule("jashboard.angular", function() {
-  jashboard.angular.dialogDirective = function factory(dialogService) {
+  jashboard.angular.dialogDirective = function (dialogService) {
     return new jashboard.angular.EventDirectiveDefinition("jbDialog", function(element) {
       return {
         show: function() {

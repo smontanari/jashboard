@@ -1,6 +1,6 @@
 [
   {
-    "id": "dashboard_1", "name": "second dashboard",
+    "id": "dashboard_1", "name": "a dashboard",
     "monitors": [
       {
         "id": "monitor_1",

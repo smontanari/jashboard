@@ -1,5 +1,5 @@
 jashboard.defineModule("jashboard.angular", function() {
-  jashboard.angular.overlayDirective = function factory(overlayService) {
+  jashboard.angular.overlayDirective = function (overlayService) {
     return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(element) {
       return {
         show: function() {

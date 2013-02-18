@@ -62,8 +62,8 @@
               <span class="drag-handle"></span>
             </div>
             <div class="monitor-title">
+              <span data-ng-hide="monitor.loadingStatus == 'completed'"><img src="img/ajax-loader-indicator.gif"></span>
               <span>{{monitor.name}}</span>
-              <span data-ng-hide="monitor.loadingStatus == 'completed'"><img src="img/ajax-loader-arrows.gif"></span>
             </div>
             <div class="monitor-details">
               <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_view.html'"></div>

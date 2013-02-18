@@ -54,16 +54,27 @@ describe("Monitor", function() {
   });
   
   describe("Updating runtime info", function() {
+    var callback, runtimeInfoSynchroniser;
     beforeEach(function() {
       monitor = new jashboard.model.Monitor({});
-      monitor.updateRuntimeInfo({testRuntimeInfo: "test"});
+      monitor.loadingStatus = jashboard.model.loadingStatus.completed;
+      callback = jasmine.createSpy("callback");
+      runtimeInfoSynchroniser = monitor.runtimeInfoSynchroniser(callback);
     });
 
-    it("should set the new runtime data", function() {
-      expect(monitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
+    it("should set the loadingStatus to 'waiting'", function() {
+      expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
     });
-    it("should update the loading status to 'completed'", function() {
+    it("should set the new runtime data and update the loading status to 'completed'", function() {
+      runtimeInfoSynchroniser({testRuntimeInfo: "test"});
+
+      expect(monitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
       expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
+    });
+    it("should invoke the callback", function() {
+      runtimeInfoSynchroniser({testRuntimeInfo: "test"});
+
+      expect(callback).toHaveBeenCalledWith(monitor);
     });
   });
 });

@@ -15,9 +15,16 @@ jashboard.defineModule("jashboard.model", function() {
     this.configuration = {};
     this.runtimeInfo = {};
 
-    this.updateRuntimeInfo = function(info) {
-      this.runtimeInfo = info;
-      this.loadingStatus = jashboard.model.loadingStatus.completed;
+    this.runtimeInfoSynchroniser = function(callback) {
+      this.loadingStatus = jashboard.model.loadingStatus.waiting;
+      var self = this;
+      return function(runtimeData) {
+        self.runtimeInfo = runtimeData;
+        self.loadingStatus = jashboard.model.loadingStatus.completed;
+        if(_.isFunction(callback)) {
+          callback(self);
+        }
+      };
     };
   };
 });

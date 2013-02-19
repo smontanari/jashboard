@@ -2,7 +2,7 @@ describe("MainController", function() {
   var pluginManager, controller, scope, repository, dashboardDelegate;
 
   beforeEach(function() {
-    scope = {};
+    scope = jasmine.createSpyObj("scope", ["$broadcast"]);
     repository = {};
     pluginManager = {
       getAllMonitorTypes: jasmine.createSpy("pluginManager.getAllMonitorTypes()")
@@ -19,5 +19,12 @@ describe("MainController", function() {
 
   it("should initialise a new DashboardScopeManager", function() {
     expect(dashboardDelegate.init).toHaveBeenCalledWith(scope);
+  });
+
+  describe("scope.menuAction()", function() {
+    it("should broadcast the 'OpenDashboardDialog' event", function() {
+      scope.menuAction('newDashboard');
+      expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog");      
+    });
   });
 });

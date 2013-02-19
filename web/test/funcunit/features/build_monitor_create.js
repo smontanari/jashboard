@@ -19,7 +19,7 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
     featureHelper.inputText("input[name='monitorName']", data.monitorName);
     featureHelper.inputText("input[name='monitorRefresh']", data.monitorRefresh);
     S("select[name='monitorType']").visible().click();
-    S("select[name='monitorType'] option:contains('" + data.monitorType + "')").visible().click();
+    S("select[name='monitorType'] option:contains('" + data.monitorType + "')").click();    
     S("#configuration-next").visible().click();
     featureHelper.inputText("input[name='serverName']", data.serverName);
     featureHelper.inputText("input[name='serverPort']", data.serverPort);

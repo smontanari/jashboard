@@ -1,4 +1,14 @@
 jashboard.MainController = function(scope, dashboardDelegate, pluginManager) {
+  var menuActions = {
+    newDashboard: function() {
+      scope.$broadcast("OpenDashboardDialog");
+    }
+  };
+  
+  scope.menuAction = function(name) {
+    menuActions[name]();
+  }
+
   scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
   dashboardDelegate.init(scope);
 };

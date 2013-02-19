@@ -23,7 +23,7 @@ var scenarioHelper = {
       this.old_processRequest(request);
     };
 
-    this.fakeResponse = function(method, url, responseOptions) {
+    this.fakeResponse = function(httpMethod, url, responseOptions) {
       var options = _.defaults(responseOptions, {
         returnCode: 200,
         contentType: "application/json",
@@ -31,7 +31,7 @@ var scenarioHelper = {
         timeout: 0
       }); 
 
-      fakeServer.respondWith(method, url, function(xhr) {
+      fakeServer.respondWith(httpMethod, url, function(xhr) {
         if (options.timeout > 0) {
           setTimeout(function() {
             xhr.respond(

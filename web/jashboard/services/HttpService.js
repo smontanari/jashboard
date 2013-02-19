@@ -21,16 +21,14 @@ jashboard.HttpService = function() {
   this.postJSON = function(url, obj) {
     return ajaxRequest(url, _.defaults({
       type: 'POST',
-      // data: JSON.stringify(obj)
-      data: obj
+      data: JSON.stringify(obj),
     }, ajaxWriteDefaults));
   };
 
   this.putJSON = function(url, obj) {
     return ajaxRequest(url, _.defaults({
       type: 'PUT',
-      // data: JSON.stringify(obj)
-      data: obj
+      data: JSON.stringify(obj),
     }, ajaxWriteDefaults));
   };
 };

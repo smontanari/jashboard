@@ -30,7 +30,7 @@ describe("HttpService", function() {
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
     expect($stub.ajax.mostRecentCall.args[1]).toEqual({
       type: 'POST',
-      data: {param1: "test.value", param2: 123},
+      data: '{"param1":"test.value","param2":123}',
       processData: false,
       contentType: 'application/json',
       dataType: 'json'
@@ -46,7 +46,7 @@ describe("HttpService", function() {
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
     expect($stub.ajax.mostRecentCall.args[1]).toEqual({
       type: 'PUT',
-      data: {param1: "test.value", param2: 123},
+      data: '{"param1":"test.value","param2":123}',
       processData: false,
       contentType: 'application/json',
       dataType: 'json'

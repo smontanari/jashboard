@@ -36,20 +36,20 @@ $.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, a
   };
   var isExpectedData = function() {
     return (
-      ajaxOptions.data.name === "Test " + ajaxOptions.data.configuration.type + "-monitor" &&
-      ajaxOptions.data.refreshInterval === "30" &&
-      ajaxOptions.data.type === "build" &&
-      ajaxOptions.data.configuration.hostname === ajaxOptions.data.configuration.type + "-server" &&
-      ajaxOptions.data.configuration.port === "1234" &&
-      isExpectedConfiguration(ajaxOptions.data.configuration)
+      data.name === "Test " + data.configuration.type + "-monitor" &&
+      data.refreshInterval === "30" &&
+      data.type === "build" &&
+      data.configuration.hostname === data.configuration.type + "-server" &&
+      data.configuration.port === "1234" &&
+      isExpectedConfiguration(data.configuration)
     );
   };
-  // var data = JSON.parse(ajaxOptions.data);
-  if (isExpectedData(ajaxOptions.data)) {
+  var data = JSON.parse(ajaxOptions.data);
+  if (isExpectedData(data)) {
     return [
       201, 
       "success",
-      scenarioHelper.monitorJsonResponseFixture("monitor_2", ajaxOptions.data),
+      scenarioHelper.monitorJsonResponseFixture("monitor_2", data),
       {} 
     ];
   }

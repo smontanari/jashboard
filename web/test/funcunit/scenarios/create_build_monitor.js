@@ -27,31 +27,31 @@ _.each([1, 2, 3], function(index) {
 $.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var isExpectedConfiguration = function(configuration) {
     if (configuration.type === "jenkins") {
-      return data.configuration.build_id === "jenkins-build-123";
+      return configuration.build_id === "jenkins-build-123";
     } else if (configuration.type === "go") {
-      return data.configuration.pipeline === "test-pipeline" &&
-      data.configuration.stage === "test-stage" &&
-      data.configuration.job === "test-job";
+      return configuration.pipeline === "test-pipeline" &&
+      configuration.stage === "test-stage" &&
+      configuration.job === "test-job";
     }
   };
   var isExpectedData = function() {
     return (
-      data.name === "Test " + data.configuration.type + "-monitor" &&
-      data.refreshInterval === "30" &&
-      data.type === "build" &&
-      data.configuration.hostname === data.configuration.type + "-server" &&
-      data.configuration.port === "1234" &&
-      isExpectedConfiguration(data.configuration)
+      ajaxOptions.data.name === "Test " + ajaxOptions.data.configuration.type + "-monitor" &&
+      ajaxOptions.data.refreshInterval === "30" &&
+      ajaxOptions.data.type === "build" &&
+      ajaxOptions.data.configuration.hostname === ajaxOptions.data.configuration.type + "-server" &&
+      ajaxOptions.data.configuration.port === "1234" &&
+      isExpectedConfiguration(ajaxOptions.data.configuration)
     );
   };
-  var data = JSON.parse(ajaxOptions.data);
-  if (isExpectedData(data)) {
+  // var data = JSON.parse(ajaxOptions.data);
+  if (isExpectedData(ajaxOptions.data)) {
     return [
-            201, 
-            "success",
-            scenarioHelper.monitorJsonResponseFixture("monitor_2", data),
-            {} 
-          ];
+      201, 
+      "success",
+      scenarioHelper.monitorJsonResponseFixture("monitor_2", ajaxOptions.data),
+      {} 
+    ];
   }
-  throw "unexpected data in the POST request: " + data;
+  throw "unexpected data in the POST request: " + ajaxOptions.data;
 });

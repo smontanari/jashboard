@@ -1,4 +1,20 @@
 jashboard.MonitorControllerDelegate = function(repository) {
+  var findMonitorById = function(dashboards, id) {
+    var monitor;
+    for (var i = 0; i < dashboards.length; i++) {
+      monitor = _.find(dashboards[i].monitors, function(monitor) {
+        return id === monitor.id;
+      });
+      if (_.isObject(monitor)) {
+        break;
+      }
+    };
+    if (_.isUndefined(monitor)) {
+      throw "Could not find monitor with id '" + id + "'";
+    }
+    return monitor;
+  };
+
   this.updateMonitorRuntime = function(scope, monitor) {
     repository.loadMonitorRuntimeInfo(
       monitor.id,
@@ -18,6 +34,12 @@ jashboard.MonitorControllerDelegate = function(repository) {
       dashboard.monitors.push(monitor);
       self.updateMonitorRuntime(scope, monitor);
       scope.$apply();
+    });
+
+    scope.$on("MonitorPositionChanged", function(event, monitorElement, monitorPosition) {
+      var monitor = findMonitorById(scope.dashboards, monitorElement.getAttribute("id"));
+      monitor.setPosition(monitorPosition);
+      repository.updateMonitorPosition(monitor.id, monitorPosition);
     });
   }
 

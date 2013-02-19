@@ -18,16 +18,49 @@ describe("MonitorControllerDelegate", function() {
       loadMonitorRuntimeInfo: jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
         .andCallFake(function(monitor_id, monitor_type, handler) {
           handler("testRuntimeInfo");
-        })
+        }),
+        updateMonitorPosition: jasmine.createSpy("repository.updateMonitorPosition()")
     };
     delegate = new jashboard.MonitorControllerDelegate(repository);
   });
 
-  describe("init", function() {
-    describe("NewMonitorCreated event handler", function() {
+  describe("init()", function() {
+    describe("'MonitorPositionChanged' event handler", function() {
+      var testMonitor;
+      beforeEach(function() {
+        var monitorDomElement = {
+          getAttribute: sinon.stub().withArgs("id").returns("m2")
+        };
+        testMonitor = {
+          id: "m2",
+          setPosition: jasmine.createSpy("monitor.setPosition()")
+        };
+        scope.dashboards = [
+          {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
+          {id: "dashboard2", monitors: [{id: "m3"}]}
+        ];
+        scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
+          if (eventName === "MonitorPositionChanged") {
+            callback({}, monitorDomElement, {top: 10, left: 20});
+          }
+        });
+
+        delegate.init(scope);
+      });
+      it("should update the monitor position", function() {
+        expect(testMonitor.setPosition).toHaveBeenCalledWith({top: 10, left: 20});
+      });
+      it("should invoke the repository", function() {
+        expect(repository.updateMonitorPosition).toHaveBeenCalledWith("m2", {top: 10, left: 20});
+      });
+    });
+
+    describe("'NewMonitorCreated' event handler", function() {
       beforeEach(function() {
         scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-          handler({}, "dashboard2", testMonitor);
+          if (eventName === "NewMonitorCreated") {
+            handler({}, "dashboard2", testMonitor);
+          }
         });
         scope.dashboards = [
           {id: "dashboard1", monitors: [{id: "m1"}]},
@@ -36,9 +69,7 @@ describe("MonitorControllerDelegate", function() {
 
         delegate.init(scope);
       });
-      it("should register a listener to the 'NewMonitorCreated'", function() {
-        expect(scope.$on).toHaveBeenCalledWith("NewMonitorCreated", jasmine.any(Function));
-      });
+
       it("should add the monitor to the dashboard", function() {
         expect(scope.dashboards[0].monitors.length).toEqual(1);
         expect(scope.dashboards[1].monitors.length).toEqual(2);

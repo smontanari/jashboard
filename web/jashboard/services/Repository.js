@@ -26,6 +26,10 @@ jashboard.Repository = function(http, modelMapper) {
       handler(modelMapper.mapMonitor(monitorData));
     });    
   }
+
+  this.updateMonitorPosition = function(monitor_id, position) {
+    http.putJSON("/ajax/monitor/" + monitor_id + "/position", position);
+  }
 };
 
 jashboard.services.service('Repository', ['HttpService', 'ModelMapper', jashboard.Repository]).run(function() {

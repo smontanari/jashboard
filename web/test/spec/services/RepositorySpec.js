@@ -12,7 +12,7 @@ describe("Repository", function() {
     handler = jasmine.createSpy("handler callback");
   });
 
-  describe("Loading data", function() {
+  describe("Loading objects", function() {
     it("should invoke the http service to load and return the dashboards information", function() {
       httpService.getJSON = jasmine.createSpy("httpService.getJSON()").andReturn(ajaxCallback(
         ["test_dashboard1", "test_dashboard2"]
@@ -46,7 +46,7 @@ describe("Repository", function() {
     });
   });
 
-  describe("Saving data", function() {
+  describe("Creating objects", function() {
     it("should use the http service to save the dashboard data and invoke the callback", function() {
       httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
         ajaxCallback("test_dashboard")
@@ -74,5 +74,15 @@ describe("Repository", function() {
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard/monitor", {name: "test.monitor"});
       expect(handler).toHaveBeenCalledWith({id: "test_monitor"});
     });
+  });
+  
+  describe("Updating objects", function() {
+    it("should use the http service to update the monitor position", function() {
+      httpService.putJSON = jasmine.createSpy("httpService.putJSON()");
+
+      repository.updateMonitorPosition("test_id", "test.position");
+
+      expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/position", "test.position");
+    });    
   });
 });

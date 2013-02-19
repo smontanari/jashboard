@@ -30,7 +30,7 @@ describe("Monitor", function() {
     });
   });
 
-  describe("setting the initial position", function() {
+  describe("setting the position", function() {
     var monitorData = {
       id: "test_id",
       name: "test_name",
@@ -43,14 +43,24 @@ describe("Monitor", function() {
       var monitor = new jashboard.model.Monitor(monitorData);
 
       expect(monitor.position).toBeUndefined();
+      expect(monitor.cssPosition).toBeUndefined();
     });
-    it("should create a monitor with an absolute position", function() {
+    it("should create a monitor with an absolute initial position", function() {
       monitorData.position = {top: 20, left: 50};
       var monitor = new jashboard.model.Monitor(monitorData);
 
-      expect(monitor.position).toEqual({position: 'absolute', top: 20, left: 50});
+      expect(monitor.position).toEqual({top: 20, left: 50});
+      expect(monitor.cssPosition).toEqual({position: 'absolute', top: 20, left: 50});
     });
 
+    it("should set an absolute position", function() {
+      monitorData.position = {top: 20, left: 50};
+      var monitor = new jashboard.model.Monitor(monitorData);
+      monitor.setPosition({top: 45, left: 20});
+
+      expect(monitor.position).toEqual({top: 45, left: 20});
+      expect(monitor.cssPosition).toEqual({position: 'absolute', top: 45, left: 20});
+    });
   });
   
   describe("Updating runtime info", function() {

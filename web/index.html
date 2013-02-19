@@ -56,7 +56,7 @@
           <div id="{{monitor.id}}" class="monitor-panel" 
             data-ng-repeat="monitor in dashboard.monitors" 
             data-jb-draggable="{handleSelector: '.drag-handle', onDragStopEvent: 'MonitorPositionChanged'}"
-            data-ng-style="{position: monitor.position.position, top: monitor.position.top, left: monitor.position.left}">
+            data-ng-style="{position: monitor.cssPosition.position, top: monitor.cssPosition.top, left: monitor.cssPosition.left}">
             <div class="monitor-bar">
               <span class="drag-handle"></span>
             </div>

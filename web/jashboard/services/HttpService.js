@@ -1,25 +1,37 @@
 jashboard.HttpService = function() {
+  var ajaxDefaults = {
+    dataType: 'json'
+  };
+  var ajaxWriteDefaults = _.extend({
+    processData: false,
+    contentType: "application/json"
+  }, ajaxDefaults);
+
   var ajaxRequest = function(url, settings) {
     return jQuery.ajax(url, settings);
   };
 
   this.getJSON = function(url, params) {
-    return ajaxRequest(url, {
+    return ajaxRequest(url, _.defaults({
       type: 'GET',
-      data: params,
-      dataType: 'json'
-    });
+      data: params
+    }, ajaxDefaults));
   };
 
   this.postJSON = function(url, obj) {
-    var data = JSON.stringify(obj);
-    return ajaxRequest(url, {
+    return ajaxRequest(url, _.defaults({
       type: 'POST',
-      data: data,
-      processData: false,
-      contentType: "application/json",
-      dataType: 'json'
-    });
+      // data: JSON.stringify(obj)
+      data: obj
+    }, ajaxWriteDefaults));
+  };
+
+  this.putJSON = function(url, obj) {
+    return ajaxRequest(url, _.defaults({
+      type: 'PUT',
+      // data: JSON.stringify(obj)
+      data: obj
+    }, ajaxWriteDefaults));
   };
 };
 

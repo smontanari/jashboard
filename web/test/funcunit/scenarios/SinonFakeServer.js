@@ -1,14 +1,7 @@
 (function(testModule) {
+  var _fakeServer;
   jashboard.test = _.extend(testModule, {
     SinonFakeServer: function() {
-      var createResponseOptions = function(options) {
-        return _.defaults(options, {
-          returnCode: 200,
-          contentType: "application/json",
-          content: {},
-          timeout: 0
-        });
-      };
       var fakeServer = sinon.fakeServer.create();
       fakeServer.autoRespond = true;
       fakeServer.old_processRequest = fakeServer.processRequest;
@@ -17,23 +10,46 @@
         this.old_processRequest(request);
       };
 
+      var getResponseOptions = function(response, args) {
+        var options = response;
+        if (_.isFunction(response)) {
+          options = response.apply(null, args);
+        }
+        return _.defaults(options, {
+          returnCode: 200,
+          contentType: "application/json",
+          content: {}
+        });        
+      };
+
+      var executeResponse = function(returnCode, contentType, content) {
+        this.respond(
+          returnCode,
+          { "Content-Type": contentType },
+          JSON.stringify(content)
+        );
+      };
+
       this.fakeResponse = function(httpMethod, url, response) {
-        fakeServer.respondWith(httpMethod, url, function(xhr) {
-          var responseOptions;
-          if (_.isObject(response)) {
-            responseOptions = createResponseOptions(response);
-          }
-          if (responseOptions.timeout > 0) {
+        fakeServer.respondWith(httpMethod, url, function() {
+          var args = _.toArray(arguments);
+          var xhr = args[0];
+          var responseOptions = getResponseOptions(response, args);
+          if (_.isNumber(responseOptions.timeout)) {
             setTimeout(function() {
-              xhr.respond(
-                responseOptions.returnCode,
-                { "Content-Type": responseOptions.contentType },
-                JSON.stringify(responseOptions.content)
-              );
+              executeResponse.apply(xhr, [responseOptions.returnCode, responseOptions.contentType, responseOptions.content]);
             }, (responseOptions.timeout * 1000));
+          } else {
+            executeResponse.apply(xhr, [responseOptions.returnCode, responseOptions.contentType, responseOptions.content]);
           }
         });
       };
+    },
+    getFakeServer: function() {
+      if (!_fakeServer) {
+        _fakeServer = new jashboard.test.SinonFakeServer();
+      }
+      return _fakeServer;
     }
   });
 }(jashboard.test || {}));

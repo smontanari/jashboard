@@ -49,7 +49,7 @@ $.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, a
     return [
       201, 
       "success",
-      scenarioHelper.monitorJsonResponseFixture("monitor_2", data),
+      jashboard.test.monitorJsonResponseFixture("monitor_2", data),
       {} 
     ];
   }

@@ -31,37 +31,4 @@ describe("Jashboard utility functions", function() {
       expect(result).toEqual("some value");
     });
   });
-
-  describe("defineModule", function() {
-    beforeEach(function() {
-      testRootNamespace = undefined;
-    });
-    it("should create and populate a module", function() {
-      jashboard.defineModule("testRootNamespace", function() {
-        testRootNamespace.testValue = {};
-      });
-
-      expect(testRootNamespace.testValue).toBeDefined();
-    });
-    it("should create and populate the submodule recursively", function() {
-      jashboard.defineModule("testRootNamespace.testChildNamespace", function() {
-        testRootNamespace.testChildNamespace.testValue = {};
-      });
-
-      expect(testRootNamespace.testChildNamespace.testValue).toBeDefined();
-    });
-    it("should not re-create the module if already defined", function() {
-      testRootNamespace = {
-        testDefinedNamespace: {
-          testDefinedValue: {}
-        }
-      };
-      jashboard.defineModule("testRootNamespace.testDefinedNamespace.testChildNamespace", function() {
-        testRootNamespace.testDefinedNamespace.testChildNamespace.testValue = {};
-      });
-
-      expect(testRootNamespace.testDefinedNamespace.testDefinedValue).toBeDefined();
-      expect(testRootNamespace.testDefinedNamespace.testChildNamespace.testValue).toBeDefined();
-    });
-  });
 });

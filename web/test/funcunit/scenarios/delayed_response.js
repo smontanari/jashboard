@@ -1,4 +1,4 @@
-var server = new scenarioHelper.SinonFakeServer();
+var server = new jashboard.test.SinonFakeServer();
 
 server.fakeResponse("GET", "/ajax/dashboards", {
   content: [{

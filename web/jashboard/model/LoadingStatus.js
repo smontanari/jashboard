@@ -1,6 +1,8 @@
-jashboard.defineModule("jashboard.model", function() {
-  jashboard.model.loadingStatus = {
-    waiting: "waiting",
-    completed: "completed"
-  };
-});
+(function(module) {
+  jashboard.model = _.extend(module, {
+    loadingStatus: {
+      waiting: "waiting",
+      completed: "completed"
+    }
+  });
+}(jashboard.model || {}));

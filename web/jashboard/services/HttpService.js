@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    HttpService: function() {
+    HttpService: function(logger) {
       var ajaxDefaults = {
         dataType: 'json'
       };
@@ -10,7 +10,9 @@
       }, ajaxDefaults);
 
       var ajaxRequest = function(url, settings) {
-        return jQuery.ajax(url, settings);
+        return jQuery.ajax(url, settings).fail(function(xhr, status, error) {
+          logger.error("Failed ajax request: " + status + " - " + error);
+        });
       };
 
       this.getJSON = function(url, params) {
@@ -35,7 +37,7 @@
       };
     }
   });
-  jashboard.services.service('HttpService', [jashboard.HttpService]).run(function() {
+  jashboard.services.service('HttpService', ['$log', jashboard.HttpService]).run(function() {
     steal.dev.log("HttpService initialized");
   });
 }(jashboard || {}));

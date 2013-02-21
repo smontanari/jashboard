@@ -13,7 +13,8 @@ steal(
     'dashboard_create',
     'build_monitor_create',
     'ajax_loader_display',
-    'monitor_positioning'
+    'monitor_positioning',
+    'error_loading_dashboards'
   ];
 
   var selectFeatures = function() {

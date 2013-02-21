@@ -1,18 +1,25 @@
 describe("HttpService", function() {
-  var httpService;
-  var $stub;
+  var httpService, $stub, logger, mockRequest;
 
   beforeEach(function() {
+    logger = jasmine.createSpyObj("$log", ['error']);
+    mockRequest = {
+      fail: function(callback) {
+        callback("request", "status", "error");
+        return this;
+      }
+    };
     $stub = testHelper.stubJQuery();
-    $stub.ajax = jasmine.createSpy("$.ajax()");
-    httpService = new jashboard.HttpService();
+    $stub.ajax = jasmine.createSpy("$.ajax()").andReturn(mockRequest);
+    httpService = new jashboard.HttpService(logger);
   });
 
   it("should invoke jQuery.ajax to perform a JSON GET request", function() {
     var expectedParams = {testParam1: "value1", testParam2: "value2"};
 
-    httpService.getJSON("/test/path/to/resource", expectedParams);
+    var request = httpService.getJSON("/test/path/to/resource", expectedParams);
 
+    expect(request).toEqual(mockRequest);
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
     expect($stub.ajax.mostRecentCall.args[1]).toEqual({
       type: 'GET',
@@ -20,13 +27,18 @@ describe("HttpService", function() {
       dataType: 'json'
     });
   });
+  it("should log an error when the JSON GET request fails", function() {
+    var request = httpService.getJSON("/test/path/to/resource");
+    expect(logger.error).toHaveBeenCalledWith("Failed ajax request: status - error");
+  });
   it("should invoke jQuery.ajax to perform a JSON POST request", function() {
     var data = {
       param1: "test.value",
       param2: 123
     };
-    httpService.postJSON("/test/path/to/resource", data);
+    var request = httpService.postJSON("/test/path/to/resource", data);
 
+    expect(request).toEqual(mockRequest);
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
     expect($stub.ajax.mostRecentCall.args[1]).toEqual({
       type: 'POST',
@@ -41,8 +53,9 @@ describe("HttpService", function() {
       param1: "test.value",
       param2: 123
     };
-    httpService.putJSON("/test/path/to/resource", data);
+    var request = httpService.putJSON("/test/path/to/resource", data);
 
+    expect(request).toEqual(mockRequest);
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
     expect($stub.ajax.mostRecentCall.args[1]).toEqual({
       type: 'PUT',

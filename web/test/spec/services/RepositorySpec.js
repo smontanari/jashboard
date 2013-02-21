@@ -1,33 +1,56 @@
 describe("Repository", function() {
-  var httpService, repository, handler, modelMapper;
+  var httpService, repository, successHandler, errorHandler, modelMapper;
 
-  var ajaxCallback = function(content) {
-    return {success: function(callBack) { callBack(content); }}
+  var AjaxPromise = function(successfulResponse) {
+    this.done = function(callBack) { 
+      callBack(successfulResponse);
+      return this;
+    };
+    this.fail = function(callback) { 
+      callback(null, "testStatus", "test_exception"); 
+      return this;
+    };
   };
 
   beforeEach(function() {
-    httpService = jasmine.createSpyObj("ModelMapper", ['getJSON', 'postJSON']);
-    modelMapper = jasmine.createSpyObj("ModelMapper", ['mapDashboard', 'mapMonitor']);
+    httpService = jasmine.createSpyObj("httpService", ['getJSON', 'postJSON', 'putJSON']);
+    modelMapper = jasmine.createSpyObj("ModelMapper", ['mapDashboard', 'mapMonitor', 'mapMonitorRuntimeInfo']);
     repository = new jashboard.Repository(httpService, modelMapper);
-    handler = jasmine.createSpy("handler callback");
+    successHandler = jasmine.createSpy("successHandler callback");
+    errorHandler = jasmine.createSpy("errorHandler callback");
   });
 
-  describe("Loading objects", function() {
+  describe("Loading dashboards data", function() {
+    beforeEach(function() {
+      httpService.getJSON = jasmine.createSpy("httpService.getJSON()")
+        .andReturn(new AjaxPromise(["test_dashboard1", "test_dashboard2"])
+      );      
+    });
     it("should invoke the http service to load and return the dashboards information", function() {
-      httpService.getJSON = jasmine.createSpy("httpService.getJSON()").andReturn(ajaxCallback(
-        ["test_dashboard1", "test_dashboard2"]
-      ));
       modelMapper.mapDashboard = jasmine.createSpy("modelMapper.mapDashboard()").andCallFake(function(data) {
         return {id: data};
       });
 
-      repository.loadDashboards(handler);
+      repository.loadDashboards(successHandler);
 
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/dashboards");
-      expect(handler).toHaveBeenCalledWith([
+      expect(successHandler).toHaveBeenCalledWith([
         {id: "test_dashboard1"},
         {id: "test_dashboard2"},
       ]);
+    });
+    it("should invoke the error handler if the request fails", function() {
+      repository.loadDashboards(successHandler, errorHandler);
+
+      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+    });
+  });
+
+  describe("Loading monitor info", function() {
+    beforeEach(function() {
+      httpService.getJSON = jasmine.createSpy("httpService.getJSON")
+        .andReturn(new AjaxPromise("test_monitor_data")
+      );
     });
     it("should invoke the http service to load and return the monitor runtime information", function() {
       modelMapper.mapMonitorRuntimeInfo = jasmine.createSpy("modelMapper.mapMonitorRuntimeInfo()")
@@ -36,50 +59,67 @@ describe("Repository", function() {
         }
       );
 
-      httpService.getJSON = jasmine.createSpy("httpService.getJSON").andReturn(ajaxCallback("test_monitor_data"));
-
-      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", handler);
+      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", successHandler);
 
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/monitor/test.monitor.id/runtime");
       expect(modelMapper.mapMonitorRuntimeInfo).toHaveBeenCalledWith("test_type", "test_monitor_data");
-      expect(handler).toHaveBeenCalledWith({runtimeInfo: "test_monitor_data"});
+      expect(successHandler).toHaveBeenCalledWith({runtimeInfo: "test_monitor_data"});
+    });
+    it("should invoke the error handler if the request fails", function() {
+      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", successHandler, errorHandler);
+
+      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
     });
   });
 
-  describe("Creating objects", function() {
-    it("should use the http service to save the dashboard data and invoke the callback", function() {
+  describe("Creating a dashboard", function() {
+    beforeEach(function() {
       httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
-        ajaxCallback("test_dashboard")
-      );
+        new AjaxPromise("test_dashboard")
+      );      
+    });
+    it("should use the http service to save the dashboard data and invoke the callback", function() {
       modelMapper.mapDashboard = jasmine.createSpy("modelMapper.mapDashboard()").andCallFake(function(data) {
         return {id: data};
       });
 
-      repository.createDashboard({name: "test.dashboard"}, handler);
+      repository.createDashboard({name: "test.dashboard"}, successHandler);
 
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard", {name: "test.dashboard"});
-      expect(handler).toHaveBeenCalledWith({id: "test_dashboard"});
+      expect(successHandler).toHaveBeenCalledWith({id: "test_dashboard"});
     });
+    it("should invoke the error handler if the request fails", function() {
+      repository.createDashboard("test", successHandler, errorHandler);
 
-    it("should use the http service to save the monitor data and invoke the callback", function() {
+      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+    });    
+  });
+
+  describe("Creating a monitor", function() {
+    beforeEach(function() {
       httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
-        ajaxCallback("test_monitor")
-      );
+        new AjaxPromise("test_monitor")
+      );      
+    });
+    it("should use the http service to save the monitor data and invoke the callback", function() {
       modelMapper.mapMonitor = jasmine.createSpy("modelMapper.mapMonitor()").andCallFake(function(data) {
         return {id: data};
       });
 
-      repository.createMonitor("test_dashboard", {name: "test.monitor"}, handler);
+      repository.createMonitor("test_dashboard", {name: "test.monitor"}, successHandler);
 
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard/monitor", {name: "test.monitor"});
-      expect(handler).toHaveBeenCalledWith({id: "test_monitor"});
+      expect(successHandler).toHaveBeenCalledWith({id: "test_monitor"});
     });
+    it("should invoke the error handler if the request fails", function() {
+      repository.createMonitor("test", "test", successHandler, errorHandler);
+
+      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+    });    
   });
   
-  describe("Updating objects", function() {
+  describe("Updating a monitor", function() {
     it("should use the http service to update the monitor position", function() {
-      httpService.putJSON = jasmine.createSpy("httpService.putJSON()");
-
       repository.updateMonitorPosition("test_id", "test.position");
 
       expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/position", "test.position");

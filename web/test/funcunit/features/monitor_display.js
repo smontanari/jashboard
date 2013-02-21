@@ -1,8 +1,8 @@
 funcunitHelper.testFeature("Monitor display", "display_dashboards_data", function() {
   test("should load and display build monitor data", function() {
-    S(".dashboard-tab a[href='#dashboard_3']").click();
+    S("#tab-dashboard_3").visible().click();
     S(".build-panel").invisible("No build monitors are visible");
-    S(".dashboard-tab a[href='#dashboard_2']").click();
+    S("#tab-dashboard_2").visible().click();
     featureHelper.verifyMonitorData("#monitor_2",
       {
         '.monitor-title': "Epic build",
@@ -21,7 +21,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
         '.build-status': "idle"
       }
     );
-    S(".dashboard-tab a[href='#dashboard_1']").click();
+    S("#tab-dashboard_1").visible().click();
     featureHelper.verifyMonitorData("#monitor_1",
       {
         '.monitor-title': "Zombie-Dash build",

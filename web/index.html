@@ -82,11 +82,7 @@
     </div>
   </div>
   <div data-ng-include="'html/new_dashboard_dialog.html'"></div>
-  <div class="hide" data-jb-overlay="{show: 'DataLoadingStart', hide: 'DataLoadingComplete,DataLoadingError'}">
-    <div class="ajax-loader-msg">
-      <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
-    </div>
-  </div>
+  <div data-ng-include="'html/ajax_loader_overlay.html'" onload="loadData()"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>
 </html>

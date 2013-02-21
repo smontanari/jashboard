@@ -35,11 +35,20 @@
   overflow: auto;
 }
 
+.iconised-info {
+  .iconised('info', 32px);
+}
+
+.iconised-error {
+  .iconised('error', 32px);
+}
+
 .no-data-available {
-  margin: 15px;
-  .rounded-corners(10px);
-  border: 1px solid #2b60de;
-  box-shadow: 1px 2px 2px 1px #306eff;
+  .message-area(#2b60de, #306eff);
+}
+
+.data-load-error {
+  .message-area(#c11b17, #800517);
 }
 
 .dashboard-actions {

@@ -8,17 +8,24 @@
             monitorDelegate.updateMonitorRuntime(scope, monitor);
           });
         };
+        var onDataLoadSuccess = function(data) {
+          scope.$broadcast("DataLoadingComplete");
+          scope.dashboards = [];
+          _.each(data, addDashboard);
+          scope.dataLoadingStatus = jashboard.model.loadingStatus.completed;
+          scope.$apply();
+        };
+        var onDataLoadError = function(status, error) {
+          scope.$broadcast("DataLoadingError");
+          scope.dataLoadingStatus = jashboard.model.loadingStatus.error;
+          scope.$apply();
+        };
 
         scope.$evalAsync(function(aScope) {
           aScope.$broadcast("DataLoadingStart");
         });
 
-        repository.loadDashboards(function(data) {
-          scope.$broadcast("DataLoadingComplete");
-          scope.dashboards = [];
-          _.each(data, addDashboard);
-          scope.$apply();
-        });
+        repository.loadDashboards(onDataLoadSuccess, onDataLoadError);
 
         scope.$on('NewDashboardCreated', function(event, dashboard) {
           addDashboard(dashboard);

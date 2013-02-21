@@ -28,10 +28,18 @@
     </div>
   </div>
   <div class="container" class="ng-cloak">
-    <div class="no-data-available hide alert alert-info" data-ng-class="{show: (dashboards.length == 0)}">
-      <div class="alert-info icon-info-sign icon-white"></div>
-      <h5>There are no configured dashboards.</h5>
-      <p>You can create a new dashboard through the Actions menu.</p>
+    <div class="no-data-available hide alert alert-info " data-ng-class="{show: (dashboards.length == 0)}">
+      <div class="iconised-info"></div>
+      <div class="message">
+        <h5>There are no configured dashboards.</h5>
+        <p>You can create a new dashboard through the Actions menu.</p>
+      </div>
+    </div>
+    <div class="data-load-error hide alert alert-error" data-ng-class="{show: (dataLoadingStatus == 'error')}">
+      <div class="iconised-error"></div>
+      <div class="message">
+        <h5>An error occurred while connecting to the server.</h5>
+      </div>
     </div>
     <div id="dashboard-navbar" class="hide" data-ng-class="{show: (dashboards.length > 0)}">
       <ul class="nav nav-tabs">
@@ -74,7 +82,7 @@
     </div>
   </div>
   <div data-ng-include="'html/new_dashboard_dialog.html'"></div>
-  <div class="hide" data-jb-overlay="{show: 'DataLoadingStart', hide: 'DataLoadingComplete'}">
+  <div class="hide" data-jb-overlay="{show: 'DataLoadingStart', hide: 'DataLoadingComplete,DataLoadingError'}">
     <div class="ajax-loader-msg">
       <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
     </div>

@@ -4,10 +4,13 @@
       this.link = function(scope, element, attrs) {
         var actions = actionCallbacks(element);
 
-        var events = scope.$eval(attrs[tagAttribute]);
+        var eventsMap = scope.$eval(attrs[tagAttribute]);
 
-        _.each(_.keys(events), function(key) {
-          scope.$on(events[key], actions[key]);
+        _.each(_.keys(eventsMap), function(actionName) {
+          var events = eventsMap[actionName].split(',');
+          _.each(events, function(eventName) {
+            scope.$on(eventName, actions[actionName]);
+          });
         });
       };
     }

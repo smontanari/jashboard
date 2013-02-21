@@ -35,6 +35,16 @@
   overflow: auto;
 }
 
+.message-area {
+  margin: 10px;
+  .iconised-info, .iconised-error {
+    float: left;
+  }
+  .message {
+    margin-left: 40px;
+  }
+}
+
 .iconised-info {
   .iconised('info', 32px);
 }
@@ -44,11 +54,13 @@
 }
 
 .no-data-available {
-  .message-area(#2b60de, #306eff);
+  .message-area;
+  .message-box(#2b60de, #306eff);
 }
 
 .data-load-error {
-  .message-area(#c11b17, #800517);
+  .message-area;
+  .message-box(#c11b17, #800517);
 }
 
 .dashboard-actions {

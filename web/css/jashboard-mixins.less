@@ -36,14 +36,7 @@
   background: url("@{img_path_prefix}/icon-@{icon-name}.png") no-repeat center;    
 }
 
-.message-area (@border-color, @shadow-color) {
-  .iconised-info, .iconised-error {
-    float: left;
-  }
-  .message {
-    margin-left: 40px;
-  }
-  margin: 15px;
+.message-box (@border-color, @shadow-color) {
   .rounded-corners(10px);
   border: 1px solid @border-color;
   box-shadow: 1px 2px 2px 1px @shadow-color;

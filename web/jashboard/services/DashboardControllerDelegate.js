@@ -21,16 +21,15 @@
           scope.$apply();
         };
 
-        scope.$evalAsync(function(aScope) {
-          aScope.$broadcast("DataLoadingStart");
-        });
-
-        repository.loadDashboards(onDataLoadSuccess, onDataLoadError);
-
         scope.$on('NewDashboardCreated', function(event, dashboard) {
           addDashboard(dashboard);
           scope.$apply();
         });
+
+        scope.loadData = function() {
+          scope.$broadcast("DataLoadingStart");
+          repository.loadDashboards(onDataLoadSuccess, onDataLoadError);
+        };
 
         monitorDelegate.init(scope);
       };

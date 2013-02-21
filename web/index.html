@@ -5,6 +5,8 @@
   <title>Jashboard</title>
 </head>
 <body data-ng-controller="MainController">
+  <div data-ng-include="'html/navigation_bar.html'"></div>
+<!-- 
   <div class="navbar navbar-static-top navbar-inverse">
     <div class="navbar-inner">
       <div id="navbarMenu" class="container">
@@ -27,6 +29,7 @@
       </div>
     </div>
   </div>
+ -->  
   <div class="container" class="ng-cloak">
     <div class="no-data-available hide alert alert-info " data-ng-class="{show: (dashboards.length == 0)}">
       <div class="iconised-info"></div>
@@ -82,11 +85,7 @@
     </div>
   </div>
   <div data-ng-include="'html/new_dashboard_dialog.html'"></div>
-  <div class="hide" data-jb-overlay="{show: 'DataLoadingStart', hide: 'DataLoadingComplete,DataLoadingError'}">
-    <div class="ajax-loader-msg">
-      <img src="img/ajax-loader-snake.gif"> Loading dashboards... Please wait.
-    </div>
-  </div>
+  <div data-ng-include="'html/ajax_loader_overlay.html'" onload="loadData()"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>
 </html>

@@ -5,45 +5,10 @@
   <title>Jashboard</title>
 </head>
 <body data-ng-controller="MainController">
-  <div data-ng-include="'html/navigation_bar.html'"></div>
-<!-- 
-  <div class="navbar navbar-static-top navbar-inverse">
-    <div class="navbar-inner">
-      <div id="navbarMenu" class="container">
-        <ul class="nav">
-          <li>
-            <span class="logo"><img src="img/logo.png" alt="logo"></span>
-          </li>
-          <li class="divider-vertical">
-            <a href="#/About">About</a>
-          </li>
-          <li class="divider-vertical dropdown">
-            <a id="menuActions" class="dropdown-toggle" data-toggle="dropdown" href="#">Actions <b class="caret"></b></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="menuActions">
-              <li>
-                <a class="menuAction-new-dashboard" href="#" data-ng-click="menuAction('newDashboard')">Create new dashboard</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
- -->  
+  <div data-ng-include="'html/navigation_bar_partial.html'"></div>
+
   <div class="container" class="ng-cloak">
-    <div class="no-data-available hide alert alert-info " data-ng-class="{show: (dashboards.length == 0)}">
-      <div class="iconised-info"></div>
-      <div class="message">
-        <h5>There are no configured dashboards.</h5>
-        <p>You can create a new dashboard through the Actions menu.</p>
-      </div>
-    </div>
-    <div class="data-load-error hide alert alert-error" data-ng-class="{show: (dataLoadingStatus == 'error')}">
-      <div class="iconised-error"></div>
-      <div class="message">
-        <h5>An error occurred while connecting to the server.</h5>
-      </div>
-    </div>
+    <div data-ng-include="'html/alert_box_partial.html'"></div>
     <div id="dashboard-navbar" class="hide" data-ng-class="{show: (dashboards.length > 0)}">
       <ul class="nav nav-tabs">
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
@@ -51,15 +16,14 @@
         </li>
       </ul>
     </div>
-    <div id="dashboard-container" class="tab-content" data-ng-controller="DashboardActionsController">
-      <div data-ng-include="'html/new_monitor_dialog.html'"></div>
+    <div id="dashboard-container" class="tab-content">
       <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
         <div class="menubar">
           <div class="dashboard-actions">
             <div class="dropdown">
               <a id="{{dashboard.id}}-actions" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-actions">
-                <li><a class="new-monitor" href="#" data-ng-click="actionNewMonitor()">New Monitor</a></li>
+                <li><a class="new-monitor" href="#" data-ng-click="dashboardAction('newMonitor')">New Monitor</a></li>
               </ul>
             </div>
           </div>
@@ -77,15 +41,17 @@
               <span>{{monitor.name}}</span>
             </div>
             <div class="monitor-details">
-              <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_view.html'"></div>
+              <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_partial.html'"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div data-ng-include="'html/new_dashboard_dialog.html'"></div>
-  <div data-ng-include="'html/ajax_loader_overlay.html'" onload="loadData()"></div>
+
+  <div data-ng-include="'html/new_monitor_dialog_partial.html'"></div>
+  <div data-ng-include="'html/new_dashboard_dialog_partial.html'"></div>
+  <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="loadData()"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>
 </html>

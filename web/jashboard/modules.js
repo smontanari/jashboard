@@ -17,7 +17,7 @@ steal('jashboard/jashboard.js')
 )
 .then(
   'jashboard/controllers/MainController.js',
-  'jashboard/controllers/DashboardActionsController.js',
+  // 'jashboard/controllers/DashboardActionsController.js',
   'jashboard/controllers/DashboardFormController.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MonitorFormController.js'

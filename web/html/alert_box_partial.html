@@ -1,0 +1,13 @@
+<div class="no-data-available hide alert alert-info " data-ng-class="{show: (dashboards.length == 0)}">
+  <div class="iconised-info"></div>
+  <div class="message">
+    <h5>There are no configured dashboards.</h5>
+    <p>You can create a new dashboard through the Actions menu.</p>
+  </div>
+</div>
+<div class="data-load-error hide alert alert-error" data-ng-class="{show: (dataLoadingStatus == 'error')}">
+  <div class="iconised-error"></div>
+  <div class="message">
+    <h5>An error occurred while connecting to the server.</h5>
+  </div>
+</div>

@@ -27,4 +27,11 @@ describe("MainController", function() {
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog");      
     });
   });
+  describe("scope.dashboardAction()", function() {
+    it("should broadcast the 'OpenMonitorDialog' event", function() {
+      var innerScope = { dashboard: {id: "test_dashboard_id"} };
+      scope.dashboardAction.apply(innerScope, ['newMonitor']);
+      expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", "test_dashboard_id");
+    });
+  });
 });

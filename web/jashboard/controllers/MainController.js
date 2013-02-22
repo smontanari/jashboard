@@ -6,10 +6,18 @@
           scope.$broadcast("OpenDashboardDialog");
         }
       };
+      var dashboardActions = {
+        newMonitor: function(currentScope) {
+          scope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
+        }
+      };
       
       scope.menuAction = function(name) {
         menuActions[name]();
       }
+      scope.dashboardAction = function(name) {
+        dashboardActions[name](this);
+      };
 
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
       dashboardDelegate.init(scope);

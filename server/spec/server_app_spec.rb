@@ -24,6 +24,19 @@ module Jashboard
       end
     end
 
+    context "Error handling" do
+      it("should return a response with an error description") do
+        @mock_repository.should_receive(:load_dashboards).and_raise("test_error")
+
+        get '/ajax/dashboards'
+
+        expected_response = %({"error": "test_error"})
+        last_response.status.should == 500
+        last_response.content_type.should include('application/json')
+        last_response.body.should be_json_eql expected_response
+      end
+    end
+
     context "Data retrieval" do
       describe("GET /ajax/dashboards") do
         it("should return the dashboard and monitor data from the repository as json") do
@@ -147,6 +160,31 @@ module Jashboard
           last_response.status.should == 201
           last_response.content_type.should include('application/json')
           last_response.body.should be_json_eql %({"id": "test_id", "attr": "test_attr"})
+        end
+      end
+    end
+    context "Monitor update" do
+      describe("PUT /ajax/monitor/:monitor_id/position") do
+        before(:each) do
+          @monitor = Monitor.new
+          @monitor.id = "test-monitor-id"
+          @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return(@monitor)
+          @mock_repository.stub(:save_monitor)
+        end
+
+        it("should return a successful response") do
+          put '/ajax/monitor/test-monitor-id/position', %({"top": 243, "left": 765})
+
+          last_response.should be_ok
+          last_response.body.should be_empty
+        end
+        it("should update the monitor position") do
+          @mock_repository.should_receive(:save_monitor).with(@monitor)
+          
+          put '/ajax/monitor/test-monitor-id/position', %({"top": 243, "left": 765})
+
+          @monitor.position.top.should == 243
+          @monitor.position.left.should == 765
         end
       end
     end

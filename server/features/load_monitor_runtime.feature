@@ -1,4 +1,4 @@
-Feature: Load monitor runtime data
+Feature: Get monitor runtime data
   In order to display monitor data
   As a jashboard client 
   I want to request runtime information for an existing monitor  
@@ -16,3 +16,12 @@ Feature: Load monitor runtime data
     When I request the runtime info for monitor monitor_1
 
     Then the app should return the json response "fixture_build_monitor_1.json"
+
+  Scenario: Load build monitor runtime returns error
+    Given the following monitors
+    | id        | name              | type  | refresh_interval | configuration                                                                    |
+    | monitor_1 | Zombie-Dash build | build | 10               | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
+
+    When I request the runtime info for monitor monitor_1
+
+    Then the app should return the error json response "fixture_monitor_1_error.json"

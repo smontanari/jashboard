@@ -24,11 +24,5 @@ module Jashboard
         @server.shutdown
         @server_thread.exit
     end
-
-    def running?
-      !@server.nil? && @server.status == 'Running'
-    end
-
   end
-
 end

@@ -8,7 +8,5 @@ Before('@use_stub_server') do
 end
 
 After('@use_stub_server') do
-  if @fake_server.running?
-    @fake_server.stop
-  end
+  @fake_server.stop
 end

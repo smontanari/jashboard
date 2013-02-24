@@ -14,6 +14,10 @@ module Jashboard
     configure :development do |conf|
       set :public_folder, File.join(File.dirname(__FILE__), '../../web')
       set :static_cache_control, "no-cache"
+      set :show_exceptions, :after_handler
+    end
+    configure :test do
+      set :raise_errors, false
     end
 
     def initialize(*args)
@@ -21,6 +25,12 @@ module Jashboard
       @repository = FileRepository.new
       @monitor_adapter = Plugin::MonitorAdapter.new
       Plugin::PluginManager.load_plugins
+    end
+
+    error do
+      status 500
+      puts env['sinatra.error'].inspect
+      json({error: env['sinatra.error']})
     end
 
     get '/ajax/dashboards' do
@@ -51,6 +61,14 @@ module Jashboard
       add_monitor_to_dashboard(params[:dashboard_id], monitor)
       status 201
       json(monitor)
+    end
+
+    put '/ajax/monitor/:id/position' do
+      data = JSON.parse(request.body.read)
+      monitor = @repository.load_monitor(params[:id])
+      monitor.position = Struct.new(:top, :left).new(data['top'], data['left'])
+      @repository.save_monitor(monitor)
+      status 200
     end
 
     private

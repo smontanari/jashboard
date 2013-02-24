@@ -2,6 +2,7 @@ require 'sinatra/base'
 require "sinatra/json"
 require 'json'
 require 'service/repository'
+require 'plugins/plugin_manager'
 require 'plugins/monitor_adapter'
 require 'model/dashboard_view'
 
@@ -19,6 +20,7 @@ module Jashboard
       super(*args)
       @repository = FileRepository.new
       @monitor_adapter = Plugin::MonitorAdapter.new
+      Plugin::PluginManager.load_plugins
     end
 
     get '/ajax/dashboards' do
@@ -44,7 +46,8 @@ module Jashboard
     end
 
     post '/ajax/dashboard/:dashboard_id/monitor' do
-      monitor = create_monitor(JSON.parse(request.body.read))
+      data = JSON.parse(request.body.read)
+      monitor = create_monitor(data)
       add_monitor_to_dashboard(params[:dashboard_id], monitor)
       status 201
       json(monitor)

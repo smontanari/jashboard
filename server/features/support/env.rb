@@ -3,8 +3,10 @@ $JSON_FIXTURE_PATH = File.join(File.dirname(__FILE__), '/../../../web/test/funcu
 
 require 'rack/test'
 require 'json_spec'
+# require 'cucumber/rspec/doubles'
 require 'spec_helper'
 require 'server_app'
+require 'fake_server'
 
 ENV['JASHBOARD_ENV'] = 'test'
 Jashboard::ServerApp.set :environment, :test

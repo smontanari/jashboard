@@ -17,9 +17,9 @@ module Jashboard
         clazz.new.create_configuration(input_configuration)
       end
 
-      def get_runtime_info(monitor)
-        clazz =  @@ciserver_type_handlers[monitor.configuration.type]
-        clazz.new.fetch_build_runtime_info(monitor.configuration)
+      def get_runtime_info(monitor_configuration)
+        clazz =  @@ciserver_type_handlers[monitor_configuration.server_type]
+        clazz.new.fetch_build_runtime_info(monitor_configuration)
       end
     end
   end

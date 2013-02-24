@@ -18,5 +18,5 @@ Feature: Get dashboards
 
     When I request all the dashboards
 
-    Then the app should return the json response "dashboards_data.json"
+    Then the app should return the json response "fixture_dashboards.json"
 

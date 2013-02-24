@@ -29,18 +29,20 @@ module Jashboard
 
       end
       it("should fetch and return build runtime info from the type handler") do
-        monitor_configuration = Struct.new(:type).new(123)
-        monitor = MonitorBuilder.new.
-          with_id("test-id").
-          with_configuration(monitor_configuration).
-          build
+        DummyConfiguration = Struct.new(:dummy_value).tap do |clazz|
+          clazz.module_eval do
+            extend CIServer::ServerConfiguration
+            ciserver_type 123
+          end
+        end
+        monitor_configuration = DummyConfiguration.new("test")
 
         mock_handler = double
         DummyHandler.stub(:new => mock_handler)
         runtime_info = Object.new
         mock_handler.should_receive(:fetch_build_runtime_info).with(monitor_configuration).and_return(runtime_info)
 
-        subject.get_runtime_info(monitor).should === runtime_info
+        subject.get_runtime_info(monitor_configuration).should === runtime_info
       end
     end
   end

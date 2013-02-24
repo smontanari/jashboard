@@ -10,6 +10,9 @@ module Jashboard
               map[:type] = type
             end
           end
+          define_method :server_type do
+            type
+          end
         end
       end
       module CIServerTypeManager

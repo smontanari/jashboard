@@ -15,3 +15,10 @@ end
 Cucumber::Rake::Task.new do |t|
   t.cucumber_opts = %w{--format pretty}
 end
+
+desc "Clear all stored data in DEV environment"
+task :db_clean do
+  FileUtils.rm Dir.glob("db/development/**/*.txt")
+  FileUtils.rm Dir.glob("db/development/**/..fsdb.meta.*.txt")
+end
+

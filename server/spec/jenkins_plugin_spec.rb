@@ -13,6 +13,7 @@ module Jashboard
           JenkinsServerConfiguration.new("test.host.name", 40, "test-build-id").to_json.
             should be_json_eql %({"type": "jenkins", "hostname": "test.host.name", "port": 40, "build_id": "test-build-id"})
         end
+        
       end
 
       describe JenkinsAdapter do

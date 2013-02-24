@@ -25,10 +25,10 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
     featureHelper.verifyMonitorData("#monitor_1",
       {
         '.monitor-title': "Zombie-Dash build",
-        '.build-time': "23-08-2012 14:32:23",
-        '.build-duration': "12:32",
+        '.build-time': "05-11-2012 09:35:08",
+        '.build-duration': "25",
         '.build-result': "success",
-        '.build-status': "idle"
+        '.build-status': "building"
       }
     );
   });

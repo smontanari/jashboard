@@ -30,5 +30,28 @@ module Jashboard
 
       monitor.to_json.should be_json_eql(expected_json).including(:id)
     end
+    it("should not have position if not initialised") do
+      monitor = MonitorBuilder.new.
+        with_id("test.id").
+        with_name("test.name").
+        with_type(123).
+        with_refresh_interval(9876).
+        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", "test_attr2")).
+        with_runtime_info(Struct.new(:attr3, :attr4).new("test_attr3", "test_attr4")).
+        build
+
+      expected_json = %({
+        "id": "test.id",
+        "name": "test.name",
+        "type": 123,
+        "refresh_interval": 9876,
+        "configuration": {
+          "attr1": "test_attr1",
+          "attr2": "test_attr2"
+        }
+      })
+
+      monitor.to_json.should be_json_eql(expected_json).including(:id)
+    end
   end
 end

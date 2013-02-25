@@ -29,7 +29,6 @@ module Jashboard
 
     error do
       status 500
-      puts env['sinatra.error'].inspect
       json({error: env['sinatra.error']})
     end
 

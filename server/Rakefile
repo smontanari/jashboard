@@ -1,6 +1,7 @@
 require 'rake'
 require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
+require './spec/fsdb_helper'
 
 desc "Run specs matching the pattern (or all of them if no pattern specified)"
 task :test, [:file_pattern] do |t, args|
@@ -13,12 +14,13 @@ task :test, [:file_pattern] do |t, args|
 end
 
 Cucumber::Rake::Task.new do |t|
-  t.cucumber_opts = %w{--format pretty}
+  t.cucumber_opts = %w{--format pretty --tags ~@wip} 
 end
 
 desc "Clear all stored data in DEV environment"
-task :db_clean do
-  FileUtils.rm Dir.glob("db/development/**/*.txt")
-  FileUtils.rm Dir.glob("db/development/**/..fsdb.meta.*.txt")
+task :db_clean, [:environment] do |t, args|
+  environment = args.environment  || "development"
+  db_helper = Jashboard::FSDBHelper.new("db/#{environment}")
+  db_helper.clean_data
 end
 

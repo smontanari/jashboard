@@ -7,3 +7,4 @@ Feature: Create a new dashboard
     When I request the creation of a dashboard with name "test dashboard"
 
     Then the app should return a response containing an empty dashboard with name "test dashboard" and an id
+    And the returned dashboard should be saved in the repository

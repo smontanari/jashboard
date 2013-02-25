@@ -5,19 +5,26 @@ module Jashboard
     end
 
     def clean_data
-      FileUtils.rm Dir.glob("#{@db_path}/monitor/..fsdb.meta.*.txt")
-      FileUtils.rm Dir.glob("#{@db_path}/monitor/*.txt")
-      FileUtils.rm Dir.glob("#{@db_path}/dashboard/..fsdb.meta.*.txt")
-      FileUtils.rm Dir.glob("#{@db_path}/dashboard/*.txt")
+      FileUtils.rm Dir.glob("#{@db_path}/**/*.txt")
+      FileUtils.rm Dir.glob("#{@db_path}/**/..fsdb.meta.*.txt")
     end
 
     def method_missing(method, args)
-      match = method.to_s.match(/(serialize|verify)_(monitor|dashboard)/)
+      match = method.to_s.match(/(serialize|verify|load)_(monitor|dashboard)/)
       super(method, args) if match.nil?
-      self.send("#{match[1]}_yaml".to_sym, "#{match[2]}/#{args.id}.txt", args)
+      if(match[1] == 'load')
+        puts "#{match[2]}/#{args}.txt"
+        self.send("#{match[1]}_yaml".to_sym, "#{match[2]}/#{args}.txt")  
+      else
+        self.send("#{match[1]}_yaml".to_sym, "#{match[2]}/#{args.id}.txt", args)
+      end
     end
 
     private
+
+    def load_yaml(file_path)
+      YAML.load_file("#{@db_path}/#{file_path}")
+    end
 
     def serialize_yaml(file_path, obj)
       File.open("#{@db_path}/#{file_path}", "w") do |f|

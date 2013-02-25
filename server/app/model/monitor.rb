@@ -3,14 +3,15 @@ module Jashboard
     attr_accessor :id, :type, :name, :refresh_interval, :position, :configuration, :runtime_info
 
     def to_json(*args)
-      {
+      map = {
         id: @id,
         name: @name,
         type: @type,
         refresh_interval: @refresh_interval,
-        position: @position,
         configuration: @configuration
-      }.to_json(*args)
+      }
+      map[:position] = @position unless @position.nil?
+      map.to_json(*args)
     end
   end
 end

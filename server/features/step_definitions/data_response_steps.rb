@@ -13,6 +13,7 @@ Then /^the app should return the error json response "(.*)"$/ do |fixture_path|
 end
 
 Then /^the app should return a response containing an empty dashboard with name "(.*)" and an id$/ do |name|
+  last_response.status.should == 201
   response = JSON.parse(last_response.body)
   response['id'].should_not be_empty
   response['name'].should == name
@@ -20,6 +21,7 @@ Then /^the app should return a response containing an empty dashboard with name 
 end
 
 Then /^the app should return a response containing a new monitor with name (.*), refresh interval (.*), type (.*) and an id$/ do |name, refresh_interval, type|
+  last_response.status.should == 201
   response = JSON.parse(last_response.body)
   response['id'].should_not be_empty
   response['name'].should == name
@@ -28,6 +30,7 @@ Then /^the app should return a response containing a new monitor with name (.*),
 end
 
 Then /^the app should return a response containing a dashboard with id "(.*?)", and monitors$/ do |id, expected_monitors|
+  last_response.should be_ok
   dashboards = JSON.parse(last_response.body)
   dashboards.first['id'].should == id
   actual_monitors = dashboards.first['monitors']
@@ -37,4 +40,8 @@ Then /^the app should return a response containing a dashboard with id "(.*?)", 
     actual_monitors[index]['refresh_interval'].should == monitor[:refresh_interval].to_i
     actual_monitors[index]['type'].should == monitor[:type]
   end
+end
+
+Then /^the app should return a successful response$/ do
+  last_response.should be_ok
 end

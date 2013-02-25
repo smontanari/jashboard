@@ -29,17 +29,22 @@ module Jashboard
     end
 
     it("should store a build monitor as yaml into a file") do
-      monitor = subject.save_monitor(
+      new_monitor = subject.save_monitor(
         MonitorBuilder.new.
-        with_id("test-monitor-id").
         with_type(123).
         with_name("test new_name").
         with_refresh_interval(456).
         with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build)
 
-      monitor.id.should_not be_nil
-      @db_helper.verify_monitor(monitor)
+      new_monitor.id.should_not be_nil
+      @db_helper.validate_monitor(new_monitor.id) do |monitor|
+        monitor.type.should == 123
+        monitor.name.should == "test new_name"
+        monitor.refresh_interval.should == 456
+        monitor.configuration.attr1.should == "test_attr1"
+        monitor.configuration.attr2.should == 1234
+      end
     end
 
     it("should store a build monitor as yaml into an existing file") do
@@ -60,7 +65,12 @@ module Jashboard
 
       subject.save_monitor(monitor)
 
-      @db_helper.verify_monitor(monitor)
+      @db_helper.validate_monitor("test-new_monitor-id") do |m|
+        m.name.should == "test change name"
+        m.refresh_interval.should == 123
+        m.configuration.attr1.should == "test_changed_attr1"
+        m.configuration.attr2.should == 9876
+      end
     end
 
     it("should load a dashboard from a yaml file") do
@@ -106,7 +116,7 @@ module Jashboard
     end
 
     it("should store a dashboard as yaml into a new file") do
-      dashboard = subject.save_dashboard(
+      new_dashboard = subject.save_dashboard(
         DashboardBuilder.new.
           with_name("test dashboard-name").
           with_monitor_id("test-mon-1").
@@ -114,8 +124,13 @@ module Jashboard
           build
       )
 
-      dashboard.id.should_not be_nil
-      @db_helper.verify_dashboard(dashboard)
+      new_dashboard.id.should_not be_nil
+      @db_helper.validate_dashboard(new_dashboard.id) do |dashboard|
+        dashboard.name.should == "test dashboard-name"
+        dashboard.monitor_ids.length.should == 2
+        dashboard.monitor_ids[0].should == "test-mon-1"
+        dashboard.monitor_ids[1].should == "test-mon-2"
+      end
     end
   end
 end

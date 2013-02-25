@@ -9,33 +9,24 @@ module Jashboard
       FileUtils.rm Dir.glob("#{@db_path}/**/..fsdb.meta.*.txt")
     end
 
-    def method_missing(method, args)
-      match = method.to_s.match(/(serialize|verify|load)_(monitor|dashboard)/)
+    def method_missing(method, args, &block)
+      match = method.to_s.match(/(serialize|validate)_(monitor|dashboard)/)
       super(method, args) if match.nil?
-      if(match[1] == 'load')
-        puts "#{match[2]}/#{args}.txt"
-        self.send("#{match[1]}_yaml".to_sym, "#{match[2]}/#{args}.txt")  
-      else
-        self.send("#{match[1]}_yaml".to_sym, "#{match[2]}/#{args.id}.txt", args)
-      end
+      self.send("#{match[1]}_yaml".to_sym, "#{match[2]}", args, &block)
     end
 
     private
 
-    def load_yaml(file_path)
-      YAML.load_file("#{@db_path}/#{file_path}")
-    end
-
-    def serialize_yaml(file_path, obj)
-      File.open("#{@db_path}/#{file_path}", "w") do |f|
+    def serialize_yaml(base_path, obj)
+      File.open("#{@db_path}/#{base_path}/#{obj.id}.txt", "w") do |f|
         f.write(YAML.dump(obj))
       end
     end
 
-    def verify_yaml(file_path, obj)
-      File.open("#{@db_path}/#{file_path}") do |f|
-        f.read.should == obj.to_yaml
-      end
+    def validate_yaml(base_path, id)
+      obj = YAML.load_file("#{@db_path}/#{base_path}/#{id}.txt")
+      yield(obj) if block_given?
+      obj
     end
   end
 end

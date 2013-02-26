@@ -2,16 +2,12 @@
   jashboard = _.extend(module, {
     DashboardControllerDelegate: function(repository, monitorDelegate) {
       this.init = function(scope) {
-        var addDashboard = function(dashboard) {
-          scope.dashboards.push(dashboard);
-          _.each(dashboard.monitors, function(monitor) {
-            monitorDelegate.updateMonitorRuntime(scope, monitor);
-          });
-        };
         var onDataLoadSuccess = function(data) {
           scope.$broadcast("DataLoadingComplete");
           scope.dashboards = [];
-          _.each(data, addDashboard);
+          _.each(data, function(dashboard) {
+            scope.dashboards.push(dashboard);
+          });
           scope.dataLoadingStatus = jashboard.model.loadingStatus.completed;
           scope.$apply();
         };
@@ -22,7 +18,7 @@
         };
 
         scope.$on('NewDashboardCreated', function(event, dashboard) {
-          addDashboard(dashboard);
+          scope.dashboards.push(dashboard);
           scope.$apply();
         });
 
@@ -30,10 +26,6 @@
           scope.$broadcast("DataLoadingStart");
           repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
         };
-
-        // scope.initMonitor = function() {
-        //   monitorDelegate.bindTo(this);
-        // }
 
         monitorDelegate.init(scope);
       };

@@ -59,45 +59,4 @@ describe("Monitor", function() {
       expect(monitor.cssPosition).toEqual({position: 'absolute', top: 45, left: 20});
     });
   });
-  
-  describe("Updating runtime info", function() {
-    var callback, runtimeInfoSynchroniser;
-    beforeEach(function() {
-      monitor = new jashboard.model.Monitor({});
-      monitor.runtimeInfo = "test_initial_runtime";
-      monitor.loadingStatus = jashboard.model.loadingStatus.completed;
-      callback = jasmine.createSpy("callback");
-      runtimeInfoSynchroniser = monitor.runtimeInfoSynchroniser(callback);
-    });
-
-    it("should set the loadingStatus to 'waiting'", function() {
-      expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
-    });
-    describe("successful update", function() {
-      it("should set the new runtime data and update the loading status to 'completed'", function() {
-        runtimeInfoSynchroniser.success({testRuntimeInfo: "test"});
-
-        expect(monitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
-        expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
-      });
-      it("should invoke the callback", function() {
-        runtimeInfoSynchroniser.success({testRuntimeInfo: "test"});
-
-        expect(callback).toHaveBeenCalledWith(monitor);
-      });
-    });
-    describe("failed update", function() {
-      it("should not change the runtime data update the loading status to 'error'", function() {
-        runtimeInfoSynchroniser.error();
-
-        expect(monitor.runtimeInfo).toEqual("test_initial_runtime");
-        expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
-      });
-      it("should invoke the callback", function() {
-        runtimeInfoSynchroniser.error();
-
-        expect(callback).toHaveBeenCalledWith(monitor);
-      });
-    });
-  });
 });

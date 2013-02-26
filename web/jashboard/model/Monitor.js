@@ -8,26 +8,6 @@
         }
       };
 
-      this.runtimeInfoSynchroniser = function(callback) {
-        this.loadingStatus = jashboard.model.loadingStatus.waiting;
-        var self = this;
-        return {
-          success: function(runtimeData) {
-            self.runtimeInfo = runtimeData;
-            self.loadingStatus = jashboard.model.loadingStatus.completed;
-            if(_.isFunction(callback)) {
-              callback(self);
-            }
-          },
-          error: function(status, error) {
-            self.loadingStatus = jashboard.model.loadingStatus.error;
-            if(_.isFunction(callback)) {
-              callback(self);
-            }
-          }
-        };
-      };
-
       this.id = monitorData.id;
       this.type = monitorData.type;
       this.name = monitorData.name;

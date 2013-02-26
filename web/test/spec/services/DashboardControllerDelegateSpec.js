@@ -3,7 +3,7 @@ describe("DashboardControllerDelegate", function() {
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast', '$evalAsync']);
-    monitorControllerDelegate = jasmine.createSpyObj("monitorControllerDelegate", ['init', 'updateMonitorRuntime']);
+    monitorControllerDelegate = jasmine.createSpyObj("monitorControllerDelegate", ['init']);
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
 
     delegate = new jashboard.DashboardControllerDelegate(repository, monitorControllerDelegate);
@@ -18,10 +18,7 @@ describe("DashboardControllerDelegate", function() {
   describe("Dashboard data loading successfully", function() {
     var test_dashboards = [];
     beforeEach(function() {
-      test_dashboards = [
-        {id: "test.dashboard.1", monitors: ["test_monitor1", "test_monitor2"]},
-        {id: "test.dashboard.2", monitors: ["test_monitor3"]}
-      ];
+      test_dashboards = [{id: "test.dashboard.1"}, {id: "test.dashboard.2"}];
       repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(handlers) {
         handlers.success(test_dashboards);
       });
@@ -42,12 +39,6 @@ describe("DashboardControllerDelegate", function() {
     });
     it("should set the dataLoadingStatus to completed", function() {
       expect(scope.dataLoadingStatus).toEqual(jashboard.model.loadingStatus.completed);
-    });
-    it("should update the monitor runtime", function() {
-      expect(monitorControllerDelegate.updateMonitorRuntime).toHaveBeenCalledWith(scope, "test_monitor1");
-      expect(monitorControllerDelegate.updateMonitorRuntime).toHaveBeenCalledWith(scope, "test_monitor2");
-      expect(monitorControllerDelegate.updateMonitorRuntime).toHaveBeenCalledWith(scope, "test_monitor3");
-      expect(scope.$apply).toHaveBeenCalled();
     });
   });
   describe("Dashboard data loading failure", function() {

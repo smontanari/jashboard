@@ -9,14 +9,7 @@ describe("MonitorControllerDelegate", function() {
       id: "test_id",
       name: "test.monitor",
       type: "test_type",
-      setPosition: jasmine.createSpy("monitor.setPosition()"),
-      runtimeInfoSynchroniser: function(callback) {
-       callback();
-       return {
-        success: successHandler,
-        error: errorHandler
-       };
-      }
+      setPosition: jasmine.createSpy("monitor.setPosition()")
     };
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
     repository = {
@@ -90,31 +83,62 @@ describe("MonitorControllerDelegate", function() {
         expect(scope.dashboards[1].monitors.length).toEqual(2);
         expect(scope.dashboards[1].monitors).toContain(testMonitor);
       });
-      it("should invoke the repository with monitor parameters", function() {
-        expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
-      });
-      it("should use the monitor runtimeInfoSynchroniser.success as a callback", function() {
-        expect(successHandler).toHaveBeenCalledWith("testRuntimeInfo");
-      });
       it("should syncronise the scope", function() {
         expect(scope.$apply).toHaveBeenCalled();
       });
     });
   });
 
-  describe("updateRuntimeInfo", function() {
+  describe("scope.loadMonitorRuntimeInfo()", function() {
+    var runtimeSynchHandlers, innerScope = jasmine.createSpyObj("innerScope", ['$apply']);
     beforeEach(function() {
-      delegate.updateMonitorRuntime(scope, testMonitor);
-    });
+      repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
+          .andCallFake(function(monitor_id, monitor_type, handlers) {
+            runtimeSynchHandlers = handlers;
+          });
 
-    it("should invoke the repository with monitor parameters", function() {
+      delegate.init(scope);
+      innerScope.monitor = testMonitor;
+      testMonitor.runtimeInfo = "test_initial_runtime";
+      scope.loadMonitorRuntimeInfo.apply(innerScope);
+    });
+    it("should invoke the repository", function() {
       expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
     });
-    it("should use the monitor runtimeInfoSynchroniser.error as a callback", function() {
-      expect(successHandler).toHaveBeenCalledWith("testRuntimeInfo");
+    it("should set the monitor loadingStatus to 'waiting'", function() {
+      expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
     });
-    it("should syncronise the scope", function() {
-      expect(scope.$apply).toHaveBeenCalled();
+
+    describe("on success", function() {
+      beforeEach(function () {
+        runtimeSynchHandlers.success({testRuntimeInfo: "test"});
+      });
+      it("should update the runtime data", function() {
+        expect(testMonitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
+      });
+      it("change the loading status to 'completed'", function() {
+        expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
+      });
+      it("should apply the changes to the scope", function() {
+        expect(innerScope.errorMessage).toBeUndefined();
+        expect(innerScope.$apply).toHaveBeenCalled();
+      });
+    });
+
+    describe("on failure", function() {
+      beforeEach(function () {
+        runtimeSynchHandlers.error("test_status", "test_error");
+      });
+      it("should not change the runtime data", function() {
+        expect(testMonitor.runtimeInfo).toEqual("test_initial_runtime");
+      });
+      it("should change the loading status to 'error'", function() {
+        expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
+      });
+      it("should apply the changes to the scope", function() {
+        expect(innerScope.errorMessage).toEqual("Error refreshing runtime information: test_status - test_error");
+        expect(innerScope.$apply).toHaveBeenCalled();
+      });
     });
   });
 });

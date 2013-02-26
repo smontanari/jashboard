@@ -28,7 +28,7 @@
 
         scope.loadData = function() {
           scope.$broadcast("DataLoadingStart");
-          repository.loadDashboards(onDataLoadSuccess, onDataLoadError);
+          repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
         };
 
         monitorDelegate.init(scope);

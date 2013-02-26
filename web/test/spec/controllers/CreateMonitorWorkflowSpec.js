@@ -42,15 +42,15 @@ describe("CreateMonitorWorkflow", function() {
   describe("Action: save", function() {
     beforeEach(function() {
       scope.$emit = jasmine.createSpy("scope.$emit");
-      repository.createMonitor = jasmine.createSpy("repository.createMonitor").andCallFake(function(dashboard_id, monitorParameters, handler) {
-        handler("test.monitor");
+      repository.createMonitor = jasmine.createSpy("repository.createMonitor").andCallFake(function(dashboard_id, monitorParameters, handlers) {
+        handlers.success("test.monitor");
       });
       scope.monitorForm = {dashboard_id: "test_dashboard", name: "test.name"};
       workflow['save']();
     });
 
     it("should call the repository to create a monitor", function() {
-      expect(repository.createMonitor).toHaveBeenCalledWith("test_dashboard", {name: "test.name"}, jasmine.any(Function));
+      expect(repository.createMonitor).toHaveBeenCalledWith("test_dashboard", {name: "test.name"}, jasmine.any(Object));
     });
     it("should emit the 'NewMonitorCreated'", function() {
       expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated", "test_dashboard", "test.monitor");

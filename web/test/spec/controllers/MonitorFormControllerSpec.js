@@ -9,9 +9,6 @@ describe("MonitorFormController", function() {
         var event = {};
         handler(event, "test_dashboard_id");
       });
-      repository.createMonitor = jasmine.createSpy("repository.createMonitor").andCallFake(function(input, handler) {
-        handler("test.monitor");
-      });
     });
     it("should listen to the 'OpenMonitorDialog' event", function() {
       controller = new jashboard.MonitorFormController(scope, repository);

@@ -31,7 +31,7 @@ describe("Repository", function() {
         return {id: data};
       });
 
-      repository.loadDashboards(successHandler);
+      repository.loadDashboards({success: successHandler});
 
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/dashboards");
       expect(successHandler).toHaveBeenCalledWith([
@@ -40,13 +40,13 @@ describe("Repository", function() {
       ]);
     });
     it("should invoke the error handler if the request fails", function() {
-      repository.loadDashboards(successHandler, errorHandler);
+      repository.loadDashboards({error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
     });
   });
 
-  describe("Loading monitor info", function() {
+  describe("Loading monitor runtime data", function() {
     beforeEach(function() {
       httpService.getJSON = jasmine.createSpy("httpService.getJSON")
         .andReturn(new AjaxPromise("test_monitor_data")
@@ -59,14 +59,14 @@ describe("Repository", function() {
         }
       );
 
-      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", successHandler);
+      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", {success: successHandler});
 
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/monitor/test.monitor.id/runtime");
       expect(modelMapper.mapMonitorRuntimeInfo).toHaveBeenCalledWith("test_type", "test_monitor_data");
       expect(successHandler).toHaveBeenCalledWith({runtimeInfo: "test_monitor_data"});
     });
     it("should invoke the error handler if the request fails", function() {
-      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", successHandler, errorHandler);
+      repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
     });
@@ -83,13 +83,13 @@ describe("Repository", function() {
         return {id: data};
       });
 
-      repository.createDashboard({name: "test.dashboard"}, successHandler);
+      repository.createDashboard({name: "test.dashboard"}, {success: successHandler});
 
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard", {name: "test.dashboard"});
       expect(successHandler).toHaveBeenCalledWith({id: "test_dashboard"});
     });
     it("should invoke the error handler if the request fails", function() {
-      repository.createDashboard("test", successHandler, errorHandler);
+      repository.createDashboard("test", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
     });    
@@ -106,13 +106,13 @@ describe("Repository", function() {
         return {id: data};
       });
 
-      repository.createMonitor("test_dashboard", {name: "test.monitor"}, successHandler);
+      repository.createMonitor("test_dashboard", {name: "test.monitor"}, {success: successHandler});
 
       expect(httpService.postJSON).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard/monitor", {name: "test.monitor"});
       expect(successHandler).toHaveBeenCalledWith({id: "test_monitor"});
     });
     it("should invoke the error handler if the request fails", function() {
-      repository.createMonitor("test", "test", successHandler, errorHandler);
+      repository.createMonitor("test", "test", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
     });    

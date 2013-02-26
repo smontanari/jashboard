@@ -12,7 +12,7 @@
           }
         };
         if (_.isUndefined(monitor)) {
-          throw "Could not find monitor with id '" + id + "'";
+          throw "Could not find monitor with id: " + id;
         }
         return monitor;
       };

@@ -67,6 +67,7 @@ describe("Monitor", function() {
     var callback, runtimeInfoSynchroniser;
     beforeEach(function() {
       monitor = new jashboard.model.Monitor({});
+      monitor.runtimeInfo = "test_initial_runtime";
       monitor.loadingStatus = jashboard.model.loadingStatus.completed;
       callback = jasmine.createSpy("callback");
       runtimeInfoSynchroniser = monitor.runtimeInfoSynchroniser(callback);
@@ -75,16 +76,31 @@ describe("Monitor", function() {
     it("should set the loadingStatus to 'waiting'", function() {
       expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
     });
-    it("should set the new runtime data and update the loading status to 'completed'", function() {
-      runtimeInfoSynchroniser({testRuntimeInfo: "test"});
+    describe("successful update", function() {
+      it("should set the new runtime data and update the loading status to 'completed'", function() {
+        runtimeInfoSynchroniser.success({testRuntimeInfo: "test"});
 
-      expect(monitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
-      expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
+        expect(monitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
+        expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
+      });
+      it("should invoke the callback", function() {
+        runtimeInfoSynchroniser.success({testRuntimeInfo: "test"});
+
+        expect(callback).toHaveBeenCalledWith(monitor);
+      });
     });
-    it("should invoke the callback", function() {
-      runtimeInfoSynchroniser({testRuntimeInfo: "test"});
+    describe("failed update", function() {
+      it("should not change the runtime data update the loading status to 'error'", function() {
+        runtimeInfoSynchroniser.error();
 
-      expect(callback).toHaveBeenCalledWith(monitor);
+        expect(monitor.runtimeInfo).toEqual("test_initial_runtime");
+        expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
+      });
+      it("should invoke the callback", function() {
+        runtimeInfoSynchroniser.error();
+
+        expect(callback).toHaveBeenCalledWith(monitor);
+      });
     });
   });
 });

@@ -37,7 +37,8 @@
               <span class="drag-handle"></span>
             </div>
             <div class="monitor-title">
-              <span data-ng-hide="monitor.loadingStatus == 'completed'"><img src="img/ajax-loader-indicator.gif"></span>
+              <span data-ng-show="monitor.loadingStatus == 'waiting'"><img src="img/ajax-loader-indicator.gif"></span>
+              <!-- <span data-ng-show="monitor.loadingStatus == 'error'"><img src="img/icon-warning.png"></span> -->
               <span>{{monitor.name}}</span>
             </div>
             <div class="monitor-details">

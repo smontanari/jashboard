@@ -1,8 +1,9 @@
 describe("MonitorControllerDelegate", function() {
-  var delegate, scope, repository, synchroniserFunction, testMonitor;
+  var delegate, scope, repository, testMonitor, successHandler, errorHandler;
 
   beforeEach(function() {
-    synchroniserFunction = jasmine.createSpy("synchroniserFunction");
+    successHandler = jasmine.createSpy("successHandler");
+    errorHandler = jasmine.createSpy("errorHandler");
     testMonitor = 
     {
       id: "test_id",
@@ -10,14 +11,17 @@ describe("MonitorControllerDelegate", function() {
       type: "test_type",
       runtimeInfoSynchroniser: function(callback) {
        callback();
-       return synchroniserFunction;
+       return {
+        success: successHandler,
+        error: errorHandler
+       };
       }
     };
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
     repository = {
       loadMonitorRuntimeInfo: jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
-        .andCallFake(function(monitor_id, monitor_type, handler) {
-          handler("testRuntimeInfo");
+        .andCallFake(function(monitor_id, monitor_type, handlers) {
+          handlers.success("testRuntimeInfo");
         }),
         updateMonitorPosition: jasmine.createSpy("repository.updateMonitorPosition()")
     };
@@ -76,10 +80,10 @@ describe("MonitorControllerDelegate", function() {
         expect(scope.dashboards[1].monitors).toContain(testMonitor);
       });
       it("should invoke the repository with monitor parameters", function() {
-        expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Function));
+        expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
       });
-      it("should use the monitor runtimeInfoSynchroniser as a callback", function() {
-        expect(synchroniserFunction).toHaveBeenCalledWith("testRuntimeInfo");
+      it("should use the monitor runtimeInfoSynchroniser.success as a callback", function() {
+        expect(successHandler).toHaveBeenCalledWith("testRuntimeInfo");
       });
       it("should syncronise the scope", function() {
         expect(scope.$apply).toHaveBeenCalled();
@@ -93,10 +97,10 @@ describe("MonitorControllerDelegate", function() {
     });
 
     it("should invoke the repository with monitor parameters", function() {
-      expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Function));
+      expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
     });
-    it("should use the monitor runtimeInfoSynchroniser as a callback", function() {
-      expect(synchroniserFunction).toHaveBeenCalledWith("testRuntimeInfo");
+    it("should use the monitor runtimeInfoSynchroniser.error as a callback", function() {
+      expect(successHandler).toHaveBeenCalledWith("testRuntimeInfo");
     });
     it("should syncronise the scope", function() {
       expect(scope.$apply).toHaveBeenCalled();

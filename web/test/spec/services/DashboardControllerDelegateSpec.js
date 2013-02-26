@@ -22,8 +22,8 @@ describe("DashboardControllerDelegate", function() {
         {id: "test.dashboard.1", monitors: ["test_monitor1", "test_monitor2"]},
         {id: "test.dashboard.2", monitors: ["test_monitor3"]}
       ];
-      repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(success, error) {
-        success(test_dashboards);
+      repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(handlers) {
+        handlers.success(test_dashboards);
       });
 
       delegate.init(scope);
@@ -52,8 +52,8 @@ describe("DashboardControllerDelegate", function() {
   });
   describe("Dashboard data loading failure", function() {
     beforeEach(function() {
-      repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(success, error) {
-        error();
+      repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(handlers) {
+        handlers.error();
       });        
       delegate.init(scope);
       scope.loadData();

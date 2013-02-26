@@ -17,9 +17,11 @@
       this.save = function() {
         var dashboard_id = scope.monitorForm.dashboard_id;
         var monitorParameters = _.omit(scope.monitorForm, "dashboard_id");
-        repository.createMonitor(dashboard_id, monitorParameters, function(monitor) {
-          scope.$emit("NewMonitorCreated", dashboard_id, monitor);
-          scope.$emit("CloseMonitorDialog", dashboard_id, monitor);
+        repository.createMonitor(dashboard_id, monitorParameters, {
+          success: function(monitor) {
+            scope.$emit("NewMonitorCreated", dashboard_id, monitor);
+            scope.$emit("CloseMonitorDialog", dashboard_id, monitor);
+          }
         });
       };
     }

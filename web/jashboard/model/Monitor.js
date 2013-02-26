@@ -11,11 +11,19 @@
       this.runtimeInfoSynchroniser = function(callback) {
         this.loadingStatus = jashboard.model.loadingStatus.waiting;
         var self = this;
-        return function(runtimeData) {
-          self.runtimeInfo = runtimeData;
-          self.loadingStatus = jashboard.model.loadingStatus.completed;
-          if(_.isFunction(callback)) {
-            callback(self);
+        return {
+          success: function(runtimeData) {
+            self.runtimeInfo = runtimeData;
+            self.loadingStatus = jashboard.model.loadingStatus.completed;
+            if(_.isFunction(callback)) {
+              callback(self);
+            }
+          },
+          error: function(status, error) {
+            self.loadingStatus = jashboard.model.loadingStatus.error;
+            if(_.isFunction(callback)) {
+              callback(self);
+            }
           }
         };
       };

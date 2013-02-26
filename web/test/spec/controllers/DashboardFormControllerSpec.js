@@ -40,8 +40,8 @@ describe("DashboardFormController", function() {
   describe("saveDashboard()", function() {
     beforeEach(function() {
       scope = jasmine.createSpyObj("scope", ['$on', '$emit']);
-      repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handler) {
-        handler("test.dashboard");
+      repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handlers) {
+        handlers.success("test.dashboard");
       });
       controller = new jashboard.DashboardFormController(scope, repository);
 
@@ -50,9 +50,9 @@ describe("DashboardFormController", function() {
     });
 
     it("should call the repository to create a dashboard", function() {
-      expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Function));
+      expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Object));
     });
-    it("should emit the 'NewDashboardCreated'", function() {
+    it("should emit the 'NewDashboardCreated' if successful", function() {
       expect(scope.$emit).toHaveBeenCalledWith("NewDashboardCreated", "test.dashboard");
     });
   });

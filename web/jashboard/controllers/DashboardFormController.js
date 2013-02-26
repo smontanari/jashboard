@@ -6,8 +6,10 @@
           scope.validationError = true;
           return;
         }
-        repository.createDashboard({name: this.dashboardName}, function(dashboard) {
-          scope.$emit("NewDashboardCreated", dashboard);
+        repository.createDashboard({name: this.dashboardName}, {
+          success: function(dashboard) {
+            scope.$emit("NewDashboardCreated", dashboard);
+          }
         });
         scope.$emit("CloseDashboardDialog");
       };

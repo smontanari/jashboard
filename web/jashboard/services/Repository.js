@@ -1,37 +1,41 @@
 (function(module) {
   jashboard = _.extend(module, {
     Repository: function(http, modelMapper) {
-      var executeRequest = function(promise, successHandler, errorHandler) {
-        promise.done(successHandler)
-        if (_.isFunction(errorHandler)) {
+      var executeRequest = function(promise, dataMapperFn, handlers) {
+        if(_.isFunction(handlers.success)) {
+          promise.done(function(data) {
+            handlers.success(dataMapperFn(data));
+          });
+        }
+        if (_.isFunction(handlers.error)) {
           promise.fail(function(request, status, error) {
-            errorHandler(status, error);
+            handlers.error(status, error);
           });
         }
       };
 
-      this.loadDashboards = function(successHandler, errorHandler) {
+      this.loadDashboards = function(handlers) {
         executeRequest(http.getJSON("/ajax/dashboards"), function(data) {
-          successHandler(_.map(data, modelMapper.mapDashboard));
-        }, errorHandler);
+          return _.map(data, modelMapper.mapDashboard);
+        }, handlers);
       };
       
-      this.loadMonitorRuntimeInfo = function(monitor_id, monitorType, successHandler, errorHandler) {
+      this.loadMonitorRuntimeInfo = function(monitor_id, monitorType, handlers) {
         executeRequest(http.getJSON("/ajax/monitor/" + monitor_id + "/runtime"), function(data) {
-          successHandler(modelMapper.mapMonitorRuntimeInfo(monitorType, data));
-        }, errorHandler);
+          return modelMapper.mapMonitorRuntimeInfo(monitorType, data);
+        }, handlers);
       };
 
-      this.createDashboard = function(parameters, successHandler, errorHandler) {
+      this.createDashboard = function(parameters, handlers) {
         executeRequest(http.postJSON("/ajax/dashboard", parameters), function(data) {
-          successHandler(modelMapper.mapDashboard(data));
-        }, errorHandler);
+          return modelMapper.mapDashboard(data);
+        }, handlers);
       };
 
-      this.createMonitor = function(dashboard_id, monitorParameters, successHandler, errorHandler) {
+      this.createMonitor = function(dashboard_id, monitorParameters, handlers) {
         executeRequest(http.postJSON("/ajax/dashboard/" + dashboard_id + "/monitor", monitorParameters), function(data) {
-          successHandler(modelMapper.mapMonitor(data));
-        }, errorHandler);
+          return modelMapper.mapMonitor(data);
+        }, handlers);
       };
 
       this.updateMonitorPosition = function(monitor_id, position) {

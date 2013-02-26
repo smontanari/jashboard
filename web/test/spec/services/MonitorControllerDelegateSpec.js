@@ -64,9 +64,17 @@ describe("MonitorControllerDelegate", function() {
 
     describe("'NewMonitorCreated' event handler", function() {
       beforeEach(function() {
+        eventObject = {
+          targetScope: {
+            monitorForm: {
+              dashboard_id: "dashboard2"
+            }
+          },
+          stopPropagation: jasmine.createSpy("event.stopPropagation()")
+        };
         scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
           if (eventName === "NewMonitorCreated") {
-            handler({}, "dashboard2", testMonitor);
+            handler(eventObject, testMonitor);
           }
         });
         scope.dashboards = [

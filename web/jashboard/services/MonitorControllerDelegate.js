@@ -24,9 +24,9 @@
 
       this.init = function(scope) {
         var self = this;
-        scope.$on("NewMonitorCreated", function(event, dashboard_id, monitor) {
+        scope.$on("NewMonitorCreated", function(event, monitor) {
           var dashboard = _.find(scope.dashboards, function(dashboard) {
-            return (dashboard.id === dashboard_id);
+            return (dashboard.id === event.targetScope.monitorForm.dashboard_id);
           });
           dashboard.monitors.push(monitor);
           self.updateMonitorRuntime(scope, monitor);

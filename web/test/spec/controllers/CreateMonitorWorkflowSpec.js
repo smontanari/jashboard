@@ -53,7 +53,7 @@ describe("CreateMonitorWorkflow", function() {
       expect(repository.createMonitor).toHaveBeenCalledWith("test_dashboard", {name: "test.name"}, jasmine.any(Object));
     });
     it("should emit the 'NewMonitorCreated'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated", "test_dashboard", "test.monitor");
+      expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated", "test.monitor");
     });
   });
 });

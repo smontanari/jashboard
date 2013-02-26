@@ -46,11 +46,11 @@
 }
 
 .iconised-info {
-  .iconised('info', 32px);
+  .iconised('icon-info.png', 32px);
 }
 
 .iconised-error {
-  .iconised('error', 32px);
+  .iconised('icon-error.png', 32px);
 }
 
 .no-data-available {
@@ -99,7 +99,12 @@
   overflow: hidden;
   clear: both;
   text-overflow: ellipsis;
-  span img {
+  .monitor-icon-ajax-loader {
+    .iconised('icon-ajax-loader-indicator.gif', 16px);
+    float: right;
+  }
+  .monitor-icon-ajax-error {
+    .iconised('icon-ajax-loader-error.png', 16px);
     float: right;
   }
 }

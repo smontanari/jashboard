@@ -33,15 +33,15 @@
         }
       ],
     }],
-    timeout: 2
+    timeout: 1
   });
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
-    returnCode: 501,
+    returnCode: 500,
     content: {
-      error: "smoething went very wrong"
+      error: "something went very wrong"
     },
-    timeout: 3
+    timeout: 2
   });
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {

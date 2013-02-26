@@ -19,9 +19,6 @@ describe("Monitor", function() {
       expect(monitor.refreshInterval).toEqual(123);
       expect(monitor.type).toEqual("test_type");
     });
-    it("should create a monitor with initial loading status as 'waiting'", function() {
-      expect(monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
-    });
     it("should create a monitor with empty configuration", function() {
       expect(monitor.configuration).toEqual({});
     });

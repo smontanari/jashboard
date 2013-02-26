@@ -31,7 +31,6 @@
       this.id = monitorData.id;
       this.type = monitorData.type;
       this.name = monitorData.name;
-      this.loadingStatus = jashboard.model.loadingStatus.waiting;
       this.refreshInterval = monitorData.refresh_interval;
       this.setPosition(monitorData.position);
       this.configuration = {};

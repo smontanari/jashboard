@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    DashboardControllerDelegate: function(repository, monitorDelegate) {
+    DashboardControllerDelegate: function(repository) {
       this.init = function(scope) {
         var onDataLoadSuccess = function(data) {
           scope.$broadcast("DataLoadingComplete");
@@ -22,16 +22,14 @@
           scope.$apply();
         });
 
-        scope.loadData = function() {
+        scope.loadDashboardData = function() {
           scope.$broadcast("DataLoadingStart");
           repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
         };
-
-        monitorDelegate.init(scope);
       };
     }
   });
-  jashboard.services.service('DashboardControllerDelegate', ['Repository', 'MonitorControllerDelegate', jashboard.DashboardControllerDelegate]).run(function() {
+  jashboard.services.service('DashboardControllerDelegate', ['Repository', jashboard.DashboardControllerDelegate]).run(function() {
     steal.dev.log("DashboardControllerDelegate initialized");
   });
 }(jashboard || {}));

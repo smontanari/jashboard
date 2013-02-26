@@ -1,20 +1,13 @@
 describe("DashboardControllerDelegate", function() {
-  var delegate, repository, scope, monitorControllerDelegate;
+  var delegate, repository, scope;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast', '$evalAsync']);
-    monitorControllerDelegate = jasmine.createSpyObj("monitorControllerDelegate", ['init']);
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
 
-    delegate = new jashboard.DashboardControllerDelegate(repository, monitorControllerDelegate);
+    delegate = new jashboard.DashboardControllerDelegate(repository);
   });
 
-  describe("Initialisation", function() {
-    it("should initialise the monitorControllerDelegate", function() {
-      delegate.init(scope);
-      expect(monitorControllerDelegate.init).toHaveBeenCalledWith(scope);
-    });
-  });
   describe("Dashboard data loading successfully", function() {
     var test_dashboards = [];
     beforeEach(function() {
@@ -24,7 +17,7 @@ describe("DashboardControllerDelegate", function() {
       });
 
       delegate.init(scope);
-      scope.loadData();
+      scope.loadDashboardData();
     });
 
     it("should broadcast the 'DataLoadingStart' event", function() {
@@ -47,7 +40,7 @@ describe("DashboardControllerDelegate", function() {
         handlers.error();
       });        
       delegate.init(scope);
-      scope.loadData();
+      scope.loadDashboardData();
     });
     it("should set the dataLoadingStatus to error", function() {
       expect(scope.dataLoadingStatus).toEqual(jashboard.model.loadingStatus.error);

@@ -1,5 +1,5 @@
 describe("MainController", function() {
-  var pluginManager, controller, scope, repository, dashboardDelegate;
+  var pluginManager, controller, scope, repository, dashboardDelegate, monitorDelegate;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ["$broadcast"]);
@@ -8,9 +8,10 @@ describe("MainController", function() {
       getAllMonitorTypes: jasmine.createSpy("pluginManager.getAllMonitorTypes()")
         .andReturn(['test_type1', 'test_type2'])
     };
-    dashboardDelegate = jasmine.createSpyObj("DashboardDelegate", ['init']);
+    dashboardDelegate = jasmine.createSpyObj("DashboardControllerDelegate", ['init']);
+    monitorDelegate = jasmine.createSpyObj("MonitorControllerDelegate", ['init']);
 
-    controller = new jashboard.MainController(scope, dashboardDelegate, pluginManager);
+    controller = new jashboard.MainController(scope, dashboardDelegate, monitorDelegate, pluginManager);
   });
 
   it("should inject the array of available monitor types into the scope", function() {
@@ -19,6 +20,9 @@ describe("MainController", function() {
 
   it("should initialise a new DashboardScopeManager", function() {
     expect(dashboardDelegate.init).toHaveBeenCalledWith(scope);
+  });
+  it("should initialise the monitorControllerDelegate", function() {
+    expect(monitorDelegate.init).toHaveBeenCalledWith(scope);
   });
 
   describe("scope.menuAction()", function() {

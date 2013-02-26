@@ -31,6 +31,10 @@
           repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
         };
 
+        // scope.initMonitor = function() {
+        //   monitorDelegate.bindTo(this);
+        // }
+
         monitorDelegate.init(scope);
       };
     }

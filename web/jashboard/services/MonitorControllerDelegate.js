@@ -1,22 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorControllerDelegate: function(repository) {
-      var findMonitorById = function(dashboards, id) {
-        var monitor;
-        for (var i = 0; i < dashboards.length; i++) {
-          monitor = _.find(dashboards[i].monitors, function(monitor) {
-            return id === monitor.id;
-          });
-          if (_.isObject(monitor)) {
-            break;
-          }
-        };
-        if (_.isUndefined(monitor)) {
-          throw "Could not find monitor with id: " + id;
-        }
-        return monitor;
-      };
-
       this.updateMonitorRuntime = function(scope, monitor) {
         repository.loadMonitorRuntimeInfo(
           monitor.id,
@@ -26,6 +10,17 @@
           })
         );
       };
+
+      this.bindTo = function(scope) {
+        var monitor = scope.monitor;
+        repository.loadMonitorRuntimeInfo(
+          monitor.id,
+          monitor.type,
+          monitor.runtimeInfoSynchroniser(function() {
+            scope.$apply();
+          })
+        );
+      }
 
       this.init = function(scope) {
         var self = this;
@@ -38,10 +33,11 @@
           scope.$apply();
         });
 
-        scope.$on("MonitorPositionChanged", function(event, monitorElement, monitorPosition) {
-          var monitor = findMonitorById(scope.dashboards, monitorElement.getAttribute("id"));
-          monitor.setPosition(monitorPosition);
-          repository.updateMonitorPosition(monitor.id, monitorPosition);
+        scope.$on("MonitorPositionChanged", function(event, element, position) {
+          var monitor = event.targetScope.monitor;
+          monitor.setPosition(position);
+          repository.updateMonitorPosition(monitor.id, position);
+          event.stopPropagation();
         });
       }
     }

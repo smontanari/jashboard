@@ -9,6 +9,7 @@ describe("MonitorControllerDelegate", function() {
       id: "test_id",
       name: "test.monitor",
       type: "test_type",
+      setPosition: jasmine.createSpy("monitor.setPosition()"),
       runtimeInfoSynchroniser: function(callback) {
        callback();
        return {
@@ -30,14 +31,13 @@ describe("MonitorControllerDelegate", function() {
 
   describe("init()", function() {
     describe("'MonitorPositionChanged' event handler", function() {
-      var testMonitor;
+      var eventObject;
       beforeEach(function() {
-        var monitorDomElement = {
-          getAttribute: sinon.stub().withArgs("id").returns("m2")
-        };
-        testMonitor = {
-          id: "m2",
-          setPosition: jasmine.createSpy("monitor.setPosition()")
+        eventObject = {
+          targetScope: {
+            monitor: testMonitor
+          },
+          stopPropagation: jasmine.createSpy("event.stopPropagation()")
         };
         scope.dashboards = [
           {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
@@ -45,7 +45,7 @@ describe("MonitorControllerDelegate", function() {
         ];
         scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
           if (eventName === "MonitorPositionChanged") {
-            callback({}, monitorDomElement, {top: 10, left: 20});
+            callback(eventObject, {}, {top: 10, left: 20});
           }
         });
 
@@ -55,7 +55,10 @@ describe("MonitorControllerDelegate", function() {
         expect(testMonitor.setPosition).toHaveBeenCalledWith({top: 10, left: 20});
       });
       it("should invoke the repository", function() {
-        expect(repository.updateMonitorPosition).toHaveBeenCalledWith("m2", {top: 10, left: 20});
+        expect(repository.updateMonitorPosition).toHaveBeenCalledWith("test_id", {top: 10, left: 20});
+      });
+      it("should stop the event propagation", function() {
+        expect(eventObject.stopPropagation).toHaveBeenCalled();
       });
     });
 

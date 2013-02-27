@@ -29,9 +29,9 @@
           </div>
         </div>
         <div class="dashboard-content">
-          <div id="{{monitor.id}}" class="monitor-panel" 
+          <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"
             data-ng-repeat="monitor in dashboard.monitors" 
-            data-jb-draggable="{handleSelector: '.drag-handle', onDragStopEvent: 'MonitorPositionChanged'}"
+            data-jb-draggable="{handleSelector: '.drag-handle', onDragStop: 'MonitorPositionChanged'}"
             data-ng-style="{position: monitor.cssPosition.position, top: monitor.cssPosition.top, left: monitor.cssPosition.left}"
             data-ng-init="loadMonitorRuntimeInfo()">
             <div class="monitor-bar">
@@ -40,6 +40,7 @@
             <div class="monitor-title">
               <span class="monitor-icon-ajax-loader" data-ng-show="monitor.loadingStatus == 'waiting'"></span>
               <span class="monitor-icon-ajax-error" data-ng-show="monitor.loadingStatus == 'error'"></span>
+              <!-- <div class="hide monitor-error-tooltip"><span class="tooltip-error">{{errorMessage}}</span></div> -->
               <span>{{monitor.name}}</span>
             </div>
             <div class="monitor-details">

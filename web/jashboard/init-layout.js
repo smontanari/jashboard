@@ -5,28 +5,38 @@ var logGeometry = function(event, ui) {
   console.log($(element).position());
 };
 
-var resizeMonitorDetails = function() {
-  $(".monitor-panel").each(function() {
-    var position = $(".monitor-details", this).position();
-    var calculatedHeight = $(this).height() - position.top;
-    $(".monitor-details", this).height(calculatedHeight);
+var resizeMonitorDetails = function(childrenSel, parentSel) {
+  var parent = $(parentSel);
+  $(childrenSel, parent).each(function(index, element) {
+    var position = $(element).position();
+    var calculatedHeight = $(parent).height() - position.top;
+    $(element).height(calculatedHeight);
   });
+  // var position = $(".monitor-details", this).position();
+  // var calculatedHeight = $(this).height() - position.top;
+  // $(".monitor-details", this).height(calculatedHeight);
 }
 
 $(function() {
   $(".monitor-panel").draggable(
-    { containment: "parent",
+    { 
+      containment: "parent",
       handle: ".drag-handle",
       scroll: true,
       stack: ".monitor-panel",
       stop: logGeometry
     }).resizable(
-    { minHeight: 130,
-      minWidth: 250,
+    { 
       containment: "parent",
-      stop: resizeMonitorDetails
+      autoHide: true,
+      resize: function(event, ui) {
+        resizeMonitorDetails(".monitor-details", ui.element);
+      }
+      // stop: resizeMonitorDetails
   });
-  resizeMonitorDetails();
+  $(".monitor-panel").each(function(index, element) {
+    resizeMonitorDetails(".monitor-details", element);
+  });
 });
 
 

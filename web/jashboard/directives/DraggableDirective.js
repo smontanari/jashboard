@@ -8,9 +8,9 @@
           var options = {
             handle: draggableOptions.handleSelector
           };
-          if (_.isString(draggableOptions.onDragStopEvent)) {
+          if (_.isString(draggableOptions.onDragStop)) {
             options.stop = function(event, ui) {
-              scope.$emit(draggableOptions.onDragStopEvent, event.target, ui.position);
+              scope.$emit(draggableOptions.onDragStop, event.target, ui.position);
             };
           }
         }

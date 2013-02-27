@@ -35,6 +35,11 @@
                 monitor.loadingStatus = jashboard.model.loadingStatus.error;
                 self.errorMessage = "Error refreshing runtime information: " + status + " - " + error;
                 self.$apply();
+                // $(".monitor-title").tooltip({
+                //   html: true,
+                //   title: $("#" + monitor.id + " .monitor-tooltip").html(),
+                //   container: "body"
+                // });
               }
             }
           );

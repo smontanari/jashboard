@@ -14,6 +14,7 @@ steal(
     'build_monitor_create',
     'ajax_loader_display',
     'monitor_positioning',
+    'monitor_resizing',
     'dashboards_loading_error',
     'monitor_runtime_loading_error'
   ];

@@ -32,7 +32,7 @@
           <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"
             data-ng-repeat="monitor in dashboard.monitors" 
             data-jb-draggable="{handleSelector: '.drag-handle', onDragStop: 'MonitorPositionChanged'}"
-            data-jb-resizable=""
+            data-jb-resizable="{onResizeStop: 'Test'}"
             data-ng-style="monitor.cssLayout()"
             data-ng-init="loadMonitorRuntimeInfo()">
             <div class="monitor-bar">

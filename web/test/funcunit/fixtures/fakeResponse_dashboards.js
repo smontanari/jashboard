@@ -26,6 +26,7 @@
             "name": "Forum build",
             "refresh_interval": 30,
             "position": {"top": 200, "left": 400},
+            "size": {"width": 270, "height": 150},
             "type": "build",
             "configuration": {
               "type": "jenkins",

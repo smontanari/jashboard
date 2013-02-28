@@ -10,7 +10,7 @@ funcunitHelper.testFeature("Monitor positioning", "position_monitors", function(
   });
 
   test("should move monitors", function() {
-    FuncUnit.wait(1000, function() {
+    FuncUnit.wait(500, function() {
       S("#monitor_1 .drag-handle").drag({
         to: "+0 +200",
         duration: 1000
@@ -20,7 +20,7 @@ funcunitHelper.testFeature("Monitor positioning", "position_monitors", function(
       verifyPosition({top: 210, left: 60}, S("#monitor_1").position());
     });
 
-    FuncUnit.wait(1000, function() {
+    FuncUnit.wait(500, function() {
       S("#monitor_3 .drag-handle").drag({
         to: "-200 -200",
         duration: 1000

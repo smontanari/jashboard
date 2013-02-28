@@ -15,20 +15,20 @@ var resizeMonitorDetails = function(childrenSel, parentSel) {
 }
 
 $(function() {
-  $(".monitor-panel").draggable(
-    { 
-      containment: "parent",
-      handle: ".drag-handle",
-      scroll: true,
-      stack: ".monitor-panel",
-      stop: logGeometry
-    }).resizable(
-    { 
-      containment: "parent",
-      autoHide: true,
-      resize: function(event, ui) {
-        resizeMonitorDetails(".monitor-details", ui.element);
-      }
+  $(".monitor-panel").each(function() {
+    $(this).draggable(
+      { 
+        containment: "parent",
+        handle: ".drag-handle",
+        scroll: true,
+        stack: ".monitor-panel",
+        stop: logGeometry
+      }).resizable(
+      { 
+        containment: "parent",
+        autoHide: true,
+        alsoResize: $(".monitor-details", this)
+    });
   });
   $(".monitor-panel").each(function(index, element) {
     resizeMonitorDetails(".monitor-details", element);

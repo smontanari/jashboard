@@ -1,6 +1,7 @@
 steal.dev.log("Loading 3rd party assets");
 steal(
   { src: "css/bootstrap.min.css", packaged: false },
+  { src: "css/jquery-ui/jquery-ui-1.9.1.custom.min.css", packaged: false },
   "jquery"
 ).then(
   { src: 'lib/angular.min.js', packaged: false },

@@ -12,9 +12,6 @@ var resizeMonitorDetails = function(childrenSel, parentSel) {
     var calculatedHeight = $(parent).height() - position.top;
     $(element).height(calculatedHeight);
   });
-  // var position = $(".monitor-details", this).position();
-  // var calculatedHeight = $(this).height() - position.top;
-  // $(".monitor-details", this).height(calculatedHeight);
 }
 
 $(function() {
@@ -32,7 +29,6 @@ $(function() {
       resize: function(event, ui) {
         resizeMonitorDetails(".monitor-details", ui.element);
       }
-      // stop: resizeMonitorDetails
   });
   $(".monitor-panel").each(function(index, element) {
     resizeMonitorDetails(".monitor-details", element);

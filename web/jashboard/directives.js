@@ -2,7 +2,8 @@
   var directives = [
     'Dialog', 
     'Overlay',
-    'Draggable'
+    'Draggable',
+    'Resizable'
   ];
 
   steal("jashboard/directives/EventDirectiveDefinition.js")

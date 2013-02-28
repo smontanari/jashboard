@@ -4,18 +4,16 @@
       return function(scope, element, attrs) {
         var directiveOptions = scope.$eval(attrs['jbResizable']);
         var options = {};
-        var handleEvent = function(eventName, optionName, fireAction) {
-          if (_.isString(eventName)) {
-            options[optionName] = function(event, ui) {
-              scope[fireAction](eventName, event.target, ui.size);
-            };
-          }
-        };
-        if (_.isObject(directiveOptions)) {
-          handleEvent(directiveOptions.whenResizeStop, 'stop', '$emit');
-          handleEvent(directiveOptions.whenResize, 'resize', '$broadcast');
+        if (_.isString(directiveOptions.onResizeStop)) {
+          options.stop = function(event, ui) {
+            scope.$emit(directiveOptions.onResizeStop, event.target, ui.size);
+          };
         }
-
+        if (_.isString(directiveOptions.onResize)) {
+          options.resize = function(event, ui) {
+            scope.$broadcast(directiveOptions.onResize, event.target);
+          };
+        }
         widgetService.makeResizable(element, options);
       };
     }

@@ -13,20 +13,20 @@ describe("ResizableDirective", function() {
       .andCallFake(function(selector, options) {
         options.resize({target: "targetElement"}, {size: {width: 123, height: 456}});
       });
-    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({whenResize: "TestEvent"});
+    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({onResize: "TestEvent"});
 
     linkFunction(scope, "test-element", {"jbResizable": "test-map"});
 
     expect(scope.$eval).toHaveBeenCalledWith("test-map");
     expect(widgetService.makeResizable).toHaveBeenCalledWith("test-element", {resize: jasmine.any(Function)});
-    expect(scope.$broadcast).toHaveBeenCalledWith("TestEvent", "targetElement", {width: 123, height: 456});
-  });
+    expect(scope.$broadcast).toHaveBeenCalledWith("TestEvent", "targetElement");
+  });    
   it("should emit the given event when the resize action stops", function() {
     widgetService.makeResizable = jasmine.createSpy("widgetService.makeResizable()")
       .andCallFake(function(selector, options) {
         options.stop({target: "targetElement"}, {size: {width: 123, height: 456}});
       });
-    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({whenResizeStop: "TestEvent"});
+    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({onResizeStop: "TestEvent"});
 
     linkFunction(scope, "test-element", {"jbResizable": "test-map"});
 

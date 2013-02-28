@@ -2,27 +2,24 @@ describe("ResizeFromParentDirective", function() {
   var widgetService, linkFunction, scope;
   
   beforeEach(function() {
-    scope = jasmine.createSpyObj("scope", ['$eval', '$on']);
+    scope = jasmine.createSpyObj("scope", ['$on']);
     widgetService = jasmine.createSpyObj("WidgetService", ["resizeFromParent"]);
-  });
-
-  it("should handle the given resize event", function() {
-    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({on: "TestEvent"});
     linkFunction = jashboard.angular.resizeFromParentDirective(widgetService);
-
-    expect(scope.$on).toHaveBeenCalledWith("TestEvent");
   });
-  xit("should resize the element based on the parent", function() {
-    widgetService.resizeFromParent = jasmine.createSpy("widgetService.resizeFromParent()")
-      .andCallFake(function(selector, options) {
-        options.resize({target: "targetElement"}, {size: {width: 123, height: 456}});
-      });
-    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({resizeChildren: "children_element_selector"});
 
-    linkFunction(scope, "test-element", {"jbResizable": "test-map"});
+  it("should handle the given parent resize event", function() {
+    linkFunction(scope, {}, {"jbResizeFromParent": "TestEvent"});
 
-    expect(scope.$eval).toHaveBeenCalledWith("test-map");
-    expect(widgetService.resizeFromParent).toHaveBeenCalledWith("test-element", 
-      {handle: "test-handle-selector"});
+    expect(scope.$on).toHaveBeenCalledWith("TestEvent", jasmine.any(Function));
+  });
+  it("should resize the element based on the parent", function() {
+    widgetService.resizeFromParent = jasmine.createSpy("widgetService.resizeFromParent()");
+    scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, listener) {
+      listener({}, "parentElement");
+    });
+
+    linkFunction(scope, "test-element", {"jbResizeFromParent": "TestEvent"});
+
+    expect(widgetService.resizeFromParent).toHaveBeenCalledWith("test-element", "parentElement");
   });
 });

@@ -5,29 +5,23 @@ funcunitHelper.testFeature("Monitor positioning", "position_monitors", function(
   };
   
   test("should display monitors in their given position", function() {
-    verifyPosition({top: 10, left: 60}, S("#monitor_1").position());
-    verifyPosition({top: 200, left: 400}, S("#monitor_3").position());
+    featureHelper.verifyElementPosition("#monitor_1", {top: 10, left: 60});
+    featureHelper.verifyElementPosition("#monitor_3", {top: 200, left: 400});
   });
 
   test("should move monitors", function() {
-    FuncUnit.wait(500, function() {
-      S("#monitor_1 .drag-handle").drag({
-        to: "+0 +200",
-        duration: 1000
-      });
+    featureHelper.mouseDrag({
+      dragStartDelay: 500,
+      handleSelector: "#monitor_1 .drag-handle",
+      offset: "+0 +200"
     });
-    FuncUnit.wait(500, function() {
-      verifyPosition({top: 210, left: 60}, S("#monitor_1").position());
-    });
+    featureHelper.verifyElementPosition("#monitor_1", {top: 210, left: 60});
 
-    FuncUnit.wait(500, function() {
-      S("#monitor_3 .drag-handle").drag({
-        to: "-200 -200",
-        duration: 1000
-      });
+    featureHelper.mouseDrag({
+      dragStartDelay: 500,
+      handleSelector: "#monitor_3 .drag-handle",
+      offset: "-200 -200"
     });
-    FuncUnit.wait(500, function() {
-      verifyPosition({top: 0, left: 200}, S("#monitor_3").position());
-    });
+    featureHelper.verifyElementPosition("#monitor_3", {top: 0, left: 200}, 500);
   });
 });

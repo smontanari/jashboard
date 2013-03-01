@@ -44,8 +44,8 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
     S("#dashboard_1 .monitor-panel").size(2, function() {
       S("#monitor_2").visible();
 
-      FuncUnit.wait(1000, function() {
-        featureHelper.verifyMonitorData("#monitor_2",
+      FuncUnit.wait(500, function() {
+        featureHelper.verifyElementContent("#monitor_2",
           {
             '.monitor-title': "Test jenkins-monitor",
             '.build-time': "28-08-2012 11:25:10",
@@ -76,8 +76,8 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
     S("#dashboard_1 .monitor-panel").size(2, function() {
       S("#monitor_2").visible();
 
-      FuncUnit.wait(1000, function() {
-        featureHelper.verifyMonitorData("#monitor_2",
+      FuncUnit.wait(500, function() {
+        featureHelper.verifyElementContent("#monitor_2",
           {
             '.monitor-title': "Test go-monitor",
             '.build-time': "28-08-2012 11:25:10",

@@ -1,13 +1,22 @@
 (function(module) {
   jashboard = _.extend(module, {
     TooltipService: function() {
-      this.add = function(targetSelector, contentSelector) {
+      this.attachTextTooltip = function(targetSelector, text) {
         $(targetSelector).tooltip({
-          html: true,
-          title: $(contentSelector).html(),
+          title: text,
           container: "body"
         });
       };
+      // this.attachContentTooltip = function(targetSelector, contentSelector) {
+      //   $(targetSelector).tooltip({
+      //     html: true,
+      //     title: $(contentSelector).html(),
+      //     container: "body"
+      //   });
+      // };
+      this.removeTooltip = function(targetSelector) {
+        $(targetSelector).tooltip('destroy');
+      }
     }
   });
   jashboard.services.service('TooltipService', [jashboard.TooltipService]).run(function() {

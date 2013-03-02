@@ -1,12 +1,4 @@
 var featureHelper = (function(helper) {
-  var waitAndDo = function(fn, wait) {
-    if (wait) {
-      FuncUnit.wait(wait, fn);
-    } else {
-      fn();
-    }
-  };
-
   helper.inputText = function(selector, text) {
     S(selector).visible().focus().type(text, function() {
       S(selector).trigger('input');
@@ -27,7 +19,7 @@ var featureHelper = (function(helper) {
       S(options.handleSelector).drag({to: options.offset, duration: options.duration});
     });
   };
-  
+
   helper.verifyElementPosition = function(selector, expectedPosition) {
     S(selector).visible(function() {
       var actualPosition = S(selector).position();

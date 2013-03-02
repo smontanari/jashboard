@@ -12,7 +12,7 @@
 
         scope.$on("MonitorPositionChanged", function(event, element, position) {
           var monitor = event.targetScope.monitor;
-          monitor.setPosition(position);
+          monitor.position = position;
           repository.updateMonitorPosition(monitor.id, position);
           event.stopPropagation();
         });
@@ -25,15 +25,16 @@
             monitor.id,
             monitor.type,
             {
-              success: function(runtimeData) {
-                monitor.runtimeInfo = runtimeData;
+              success: function(data) {
+                monitor.runtimeInfo = data;
                 monitor.loadingStatus = jashboard.model.loadingStatus.completed;
                 delete scope.errorMessage;
                 self.$apply();
               },
-              error: function(status, error) {
+              error: function(status, statusMessage, errorDetails) {
                 monitor.loadingStatus = jashboard.model.loadingStatus.error;
-                self.errorMessage = "Error refreshing runtime information: " + status + " - " + error;
+                self.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
+                      " [" + errorDetails + "]";
                 self.$apply();
               }
             }

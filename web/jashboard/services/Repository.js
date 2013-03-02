@@ -1,6 +1,12 @@
 (function(module) {
   jashboard = _.extend(module, {
     Repository: function(http, modelMapper) {
+      var parseError = function(request) {
+        if (_.isString(request.responseText)) {
+          var content = JSON.parse(request.responseText);
+          return content.errorDescription;
+        }
+      };
       var executeRequest = function(promise, dataMapperFn, handlers) {
         if(_.isFunction(handlers.success)) {
           promise.done(function(data) {
@@ -8,8 +14,8 @@
           });
         }
         if (_.isFunction(handlers.error)) {
-          promise.fail(function(request, status, error) {
-            handlers.error(status, error);
+          promise.fail(function(request, status, statusMessage) {
+            handlers.error(status, statusMessage, parseError(request));
           });
         }
       };

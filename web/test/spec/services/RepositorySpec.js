@@ -7,7 +7,7 @@ describe("Repository", function() {
       return this;
     };
     this.fail = function(callback) { 
-      callback(null, "testStatus", "test_exception"); 
+      callback({responseText: '{"errorDescription": "test_error"}'}, "test_status", "test_message"); 
       return this;
     };
   };
@@ -42,7 +42,7 @@ describe("Repository", function() {
     it("should invoke the error handler if the request fails", function() {
       repository.loadDashboards({error: errorHandler});
 
-      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
     });
   });
 
@@ -68,7 +68,7 @@ describe("Repository", function() {
     it("should invoke the error handler if the request fails", function() {
       repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", {error: errorHandler});
 
-      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
     });
   });
 
@@ -91,7 +91,7 @@ describe("Repository", function() {
     it("should invoke the error handler if the request fails", function() {
       repository.createDashboard("test", {error: errorHandler});
 
-      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
     });    
   });
 
@@ -114,7 +114,7 @@ describe("Repository", function() {
     it("should invoke the error handler if the request fails", function() {
       repository.createMonitor("test", "test", {error: errorHandler});
 
-      expect(errorHandler).toHaveBeenCalledWith("testStatus", "test_exception");
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
     });    
   });
   

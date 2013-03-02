@@ -2,6 +2,7 @@
   var directives = [
     'Dialog', 
     'Overlay',
+    'Tooltip',
     'Draggable',
     'Resizable'
   ];

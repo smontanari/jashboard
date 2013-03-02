@@ -11,7 +11,7 @@
           scope.dataLoadingStatus = jashboard.model.loadingStatus.completed;
           scope.$apply();
         };
-        var onDataLoadError = function(status, error) {
+        var onDataLoadError = function(status, statusMessage) {
           scope.$broadcast("DataLoadingError");
           scope.dataLoadingStatus = jashboard.model.loadingStatus.error;
           scope.$apply();

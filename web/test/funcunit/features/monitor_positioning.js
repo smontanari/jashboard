@@ -1,9 +1,4 @@
 funcunitHelper.testFeature("Monitor positioning", "position_monitors", function() {
-  var verifyPosition = function(expectedPosition, actualPosition) {
-    equal(actualPosition.top, expectedPosition.top, "should have same X coordinate");
-    equal(actualPosition.left, expectedPosition.left, "should have same X coordinate");
-  };
-  
   test("should display monitors in their given position", function() {
     featureHelper.verifyElementPosition("#monitor_1", {top: 10, left: 60});
     featureHelper.verifyElementPosition("#monitor_3", {top: 200, left: 400});

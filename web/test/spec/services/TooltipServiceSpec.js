@@ -3,21 +3,22 @@ describe("TooltipService", function() {
   var $stub;
 
   beforeEach(function() {
-    $stub = testHelper.stubJQuery(["target-selector", "content-selector"]);
-    $stub.html = jasmine.createSpy("$.html()").andCallFake(function() {
-      return "test-content";
-    });
+    $stub = testHelper.stubJQuery(["target-selector"]);
     $stub.tooltip = jasmine.createSpy("$.tooltip()");
     service = new jashboard.TooltipService();
   });
 
-  it("should invoke $.tooltip()", function() {
-    service.add("target-selector", "content-selector");
+  it("should create a simple text $.tooltip()", function() {
+    service.attachTextTooltip("target-selector", "content");
 
     expect($stub.tooltip).toHaveBeenCalledWith({
-      html: true,
-      title: "test-content",
+      title: "content",
       container: "body"
     });
+  });
+  it("should remove the tooltip", function() {
+    service.removeTooltip("target-selector");
+
+    expect($stub.tooltip).toHaveBeenCalledWith('destroy');
   });
 });

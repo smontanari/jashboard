@@ -39,7 +39,7 @@
   server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
     returnCode: 500,
     content: {
-      error: "something went very wrong"
+      errorDescription: "something went very wrong"
     },
     timeout: 2
   });

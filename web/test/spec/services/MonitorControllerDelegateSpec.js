@@ -8,8 +8,7 @@ describe("MonitorControllerDelegate", function() {
     {
       id: "test_id",
       name: "test.monitor",
-      type: "test_type",
-      setPosition: jasmine.createSpy("monitor.setPosition()")
+      type: "test_type"
     };
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
     repository = {
@@ -45,7 +44,7 @@ describe("MonitorControllerDelegate", function() {
         delegate.init(scope);
       });
       it("should update the monitor position", function() {
-        expect(testMonitor.setPosition).toHaveBeenCalledWith({top: 10, left: 20});
+        expect(testMonitor.position).toEqual({top: 10, left: 20});
       });
       it("should invoke the repository", function() {
         expect(repository.updateMonitorPosition).toHaveBeenCalledWith("test_id", {top: 10, left: 20});
@@ -127,7 +126,7 @@ describe("MonitorControllerDelegate", function() {
 
     describe("on failure", function() {
       beforeEach(function () {
-        runtimeSynchHandlers.error("test_status", "test_error");
+        runtimeSynchHandlers.error("test_status", "test_message", "test_error");
       });
       it("should not change the runtime data", function() {
         expect(testMonitor.runtimeInfo).toEqual("test_initial_runtime");
@@ -136,7 +135,7 @@ describe("MonitorControllerDelegate", function() {
         expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
       });
       it("should apply the changes to the scope", function() {
-        expect(innerScope.errorMessage).toEqual("Error refreshing runtime information: test_status - test_error");
+        expect(innerScope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");
         expect(innerScope.$apply).toHaveBeenCalled();
       });
     });

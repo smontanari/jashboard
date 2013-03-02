@@ -9,6 +9,7 @@ steal('jashboard/jashboard.js')
   'jashboard/services/DialogService.js',
   'jashboard/services/WidgetService.js',
   'jashboard/services/HttpService.js',
+  'jashboard/services/TooltipService.js',
   'jashboard/services/Repository.js',
   'jashboard/services/ModelMapper.js',
   'jashboard/services/PluginManager.js',

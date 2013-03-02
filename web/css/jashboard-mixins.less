@@ -30,10 +30,11 @@
   }
 }
 
-.iconised (@icon-image, @size) {
+.iconised (@icon-image, @size, @margin: 0px) {
   width: @size;
   height: @size;
-  background: url("@{img_path_prefix}/@{icon-image}") no-repeat center;    
+  margin: @margin;
+  background: url("@{img_path_prefix}/@{icon-image}") no-repeat;
 }
 
 .message-box (@border-color, @shadow-color) {

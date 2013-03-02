@@ -1,30 +1,40 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MainController: function(scope, dashboardDelegate, monitorDelegate, pluginManager) {
-      var menuActions = {
-        newDashboard: function() {
-          scope.$broadcast("OpenDashboardDialog");
-        }
+    MainController: function(scope, menuDelegate, dashboardDelegate, monitorDelegate, pluginManager, repository) {
+      var onDataLoadSuccess = function(data) {
+        scope.$broadcast("DataLoadingComplete");
+        scope.dashboards = [];
+        _.each(data, function(dashboard) {
+          scope.dashboards.push(dashboard);
+        });
+        scope.dataLoadingStatus = jashboard.model.loadingStatus.completed;
+        scope.$apply();
       };
-      var dashboardActions = {
-        newMonitor: function(currentScope) {
-          scope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
-        }
+      var onDataLoadError = function(status, statusMessage) {
+        scope.$broadcast("DataLoadingError");
+        scope.dataLoadingStatus = jashboard.model.loadingStatus.error;
+        scope.$apply();
       };
-      
-      scope.menuAction = function(name) {
-        menuActions[name]();
-      }
-      scope.dashboardAction = function(name) {
-        dashboardActions[name](this);
+
+      scope.loadData = function() {
+        scope.$broadcast("DataLoadingStart");
+        repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
       };
 
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+      menuDelegate.init(scope);
       dashboardDelegate.init(scope);
       monitorDelegate.init(scope);
     }
   });
-  jashboard.application.controller("MainController", ['$scope', 'DashboardControllerDelegate', 'MonitorControllerDelegate', 'PluginManager', jashboard.MainController]).run(function() {
+  jashboard.application.controller("MainController", 
+    ['$scope',
+     'MenuControllerDelegate',
+     'DashboardControllerDelegate',
+     'MonitorControllerDelegate',
+     'PluginManager',
+     'Repository',
+     jashboard.MainController]).run(function() {
     steal.dev.log("MainController initialized");
   });
 }(jashboard || {}));

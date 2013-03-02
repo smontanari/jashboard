@@ -37,6 +37,7 @@
             data-ng-init="refreshRuntimeInfo()">
             <div class="monitor-bar">
               <span class="drag-handle"></span>
+              <span class="monitor-icon-delete" title="Delete" data-ng-click="deleteMonitor()"></span>
               <span class="monitor-icon-refresh" title="Refresh" data-ng-click="refreshRuntimeInfo()"></span>
             </div>
             <div class="monitor-title">
@@ -55,7 +56,7 @@
 
   <div data-ng-include="'html/new_monitor_dialog_partial.html'"></div>
   <div data-ng-include="'html/new_dashboard_dialog_partial.html'"></div>
-  <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="loadDashboardData()"></div>
+  <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="loadData()"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>
 </html>

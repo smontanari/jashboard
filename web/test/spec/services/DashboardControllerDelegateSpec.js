@@ -2,51 +2,18 @@ describe("DashboardControllerDelegate", function() {
   var delegate, repository, scope;
 
   beforeEach(function() {
-    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast', '$evalAsync']);
+    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
 
     delegate = new jashboard.DashboardControllerDelegate(repository);
   });
 
-  describe("Dashboard data loading successfully", function() {
-    var test_dashboards = [];
-    beforeEach(function() {
-      test_dashboards = [{id: "test.dashboard.1"}, {id: "test.dashboard.2"}];
-      repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(handlers) {
-        handlers.success(test_dashboards);
-      });
-
+  describe("scope.dashboardAction()", function() {
+    it("should broadcast the 'OpenMonitorDialog' event", function() {
       delegate.init(scope);
-      scope.loadDashboardData();
-    });
-
-    it("should broadcast the 'DataLoadingStart' event", function() {
-      expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingStart");
-    });
-    it("should load all the dashboards in the scope", function() {
-      expect(scope.dashboards).toEqual(test_dashboards);
-      expect(scope.$apply).toHaveBeenCalled();
-    });
-    it("should broadcast the 'DataLoadingComplete' event when data loading completes successfully", function() {
-      expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingComplete");
-    });
-    it("should set the dataLoadingStatus to completed", function() {
-      expect(scope.dataLoadingStatus).toEqual(jashboard.model.loadingStatus.completed);
-    });
-  });
-  describe("Dashboard data loading failure", function() {
-    beforeEach(function() {
-      repository.loadDashboards = jasmine.createSpy("repository.loadDashboards()").andCallFake(function(handlers) {
-        handlers.error();
-      });        
-      delegate.init(scope);
-      scope.loadDashboardData();
-    });
-    it("should set the dataLoadingStatus to error", function() {
-      expect(scope.dataLoadingStatus).toEqual(jashboard.model.loadingStatus.error);
-    });
-    it("should broadcast the 'DataLoadingError' event when data loading fails", function() {
-      expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingError");
+      var innerScope = { dashboard: {id: "test_dashboard_id"} };
+      scope.dashboardAction.apply(innerScope, ['newMonitor']);
+      expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", "test_dashboard_id");
     });
   });
 

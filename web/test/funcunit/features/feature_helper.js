@@ -29,8 +29,12 @@ var featureHelper = (function(helper) {
   };
   helper.verifyElementSize = function(selector, expectedSize) {
     S(selector).visible(function() {
-      ok(expectedSize.width - 10 < S(selector).width() < expectedSize.width + 10);
-      ok(expectedSize.height - 10 < S(selector).height() < expectedSize.height + 10);
+      var actualWidth = S(selector).width();
+      var actualHeight = S(selector).height();
+      ok((expectedSize.width - 10) < actualWidth && actualWidth < (expectedSize.width + 10), 
+        "Monitor width should be == " + expectedSize.width);
+      ok((expectedSize.height - 10) < actualHeight && actualHeight < (expectedSize.height + 10),
+        "Monitor height should be == " + expectedSize.height);
     });
   };
   helper.verifyElementContent = function(selector, expectedData) {

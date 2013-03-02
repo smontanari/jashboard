@@ -98,12 +98,12 @@
   clear: both;
   text-overflow: ellipsis;
   .monitor-icon-ajax-loader {
-    .iconised('icon-ajax-loader-indicator.gif', 16px);
     float: right;
+    .iconised('icon-ajax-loader-indicator.gif', 16px);
   }
   .monitor-icon-ajax-error {
-    .iconised('icon-ajax-loader-error.png', 16px);
     float: right;
+    .iconised('icon-ajax-loader-error.png', 16px);
   }
 }
 
@@ -111,14 +111,15 @@
   height: 16px;
   background: #d1f0ff;
   padding: 3px;
-}
-
-.drag-handle {
-  float: left;
-  width: 16px;
-  height: 16px;
-  cursor: move;
-  background: url("@{img_path_prefix}/icon-draggable.png") no-repeat;
+  .drag-handle {
+    float: left;
+    cursor: move;
+    .iconised('icon-draggable.png', 16px);
+  }
+  .monitor-icon-refresh {
+    float: right;
+    .iconised('icon-refresh.png', 16px);
+  }
 }
 
 .right-icon {

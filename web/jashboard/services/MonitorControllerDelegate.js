@@ -17,7 +17,7 @@
           event.stopPropagation();
         });
 
-        scope.loadMonitorRuntimeInfo = function() {
+        scope.refreshRuntimeInfo = function() {
           var self = this;
           var monitor = self.monitor;
           monitor.loadingStatus = jashboard.model.loadingStatus.waiting;

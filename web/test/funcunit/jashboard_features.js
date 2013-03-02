@@ -16,7 +16,8 @@ steal(
     'monitor_positioning',
     'monitor_resizing',
     'dashboards_loading_error',
-    'monitor_runtime_loading_error'
+    'monitor_runtime_loading_error',
+    'monitor_runtime_refresh'
   ];
 
   var selectFeatures = function() {

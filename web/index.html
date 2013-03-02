@@ -34,9 +34,10 @@
             data-jb-draggable="{handleSelector: '.drag-handle', onDragStop: 'MonitorPositionChanged'}"
             data-jb-resizable="{onResizeStop: 'MonitorSizeChanged'}"
             data-ng-style="monitor.cssLayout()"
-            data-ng-init="loadMonitorRuntimeInfo()">
+            data-ng-init="refreshRuntimeInfo()">
             <div class="monitor-bar">
               <span class="drag-handle"></span>
+              <span class="monitor-icon-refresh" title="Refresh" data-ng-click="refreshRuntimeInfo()"></span>
             </div>
             <div class="monitor-title">
               <span class="monitor-icon-ajax-loader" data-ng-show="monitor.loadingStatus == 'waiting'"></span>

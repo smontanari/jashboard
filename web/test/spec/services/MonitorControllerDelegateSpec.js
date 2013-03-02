@@ -88,7 +88,7 @@ describe("MonitorControllerDelegate", function() {
     });
   });
 
-  describe("scope.loadMonitorRuntimeInfo()", function() {
+  describe("scope.refreshRuntimeInfo()", function() {
     var runtimeSynchHandlers, innerScope = jasmine.createSpyObj("innerScope", ['$apply']);
     beforeEach(function() {
       repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
@@ -99,7 +99,7 @@ describe("MonitorControllerDelegate", function() {
       delegate.init(scope);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
-      scope.loadMonitorRuntimeInfo.apply(innerScope);
+      scope.refreshRuntimeInfo.apply(innerScope);
     });
     it("should invoke the repository", function() {
       expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));

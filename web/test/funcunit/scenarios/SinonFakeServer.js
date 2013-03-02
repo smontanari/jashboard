@@ -35,10 +35,10 @@
           var args = _.toArray(arguments);
           var xhr = args[0];
           var responseOptions = getResponseOptions(response, args);
-          if (_.isNumber(responseOptions.timeout)) {
+          if (_.isNumber(responseOptions.delay)) {
             setTimeout(function() {
               executeResponse.apply(xhr, [responseOptions.returnCode, responseOptions.contentType, responseOptions.content]);
-            }, (responseOptions.timeout * 1000));
+            }, (responseOptions.delay * 1000));
           } else {
             executeResponse.apply(xhr, [responseOptions.returnCode, responseOptions.contentType, responseOptions.content]);
           }

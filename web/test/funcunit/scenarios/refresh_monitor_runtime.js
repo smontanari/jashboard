@@ -18,41 +18,36 @@
             "stage": "epic build",
             "job": "unit-integration tests"
           }
-        },
-        {
-          "id": "monitor_2",
-          "name": "Forum build",
-          "refresh_interval": 30,
-          "type": "build",
-          "configuration": {
-            "type": "jenkins",
-            "hostname": "cibuild.host.com",
-            "port": 8080,
-            "build_id": "forum_trunk"
-          }
         }
       ],
     }],
-    delay: 2
+    delay: 1
   });
 
-  server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
+  var errorResponse = {
+    returnCode: 500,
+    content: {
+      errorDescription: "something went very wrong"
+    },
+    delay: 2
+  };
+  var successResponse = {
     content: {
       last_build_time: "23-08-2012 14:32:23",
       duration: 752,
       success: true,
       status: 1
     },
-    delay: 3
-  });
-
-  server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {
-    content: {
-      last_build_time: "25-08-2012 15:56:45",
-      duration: 126,
-      success: false,
-      status: 0
-    },
     delay: 1
+  };
+
+  var requestCount = 0;
+  server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", function(request) {
+    requestCount++;
+    if (requestCount % 2 > 0) {
+      return errorResponse;
+    } else {
+      return successResponse;
+    }
   });
 }());

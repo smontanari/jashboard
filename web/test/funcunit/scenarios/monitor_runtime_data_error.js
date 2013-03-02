@@ -33,7 +33,7 @@
         }
       ],
     }],
-    timeout: 1
+    delay: 1
   });
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
@@ -41,7 +41,7 @@
     content: {
       errorDescription: "something went very wrong"
     },
-    timeout: 2
+    delay: 2
   });
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {
@@ -51,6 +51,6 @@
       success: false,
       status: 0
     },
-    timeout: 1
+    delay: 1
   });
 }());

@@ -65,4 +65,13 @@ describe("HttpService", function() {
       dataType: 'json'
     });
   });
+  it("should invoke jQuery.ajax to perform a DELETE request", function() {
+    var request = httpService.delete("/test/path/to/resource");
+
+    expect(request).toEqual(mockRequest);
+    expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
+    expect($stub.ajax.mostRecentCall.args[1]).toEqual({
+      type: 'DELETE'
+    });
+  });
 });

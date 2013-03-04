@@ -19,11 +19,12 @@ var $, jQuery = function() {throw "you must stub or mock any call to jQuery!"};
 var testHelper = {
   stubJQuery: function(selectors) {
     var jQueryStub = sinon.stub();
-    if (_.isArray(selectors)) {
-      _.each(selectors, function(selector) {
-        jQueryStub.withArgs(selector).returns(jQueryStub);
-      });
+    if (_.isString(selectors)) {
+      selectors = [selectors];
     }
+    _.each(selectors, function(selector) {
+      jQueryStub.withArgs(selector).returns(jQueryStub);
+    });
     $ = jQuery = jQueryStub;
     return jQueryStub;
   }

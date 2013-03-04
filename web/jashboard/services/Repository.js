@@ -7,10 +7,13 @@
           return content.errorDescription;
         }
       };
-      var executeRequest = function(promise, dataMapperFn, handlers) {
+      var executeRequest = function(promise, handlers, dataMapperFn) {
         if(_.isFunction(handlers.success)) {
           promise.done(function(data) {
-            handlers.success(dataMapperFn(data));
+            if (_.isFunction(dataMapperFn)) {
+              data = dataMapperFn(data);
+            }
+            handlers.success(data);
           });
         }
         if (_.isFunction(handlers.error)) {
@@ -21,31 +24,50 @@
       };
 
       this.loadDashboards = function(handlers) {
-        executeRequest(http.getJSON("/ajax/dashboards"), function(data) {
-          return _.map(data, modelMapper.mapDashboard);
-        }, handlers);
+        executeRequest(
+          http.getJSON("/ajax/dashboards"),
+          handlers,
+          function(data) {
+            return _.map(data, modelMapper.mapDashboard);
+          });
       };
       
       this.loadMonitorRuntimeInfo = function(monitor_id, monitorType, handlers) {
-        executeRequest(http.getJSON("/ajax/monitor/" + monitor_id + "/runtime"), function(data) {
-          return modelMapper.mapMonitorRuntimeInfo(monitorType, data);
-        }, handlers);
+        executeRequest(
+          http.getJSON("/ajax/monitor/" + monitor_id + "/runtime"), 
+          handlers,
+          function(data) {
+            return modelMapper.mapMonitorRuntimeInfo(monitorType, data);
+          });
       };
 
       this.createDashboard = function(parameters, handlers) {
-        executeRequest(http.postJSON("/ajax/dashboard", parameters), function(data) {
-          return modelMapper.mapDashboard(data);
-        }, handlers);
+        executeRequest(
+          http.postJSON("/ajax/dashboard", parameters),
+          handlers,
+          function(data) {
+            return modelMapper.mapDashboard(data);
+          });
       };
 
       this.createMonitor = function(dashboard_id, monitorParameters, handlers) {
-        executeRequest(http.postJSON("/ajax/dashboard/" + dashboard_id + "/monitor", monitorParameters), function(data) {
-          return modelMapper.mapMonitor(data);
-        }, handlers);
+        executeRequest(
+          http.postJSON("/ajax/dashboard/" + dashboard_id + "/monitor", monitorParameters),
+          handlers,
+          function(data) {
+            return modelMapper.mapMonitor(data);
+          });
       };
 
       this.updateMonitorPosition = function(monitor_id, position) {
         http.putJSON("/ajax/monitor/" + monitor_id + "/position", position);
+      }
+
+      this.deleteMonitor = function(monitor_id, handlers) {
+        executeRequest(
+          http.delete("/ajax/monitor/" + monitor_id),
+          handlers
+        );
       }
     }
   });

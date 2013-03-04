@@ -3,7 +3,7 @@ describe("DialogService", function() {
   var $stub;
 
   beforeEach(function() {
-    $stub = testHelper.stubJQuery(["test-selector"]);
+    $stub = testHelper.stubJQuery("test-selector");
     $stub.modal = jasmine.createSpy("$.modal()");
     service = new jashboard.DialogService();
   });

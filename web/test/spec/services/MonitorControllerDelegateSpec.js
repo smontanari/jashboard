@@ -1,9 +1,7 @@
 describe("MonitorControllerDelegate", function() {
-  var delegate, scope, repository, testMonitor, successHandler, errorHandler;
+  var delegate, scope, repository, alertService, testMonitor;
 
   beforeEach(function() {
-    successHandler = jasmine.createSpy("successHandler");
-    errorHandler = jasmine.createSpy("errorHandler");
     testMonitor = 
     {
       id: "test_id",
@@ -11,17 +9,15 @@ describe("MonitorControllerDelegate", function() {
       type: "test_type"
     };
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
-    repository = {
-      loadMonitorRuntimeInfo: jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
-        .andCallFake(function(monitor_id, monitor_type, handlers) {
-          handlers.success("testRuntimeInfo");
-        }),
-        updateMonitorPosition: jasmine.createSpy("repository.updateMonitorPosition()")
-    };
-    delegate = new jashboard.MonitorControllerDelegate(repository);
   });
 
   describe("init()", function() {
+    beforeEach(function() {
+      repository = {
+          updateMonitorPosition: jasmine.createSpy("repository.updateMonitorPosition()")
+      };
+      delegate = new jashboard.MonitorControllerDelegate(repository);
+    });
     describe("'MonitorPositionChanged' event handler", function() {
       var eventObject;
       beforeEach(function() {
@@ -41,6 +37,7 @@ describe("MonitorControllerDelegate", function() {
           }
         });
 
+        delegate = new jashboard.MonitorControllerDelegate(repository);
         delegate.init(scope);
       });
       it("should update the monitor position", function() {
@@ -74,6 +71,7 @@ describe("MonitorControllerDelegate", function() {
           {id: "dashboard2", monitors: [{id: "m2"}]}
         ];
 
+        delegate = new jashboard.MonitorControllerDelegate(repository);
         delegate.init(scope);
       });
 
@@ -88,6 +86,45 @@ describe("MonitorControllerDelegate", function() {
     });
   });
 
+  describe("scope.removeMonitor()", function() {
+    var innerScope = {}, deleteHandlers, alertOptions;
+    beforeEach(function() {
+      alertService = {
+        showAlert: jasmine.createSpy("alertService.showAlert()").andCallFake(function(options) {
+          alertOptions = options;
+        })
+      };
+      repository = {
+          deleteMonitor: jasmine.createSpy("repository.deleteMonitor()").andCallFake(function(monitor_id, handlers) {
+            deleteHandlers = handlers;
+          })
+      };
+      innerScope.dashboard = {monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
+      innerScope.monitor = testMonitor;
+
+      delegate = new jashboard.MonitorControllerDelegate(repository, alertService);
+      delegate.init(scope);      
+      scope.removeMonitor.apply(innerScope);
+    });
+
+    it("should invoke the alert service to display the alert box", function() {
+      expect(alertOptions.title).toEqual("Remove monitor test.monitor");
+      expect(alertOptions.message).toEqual("If you delete this monitor you will lose all its data. Continue?");
+    });
+    it("should delete the monitor on confirmation", function() {
+      alertOptions.confirmAction();
+
+      expect(repository.deleteMonitor).toHaveBeenCalledWith("test_id", jasmine.any(Object));
+    });
+    it("should remove the monitor from the dashboard on successful deletion", function() {
+      alertOptions.confirmAction();
+      deleteHandlers.success();
+
+      expect(innerScope.dashboard.monitors).toEqual([{id: "m1"}, {id: "m2"}]);
+      expect(scope.$apply).toHaveBeenCalled();
+    });
+  });
+
   describe("scope.refreshRuntimeInfo()", function() {
     var runtimeSynchHandlers, innerScope = jasmine.createSpyObj("innerScope", ['$apply']);
     beforeEach(function() {
@@ -96,6 +133,7 @@ describe("MonitorControllerDelegate", function() {
             runtimeSynchHandlers = handlers;
           });
 
+      delegate = new jashboard.MonitorControllerDelegate(repository);
       delegate.init(scope);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";

@@ -35,6 +35,12 @@
           data: JSON.stringify(obj),
         }, ajaxWriteDefaults));
       };
+
+      this.delete = function(url) {
+        return ajaxRequest(url, {
+          type: 'DELETE'
+        });
+      };
     }
   });
   jashboard.services.service('HttpService', ['$log', jashboard.HttpService]).run(function() {

@@ -3,7 +3,7 @@ describe("OverlayService", function() {
   var $stub;
 
   beforeEach(function() {
-    $stub = testHelper.stubJQuery(["test-message"]);
+    $stub = testHelper.stubJQuery("test-message");
     service = new jashboard.OverlayService();
   });
 

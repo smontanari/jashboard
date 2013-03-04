@@ -3,7 +3,7 @@ describe("WidgetService", function() {
   var $stub;
 
   beforeEach(function() {
-    $stub = testHelper.stubJQuery(["test-selector"]);
+    $stub = testHelper.stubJQuery("test-selector");
     service = new jashboard.WidgetService();
   });
 

@@ -125,4 +125,23 @@ describe("Repository", function() {
       expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/position", "test.position");
     });    
   });
+
+  describe("Deleting a monitor", function() {
+    beforeEach(function() {
+      httpService.delete = jasmine.createSpy("httpService.delete()").andReturn(
+        new AjaxPromise("")
+      );      
+    });
+    it("should use the http service to delete the monitor", function() {
+      repository.deleteMonitor("test_id", {success: successHandler});
+
+      expect(httpService.delete).toHaveBeenCalledWith("/ajax/monitor/test_id");
+      expect(successHandler).toHaveBeenCalled();
+    });    
+    it("should invoke the error handler if the request fails", function() {
+      repository.deleteMonitor("test_id", {error: errorHandler});
+
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
+    });    
+  });
 });

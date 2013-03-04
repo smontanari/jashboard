@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorControllerDelegate: function(repository) {
+    MonitorControllerDelegate: function(repository, alertService) {
       this.init = function(scope) {
         scope.$on("NewMonitorCreated", function(event, monitor) {
           var dashboard = _.find(scope.dashboards, function(dashboard) {
@@ -16,6 +16,23 @@
           repository.updateMonitorPosition(monitor.id, position);
           event.stopPropagation();
         });
+
+        scope.removeMonitor = function() {
+          var currentDashboard = this.dashboard;
+          var currentMonitor = this.monitor;
+          alertService.showAlert({
+            title: "Remove monitor " + currentMonitor.name,
+            message: "If you delete this monitor you will lose all its data. Continue?",
+            confirmAction: function() {
+              repository.deleteMonitor(currentMonitor.id, {
+                success: function() {
+                  currentDashboard.monitors = _.difference(currentDashboard.monitors, [currentMonitor]);
+                  scope.$apply();
+                }
+              });
+            }
+          });
+        };
 
         scope.refreshRuntimeInfo = function() {
           var self = this;
@@ -43,7 +60,7 @@
       }
     }
   });
-  jashboard.services.service('MonitorControllerDelegate', ['Repository', jashboard.MonitorControllerDelegate]).run(function() {
+  jashboard.services.service('MonitorControllerDelegate', ['Repository', 'AlertService', jashboard.MonitorControllerDelegate]).run(function() {
     steal.dev.log("MonitorControllerDelegate initialized");
   });
 }(jashboard || {}));

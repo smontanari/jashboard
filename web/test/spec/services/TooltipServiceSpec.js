@@ -3,12 +3,12 @@ describe("TooltipService", function() {
   var $stub;
 
   beforeEach(function() {
-    $stub = testHelper.stubJQuery(["target-selector"]);
+    $stub = testHelper.stubJQuery("target-selector");
     $stub.tooltip = jasmine.createSpy("$.tooltip()");
     service = new jashboard.TooltipService();
   });
 
-  it("should create a simple text $.tooltip()", function() {
+  it("should create a simple text tooltip", function() {
     service.attachTextTooltip("target-selector", "content");
 
     expect($stub.tooltip).toHaveBeenCalledWith({

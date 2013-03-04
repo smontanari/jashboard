@@ -8,6 +8,7 @@
         cancelLabel: "Cancel",
         confirmAction: function() {}
       };
+
       this.bindTo = function(selector) {
         _selector = selector;
       };
@@ -16,6 +17,7 @@
         var elementScope = angular.element(_selector).scope();
         elementScope.alertOptions = _.defaults(options, defaultOptions);
         $(_selector).modal('show');
+        $(".modal-backdrop").css("opacity", "0.2");
       };
     }
   });

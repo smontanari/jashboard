@@ -123,7 +123,12 @@ describe("Repository", function() {
       repository.updateMonitorPosition("test_id", "test.position");
 
       expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/position", "test.position");
-    });    
+    });
+    it("should use the http service to update the monitor size", function() {
+      repository.updateMonitorSize("test_id", "test.size");
+
+      expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/size", "test.size");
+    });
   });
 
   describe("Deleting a monitor", function() {

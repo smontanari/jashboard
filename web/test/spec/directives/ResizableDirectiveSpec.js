@@ -1,9 +1,13 @@
 describe("ResizableDirective", function() {
-  var widgetService, linkFunction, scope;
+  var widgetService, linkFunction, scope, mockElement;
   
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$eval', '$emit', '$broadcast']);
     widgetService = jasmine.createSpyObj("WidgetService", ["makeResizable"]);
+    mockElement = {
+      width: function() { return 123; },
+      height: function() { return 456; }
+    };
     
     linkFunction = jashboard.angular.resizableDirective(widgetService);
   });
@@ -11,7 +15,7 @@ describe("ResizableDirective", function() {
   it("should broadcast the given event during the resizing process", function() {
     widgetService.makeResizable = jasmine.createSpy("widgetService.makeResizable()")
       .andCallFake(function(selector, options) {
-        options.resize({target: "targetElement"}, {size: {width: 123, height: 456}});
+        options.resize({target: "targetElement"}, {element: mockElement});
       });
     scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({onResize: "TestEvent"});
 
@@ -24,7 +28,7 @@ describe("ResizableDirective", function() {
   it("should emit the given event when the resize action stops", function() {
     widgetService.makeResizable = jasmine.createSpy("widgetService.makeResizable()")
       .andCallFake(function(selector, options) {
-        options.stop({target: "targetElement"}, {size: {width: 123, height: 456}});
+        options.stop({}, {element: mockElement});
       });
     scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({onResizeStop: "TestEvent"});
 
@@ -32,6 +36,6 @@ describe("ResizableDirective", function() {
 
     expect(scope.$eval).toHaveBeenCalledWith("test-map");
     expect(widgetService.makeResizable).toHaveBeenCalledWith("test-element", {stop: jasmine.any(Function)});
-    expect(scope.$emit).toHaveBeenCalledWith("TestEvent", "targetElement", {width: 123, height: 456});
+    expect(scope.$emit).toHaveBeenCalledWith("TestEvent", {width: 123, height: 456});
   });
 });

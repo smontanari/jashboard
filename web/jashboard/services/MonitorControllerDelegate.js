@@ -10,10 +10,17 @@
           scope.$apply();
         });
 
-        scope.$on("MonitorPositionChanged", function(event, element, position) {
+        scope.$on("MonitorPositionChanged", function(event, position) {
           var monitor = event.targetScope.monitor;
           monitor.position = position;
           repository.updateMonitorPosition(monitor.id, position);
+          event.stopPropagation();
+        });
+
+        scope.$on("MonitorSizeChanged", function(event, size) {
+          var monitor = event.targetScope.monitor;
+          monitor.size = size;
+          repository.updateMonitorSize(monitor.id, size);
           event.stopPropagation();
         });
 

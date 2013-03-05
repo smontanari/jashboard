@@ -63,6 +63,10 @@
         http.putJSON("/ajax/monitor/" + monitor_id + "/position", position);
       }
 
+      this.updateMonitorSize = function(monitor_id, size) {
+        http.putJSON("/ajax/monitor/" + monitor_id + "/size", size);
+      }
+
       this.deleteMonitor = function(monitor_id, handlers) {
         executeRequest(
           http.delete("/ajax/monitor/" + monitor_id),

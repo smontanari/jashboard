@@ -7,11 +7,16 @@
         if(_.isObject(directiveOptions)) {
           if (_.isString(directiveOptions.onResizeStop)) {
             options.stop = function(event, ui) {
-              scope.$emit(directiveOptions.onResizeStop, event.target, ui.size);
+              var size = {
+                width: ui.element.width(),
+                height: ui.element.height()
+              }
+              scope.$emit(directiveOptions.onResizeStop, size);
             };
           }
           if (_.isString(directiveOptions.onResize)) {
             options.resize = function(event, ui) {
+              var element = ui.element;
               scope.$broadcast(directiveOptions.onResize, event.target);
             };
           }

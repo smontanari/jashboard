@@ -13,15 +13,20 @@ describe("MonitorControllerDelegate", function() {
 
   describe("init()", function() {
     beforeEach(function() {
-      repository = {
-          updateMonitorPosition: jasmine.createSpy("repository.updateMonitorPosition()")
-      };
+      repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize']);
       delegate = new jashboard.MonitorControllerDelegate(repository);
     });
-    describe("'MonitorPositionChanged' event handler", function() {
-      var eventObject;
+
+    describe("'MonitorPositionChanged' and 'MonitorSizeChanged' events handler", function() {
+      var positionChangedEventObject, sizeChangedEventObject;
       beforeEach(function() {
-        eventObject = {
+        positionChangedEventObject = {
+          targetScope: {
+            monitor: testMonitor
+          },
+          stopPropagation: jasmine.createSpy("event.stopPropagation()")
+        };
+        sizeChangedEventObject = {
           targetScope: {
             monitor: testMonitor
           },
@@ -33,7 +38,10 @@ describe("MonitorControllerDelegate", function() {
         ];
         scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
           if (eventName === "MonitorPositionChanged") {
-            callback(eventObject, {}, {top: 10, left: 20});
+            callback(positionChangedEventObject, {top: 10, left: 20});
+          }
+          if (eventName === "MonitorSizeChanged") {
+            callback(sizeChangedEventObject, {width: 10, height: 20});
           }
         });
 
@@ -43,11 +51,20 @@ describe("MonitorControllerDelegate", function() {
       it("should update the monitor position", function() {
         expect(testMonitor.position).toEqual({top: 10, left: 20});
       });
-      it("should invoke the repository", function() {
+      it("should update the monitor size", function() {
+        expect(testMonitor.size).toEqual({width: 10, height: 20});
+      });
+      it("should invoke the repository to update the position", function() {
         expect(repository.updateMonitorPosition).toHaveBeenCalledWith("test_id", {top: 10, left: 20});
       });
+      it("should invoke the repository to update the size", function() {
+        expect(repository.updateMonitorSize).toHaveBeenCalledWith("test_id", {width: 10, height: 20});
+      });
       it("should stop the event propagation", function() {
-        expect(eventObject.stopPropagation).toHaveBeenCalled();
+        expect(positionChangedEventObject.stopPropagation).toHaveBeenCalled();
+      });
+      it("should stop the event propagation", function() {
+        expect(sizeChangedEventObject.stopPropagation).toHaveBeenCalled();
       });
     });
 

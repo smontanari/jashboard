@@ -21,7 +21,7 @@ describe("DraggableDirective", function() {
   it("should invoke the widgetService with the 'stop' callback emitting the given event", function() {
     widgetService.makeDraggable = jasmine.createSpy("widgetService.makeDraggable()")
       .andCallFake(function(selector, options) {
-        options.stop({target: "targetElement"}, {position: {top: 123, left: 456}});
+        options.stop({}, {position: {top: 123, left: 456}});
       });
     scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({onDragStop: "TestEvent"});
 
@@ -29,6 +29,6 @@ describe("DraggableDirective", function() {
 
     expect(scope.$eval).toHaveBeenCalledWith("test-map");
     expect(widgetService.makeDraggable).toHaveBeenCalledWith("test-element", {stop: jasmine.any(Function)});
-    expect(scope.$emit).toHaveBeenCalledWith("TestEvent", "targetElement", {top: 123, left: 456});
+    expect(scope.$emit).toHaveBeenCalledWith("TestEvent", {top: 123, left: 456});
   });
 });

@@ -10,7 +10,7 @@
           };
           if (_.isString(directiveOptions.onDragStop)) {
             options.stop = function(event, ui) {
-              scope.$emit(directiveOptions.onDragStop, event.target, ui.position);
+              scope.$emit(directiveOptions.onDragStop, ui.position);
             };
           }
         }

@@ -70,6 +70,14 @@ module Jashboard
       status 200
     end
 
+    put '/ajax/monitor/:id/size' do
+      data = JSON.parse(request.body.read)
+      monitor = @repository.load_monitor(params[:id])
+      monitor.size = Struct.new(:width, :height).new(data['width'], data['height'])
+      @repository.save_monitor(monitor)
+      status 200
+    end
+
     private
 
     def create_monitor(monitor_json)

@@ -187,6 +187,29 @@ module Jashboard
           @monitor.position.left.should == 765
         end
       end
+      describe("PUT /ajax/monitor/:monitor_id/size") do
+        before(:each) do
+          @monitor = Monitor.new
+          @monitor.id = "test-monitor-id"
+          @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return(@monitor)
+          @mock_repository.stub(:save_monitor)
+        end
+
+        it("should return a successful response") do
+          put '/ajax/monitor/test-monitor-id/size', %({"width": 243, "height": 765})
+
+          last_response.should be_ok
+          last_response.body.should be_empty
+        end
+        it("should update the monitor size") do
+          @mock_repository.should_receive(:save_monitor).with(@monitor)
+          
+          put '/ajax/monitor/test-monitor-id/size', %({"width": 243, "height": 765})
+
+          @monitor.size.width.should == 243
+          @monitor.size.height.should == 765
+        end
+      end
     end
   end
 end

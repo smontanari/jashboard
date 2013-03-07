@@ -7,10 +7,9 @@ module Jashboard
       is_monitor_plugin_for_type 'ipsum'
 
       def get_configuration(input_configuration)
-        return {
-          no_sentences: input_configuration['numberOfSentences'],
-          language: input_configuration['language']
-        }
+        Struct.new(:no_sentences, :language).new(
+          input_configuration['no_sentences'], input_configuration['language']
+        )
       end
 
       def get_runtime_info(monitor_configuration)

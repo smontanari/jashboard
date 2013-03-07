@@ -11,5 +11,11 @@ module Jashboard
       type = data.delete :type
       @configuration_types[type].new(*data.values)
     end
+
+    def self.method_missing(method, args)
+      if (method.to_s.match(/create_\w+_monitor_configuration/))
+        args
+      end
+    end
   end
 end

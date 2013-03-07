@@ -18,3 +18,7 @@ end
 When /^I request to update the position of monitor (\w+) with coordinates (\d+), (\d+)$/ do |monitor_id, top, left|
   put "/ajax/monitor/#{monitor_id}/position", %({"top": #{top}, "left": #{left}}) 
 end
+
+When /^I request to update the size of monitor (\w+) with dimensions (\d+), (\d+)$/ do |monitor_id, width, height|
+  put "/ajax/monitor/#{monitor_id}/size", %({"width": #{width}, "height": #{height}}) 
+end

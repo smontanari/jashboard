@@ -10,9 +10,11 @@ module Jashboard
       end
 
       it("should return the configuration from the type handler") do
-        input_configuration = {'numberOfSentences' => 10, 'language' => "english"}
+        input_configuration = {'no_sentences' => 10, 'language' => "english"}
 
-        subject.get_configuration(input_configuration).should == {no_sentences: 10, language: "english"}
+        configuration = subject.get_configuration(input_configuration)
+        configuration.no_sentences.should == 10
+        configuration.language.should == "english"
       end
       context("generating sentences") do
         before(:each) do

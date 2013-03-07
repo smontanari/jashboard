@@ -12,6 +12,7 @@ module Jashboard
         with_type(123).
         with_refresh_interval(9876).
         with_position(Struct.new(:top, :left).new(123, 456)).
+        with_size(Struct.new(:width, :height).new(432, 789)).
         with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", "test_attr2")).
         with_runtime_info(Struct.new(:attr3, :attr4).new("test_attr3", "test_attr4")).
         build
@@ -22,6 +23,7 @@ module Jashboard
         "type": 123,
         "refresh_interval": 9876,
         "position": {"top": 123, "left": 456},
+        "size": {"width": 432, "height": 789},
         "configuration": {
           "attr1": "test_attr1",
           "attr2": "test_attr2"

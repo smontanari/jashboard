@@ -13,6 +13,17 @@ GEM
     fsdb (0.7.2)
     gherkin (2.11.6)
       json (>= 1.7.6)
+    ipsum (2.0.0)
+      ipsum-english (>= 1.1.0)
+      ipsum-french (>= 1.1.0)
+      ipsum-latin (>= 1.1.0)
+    ipsum-core (2.0.0)
+    ipsum-english (1.1.0)
+      ipsum-core (>= 2.0.0)
+    ipsum-french (1.1.0)
+      ipsum-core (>= 2.0.0)
+    ipsum-latin (1.1.0)
+      ipsum-core (>= 2.0.0)
     json (1.7.7)
     json_spec (1.1.0)
       multi_json (~> 1.0)
@@ -52,6 +63,7 @@ PLATFORMS
 DEPENDENCIES
   cucumber
   fsdb
+  ipsum
   json_spec
   nokogiri
   rspec

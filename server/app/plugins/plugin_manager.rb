@@ -6,7 +6,6 @@ module Jashboard
       def PluginManager.load_plugins(path = File.dirname(__FILE__))
         Dir.glob("#{path}/**/*_plugin.rb") do |plugin_file|
           require plugin_file
-          # puts "Loaded plugin: #{plugin_file}"
         end
       end
 

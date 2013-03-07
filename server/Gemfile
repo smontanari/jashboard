@@ -4,6 +4,7 @@ gem 'sinatra-contrib'
 gem 'nokogiri'
 gem 'fsdb'
 gem 'uuidtools'
+gem 'ipsum'
 
 group :test do
   gem 'rspec'

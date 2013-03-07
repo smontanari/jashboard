@@ -1,7 +1,7 @@
-funcunitHelper.testFeature("Monitor positioning", "position_monitors", function() {
+funcunitHelper.testFeature("Monitor positioning", "monitor_layout_scenario", function() {
   test("should display monitors in their given position", function() {
     featureHelper.verifyElementPosition("#monitor_1", {top: 10, left: 60});
-    featureHelper.verifyElementPosition("#monitor_3", {top: 200, left: 400});
+    featureHelper.verifyElementPosition("#monitor_2", {top: 200, left: 400});
   });
 
   test("should move monitors", function() {
@@ -14,9 +14,9 @@ funcunitHelper.testFeature("Monitor positioning", "position_monitors", function(
 
     featureHelper.mouseDrag({
       dragStartDelay: 500,
-      handleSelector: "#monitor_3 .drag-handle",
+      handleSelector: "#monitor_2 .drag-handle",
       offset: "-200 -200"
     });
-    featureHelper.verifyElementPosition("#monitor_3", {top: 0, left: 200}, 500);
+    featureHelper.verifyElementPosition("#monitor_2", {top: 0, left: 200});
   });
 });

@@ -22,7 +22,7 @@ $.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers
 $.fixture("GET /ajax/monitor/monitor_1/runtime", "//test/funcunit/fixtures/fixture_build_monitor_1.json");
 $.fixture("GET /ajax/monitor/monitor_2/runtime", "//test/funcunit/fixtures/fixture_build_monitor_2.json");
 
-$.fixture("POST /dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
+$.fixture("POST /ajax/dashboard/dashboard_1/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var isExpectedConfiguration = function(configuration) {
     if (configuration.type === "jenkins") {
       return configuration.build_id === "jenkins-build-123";

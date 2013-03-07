@@ -1,6 +1,6 @@
 steal("test/funcunit/scenarios/display_dashboards_data.js");
 
-$.fixture("POST /dashboard", function(ajaxOriginalOptions, ajaxOptions, headers) {
+$.fixture("POST /ajax/dashboard", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var data = JSON.parse(ajaxOptions.data);
 
   if( "test new-dashboard" === data.name) {

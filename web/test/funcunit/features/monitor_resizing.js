@@ -1,7 +1,7 @@
-funcunitHelper.testFeature("Monitor resizing", "resize_monitors", function() {
+funcunitHelper.testFeature("Monitor resizing", "monitor_layout_scenario", function() {
   test("should display monitors with the given size", function() {
     featureHelper.verifyElementSize("#monitor_1", {width: 240, height: 140});
-    featureHelper.verifyElementSize("#monitor_3", {width: 270, height: 150});
+    featureHelper.verifyElementSize("#monitor_2", {width: 270, height: 150});
   });
 
   test("should resize monitors", function() {
@@ -15,10 +15,10 @@ funcunitHelper.testFeature("Monitor resizing", "resize_monitors", function() {
 
     featureHelper.mouseDrag({
       dragStartDelay: 500,
-      elementSelector: "#monitor_3",
-      handleSelector: "#monitor_3 .ui-resizable-se",
+      elementSelector: "#monitor_2",
+      handleSelector: "#monitor_2 .ui-resizable-se",
       offset: "+0 +200"
     });
-    featureHelper.verifyElementSize("#monitor_3", {width: 270, height: 350});
+    featureHelper.verifyElementSize("#monitor_2", {width: 270, height: 350});
   });
 });

@@ -14,6 +14,12 @@ describe("IpsumMonitorAdapter", function() {
     expect(configuration.numberOfSentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
+  it("should validate the form ipsum monitor configuration", function() {
+    var configuration = adapter.validateConfiguration({numberOfSentences: "10", language: "english"});
+
+    expect(configuration.no_sentences).toEqual(10);
+    expect(configuration.language).toEqual("english");
+  });
   it("should parse the runtime information", function() {
     var runtimeInfo = adapter.parseRuntimeInfo({text: "some text"});
 

@@ -1,11 +1,11 @@
 describe("BuildMonitorFormController", function() {
-  var scope = {};
+  var scope;
 
   describe("Build configuration types", function() {
     beforeEach(function() {
-      scope.$on = jasmine.createSpy("scope.$on");
-      jashboard.plugin.build.buildConfigurationTypeAdapter = {
-          getAllRegisteredTypes: jasmine.createSpy("buildConfigurationTypeAdapter.getAllRegisteredTypes").andReturn(["test_build_type1", "test_build_type2"])
+      scope = jasmine.createSpyObj("scope", ['$on']);
+      jashboard.plugin.build.buildConfigurationParser = {
+          getAllRegisteredTypes: jasmine.createSpy("buildConfigurationParser.getAllRegisteredTypes").andReturn(["test_build_type1", "test_build_type2"])
       };
       controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
     });
@@ -16,17 +16,19 @@ describe("BuildMonitorFormController", function() {
     it("should set the selected type in the scope", function() {
       scope.monitorForm = {
         configuration: {
-          hostname: "test-host", 
-          port: 123, 
-          type:"test-type1",
-          other: "test-other"
+          build: {
+            hostname: "test-host", 
+            port: 123, 
+            type:"test-type1",
+            other: "test-other"            
+          }
         }
       };
 
       controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
       scope.setConfigurationType("test-type2");
 
-      expect(scope.monitorForm.configuration.type).toEqual("test-type2");
+      expect(scope.monitorForm.configuration.build.type).toEqual("test-type2");
 
     });
   });
@@ -36,16 +38,18 @@ describe("BuildMonitorFormController", function() {
       scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
         handler({});
       });
-      jashboard.plugin.build.buildConfigurationTypeAdapter = {
-          getAllRegisteredTypes: jasmine.createSpy("buildConfigurationTypeAdapter.getAllRegisteredTypes")
+      jashboard.plugin.build.buildConfigurationParser = {
+          getAllRegisteredTypes: jasmine.createSpy("buildConfigurationParser.getAllRegisteredTypes")
             .andReturn(["test_build_type1", "test_build_type2"])
       };
       scope.monitorForm = {
         configuration: {
-          hostname: "test-host", 
-          port: 123, 
-          type:"test-type",
-          other: "test-other"
+          build: {
+            hostname: "test-host", 
+            port: 123, 
+            type:"test-type",
+            other: "test-other"
+          }
         }
       };
     });
@@ -57,7 +61,7 @@ describe("BuildMonitorFormController", function() {
     it("should reset the monitorForm.configuration variable in the scope", function() {
       controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
 
-      expect(scope.monitorForm.configuration).toEqual({type: "test_build_type1"});
+      expect(scope.monitorForm.configuration.build).toEqual({type: "test_build_type1"});
     });
   });
 });

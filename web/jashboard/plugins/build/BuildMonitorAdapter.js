@@ -1,7 +1,8 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorAdapter: function() {
-      var buildConfigurationTypeAdapter = new jashboard.plugin.TypeAdapter();
+      var buildConfigurationParser = new jashboard.plugin.TypeAdapter();
+      var buildConfigurationValidator = new jashboard.plugin.TypeAdapter();
 
       var getBuildStatus = function(status) {
         switch(status) {
@@ -19,7 +20,11 @@
       };
 
       this.parseConfiguration = function(configuration_data) {
-        return buildConfigurationTypeAdapter.toObject(configuration_data);    
+        return buildConfigurationParser.toObject(configuration_data);    
+      };
+
+      this.validateConfiguration = function(configuration_input) {
+        return buildConfigurationValidator.toObject(configuration_input);    
       };
 
       this.parseRuntimeInfo = function(runtimeInfo_data) {
@@ -33,7 +38,8 @@
       };
 
       this.init = function() {
-        jashboard.plugin.build.buildConfigurationTypeAdapter = buildConfigurationTypeAdapter;
+        jashboard.plugin.build.buildConfigurationParser = buildConfigurationParser;
+        jashboard.plugin.build.buildConfigurationValidator = buildConfigurationValidator;
       };
     }
   });

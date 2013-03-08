@@ -17,9 +17,20 @@ describe("BuildMonitorAdapter", function() {
     expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
   });
 
-  it("should create a buildConfigurationTypeAdapter at initialisation", function() {
+  it("should create a buildConfigurationParser at initialisation", function() {
     plugin.init();
-    expect(jashboard.plugin.build.buildConfigurationTypeAdapter).toBeDefined();
+    expect(jashboard.plugin.build.buildConfigurationParser).toBeDefined();
+  });
+
+  it("should invoke a build configuration validator", function() {
+    plugin.validateConfiguration("test");
+
+    expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
+  });
+
+  it("should create a buildConfigurationValidator at initialisation", function() {
+    plugin.init();
+    expect(jashboard.plugin.build.buildConfigurationValidator).toBeDefined();
   });
 
   describe("monitor runtime handler", function() {

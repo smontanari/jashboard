@@ -17,7 +17,7 @@ Cucumber::Rake::Task.new do |t|
   t.cucumber_opts = %w{--format pretty --tags ~@wip} 
 end
 
-desc "Clear all stored data in DEV environment"
+desc "Clear all stored data in a target environment (default: DEV)"
 task :db_clean, [:environment] do |t, args|
   environment = args.environment  || "development"
   db_helper = Jashboard::FSDBHelper.new("db/#{environment}")

@@ -1,0 +1,18 @@
+<div id="ipsumMonitorInput" data-ng-class="{'selectedConfiguration': (monitorForm.type == 'ipsum'), 'hiddenConfiguration': (monitorForm.type != 'ipsum')}" data-ng-controller="IpsumMonitorFormController">
+  <div>
+    <div class="table-like">
+      <div class="controls">
+        <label class="control-label" for="nSentences">Number of sentences</label>
+        <input name="numberOfSentences" type="text" class="input-mini" data-ng-model="monitorForm.configuration.ipsum.numberOfSentences">
+      </div>
+      <div class="controls">
+        <label>Language</label>
+        <select name="language" class="input-medium" 
+          data-ng-model="monitorForm.configuration.ipsum.language" 
+          data-ng-options="l for l in availableLanguages">
+          <option value="">choose language</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

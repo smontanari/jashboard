@@ -17,7 +17,6 @@ Feature: Get monitor runtime data
 
     Then the app should return the json response "fixture_build_monitor_1.json"
 
-  @testme
   Scenario: Load ipsum monitor runtime returns corresponding runtime data
     Given the following monitors
     | id        | name          | type  | refresh_interval | configuration                           |

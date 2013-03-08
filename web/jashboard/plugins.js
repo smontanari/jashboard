@@ -1,14 +1,14 @@
 (function() {
-  var plugintTypes = [
+  var plugins = [
     'ipsum',
     'build'
   ];
   
   steal("jashboard/plugins/TypeAdapter.js")
   .then(function() {
-    _.each(plugintTypes, function(pluginType) {
+    _.each(plugins, function(plugin) {
       steal(
-        "jashboard/plugins/" + pluginType + "/" + pluginType + "_plugin.js"
+        "jashboard/plugins/" + plugin + "/" + plugin + "_plugin.js"
       );  
     });
   });

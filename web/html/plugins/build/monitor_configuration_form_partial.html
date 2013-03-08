@@ -1,17 +1,17 @@
-<div id="buildMonitorInput" class="specificConfiguration" data-ng-controller="BuildMonitorFormController">
+<div id="buildMonitorInput" data-ng-class="{'selectedConfiguration': (monitorForm.type == 'build'), 'hiddenConfiguration': (monitorForm.type != 'build')}" data-ng-controller="BuildMonitorFormController">
   <div class="buildFormOptions">
     <div class="controls table-like">
       <div>
         <label class="control-label" for="serverName">Hostname</label>
-        <input name="serverName" type="text" class="input-large" placeholder="ci hostname" class="input-large" data-ng-model="monitorForm.configuration.hostname">
+        <input name="serverName" type="text" placeholder="ci hostname" class="input-large" data-ng-model="monitorForm.configuration.build.hostname">
       </div>
       <div>
         <label class="control-label" for="serverPort">Port</label>
-        <input name="serverPort" type="text" class="input-mini" data-ng-model="monitorForm.configuration.port">
+        <input name="serverPort" type="text" class="input-mini" data-ng-model="monitorForm.configuration.build.port">
       </div>
     </div>
     <div class="controls">
-      <input type="hidden" name="configurationType" data-ng-model="monitorForm.configuration.type">
+      <input type="hidden" name="configurationType" data-ng-model="monitorForm.configuration.build.type">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
         <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">

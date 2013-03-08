@@ -8,6 +8,13 @@
         };
       };
 
+      this.validateConfiguration = function(configuration_data) {
+        return {
+          no_sentences: parseInt(configuration_data.numberOfSentences, 10),
+          language: configuration_data.language
+        };
+      };
+
       this.parseRuntimeInfo = function(runtimeInfo_data) {
         return runtimeInfo_data;
       };

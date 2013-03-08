@@ -1,17 +1,17 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorFormController: function(scope) {
-      var buildTypes = jashboard.plugin.build.buildConfigurationTypeAdapter.getAllRegisteredTypes();
+      var buildTypes = jashboard.plugin.build.buildConfigurationParser.getAllRegisteredTypes();
       scope.availableBuildSettingsTypes = buildTypes;
     
       scope.$on("OpenMonitorDialog", function(event) {
-        scope.monitorForm.configuration = {
+        scope.monitorForm.configuration.build = {
           type: buildTypes[0]
         };
       });
 
       scope.setConfigurationType = function(type) {
-        scope.monitorForm.configuration.type = type;
+        scope.monitorForm.configuration.build.type = type;
       };
     }
   });

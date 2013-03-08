@@ -1,28 +1,29 @@
 describe("MonitorFormController", function() {
-  var scope = {};
-  var controller;
-  var repository = {};
+  var scope, controller, listener, workflow;
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-        var event = {};
-        handler(event, "test_dashboard_id");
-      });
+      scope = {
+        $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+          listener = handler;
+        })
+      };
+      spyOn(jashboard, "CreateMonitorWorkflow").andReturn({test: "workflow"});
+
+      controller = new jashboard.MonitorFormController(scope, "repository", "pluginManager");
     });
     it("should listen to the 'OpenMonitorDialog' event", function() {
-      controller = new jashboard.MonitorFormController(scope, repository);
       expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
     });
     it("should reset the monitorForm variable in the scope", function() {
       scope.monitorForm = {test: "test"};
-      controller = new jashboard.MonitorFormController(scope, repository);
-      expect(scope.monitorForm).toEqual({dashboard_id: "test_dashboard_id"});
+      listener({}, "test_dashboard_id");
+      expect(scope.monitorForm).toEqual({dashboard_id: "test_dashboard_id", configuration: {}});
     });
     it("should instantiate a new workflow", function() {
-      var workflow = spyOn(jashboard, "CreateMonitorWorkflow");
-      controller = new jashboard.MonitorFormController(scope, repository);
-      expect(workflow).toHaveBeenCalledWith(scope, repository);
+      listener({}, "test_dashboard_id");
+      expect(jashboard.CreateMonitorWorkflow).toHaveBeenCalledWith(scope, "repository", "pluginManager");
+      expect(scope.workflow).toEqual({test: "workflow"});
     });
   });
 });

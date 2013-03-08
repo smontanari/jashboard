@@ -1,11 +1,11 @@
 (function(module) {
   jashboard = _.extend(module, {
-    CreateMonitorWorkflow: function(scope, repository) {
+    CreateMonitorWorkflow: function(scope, repository, pluginManager) {
       this.actions = ["next"];
       this.state = "showGenericConfiguration";
 
       this.next = function() {
-        this.state = "showSpecificConfiguration";
+        this.state = "showSelectedConfiguration";
         this.actions = ["back", "save"];
       };
 
@@ -15,9 +15,15 @@
       };
 
       this.save = function() {
-        var dashboard_id = scope.monitorForm.dashboard_id;
-        var monitorParameters = _.omit(scope.monitorForm, "dashboard_id");
-        repository.createMonitor(dashboard_id, monitorParameters, {
+        var monitorType = scope.monitorForm.type;
+        var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
+        var monitorParameters = {
+          name: scope.monitorForm.name,
+          refreshInterval: parseInt(scope.monitorForm.refreshInterval, 10),
+          type: scope.monitorForm.type,
+          configuration: monitorAdapter.validateConfiguration(scope.monitorForm.configuration[monitorType])
+        };
+        repository.createMonitor(scope.monitorForm.dashboard_id, monitorParameters, {
           success: function(monitor) {
             scope.$emit("NewMonitorCreated", monitor);
             scope.$emit("CloseMonitorDialog");

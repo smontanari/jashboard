@@ -35,10 +35,10 @@ $.fixture("POST /ajax/dashboard/dashboard_1/monitor", function(ajaxOriginalOptio
   var isExpectedData = function() {
     return (
       data.name === "Test " + data.configuration.type + "-monitor" &&
-      data.refreshInterval === "30" &&
+      data.refreshInterval === 30 &&
       data.type === "build" &&
       data.configuration.hostname === data.configuration.type + "-server" &&
-      data.configuration.port === "1234" &&
+      data.configuration.port === 1234 &&
       isExpectedConfiguration(data.configuration)
     );
   };

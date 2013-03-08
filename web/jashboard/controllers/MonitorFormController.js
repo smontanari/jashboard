@@ -1,13 +1,13 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorFormController: function(scope, repository) {
+    MonitorFormController: function(scope, repository, pluginManager) {
       scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
-        scope.monitorForm = {dashboard_id: dashboard_id};
-        scope.workflow = new jashboard.CreateMonitorWorkflow(scope, repository);
+        scope.monitorForm = {dashboard_id: dashboard_id, configuration: {}};
+        scope.workflow = new jashboard.CreateMonitorWorkflow(scope, repository, pluginManager);
       });
     }
   });
-  jashboard.application.controller("MonitorFormController", ['$scope', 'Repository', jashboard.MonitorFormController]).run(function() {
+  jashboard.application.controller("MonitorFormController", ['$scope', 'Repository', 'PluginManager', jashboard.MonitorFormController]).run(function() {
     steal.dev.log("MonitorFormController initialized");
   });
 }(jashboard || {}));

@@ -64,15 +64,15 @@
     .genericConfiguration {
       display: block;
     }
-    .specificConfiguration {
+    .selectedConfiguration, .hiddenConfiguration {
       display: none;
     }
   }
-  &.showSpecificConfiguration {
-    .genericConfiguration {
+  &.showSelectedConfiguration {
+    .genericConfiguration, .hiddenConfiguration {
       display: none;
     }
-    .specificConfiguration {
+    .selectedConfiguration {
       display: block;
     }
   }

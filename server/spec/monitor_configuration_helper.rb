@@ -12,6 +12,10 @@ module Jashboard
       @configuration_types[type].new(*data.values)
     end
 
+    def self.create_ipsum_monitor_configuration(data)
+      Struct.new(:no_sentences, :language).new(*data.values)
+    end
+
     def self.method_missing(method, args)
       if (method.to_s.match(/create_\w+_monitor_configuration/))
         args

@@ -14,11 +14,8 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
     );
     featureHelper.verifyElementContent("#monitor_3",
       {
-        '.monitor-title': "Forum build",
-        '.build-time': "25-08-2012 15:56:45",
-        '.build-duration': "02:06",
-        '.build-result': "failure",
-        '.build-status': "idle"
+        '.monitor-title': "Random text",
+        'p': "some random generated text"
       }
     );
     S("#tab-dashboard_1").visible().click();

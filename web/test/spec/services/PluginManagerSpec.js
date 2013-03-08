@@ -28,6 +28,13 @@ describe("PluginManager", function() {
 
     expect(pluginManager.getAllMonitorTypes()).toEqual(['test_type1', 'test_type2']);
   });
+  it("should throw an error if the plugin is not defined", function() {
+    var f = function() {
+      pluginManager.findMonitorAdapter("test", TestAdapter);
+    };
+
+    expect(f).toThrow("Adapter for monitor type [test] not found");
+  });
   it("should throw an error if the plugin already exists", function() {
     mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'parseRuntimeInfo']);
     pluginManager.addMonitorAdapter("test", TestAdapter);

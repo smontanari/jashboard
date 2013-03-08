@@ -28,7 +28,11 @@
       };
 
       this.findMonitorAdapter = function(typeIdentifier) {
-        return monitorTypeAdapters[typeIdentifier];
+        var adapter = monitorTypeAdapters[typeIdentifier];
+        if (_.isUndefined(adapter)) {
+          throw "Adapter for monitor type [" + typeIdentifier + "] not found";
+        }
+        return adapter;
       };
     }
   });

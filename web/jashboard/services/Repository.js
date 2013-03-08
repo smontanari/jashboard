@@ -28,7 +28,14 @@
           http.getJSON("/ajax/dashboards"),
           handlers,
           function(data) {
-            return _.map(data, modelMapper.mapDashboard);
+            try {
+              return _.map(data, modelMapper.mapDashboard);
+            } catch (error) {
+              if (_.isFunction(handlers.error)) {
+                handlers.error("Error mapping data", error);
+                throw error;
+              }
+            }
           });
       };
       

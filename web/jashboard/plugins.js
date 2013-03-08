@@ -1,5 +1,6 @@
 (function() {
   var plugintTypes = [
+    'ipsum',
     'build'
   ];
   
@@ -7,7 +8,7 @@
   .then(function() {
     _.each(plugintTypes, function(pluginType) {
       steal(
-        "jashboard/plugins/" + pluginType + "/" + pluginType + "_plugins.js"
+        "jashboard/plugins/" + pluginType + "/" + pluginType + "_plugin.js"
       );  
     });
   });

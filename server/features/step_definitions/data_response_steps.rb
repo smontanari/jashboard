@@ -12,6 +12,12 @@ Then /^the app should return the error json response "(.*)"$/ do |fixture_path|
   end
 end
 
+Then /^the app should return a json response matching '(.*)'$/ do |regexp|
+  last_response.status.should == 200
+  match = Regexp.new(regexp).match(last_response.body)
+  match.should_not be_nil
+end
+
 Then /^the app should return a response containing an empty dashboard with name "(.*)" and an id$/ do |name|
   last_response.status.should == 201
   response = JSON.parse(last_response.body)

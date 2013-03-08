@@ -1,3 +1,4 @@
+require 'ipsum'
 require 'plugins/plugin_manager'
 
 module Jashboard
@@ -13,7 +14,7 @@ module Jashboard
       end
 
       def get_runtime_info(monitor_configuration)
-        monitor_configuration[:no_sentences].sentences(monitor_configuration[:language])
+        { text: monitor_configuration[:no_sentences].sentences(monitor_configuration[:language].to_sym) }
       end
     end
   end

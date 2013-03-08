@@ -16,12 +16,12 @@ module Jashboard
         configuration.no_sentences.should == 10
         configuration.language.should == "english"
       end
-      context("generating sentences") do
+      context("Runtime info: generating sentences") do
         before(:each) do
           class ::Fixnum
             alias_method :original_sentences, :sentences
             def sentences(language)
-              "#{self} sentences in #{language.to_s}"
+              "#{self} sentences in #{language.inspect}"
             end
           end
         end
@@ -34,11 +34,11 @@ module Jashboard
 
         it("should return sentences in french") do
           monitor_configuration = {no_sentences: 10, language: "french"}
-          subject.get_runtime_info(monitor_configuration).should === "10 sentences in french"
+          subject.get_runtime_info(monitor_configuration).should == {text: "10 sentences in :french"}
         end
         it("should return sentences in english") do
           monitor_configuration = {no_sentences: 5, language: "english"}
-          subject.get_runtime_info(monitor_configuration).should === "5 sentences in english"
+          subject.get_runtime_info(monitor_configuration).should == {text: "5 sentences in :english"}
         end
       end
     end

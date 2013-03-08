@@ -17,6 +17,16 @@ Feature: Get monitor runtime data
 
     Then the app should return the json response "fixture_build_monitor_1.json"
 
+  @testme
+  Scenario: Load ipsum monitor runtime returns corresponding runtime data
+    Given the following monitors
+    | id        | name          | type  | refresh_interval | configuration                           |
+    | monitor_1 | Ipsum Monitor | ipsum | 10               | { no_sentences: 3, language: "english"} |
+
+    When I request the runtime info for monitor monitor_1
+
+    Then the app should return a json response matching '^\{"text"\:".+"\}$'
+
   Scenario: Load build monitor runtime returns error
     Given the following monitors
     | id        | name              | type  | refresh_interval | configuration                                                                    |

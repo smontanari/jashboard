@@ -134,7 +134,11 @@ module Jashboard
           @mock_repository.stub(:load_dashboard).with("test.dashboard.id").and_return(@dashboard)
           @mock_repository.stub(:load_dashboard).with("test.dashboard.id").and_return(@dashboard)
           @mock_repository.stub(:save_dashboard)
-          monitor = Monitor.new.tap {|m| m.id = "789"}
+          new_monitor_id = Object.new
+          def new_monitor_id.to_s
+            "789"
+          end
+          monitor = Monitor.new.tap {|m| m.id = new_monitor_id}
           @mock_repository.stub(:save_monitor).and_return(monitor)
           @mock_monitor_adapter.stub(:get_configuration)
         end

@@ -103,7 +103,7 @@ module Jashboard
 
     def add_monitor_to_dashboard(dashboard_id, monitor)
       dashboard = @repository.load_dashboard(dashboard_id)
-      dashboard.monitor_ids << monitor.id
+      dashboard.monitor_ids << monitor.id.to_s
       @repository.save_dashboard(dashboard)
     end
   end

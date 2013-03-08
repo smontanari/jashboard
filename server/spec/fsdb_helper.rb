@@ -10,23 +10,28 @@ module Jashboard
     end
 
     def method_missing(method, args, &block)
-      match = method.to_s.match(/(serialize|validate)_(monitor|dashboard)/)
+      match = method.to_s.match(/(serialize|validate|find)_(monitor|dashboard)/)
       super(method, args) if match.nil?
-      self.send("#{match[1]}_yaml".to_sym, "#{match[2]}", args, &block)
+      self.send("#{match[1]}_obj".to_sym, "#{match[2]}", args, &block)
     end
 
     private
 
-    def serialize_yaml(base_path, obj)
+    def serialize_obj(base_path, obj)
       File.open("#{@db_path}/#{base_path}/#{obj.id}.txt", "w") do |f|
         f.write(YAML.dump(obj))
       end
     end
 
-    def validate_yaml(base_path, id)
-      obj = YAML.load_file("#{@db_path}/#{base_path}/#{id}.txt")
-      yield(obj) if block_given?
-      obj
+    def validate_obj(base_path, id)
+      find_obj(base_path, id).tap do |obj|
+        yield(obj) if block_given?
+      end
+    end
+
+    def find_obj(base_path, id)
+      file_path = "#{@db_path}/#{base_path}/#{id}.txt"
+      YAML.load_file("#{@db_path}/#{base_path}/#{id}.txt") if FileTest.exist?(file_path)
     end
   end
 end

@@ -25,6 +25,14 @@ module Jashboard
       YAML.load(@db["#{MONITOR_NAMESPACE}/#{monitor_id}.txt"])
     end
 
+    def delete_monitor(monitor_id)
+      @db.delete("#{MONITOR_NAMESPACE}/#{monitor_id}.txt")
+    end
+
+    def delete_dashboard(dashboard_id)
+      @db.delete("#{DASHBOARD_NAMESPACE}/#{dashboard_id}.txt")
+    end
+
     def save_dashboard(dashboard)
       save(dashboard, DASHBOARD_NAMESPACE)
     end

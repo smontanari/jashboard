@@ -22,3 +22,7 @@ end
 When /^I request to update the size of monitor (\w+) with dimensions (\d+), (\d+)$/ do |monitor_id, width, height|
   put "/ajax/monitor/#{monitor_id}/size", %({"width": #{width}, "height": #{height}}) 
 end
+
+When /^I request the deletion of monitor "(\w+)"$/ do |monitor_id|
+  delete "/ajax/monitor/#{monitor_id}"
+end

@@ -70,6 +70,34 @@ module Jashboard
       end
     end
 
+    context "Data deletion" do
+      describe("DELETE /ajax/monitor") do
+        before(:each) do
+          dashboard1 = DashboardBuilder.new.with_id("dashboard2").with_monitor_id("monitor3").build
+          @dashboard2 = DashboardBuilder.new.with_id("dashboard1").with_monitor_id("monitor1").with_monitor_id("monitor2").build
+          @mock_repository.stub(:load_dashboards).and_return([dashboard1, @dashboard2])
+          @mock_repository.stub(:save_dashboard)
+          @mock_repository.stub(:delete_monitor)
+        end
+
+        it("should remove the monitor from the repository") do
+          @mock_repository.should_receive(:delete_monitor).with("test-monitor-id")
+
+          delete '/ajax/monitor/test-monitor-id'
+
+          last_response.should be_ok
+        end
+        it("should persist the dashboard without the monitor") do
+          @mock_repository.should_receive(:save_dashboard).with(@dashboard2)
+
+          delete '/ajax/monitor/monitor2'
+
+          @dashboard2.monitor_ids.length.should == 1
+          @dashboard2.monitor_ids.should include "monitor1"
+        end
+      end
+    end
+
     context "Dashboard create" do
       describe("POST /ajax/dashboard") do
         before(:each) do
@@ -137,9 +165,10 @@ module Jashboard
             })
         end
 
-        it("should add the monitor id to the specified dashboard") do
-          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+        it("should persist the dashboard with the added monitor") do
+          @mock_repository.should_receive(:save_dashboard).with(@dashboard)
 
+          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
 
           @dashboard.monitor_ids.length.should == 3
           @dashboard.monitor_ids.should include "123"
@@ -147,11 +176,6 @@ module Jashboard
           @dashboard.monitor_ids.should include "789"
         end
 
-        it("should persist the dashboard to the repository") do
-          @mock_repository.should_receive(:save_dashboard).with(@dashboard)
-
-          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
-        end
         it("should return the monitor as json") do
           @mock_repository.stub(:save_monitor).and_return(Struct.new(:id, :attr).new("test_id", "test_attr"))
 

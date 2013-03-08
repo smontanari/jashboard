@@ -78,6 +78,17 @@ module Jashboard
       status 200
     end
 
+    delete '/ajax/monitor/:id' do
+      monitor_id = params[:id]
+      @repository.delete_monitor(monitor_id)
+      @repository.load_dashboards.each do |dashboard|
+        if (dashboard.monitor_ids.delete(monitor_id))
+          @repository.save_dashboard(dashboard)
+        end
+      end
+      status 200
+    end
+
     private
 
     def create_monitor(monitor_json)

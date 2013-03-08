@@ -21,3 +21,16 @@ Then /^monitor (\w+) size should have dimensions updated to (\d+), (\d+)$/ do |m
   end
 end
 
+Then /^monitor "(\w+)" should be removed from the repository$/ do |monitor_id|
+  @db_helper.find_monitor(monitor_id).should be_nil
+end
+
+Then /^dashboard "(\w+)" should contain monitors "(.*?)"$/ do |dashboard_id, monitors|
+  @db_helper.validate_dashboard(dashboard_id) do |dashboard|
+    monitors = monitors.split(',')
+    dashboard.monitor_ids.length.should == monitors.length
+    monitors.each do |monitor_id|
+      dashboard.monitor_ids.should include(monitor_id)
+    end
+  end
+end

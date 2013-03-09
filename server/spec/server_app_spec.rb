@@ -30,10 +30,8 @@ module Jashboard
 
         get '/ajax/dashboards'
 
-        expected_response = %({"error": "test_error"})
         last_response.status.should == 500
-        last_response.content_type.should include('application/json')
-        last_response.body.should be_json_eql expected_response
+        last_response.body.should == "test_error"
       end
     end
 

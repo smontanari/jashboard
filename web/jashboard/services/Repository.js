@@ -3,8 +3,7 @@
     Repository: function(http, modelMapper) {
       var parseError = function(request) {
         if (_.isString(request.responseText)) {
-          var content = JSON.parse(request.responseText);
-          return content.errorDescription;
+          return request.responseText;
         }
       };
       var executeRequest = function(promise, handlers, dataMapperFn) {

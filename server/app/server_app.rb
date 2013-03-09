@@ -29,7 +29,7 @@ module Jashboard
 
     error do
       status 500
-      json({error: env['sinatra.error']})
+      env['sinatra.error'].to_s
     end
 
     get '/ajax/dashboards' do

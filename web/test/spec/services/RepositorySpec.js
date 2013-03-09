@@ -7,7 +7,7 @@ describe("Repository", function() {
       return this;
     };
     this.fail = function(callback) { 
-      callback({responseText: '{"errorDescription": "test_error"}'}, "test_status", "test_message"); 
+      callback({responseText: "test_error"}, "test_status", "test_message"); 
       return this;
     };
   };

@@ -11,7 +11,7 @@
           <div class="controls">
             <label class="control-label" for="dashboardName">Name</label>
             <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
-            data-ng-model="dashboardName" data-ng-change="validationError = dashboardName == ''">
+            data-ng-model="dashboardName" data-ng-change="validationError = (dashboardName == '')">
           </div>
           <div id="errorMsg" class="controls" data-ng-show="validationError">
               <div></div>

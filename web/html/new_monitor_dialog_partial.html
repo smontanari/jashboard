@@ -1,12 +1,11 @@
 <div id="new-monitor-form" class="modal hide fade" role="dialog" 
      aria-labelledby="monitorModalLabel" aria-hidden="true" 
-     data-ng-controller="MonitorFormController"
      data-jb-dialog="{show: 'OpenMonitorDialog', hide: 'CloseMonitorDialog'}">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
-  <form>
+  <form data-ng-controller="MonitorFormController">
     <div id="configurationInput" class="modal-body" data-ng-class="workflow.state">
       <div class="genericConfiguration">
         <div class="table-like">

@@ -5,11 +5,9 @@ Then /^the app should return the json response "(.*)"$/ do |fixture_path|
   end
 end
 
-Then /^the app should return the error json response "(.*)"$/ do |fixture_path|
+Then /^the app should return the error response "(.*)"$/ do |reponse_text|
   last_response.status.should == 500
-  File.open("#{$JSON_FIXTURE_PATH}/#{fixture_path}") do |f|
-    last_response.body.should be_json_eql f.read
-  end
+  last_response.body.should == reponse_text
 end
 
 Then /^the app should return a json response matching '(.*)'$/ do |regexp|

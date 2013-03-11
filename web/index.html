@@ -12,7 +12,7 @@
     <div id="dashboard-navbar" class="hide" data-ng-class="{show: (dashboards.length > 0)}">
       <ul class="nav nav-tabs">
         <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
-          <a id="tab-{{dashboard.id}}" href="#{{dashboard.id}}" data-toggle="tab" data-ng-bind="dashboard.name"></a>
+          <a id="tab-{{dashboard.id}}" href="#{{dashboard.id}}" data-toggle="tab">{{dashboard.name}}</a>
         </li>
       </ul>
     </div>

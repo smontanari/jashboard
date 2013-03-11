@@ -33,4 +33,4 @@ Feature: Get monitor runtime data
 
     When I request the runtime info for monitor monitor_1
 
-    Then the app should return the error json response "fixture_monitor_1_error.json"
+    Then the app should return the error response "Connection refused - connect(2)"

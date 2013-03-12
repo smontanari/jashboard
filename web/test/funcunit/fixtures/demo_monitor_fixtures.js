@@ -85,6 +85,10 @@
   });
   server.fakeResponse("DELETE", /\/ajax\/monitor\/(\w+)/, function(request, monitor_id) {
     steal.dev.log("monitor[" + monitor_id + "] deleted");
+    // var monitor = _.find(storedMonitors, function(m) {
+    //   return monitor_id === m.id;
+    // });
+    // storedMonitors = _.without(storedMonitors, monitor);
     return {returnCode: 201};
   });
 }());

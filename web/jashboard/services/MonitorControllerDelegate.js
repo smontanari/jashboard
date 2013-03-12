@@ -33,7 +33,7 @@
             confirmAction: function() {
               repository.deleteMonitor(currentMonitor.id, {
                 success: function() {
-                  currentDashboard.monitors = _.difference(currentDashboard.monitors, [currentMonitor]);
+                  currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                   scope.$apply();
                 }
               });

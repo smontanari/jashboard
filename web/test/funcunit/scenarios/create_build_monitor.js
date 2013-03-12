@@ -1,22 +1,22 @@
 $.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers) {
-  return [[
+  return [200, "success", {json: [
     {
-      'id': "dashboard_1", 'name': "my dashboard",
-      "monitors": [
+      id: "dashboard_1", name: "my dashboard",
+      monitors: [
       {
-        "id": "monitor_1",
-        "name": "Zombie-Dash build",
-        "refresh_interval": 10,
-        "type": "build",
-        "configuration": {
-          "type": "jenkins",
-          "hostname": "zombie-dev.host.com",
-          "port": 9080,
-          "build_id": "zombie_build"
+        id: "monitor_1",
+        name: "Zombie-Dash build",
+        refresh_interval: 10,
+        type: "build",
+        configuration: {
+          type: "jenkins",
+          hostname: "zombie-dev.host.com",
+          port: 9080,
+          build_id: "zombie_build"
         }
       }]
     }
-  ]];
+  ]}];
 });
 
 $.fixture("GET /ajax/monitor/monitor_1/runtime", "//test/funcunit/fixtures/fixture_build_monitor_1.json");

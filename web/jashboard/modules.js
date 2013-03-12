@@ -1,4 +1,4 @@
-steal.dev.log("loading jashboard modules");
+steal.dev.log("Loading jashboard modules");
 steal('jashboard/jashboard.js')
 .then('jashboard/jashboardUtils.js')
 .then(

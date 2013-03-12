@@ -1,6 +1,6 @@
-var jashboard = (function(jashboard) {
-  jashboard.services = angular.module('jashboard.services', []);
-  jashboard.application = angular.module('jashboard', ['jashboard.services']);
+var jashboard = (function(module) {
+  module.services = angular.module('jashboard.services', []);
+  module.application = angular.module('jashboard', ['jashboard.services']);
 
-  return jashboard;
+  return module;
 }(jashboard || {}));

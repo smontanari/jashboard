@@ -15,7 +15,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
     featureHelper.verifyElementContent("#monitor_3",
       {
         '.monitor-title': "Random text",
-        'p': "some random generated text"
+        'pre': "some very random generated text\nwith some very random generated words"
       }
     );
     S("#tab-dashboard_1").visible().click();

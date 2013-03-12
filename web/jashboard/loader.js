@@ -9,11 +9,12 @@ steal(
   { src: 'lib/bootstrap.min.js', packaged: false },
   { src: 'lib/jquery.blockUI.js', packaged: false },
   { src: 'lib/jquery-ui-1.10.1.custom.min.js', packaged: false }
-);
+).then(function() {
+  steal.dev.log("Loading application files");
+  steal('steal/less')
+  .then("css/jashboard.less")
+  .then("jashboard/modules.js")
+  .then({ src: 'test/funcunit/test_scenario_loader.js', ignore: true });
+});
 
 
-steal.dev.log("Loading application files");
-steal('steal/less')
-.then("css/jashboard.less")
-.then("jashboard/modules.js")
-.then({ src: 'test/funcunit/test_scenario_loader.js', ignore: true });

@@ -60,7 +60,7 @@
       },
       ipsum: function() {
         return {
-          text: "some random generated text"
+          text: "some very random generated text\nwith some very random generated words"
         };
       }
     };

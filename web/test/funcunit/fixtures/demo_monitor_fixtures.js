@@ -32,11 +32,11 @@
     storedMonitors.push({id: "monitor_" + monitorCounter, type: data.type});
     return {
       content: {
-        "id": "monitor_" + monitorCounter,
-        "name": data.name,
-        "refresh_interval": data.refreshInterval,
-        "type": data.type,
-        "configuration": monitorConfigurationFixtures[data.type](data.configuration)
+        id: "monitor_" + monitorCounter,
+        name: data.name,
+        refresh_interval: data.refreshInterval,
+        type: data.type,
+        configuration: monitorConfigurationFixtures[data.type](data.configuration)
       },
       delay: jashboard.test.randomInt(3)
     };
@@ -69,7 +69,7 @@
     }).type;
     return {
       content: runtimeContentGenerator[monitorType](),
-      delay: jashboard.test.randomInt(5)
+      delay: jashboard.test.randomInt(3)
     };
   });
 

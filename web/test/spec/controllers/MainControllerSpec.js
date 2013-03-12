@@ -1,19 +1,16 @@
 describe("MainController", function() {
-  var pluginManager, repository, controller, scope, menuDelegate, dashboardDelegate, monitorDelegate;
+  var repository, controller, scope, menuDelegate, dashboardDelegate, monitorDelegate, locationService;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
+    locationService = {id: "locationService"};
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
-    pluginManager = {
-      getAllMonitorTypes: jasmine.createSpy("pluginManager.getAllMonitorTypes()")
-        .andReturn(['test_type1', 'test_type2'])
-    };
     menuDelegate = jasmine.createSpyObj("MenuControllerDelegate", ['init']);
     dashboardDelegate = jasmine.createSpyObj("DashboardControllerDelegate", ['init']);
     monitorDelegate = jasmine.createSpyObj("MonitorControllerDelegate", ['init']);
 
     controller = new jashboard.MainController(
-      scope, menuDelegate, dashboardDelegate, monitorDelegate, pluginManager, repository);
+      scope, locationService, menuDelegate, dashboardDelegate, monitorDelegate, repository);
   });
 
   describe("dataLoad() successful", function() {
@@ -57,8 +54,8 @@ describe("MainController", function() {
     });
   });
 
-  it("should inject the array of available monitor types into the scope", function() {
-    expect(scope.availableMonitorTypes).toEqual(["test_type1", "test_type2"]);
+  it("should inject the localocationService into the scope", function() {
+    expect(scope.locationService).toEqual(locationService);
   });
   it("should initialise a new MenuControllerDelegate", function() {
     expect(menuDelegate.init).toHaveBeenCalledWith(scope);

@@ -1,6 +1,12 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MainController: function(scope, menuDelegate, dashboardDelegate, monitorDelegate, pluginManager, repository) {
+    MainController: function(
+      scope,
+      locationService, 
+      menuDelegate, 
+      dashboardDelegate, 
+      monitorDelegate, 
+      repository) {
       var onDataLoadSuccess = function(data) {
         scope.$broadcast("DataLoadingComplete");
         scope.dashboards = [];
@@ -21,7 +27,7 @@
         repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
       };
 
-      scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+      scope.locationService = locationService;
       menuDelegate.init(scope);
       dashboardDelegate.init(scope);
       monitorDelegate.init(scope);
@@ -29,10 +35,10 @@
   });
   jashboard.application.controller("MainController", 
     ['$scope',
+     '$location',
      'MenuControllerDelegate',
      'DashboardControllerDelegate',
      'MonitorControllerDelegate',
-     'PluginManager',
      'Repository',
      jashboard.MainController]).run(function() {
     steal.dev.log("MainController initialized");

@@ -6,58 +6,9 @@
 </head>
 <body data-ng-controller="MainController">
   <div data-ng-include="'html/navigation_bar_partial.html'"></div>
-
-  <div class="container" class="ng-cloak">
-    <div data-ng-include="'html/info_box_partial.html'"></div>
-    <div id="dashboard-navbar" class="hide" data-ng-class="{show: (dashboards.length > 0)}">
-      <ul class="nav nav-tabs">
-        <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
-          <a id="tab-{{dashboard.id}}" href="#{{dashboard.id}}" data-toggle="tab">{{dashboard.name}}</a>
-        </li>
-      </ul>
-    </div>
-    <div id="dashboard-container" class="tab-content">
-      <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
-        <div class="menubar">
-          <div class="dashboard-actions">
-            <div class="dropdown">
-              <a id="{{dashboard.id}}-actions" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-actions">
-                <li><a class="new-monitor" href="#" data-ng-click="dashboardAction('newMonitor')">New Monitor</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="dashboard-content">
-          <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"
-            data-ng-repeat="monitor in dashboard.monitors" 
-            data-jb-draggable="{handleSelector: '.drag-handle', onDragStop: 'MonitorPositionChanged'}"
-            data-jb-resizable="{onResizeStop: 'MonitorSizeChanged'}"
-            data-ng-style="monitor.cssLayout()"
-            data-ng-init="refreshRuntimeInfo()">
-            <div class="monitor-bar">
-              <span class="drag-handle"></span>
-              <span class="monitor-icon-delete" title="Delete" data-ng-click="removeMonitor()"></span>
-              <span class="monitor-icon-refresh" title="Refresh" data-ng-click="refreshRuntimeInfo()"></span>
-            </div>
-            <div class="monitor-title">
-              <span class="monitor-icon-ajax-loader" data-ng-show="monitor.loadingStatus == 'waiting'"></span>
-              <span class="monitor-icon-ajax-error" data-ng-show="monitor.loadingStatus == 'error'" data-jb-tooltip="errorMessage"></span>
-              <span>{{monitor.name}}</span>
-            </div>
-            <div class="monitor-details">
-              <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_partial.html'"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="container">
+    <div data-ng-view></div>
   </div>
-
-  <div data-ng-include="'html/alert_msg_partial.html'"></div>
-  <div data-ng-include="'html/new_monitor_dialog_partial.html'"></div>
-  <div data-ng-include="'html/new_dashboard_dialog_partial.html'"></div>
-  <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="loadData()"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>
 </html>

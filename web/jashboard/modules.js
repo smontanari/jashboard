@@ -27,4 +27,6 @@ steal('jashboard/jashboard.js')
 .then(
   'jashboard/directives.js',
   'jashboard/plugins.js'
+).then(
+  'jashboard/routes.js'
 );

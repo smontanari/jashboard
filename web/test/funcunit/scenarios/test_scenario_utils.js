@@ -5,6 +5,9 @@
     randomInt: function(n) {
       return Math.floor(Math.random() * (n+1));
     },
+    randomBoolean: function() {
+      return this.randomInt(1) == 1;
+    },
     dateFormat: function(date) {
       return date.getFullYear() + "-" + pad10(date.getMonth()) + "-" + pad10(date.getDate()) + " " +
              pad10(date.getHours()) + ":" + pad10(date.getMinutes()) + ":" + pad10(date.getSeconds())      

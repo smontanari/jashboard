@@ -54,7 +54,7 @@
         return {
           last_build_time: generateDate(),
           duration: jashboard.test.randomInt(1000),
-          success: jashboard.test.randomInt(1) === 1,
+          success: jashboard.test.randomBoolean(),
           status: jashboard.test.randomInt(2)
         };
       },

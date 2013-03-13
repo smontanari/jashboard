@@ -12,19 +12,6 @@ describe("ResizableDirective", function() {
     linkFunction = jashboard.angular.resizableDirective(widgetService);
   });
 
-  it("should broadcast the given event during the resizing process", function() {
-    widgetService.makeResizable = jasmine.createSpy("widgetService.makeResizable()")
-      .andCallFake(function(selector, options) {
-        options.resize({target: "targetElement"}, {element: mockElement});
-      });
-    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({onResize: "TestEvent"});
-
-    linkFunction(scope, "test-element", {"jbResizable": "test-map"});
-
-    expect(scope.$eval).toHaveBeenCalledWith("test-map");
-    expect(widgetService.makeResizable).toHaveBeenCalledWith("test-element", {resize: jasmine.any(Function)});
-    expect(scope.$broadcast).toHaveBeenCalledWith("TestEvent", "targetElement");
-  });    
   it("should emit the given event when the resize action stops", function() {
     widgetService.makeResizable = jasmine.createSpy("widgetService.makeResizable()")
       .andCallFake(function(selector, options) {
@@ -37,5 +24,15 @@ describe("ResizableDirective", function() {
     expect(scope.$eval).toHaveBeenCalledWith("test-map");
     expect(widgetService.makeResizable).toHaveBeenCalledWith("test-element", {stop: jasmine.any(Function)});
     expect(scope.$emit).toHaveBeenCalledWith("TestEvent", {width: 123, height: 456});
+  });
+  it("should pass the alsoResize option with the selected children element to the service", function() {
+    angular.element = sinon.stub().withArgs("test-element").returns({
+      children: sinon.stub().withArgs("test-selector").returns("test-child")
+    });
+    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({resizeChildren: "test-selector"});
+    
+    linkFunction(scope, "test-element", {"jbResizable": "test-map"});
+    expect(scope.$eval).toHaveBeenCalledWith("test-map");
+    expect(widgetService.makeResizable).toHaveBeenCalledWith("test-element", {alsoResize: "test-child"});
   });
 });

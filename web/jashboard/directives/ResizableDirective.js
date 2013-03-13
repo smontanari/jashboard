@@ -14,11 +14,8 @@
               scope.$emit(directiveOptions.onResizeStop, size);
             };
           }
-          if (_.isString(directiveOptions.onResize)) {
-            options.resize = function(event, ui) {
-              var element = ui.element;
-              scope.$broadcast(directiveOptions.onResize, event.target);
-            };
+          if (_.isString(directiveOptions.resizeChildren)) {
+            options.alsoResize = angular.element(element).children(directiveOptions.resizeChildren);
           }
         }
         

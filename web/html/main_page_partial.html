@@ -23,7 +23,7 @@
         <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"
           data-ng-repeat="monitor in dashboard.monitors" 
           data-jb-draggable="{handleSelector: '.drag-handle', onDragStop: 'MonitorPositionChanged'}"
-          data-jb-resizable="{onResizeStop: 'MonitorSizeChanged'}"
+          data-jb-resizable="{onResizeStop: 'MonitorSizeChanged', resizeChildren: '.monitor-details'}"
           data-ng-style="monitor.cssLayout()"
           data-ng-init="refreshRuntimeInfo()">
           <div class="monitor-bar">
@@ -36,7 +36,7 @@
             <span class="monitor-icon-ajax-error" data-ng-show="monitor.loadingStatus == 'error'" data-jb-tooltip="errorMessage"></span>
             <span>{{monitor.name}}</span>
           </div>
-          <div class="monitor-details">
+          <div class="monitor-details scrolling">
             <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_partial.html'"></div>
           </div>
         </div>

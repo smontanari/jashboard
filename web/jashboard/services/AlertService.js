@@ -1,7 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
     AlertService: function() {
-      var _selector;
+      var elementBinding = new jashboard.ElementBinding();
       var defaultOptions = {
         title: "Please confirm",
         confirmLabel: "Ok",
@@ -10,14 +10,15 @@
       };
 
       this.bindTo = function(selector) {
-        _selector = selector;
+        elementBinding.bindDefaultElement(selector);
       };
 
       this.showAlert = function(options) {
-        var elementScope = angular.element(_selector).scope();
-        elementScope.alertOptions = _.defaults(options, defaultOptions);
-        $(_selector).modal('show');
-        $(".modal-backdrop").css("opacity", "0.2");
+        elementBinding.applyToElement(function(element, scope) {
+          scope.alertOptions = _.defaults(options, defaultOptions);
+          $(element).modal('show');
+          $(".modal-backdrop").css("opacity", "0.2");
+        });
       };
     }
   });

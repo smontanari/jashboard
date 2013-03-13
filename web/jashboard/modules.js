@@ -5,6 +5,7 @@ steal('jashboard/jashboard.js')
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
   'jashboard/model/LoadingStatus.js',
+  'jashboard/services/ElementBinding.js',
   'jashboard/services/AlertService.js',
   'jashboard/services/OverlayService.js',
   'jashboard/services/DialogService.js',

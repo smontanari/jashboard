@@ -1,5 +1,5 @@
 (function() {
-  var server = new jashboard.test.SinonFakeServer();
+  var server = jashboard.test.getFakeServer();
 
   server.fakeResponse("GET", "/ajax/dashboards", {
     content: [{

@@ -100,6 +100,9 @@ describe("MonitorControllerDelegate", function() {
       it("should syncronise the scope", function() {
         expect(scope.$apply).toHaveBeenCalled();
       });
+      it("should stop the event propagation", function() {
+        expect(eventObject.stopPropagation).toHaveBeenCalled();
+      });
     });
   });
 

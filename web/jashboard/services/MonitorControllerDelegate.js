@@ -7,6 +7,7 @@
             return (dashboard.id === event.targetScope.monitorForm.dashboard_id);
           });
           dashboard.monitors.push(monitor);
+          event.stopPropagation();
           scope.$apply();
         });
 

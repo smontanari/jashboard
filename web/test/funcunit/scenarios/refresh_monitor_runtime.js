@@ -26,9 +26,7 @@
 
   var errorResponse = {
     returnCode: 500,
-    content: {
-      errorDescription: "something went very wrong"
-    },
+    content: "something went very wrong",
     delay: 2
   };
   var successResponse = {

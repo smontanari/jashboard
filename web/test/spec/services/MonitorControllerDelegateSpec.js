@@ -1,5 +1,5 @@
 describe("MonitorControllerDelegate", function() {
-  var delegate, scope, repository, alertService, testMonitor;
+  var delegate, scope, repository, alertService, tooltipService, testMonitor;
 
   beforeEach(function() {
     testMonitor = 
@@ -153,7 +153,8 @@ describe("MonitorControllerDelegate", function() {
             runtimeSynchHandlers = handlers;
           });
 
-      delegate = new jashboard.MonitorControllerDelegate(repository);
+      tooltipService = jasmine.createSpyObj("tooltipService", ['attachTooltip', 'removeTooltip']);
+      delegate = new jashboard.MonitorControllerDelegate(repository, null, tooltipService);
       delegate.init(scope);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
@@ -176,9 +177,8 @@ describe("MonitorControllerDelegate", function() {
       it("change the loading status to 'completed'", function() {
         expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
       });
-      it("should apply the changes to the scope", function() {
-        expect(innerScope.errorMessage).toBeUndefined();
-        expect(innerScope.$apply).toHaveBeenCalled();
+      it("should remove the tooltip", function() {
+        expect(tooltipService.removeTooltip).toHaveBeenCalledWith("error-test_id");
       });
     });
 
@@ -193,8 +193,8 @@ describe("MonitorControllerDelegate", function() {
         expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
       });
       it("should apply the changes to the scope", function() {
-        expect(innerScope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");
-        expect(innerScope.$apply).toHaveBeenCalled();
+        expect(tooltipService.attachTooltip).toHaveBeenCalledWith("error-test_id",
+          "Error refreshing runtime information - test_message [test_error]");
       });
     });
   });

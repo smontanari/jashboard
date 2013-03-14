@@ -1,22 +1,25 @@
 (function(module) {
   jashboard = _.extend(module, {
     TooltipService: function() {
-      this.attachTextTooltip = function(targetSelector, text) {
-        $(targetSelector).tooltip({
-          title: text,
-          container: "body"
-        });
+      var elementBinding = new jashboard.ElementBinding();
+
+      this.bindAs = function(selector, key) {
+        elementBinding.bindElementAs(selector, key);
       };
-      // this.attachContentTooltip = function(targetSelector, contentSelector) {
-      //   $(targetSelector).tooltip({
-      //     html: true,
-      //     title: $(contentSelector).html(),
-      //     container: "body"
-      //   });
-      // };
-      this.removeTooltip = function(targetSelector) {
-        $(targetSelector).tooltip('destroy');
-      }
+
+      this.attachTooltip = function(elementKey, text) {
+        elementBinding.applyToElement(function(element, elementScope) {
+          $(element).tooltip({
+            title: text,
+            container: "body"
+          });
+        }, elementKey);
+      };
+      this.removeTooltip = function(elementKey) {
+        elementBinding.applyToElement(function(element, elementScope) {
+          $(element).tooltip('destroy');
+        }, elementKey);
+      };
     }
   });
   jashboard.services.service('TooltipService', [jashboard.TooltipService]).run(function() {

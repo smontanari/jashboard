@@ -3,9 +3,6 @@ describe("AlertService", function() {
 
   beforeEach(function() {
     elementBinding = jasmine.createSpyObj("elementBinding", ['bindDefaultElement', 'applyToElement']);
-    // var mockElement = {
-    //   scope: jasmine.createSpy("element.scope()").andReturn(scope)
-    // };
     spyOn(jashboard, "ElementBinding").andReturn(elementBinding);
     
     service = new jashboard.AlertService();
@@ -27,7 +24,7 @@ describe("AlertService", function() {
       $stub = testHelper.stubJQuery(["test_element", ".modal-backdrop"]);
       $stub.modal = jasmine.createSpy("$.modal()");
       $stub.css = jasmine.createSpy("$.css()");
-    )};
+    });
 
     it("should invoke $.modal() with the bound element", function() {
       service.showAlert({});

@@ -1,14 +1,14 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorControllerDelegate: function(repository, alertService) {
+    MonitorControllerDelegate: function(repository, alertService, tooltipService) {
       this.init = function(scope) {
         scope.$on("NewMonitorCreated", function(event, monitor) {
           var dashboard = _.find(scope.dashboards, function(dashboard) {
             return (dashboard.id === event.targetScope.monitorForm.dashboard_id);
           });
           dashboard.monitors.push(monitor);
-          event.stopPropagation();
           scope.$apply();
+          event.stopPropagation();
         });
 
         scope.$on("MonitorPositionChanged", function(event, position) {
@@ -53,14 +53,15 @@
               success: function(data) {
                 monitor.runtimeInfo = data;
                 monitor.loadingStatus = jashboard.model.loadingStatus.completed;
-                delete scope.errorMessage;
                 self.$apply();
+                tooltipService.removeTooltip("error-" + monitor.id);
               },
               error: function(status, statusMessage, errorDetails) {
                 monitor.loadingStatus = jashboard.model.loadingStatus.error;
-                self.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
-                      " [" + errorDetails + "]";
                 self.$apply();
+                errorMessage = "Error refreshing runtime information - " +  statusMessage + 
+                      " [" + errorDetails + "]";
+                tooltipService.attachTooltip("error-" + monitor.id, errorMessage);
               }
             }
           );
@@ -68,7 +69,7 @@
       }
     }
   });
-  jashboard.services.service('MonitorControllerDelegate', ['Repository', 'AlertService', jashboard.MonitorControllerDelegate]).run(function() {
+  jashboard.services.service('MonitorControllerDelegate', ['Repository', 'AlertService', 'TooltipService', jashboard.MonitorControllerDelegate]).run(function() {
     steal.dev.log("MonitorControllerDelegate initialized");
   });
 }(jashboard || {}));

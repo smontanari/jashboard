@@ -10,8 +10,8 @@
         
         scope.$on('NewDashboardCreated', function(event, dashboard) {
           scope.dashboards.push(dashboard);
-          event.stopPropagation();
           scope.$apply();
+          event.stopPropagation();
         });
 
         scope.dashboardAction = function(name) {

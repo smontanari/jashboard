@@ -2,10 +2,10 @@
   jashboard.angular = _.extend(module, {
     tooltipDirective: function (tooltipService) {
       return function(scope, element, attrs) {
-        scope.$watch(attrs['jbTooltip'], function(newValue) {
+        scope.$watch(attrs['jbTooltip'], function(newValue, oldValue) {
           if (_.isString(newValue)) {
             tooltipService.attachTextTooltip(element, newValue);
-          } else {
+          } else if (!(newValue === oldValue)) {
             tooltipService.removeTooltip(element);
           }
         });

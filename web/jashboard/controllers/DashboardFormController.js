@@ -6,6 +6,7 @@
           scope.validationError = true;
           return;
         }
+        scope.$emit("DashboardSavingStart");
         repository.createDashboard({name: this.dashboardName}, {
           success: function(dashboard) {
             scope.$emit("NewDashboardCreated", dashboard);

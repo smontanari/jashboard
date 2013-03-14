@@ -8,13 +8,25 @@
       monitorDelegate, 
       repository) {
       var onDataLoadSuccess = function(data) {
-        scope.$broadcast("DataLoadingComplete");
         scope.dashboards = [];
         _.each(data, function(dashboard) {
           scope.dashboards.push(dashboard);
         });
         scope.dataLoadingStatus = jashboard.model.loadingStatus.completed;
         scope.$apply();
+        scope.$broadcast("DataLoadingComplete");
+        // scope.$evalAsync(function() {
+        //   $(".monitor-details").each(function() {
+        //     var detailsPanel = $(this);
+        //     var position = detailsPanel.position();
+        //     var totalOffset = detailsPanel.outerHeight() - detailsPanel.height() + position.top;
+        //     detailsPanel.height(detailsPanel.height() - totalOffset);
+        //   });
+        //   $(".monitor-panel").each(function() {
+        //     var panel = $(this);
+        //     console.log(panel.css("position"));
+        //   });
+        // });
       };
       var onDataLoadError = function(status, statusMessage) {
         scope.$broadcast("DataLoadingError");

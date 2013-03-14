@@ -38,10 +38,11 @@ describe("DashboardFormController", function() {
   });
 
   describe("saveDashboard()", function() {
+    var successHandler;
     beforeEach(function() {
       scope = jasmine.createSpyObj("scope", ['$on', '$emit']);
       repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handlers) {
-        handlers.success("test.dashboard");
+        successHandler = handlers.success;
       });
       controller = new jashboard.DashboardFormController(scope, repository);
 
@@ -53,7 +54,11 @@ describe("DashboardFormController", function() {
       expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Object));
     });
     it("should emit the 'NewDashboardCreated' if successful", function() {
+      successHandler("test.dashboard");
       expect(scope.$emit).toHaveBeenCalledWith("NewDashboardCreated", "test.dashboard");
+    });
+    it("should emit the 'DashboardSavingStart' if successful", function() {
+      expect(scope.$emit).toHaveBeenCalledWith("DashboardSavingStart");
     });
   });
 });

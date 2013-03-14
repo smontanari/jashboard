@@ -73,14 +73,15 @@ describe("CreateMonitorWorkflow", function() {
         jasmine.any(Object)
       );
     });
+    it("should emit the 'MonitorSavingStart'", function() {
+      expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingStart");
+    });
     it("should emit the 'NewMonitorCreated'", function() {
       successHandler("test.monitor");
       
       expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated", "test.monitor");
     });
     it("should emit the 'CloseMonitorDialog'", function() {
-      successHandler();
-
       expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
     });
   });

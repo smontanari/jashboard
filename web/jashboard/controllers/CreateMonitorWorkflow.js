@@ -23,12 +23,13 @@
           type: scope.monitorForm.type,
           configuration: monitorAdapter.validateConfiguration(scope.monitorForm.configuration[monitorType])
         };
+        scope.$emit("MonitorSavingStart");
         repository.createMonitor(scope.monitorForm.dashboard_id, monitorParameters, {
           success: function(monitor) {
             scope.$emit("NewMonitorCreated", monitor);
-            scope.$emit("CloseMonitorDialog");
           }
         });
+        scope.$emit("CloseMonitorDialog");
       };
     }
   });

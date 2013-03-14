@@ -50,7 +50,8 @@ module Jashboard
           it("should use parse the xml response to retrieve last build information") do
             runtime_info = subject.fetch_build_runtime_info(JenkinsServerConfiguration.new("test.host", 1234, "test.build"))
 
-            runtime_info.last_build_time.should == "05-11-2012 09:35:08"
+            expected_time = Time.parse("05-11-2012 09:35:08 +1100").strftime("%d-%m-%Y %H:%M:%S")
+            runtime_info.last_build_time.should == expected_time
             runtime_info.duration.should == 25
             runtime_info.success.should == true
           end

@@ -34,15 +34,15 @@
         scope.$apply();
       };
 
-      scope.loadData = function() {
-        scope.$broadcast("DataLoadingStart");
-        repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
-      };
-
       scope.locationService = locationService;
       menuDelegate.init(scope);
       dashboardDelegate.init(scope);
       monitorDelegate.init(scope);
+      scope.$on("OverlayReady", function(event) {
+        scope.$broadcast("DataLoadingStart");
+        repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
+        event.stopPropagation();
+      });
     }
   });
   jashboard.application.controller("MainController", 

@@ -5,11 +5,11 @@
   <title>Jashboard</title>
 </head>
 <body data-ng-controller="MainController">
-  <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="loadData()"></div>
   <div data-ng-include="'html/navigation_bar_partial.html'"></div>
   <div class="container">
     <div data-ng-view></div>
   </div>
+  <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="$emit('OverlayReady')"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>
 </html>

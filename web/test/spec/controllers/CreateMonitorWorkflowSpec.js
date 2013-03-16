@@ -43,7 +43,8 @@ describe("CreateMonitorWorkflow", function() {
   describe("Action: save", function() {
     var successHandler, adapter;
     beforeEach(function() {
-      scope.$emit = jasmine.createSpy("scope.$emit");
+      scope.$emit = jasmine.createSpy("scope.$emit()");
+      scope.$apply = jasmine.createSpy("scope.$apply()");
       repository.createMonitor = jasmine.createSpy("repository.createMonitor()").andCallFake(function(dashboard_id, monitorParameters, handlers) {
         successHandler = handlers.success;
       });
@@ -61,6 +62,10 @@ describe("CreateMonitorWorkflow", function() {
           type2: "test2"
         }
       };
+      scope.dashboards = [
+        {id: "dashboard1", monitors: [{id: "m1"}]},
+        {id: "test_dashboard", monitors: [{id: "m2"}]}
+      ];
       workflow.save();
     });
 
@@ -76,10 +81,22 @@ describe("CreateMonitorWorkflow", function() {
     it("should emit the 'MonitorSavingStart'", function() {
       expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingStart");
     });
+    it("should add the monitor to the dashboard", function() {
+      successHandler("test.monitor");
+
+      expect(scope.dashboards[0].monitors.length).toEqual(1);
+      expect(scope.dashboards[1].monitors.length).toEqual(2);
+      expect(scope.dashboards[1].monitors).toContain("test.monitor");
+    });
+    it("should syncronise the scope", function() {
+      successHandler("test.monitor");
+
+      expect(scope.$apply).toHaveBeenCalled();
+    });
     it("should emit the 'NewMonitorCreated'", function() {
       successHandler("test.monitor");
       
-      expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated", "test.monitor");
+      expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated");
     });
     it("should emit the 'CloseMonitorDialog'", function() {
       expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");

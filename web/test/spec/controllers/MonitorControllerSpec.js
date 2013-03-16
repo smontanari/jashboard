@@ -1,5 +1,5 @@
-describe("MonitorControllerDelegate", function() {
-  var delegate, scope, repository, alertService, tooltipService, testMonitor;
+describe("MonitorController", function() {
+  var controller, scope, repository, alertService, tooltipService, testMonitor;
 
   beforeEach(function() {
     testMonitor = 
@@ -9,100 +9,56 @@ describe("MonitorControllerDelegate", function() {
       type: "test_type"
     };
     scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
+    scope.dashboards = [
+      {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
+      {id: "dashboard2", monitors: [{id: "m3"}]}
+    ];
+    repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize']);
   });
 
-  describe("init()", function() {
+  describe("'MonitorPositionChanged' and 'MonitorSizeChanged' events handler", function() {
+    var positionChangedEventObject, sizeChangedEventObject;
     beforeEach(function() {
-      repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize']);
-      delegate = new jashboard.MonitorControllerDelegate(repository);
+      positionChangedEventObject = {
+        targetScope: {
+          monitor: testMonitor
+        },
+        stopPropagation: jasmine.createSpy("event.stopPropagation()")
+      };
+      sizeChangedEventObject = {
+        targetScope: {
+          monitor: testMonitor
+        },
+        stopPropagation: jasmine.createSpy("event.stopPropagation()")
+      };
+      scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
+        if (eventName === "MonitorPositionChanged") {
+          callback(positionChangedEventObject, {top: 10, left: 20});
+        }
+        if (eventName === "MonitorSizeChanged") {
+          callback(sizeChangedEventObject, {width: 10, height: 20});
+        }
+      });
+
+      controller = new jashboard.MonitorController(scope, repository);
     });
-
-    describe("'MonitorPositionChanged' and 'MonitorSizeChanged' events handler", function() {
-      var positionChangedEventObject, sizeChangedEventObject;
-      beforeEach(function() {
-        positionChangedEventObject = {
-          targetScope: {
-            monitor: testMonitor
-          },
-          stopPropagation: jasmine.createSpy("event.stopPropagation()")
-        };
-        sizeChangedEventObject = {
-          targetScope: {
-            monitor: testMonitor
-          },
-          stopPropagation: jasmine.createSpy("event.stopPropagation()")
-        };
-        scope.dashboards = [
-          {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
-          {id: "dashboard2", monitors: [{id: "m3"}]}
-        ];
-        scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
-          if (eventName === "MonitorPositionChanged") {
-            callback(positionChangedEventObject, {top: 10, left: 20});
-          }
-          if (eventName === "MonitorSizeChanged") {
-            callback(sizeChangedEventObject, {width: 10, height: 20});
-          }
-        });
-
-        delegate = new jashboard.MonitorControllerDelegate(repository);
-        delegate.init(scope);
-      });
-      it("should update the monitor position", function() {
-        expect(testMonitor.position).toEqual({top: 10, left: 20});
-      });
-      it("should update the monitor size", function() {
-        expect(testMonitor.size).toEqual({width: 10, height: 20});
-      });
-      it("should invoke the repository to update the position", function() {
-        expect(repository.updateMonitorPosition).toHaveBeenCalledWith("test_id", {top: 10, left: 20});
-      });
-      it("should invoke the repository to update the size", function() {
-        expect(repository.updateMonitorSize).toHaveBeenCalledWith("test_id", {width: 10, height: 20});
-      });
-      it("should stop the event propagation", function() {
-        expect(positionChangedEventObject.stopPropagation).toHaveBeenCalled();
-      });
-      it("should stop the event propagation", function() {
-        expect(sizeChangedEventObject.stopPropagation).toHaveBeenCalled();
-      });
+    it("should update the monitor position", function() {
+      expect(testMonitor.position).toEqual({top: 10, left: 20});
     });
-
-    describe("'NewMonitorCreated' event handler", function() {
-      beforeEach(function() {
-        eventObject = {
-          targetScope: {
-            monitorForm: {
-              dashboard_id: "dashboard2"
-            }
-          },
-          stopPropagation: jasmine.createSpy("event.stopPropagation()")
-        };
-        scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-          if (eventName === "NewMonitorCreated") {
-            handler(eventObject, testMonitor);
-          }
-        });
-        scope.dashboards = [
-          {id: "dashboard1", monitors: [{id: "m1"}]},
-          {id: "dashboard2", monitors: [{id: "m2"}]}
-        ];
-
-        delegate = new jashboard.MonitorControllerDelegate(repository);
-        delegate.init(scope);
-      });
-
-      it("should add the monitor to the dashboard", function() {
-        expect(scope.dashboards[0].monitors.length).toEqual(1);
-        expect(scope.dashboards[1].monitors.length).toEqual(2);
-        expect(scope.dashboards[1].monitors).toContain(testMonitor);
-      });
-      it("should syncronise the scope", function() {
-        expect(scope.$apply).toHaveBeenCalled();
-      });
-      it("should stop the event propagation", function() {
-        expect(eventObject.stopPropagation).toHaveBeenCalled();
-      });
+    it("should update the monitor size", function() {
+      expect(testMonitor.size).toEqual({width: 10, height: 20});
+    });
+    it("should invoke the repository to update the position", function() {
+      expect(repository.updateMonitorPosition).toHaveBeenCalledWith("test_id", {top: 10, left: 20});
+    });
+    it("should invoke the repository to update the size", function() {
+      expect(repository.updateMonitorSize).toHaveBeenCalledWith("test_id", {width: 10, height: 20});
+    });
+    it("should stop the event propagation", function() {
+      expect(positionChangedEventObject.stopPropagation).toHaveBeenCalled();
+    });
+    it("should stop the event propagation", function() {
+      expect(sizeChangedEventObject.stopPropagation).toHaveBeenCalled();
     });
   });
 
@@ -122,8 +78,7 @@ describe("MonitorControllerDelegate", function() {
       innerScope.dashboard = {monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
       innerScope.monitor = testMonitor;
 
-      delegate = new jashboard.MonitorControllerDelegate(repository, alertService);
-      delegate.init(scope);      
+      controller = new jashboard.MonitorController(scope, repository, alertService);
       scope.removeMonitor.apply(innerScope);
     });
 
@@ -154,8 +109,7 @@ describe("MonitorControllerDelegate", function() {
           });
 
       tooltipService = jasmine.createSpyObj("tooltipService", ['attachTooltip', 'removeTooltip']);
-      delegate = new jashboard.MonitorControllerDelegate(repository, null, tooltipService);
-      delegate.init(scope);
+      controller = new jashboard.MonitorController(scope, repository, null, tooltipService);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
       scope.refreshRuntimeInfo.apply(innerScope);

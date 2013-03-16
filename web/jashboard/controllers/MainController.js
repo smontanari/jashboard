@@ -5,7 +5,6 @@
       locationService, 
       menuDelegate, 
       dashboardDelegate, 
-      monitorDelegate, 
       repository) {
       var onDataLoadSuccess = function(data) {
         scope.dashboards = [];
@@ -37,7 +36,6 @@
       scope.locationService = locationService;
       menuDelegate.init(scope);
       dashboardDelegate.init(scope);
-      monitorDelegate.init(scope);
       scope.$on("OverlayReady", function(event) {
         scope.$broadcast("DataLoadingStart");
         repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
@@ -50,7 +48,6 @@
      '$location',
      'MenuControllerDelegate',
      'DashboardControllerDelegate',
-     'MonitorControllerDelegate',
      'Repository',
      jashboard.MainController]).run(function() {
     steal.dev.log("MainController initialized");

@@ -16,11 +16,11 @@ steal('jashboard/jashboard.js')
   'jashboard/services/ModelMapper.js',
   'jashboard/services/PluginManager.js',
   'jashboard/services/MenuControllerDelegate.js',
-  'jashboard/services/DashboardControllerDelegate.js',
-  'jashboard/services/MonitorControllerDelegate.js'
+  'jashboard/services/DashboardControllerDelegate.js'
 )
 .then(
   'jashboard/controllers/MainController.js',
+  'jashboard/controllers/MonitorController.js',
   'jashboard/controllers/DashboardFormController.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MonitorFormController.js'

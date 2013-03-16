@@ -1,6 +1,13 @@
 (function(module) {
   jashboard = _.extend(module, {
     CreateMonitorWorkflow: function(scope, repository, pluginManager) {
+      var addMonitorToDashboard = function(monitor, dashboard_id) {
+        var dashboard = _.find(scope.dashboards, function(dashboard) {
+            return (dashboard.id === dashboard_id);
+          });
+          dashboard.monitors.push(monitor);
+          scope.$apply();
+      }
       this.actions = ["next"];
       this.state = "showGenericConfiguration";
 
@@ -26,7 +33,8 @@
         scope.$emit("MonitorSavingStart");
         repository.createMonitor(scope.monitorForm.dashboard_id, monitorParameters, {
           success: function(monitor) {
-            scope.$emit("NewMonitorCreated", monitor);
+            addMonitorToDashboard(monitor, scope.monitorForm.dashboard_id);
+            scope.$emit("NewMonitorCreated");
           }
         });
         scope.$emit("CloseMonitorDialog");

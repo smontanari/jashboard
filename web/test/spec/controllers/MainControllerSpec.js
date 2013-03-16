@@ -1,5 +1,5 @@
 describe("MainController", function() {
-  var repository, controller, scope, menuDelegate, dashboardDelegate, monitorDelegate, locationService, listener;
+  var repository, controller, scope, menuDelegate, dashboardDelegate, locationService, listener;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
@@ -7,13 +7,12 @@ describe("MainController", function() {
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
     menuDelegate = jasmine.createSpyObj("MenuControllerDelegate", ['init']);
     dashboardDelegate = jasmine.createSpyObj("DashboardControllerDelegate", ['init']);
-    monitorDelegate = jasmine.createSpyObj("MonitorControllerDelegate", ['init']);
     scope.$on = jasmine.createSpy().andCallFake(function(eventName, fn) {
       listener = fn;
     });
 
     controller = new jashboard.MainController(
-      scope, locationService, menuDelegate, dashboardDelegate, monitorDelegate, repository);
+      scope, locationService, menuDelegate, dashboardDelegate, repository);
   });
 
   it("should listen to the 'OverlayReady' event", function() {
@@ -27,9 +26,6 @@ describe("MainController", function() {
   });
   it("should initialise a new DashboardControllerDelegate", function() {
     expect(dashboardDelegate.init).toHaveBeenCalledWith(scope);
-  });
-  it("should initialise the monitorControllerDelegate", function() {
-    expect(monitorDelegate.init).toHaveBeenCalledWith(scope);
   });
 
   describe("'OverlayReady' event listener", function() {

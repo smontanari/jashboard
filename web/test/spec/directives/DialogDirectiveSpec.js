@@ -1,11 +1,12 @@
 describe("DialogDirective", function() {
-  var dialogService, actions;
+  var dialogService, actions, scope;
 
   beforeEach(function() {
+    scope = {id: "test_scope"};
     dialogService = jasmine.createSpyObj("DialogService", ["showModal", "hideModal"]);
     spyOn(jashboard.angular, "EventDirectiveDefinition")
       .andCallFake(function(attributeName, factory) {
-        actions = factory("test-element");
+        actions = factory(scope, "test-element");
       });
 
     jashboard.angular.dialogDirective(dialogService);

@@ -1,7 +1,7 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     overlayDirective: function (overlayService) {
-      return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(element) {
+      return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(scope, element) {
         return {
           show: function() {
             overlayService.show(element);

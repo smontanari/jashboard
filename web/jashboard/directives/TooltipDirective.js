@@ -1,10 +1,17 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     tooltipDirective: function (tooltipService) {
-      return function(scope, element, attrs) {
-        var key = scope.$eval(attrs['jbTooltip']);
-        tooltipService.bindAs(element, key);
-      };
+      return new jashboard.angular.EventDirectiveDefinition("jbTooltip", function(scope, element, attrs) {
+        var targetSelector = scope.$eval(attrs['jbTooltipFor']);
+        return {
+          show: function() {
+            tooltipService.attachHtmlTooltip(targetSelector, element);
+          },
+          hide: function() {
+            tooltipService.removeTooltip(targetSelector);
+          }
+        };
+      });
     }
   });
 }(jashboard.angular || {}));

@@ -2,7 +2,7 @@
   jashboard.angular = _.extend(module, {
     EventDirectiveDefinition: function(tagAttribute, actionCallbacks) {
       this.link = function(scope, element, attrs) {
-        var actions = actionCallbacks(element);
+        var actions = actionCallbacks(scope, element, attrs);
 
         var eventsMap = scope.$eval(attrs[tagAttribute]);
 

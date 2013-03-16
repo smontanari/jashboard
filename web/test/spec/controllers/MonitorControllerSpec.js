@@ -1,5 +1,5 @@
 describe("MonitorController", function() {
-  var controller, scope, repository, alertService, tooltipService, testMonitor;
+  var controller, scope, repository, alertService, testMonitor;
 
   beforeEach(function() {
     testMonitor = 
@@ -8,7 +8,7 @@ describe("MonitorController", function() {
       name: "test.monitor",
       type: "test_type"
     };
-    scope = jasmine.createSpyObj("scope", ['$apply', '$on']);
+    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
     scope.dashboards = [
       {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
       {id: "dashboard2", monitors: [{id: "m3"}]}
@@ -101,15 +101,14 @@ describe("MonitorController", function() {
   });
 
   describe("scope.refreshRuntimeInfo()", function() {
-    var runtimeSynchHandlers, innerScope = jasmine.createSpyObj("innerScope", ['$apply']);
+    var runtimeSynchHandlers, innerScope = jasmine.createSpyObj("innerScope", ['$apply', '$broadcast']);
     beforeEach(function() {
       repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
           .andCallFake(function(monitor_id, monitor_type, handlers) {
             runtimeSynchHandlers = handlers;
           });
 
-      tooltipService = jasmine.createSpyObj("tooltipService", ['attachTooltip', 'removeTooltip']);
-      controller = new jashboard.MonitorController(scope, repository, null, tooltipService);
+      controller = new jashboard.MonitorController(scope, repository);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
       scope.refreshRuntimeInfo.apply(innerScope);
@@ -131,8 +130,8 @@ describe("MonitorController", function() {
       it("change the loading status to 'completed'", function() {
         expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
       });
-      it("should remove the tooltip", function() {
-        expect(tooltipService.removeTooltip).toHaveBeenCalledWith("error-test_id");
+      it("should fire the 'MonitorRuntimeOk' event", function() {
+        expect(innerScope.$broadcast).toHaveBeenCalledWith("MonitorRuntimeOk");
       });
     });
 
@@ -146,9 +145,12 @@ describe("MonitorController", function() {
       it("should change the loading status to 'error'", function() {
         expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
       });
-      it("should apply the changes to the scope", function() {
-        expect(tooltipService.attachTooltip).toHaveBeenCalledWith("error-test_id",
-          "Error refreshing runtime information - test_message [test_error]");
+      it("should set the error message into the scope", function() {
+        expect(innerScope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");
+        expect(innerScope.$apply).toHaveBeenCalled();
+      });
+      it("should fire the 'MonitorRuntimeError' event", function() {
+        expect(innerScope.$broadcast).toHaveBeenCalledWith("MonitorRuntimeError");
       });
     });
   });

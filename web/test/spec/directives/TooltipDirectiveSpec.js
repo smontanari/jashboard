@@ -1,18 +1,31 @@
 describe("TooltipDirective", function() {
-  var tooltipService, linkFunction, scope;
+  var tooltipService, actions, scope;
 
   beforeEach(function() {
-    tooltipService = jasmine.createSpyObj("TooltipService", ["bindAs"]);
+    tooltipService = jasmine.createSpyObj("TooltipService", ['attachHtmlTooltip', 'removeTooltip']);
     scope = {
-      $eval: sinon.stub().withArgs("test_expr").returns("test_key")
+      $eval: sinon.stub()
     };
+    scope.$eval.withArgs("test_for_expr").returns("test_target_selector");
 
-    linkFunction = jashboard.angular.tooltipDirective(tooltipService);
+    spyOn(jashboard.angular, "EventDirectiveDefinition")
+      .andCallFake(function(attributeName, factory) {
+        actions = factory(scope, "test-element", {"jbTooltip": "test_expr", "jbTooltipFor": "test_for_expr"});
+      });
 
-    linkFunction(scope, "test-element", {"jbTooltip": "test_expr"})
+
+    jashboard.angular.tooltipDirective(tooltipService);
   });
 
-  it("should bind the element to the service", function() {
-    expect(tooltipService.bindAs).toHaveBeenCalledWith("test-element", "test_key");
+  it("should pass the correct attribute name", function() {
+    expect(jashboard.angular.EventDirectiveDefinition).toHaveBeenCalledWith("jbTooltip", jasmine.any(Function));
+  });
+  it("The 'show' action should invoke the tooltipService", function() {
+    actions.show();
+    expect(tooltipService.attachHtmlTooltip).toHaveBeenCalledWith("test_target_selector", "test-element");
+  });
+  it("The 'hide' action should invoke the tooltipService", function() {
+    actions.hide();
+    expect(tooltipService.removeTooltip).toHaveBeenCalledWith("test_target_selector");
   });
 });

@@ -4,13 +4,13 @@ describe("EventDirectiveDefinition", function() {
   beforeEach(function() {
     actionCallback1 = jasmine.createSpy("actionCallback1()");
     actionCallback2 = jasmine.createSpy("actionCallback2()");
-    var callbacksDefinition = function(element) {
+    var callbacksDefinition = function(scope, element, attrs) {
       return {
         testAction1: function() {
-          actionCallback1(element);
+          actionCallback1(scope, element, attrs);
         },
         testAction2: function() {
-          actionCallback2(element);
+          actionCallback2(scope, element, attrs);
         }
       };
     }
@@ -34,8 +34,8 @@ describe("EventDirectiveDefinition", function() {
     expect(scope.$on).toHaveBeenCalledWith("testEvent3", jasmine.any(Function));
   });
   it("should invoke the actions", function() {
-    expect(actionCallback1).toHaveBeenCalledWith("test.element");
-    expect(actionCallback2).toHaveBeenCalledWith("test.element");
+    expect(actionCallback1).toHaveBeenCalledWith(scope, "test.element", {'testAttribute': "test-map"});
+    expect(actionCallback2).toHaveBeenCalledWith(scope, "test.element", {'testAttribute': "test-map"});
     expect(actionCallback2.calls.length).toEqual(2);
   });
 });

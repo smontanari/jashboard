@@ -4,6 +4,7 @@
     'Overlay',
     'AlertBox',
     'Tooltip',
+    'TooltipTarget',
     'Draggable',
     'Resizable'
   ];

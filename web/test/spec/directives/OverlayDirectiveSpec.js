@@ -1,11 +1,12 @@
 describe("OverlayDirective", function() {
-  var overlayService, actions;
+  var overlayService, actions, scope;
 
   beforeEach(function() {
+    scope = {id: "test_scope"};
     overlayService = jasmine.createSpyObj("OverlayService", ["show", "hide"]);
     spyOn(jashboard.angular, "EventDirectiveDefinition")
       .andCallFake(function(attributeName, factory) {
-        actions = factory("test-element");
+        actions = factory(scope, "test-element");
       });
 
     jashboard.angular.overlayDirective(overlayService);

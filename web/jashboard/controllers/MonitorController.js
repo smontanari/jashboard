@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorController: function(scope, repository, alertService, tooltipService) {
+    MonitorController: function(scope, repository, alertService) {
       scope.$on("MonitorPositionChanged", function(event, position) {
         var monitor = event.targetScope.monitor;
         monitor.position = position;
@@ -44,21 +44,21 @@
               monitor.runtimeInfo = data;
               monitor.loadingStatus = jashboard.model.loadingStatus.completed;
               self.$apply();
-              tooltipService.removeTooltip("error-" + monitor.id);
+              self.$broadcast("MonitorRuntimeOk");
             },
             error: function(status, statusMessage, errorDetails) {
               monitor.loadingStatus = jashboard.model.loadingStatus.error;
-              self.$apply();
-              errorMessage = "Error refreshing runtime information - " +  statusMessage + 
+              self.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
                     " [" + errorDetails + "]";
-              tooltipService.attachTooltip("error-" + monitor.id, errorMessage);
+              self.$apply();
+              self.$broadcast("MonitorRuntimeError");
             }
           }
         );
       };
     }
   });
-  jashboard.services.controller('MonitorController', ['$scope', 'Repository', 'AlertService', 'TooltipService', jashboard.MonitorController]).run(function() {
+  jashboard.services.controller('MonitorController', ['$scope', 'Repository', 'AlertService', jashboard.MonitorController]).run(function() {
     steal.dev.log("MonitorController initialized");
   });
 }(jashboard || {}));

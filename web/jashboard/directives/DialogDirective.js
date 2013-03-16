@@ -1,7 +1,7 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     dialogDirective: function (dialogService) {
-      return new jashboard.angular.EventDirectiveDefinition("jbDialog", function(element) {
+      return new jashboard.angular.EventDirectiveDefinition("jbDialog", function(scope, element) {
         return {
           show: function() {
             dialogService.showModal(element);

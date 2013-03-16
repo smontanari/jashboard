@@ -15,16 +15,21 @@ describe("TooltipService", function() {
     expect(elementBinding.bindElementAs).toHaveBeenCalledWith("test_selector", "test_key");    
   });
 
-  describe("attachTooltip()", function() {
+  describe("attachHtmlTooltip()", function() {
     it("should create a simple text tooltip", function() {
+      var contentElement = {
+        html: jasmine.createSpy().andReturn("test-content");
+      }
+      $stub.withArgs("content_selector").returns(contentElement);
       elementBinding.applyToElement = jasmine.createSpy().andCallFake(function(callback) {
         callback("target-selector", {});
       });
   
-      service.attachTooltip("element_key", "test-content");
+      service.attachHtmlTooltip("element_key", "content_selector");
 
       expect(elementBinding.applyToElement).toHaveBeenCalledWith(jasmine.any(Function), "element_key");
       expect($stub.tooltip).toHaveBeenCalledWith({
+        html: true,
         title: "test-content",
         container: "body"
       });

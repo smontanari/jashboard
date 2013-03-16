@@ -7,10 +7,11 @@
         elementBinding.bindElementAs(selector, key);
       };
 
-      this.attachTooltip = function(elementKey, text) {
+      this.attachHtmlTooltip = function(elementKey, contentSelector) {
         elementBinding.applyToElement(function(element, elementScope) {
           $(element).tooltip({
-            title: text,
+            html: true,
+            title: $(contentSelector).html(),
             container: "body"
           });
         }, elementKey);

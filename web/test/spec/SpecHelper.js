@@ -4,6 +4,7 @@ var MockModule = function() {
   this.service =
   this.controller =
   this.directive =
+  this.config = 
   this.run = function(){return this};
 };
 var angular = {

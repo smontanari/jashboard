@@ -1,16 +1,19 @@
-jashboard.application.config(function($routeProvider, $locationProvider) {
-  $routeProvider.when('/', {
-    templateUrl: 'html/main_page_partial.html',
-    controller: 'MainController'
-  });
-  // $routeProvider.when('/dashboard/:dashboard_id', {
-  //   templateUrl: 'html/dashboard.html',
-  //   controller: 'DashboardController'
-  // });
- 
-  $routeProvider.when('/about', {
-    templateUrl: 'html/about_partial.html'
+(function(module) {
+  jashboard = _.extend(module, {
+    defineRoutes: function($routeProvider, $locationProvider) {
+      $routeProvider.when('/', {
+        templateUrl: 'html/main_page_partial.html',
+        controller: 'MainController'
+      }); 
+      $routeProvider.when('/about', {
+        templateUrl: 'html/about_partial.html'
+      });
+
+      $locationProvider.html5Mode(false);
+    }
   });
 
-  $locationProvider.html5Mode(false);
-});
+  jashboard.application.config(jashboard.defineRoutes).run(function() {
+    steal.dev.log("Routes definition completed");
+  });;
+}(jashboard || {}));

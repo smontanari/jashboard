@@ -8,7 +8,9 @@
     </ul>
   </div>
   <div id="dashboard-container" class="tab-content">
-    <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
+    <div id="{{dashboard.id}}" class="tab-pane" 
+      data-ng-class="{active: ($index == 0)}" 
+      data-ng-repeat="dashboard in dashboards">
       <div class="menubar">
         <div class="dashboard-actions">
           <div class="dropdown">

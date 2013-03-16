@@ -8,7 +8,9 @@
     </ul>
   </div>
   <div id="dashboard-container" class="tab-content">
-    <div id="{{dashboard.id}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
+    <div id="{{dashboard.id}}" class="tab-pane" 
+      data-ng-class="{active: ($index == 0)}" 
+      data-ng-repeat="dashboard in dashboards">
       <div class="menubar">
         <div class="dashboard-actions">
           <div class="dropdown">
@@ -33,10 +35,10 @@
             <span class="monitor-icon-refresh" title="Refresh" data-ng-click="refreshRuntimeInfo()"></span>
           </div>
           <div class="monitor-title">
-            <span class="monitor-icon-ajax-loader" data-ng-show="monitor.loadingStatus == 'waiting'"></span>
+            <span class="monitor-icon-ajax-loader" data-ng-show="loadingStatus == 'waiting'"></span>
             <span class="monitor-icon-ajax-error" 
               data-jb-tooltip-target="'error_' + monitor.id"
-              data-ng-show="monitor.loadingStatus == 'error'">
+              data-ng-show="loadingStatus == 'error'">
             </span>
             <span>{{monitor.name}}</span>
           </div>

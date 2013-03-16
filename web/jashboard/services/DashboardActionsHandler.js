@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    DashboardControllerDelegate: function(repository) {
+    DashboardActionsHandler: function(repository) {
       this.init = function(scope) {
         var dashboardActions = {
           newMonitor: function(currentScope) {
@@ -14,7 +14,7 @@
       };
     }
   });
-  jashboard.services.service('DashboardControllerDelegate', ['Repository', jashboard.DashboardControllerDelegate]).run(function() {
-    steal.dev.log("DashboardControllerDelegate initialized");
+  jashboard.application.service('DashboardActionsHandler', ['Repository', jashboard.DashboardActionsHandler]).run(function() {
+    steal.dev.log("DashboardActionsHandler initialized");
   });
 }(jashboard || {}));

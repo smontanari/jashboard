@@ -1,11 +1,11 @@
-describe("DashboardControllerDelegate", function() {
+describe("DashboardActionsHandler", function() {
   var delegate, repository, scope;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
 
-    delegate = new jashboard.DashboardControllerDelegate(repository);
+    delegate = new jashboard.DashboardActionsHandler(repository);
   });
 
   describe("scope.dashboardAction()", function() {

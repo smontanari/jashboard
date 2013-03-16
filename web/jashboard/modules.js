@@ -16,7 +16,7 @@ steal('jashboard/jashboard.js')
   'jashboard/services/ModelMapper.js',
   'jashboard/services/PluginManager.js',
   'jashboard/services/MenuControllerDelegate.js',
-  'jashboard/services/DashboardControllerDelegate.js'
+  'jashboard/services/DashboardActionsHandler.js'
 )
 .then(
   'jashboard/controllers/MainController.js',

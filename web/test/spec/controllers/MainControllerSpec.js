@@ -6,7 +6,7 @@ describe("MainController", function() {
     locationService = {id: "locationService"};
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
     menuDelegate = jasmine.createSpyObj("MenuControllerDelegate", ['init']);
-    dashboardDelegate = jasmine.createSpyObj("DashboardControllerDelegate", ['init']);
+    dashboardDelegate = jasmine.createSpyObj("DashboardActionsHandler", ['init']);
     scope.$on = jasmine.createSpy().andCallFake(function(eventName, fn) {
       listener = fn;
     });

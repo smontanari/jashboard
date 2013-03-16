@@ -47,7 +47,7 @@
     ['$scope',
      '$location',
      'MenuControllerDelegate',
-     'DashboardControllerDelegate',
+     'DashboardActionsHandler',
      'Repository',
      jashboard.MainController]).run(function() {
     steal.dev.log("MainController initialized");

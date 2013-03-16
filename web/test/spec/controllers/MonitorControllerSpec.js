@@ -116,8 +116,8 @@ describe("MonitorController", function() {
     it("should invoke the repository", function() {
       expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
     });
-    it("should set the monitor loadingStatus to 'waiting'", function() {
-      expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
+    it("should set the loadingStatus to 'waiting'", function() {
+      expect(innerScope.loadingStatus).toEqual(jashboard.model.loadingStatus.waiting);
     });
 
     describe("on success", function() {
@@ -128,7 +128,7 @@ describe("MonitorController", function() {
         expect(testMonitor.runtimeInfo).toEqual({testRuntimeInfo: "test"});
       });
       it("change the loading status to 'completed'", function() {
-        expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
+        expect(innerScope.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
       });
       it("should fire the 'MonitorRuntimeOk' event", function() {
         expect(innerScope.$broadcast).toHaveBeenCalledWith("MonitorRuntimeOk");
@@ -143,7 +143,7 @@ describe("MonitorController", function() {
         expect(testMonitor.runtimeInfo).toEqual("test_initial_runtime");
       });
       it("should change the loading status to 'error'", function() {
-        expect(testMonitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
+        expect(innerScope.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
       });
       it("should set the error message into the scope", function() {
         expect(innerScope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");

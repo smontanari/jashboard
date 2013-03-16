@@ -35,19 +35,19 @@
       scope.refreshRuntimeInfo = function() {
         var self = this;
         var monitor = self.monitor;
-        monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
+        self.loadingStatus = jashboard.model.loadingStatus.waiting;
         repository.loadMonitorRuntimeInfo(
           monitor.id,
           monitor.type,
           {
             success: function(data) {
               monitor.runtimeInfo = data;
-              monitor.loadingStatus = jashboard.model.loadingStatus.completed;
+              self.loadingStatus = jashboard.model.loadingStatus.completed;
               self.$apply();
               self.$broadcast("MonitorRuntimeOk");
             },
             error: function(status, statusMessage, errorDetails) {
-              monitor.loadingStatus = jashboard.model.loadingStatus.error;
+              self.loadingStatus = jashboard.model.loadingStatus.error;
               self.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
                     " [" + errorDetails + "]";
               self.$apply();

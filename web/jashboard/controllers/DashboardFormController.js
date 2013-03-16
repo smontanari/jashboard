@@ -9,7 +9,9 @@
         scope.$emit("DashboardSavingStart");
         repository.createDashboard({name: this.dashboardName}, {
           success: function(dashboard) {
-            scope.$emit("NewDashboardCreated", dashboard);
+            scope.dashboards.push(dashboard);
+            scope.$apply();
+            scope.$emit("DashboardSavingComplete", dashboard);
           }
         });
         scope.$emit("CloseDashboardDialog");

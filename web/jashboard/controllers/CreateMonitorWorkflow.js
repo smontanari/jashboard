@@ -34,7 +34,7 @@
         repository.createMonitor(scope.monitorForm.dashboard_id, monitorParameters, {
           success: function(monitor) {
             addMonitorToDashboard(monitor, scope.monitorForm.dashboard_id);
-            scope.$emit("NewMonitorCreated");
+            scope.$emit("MonitorSavingComplete");
           }
         });
         scope.$emit("CloseMonitorDialog");

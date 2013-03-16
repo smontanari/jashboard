@@ -8,12 +8,6 @@
           }
         };
         
-        scope.$on('NewDashboardCreated', function(event, dashboard) {
-          scope.dashboards.push(dashboard);
-          scope.$apply();
-          event.stopPropagation();
-        });
-
         scope.dashboardAction = function(name) {
           dashboardActions[name](this);
         };

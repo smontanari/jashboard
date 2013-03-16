@@ -16,27 +16,4 @@ describe("DashboardControllerDelegate", function() {
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", "test_dashboard_id");
     });
   });
-
-  describe("'NewDashboardCreated' event handler", function() {
-    var eventObject;
-    beforeEach(function() {
-      scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-        handler(eventObject, {dashboardData: "test.new.dashboard", monitors: []});
-      });
-      eventObject =  jasmine.createSpyObj("event", ['stopPropagation']);
-      scope.dashboards = [];
-      delegate.init(scope);
-    });
-    it("should register a listener to the 'NewDashboardCreated' event", function() {
-      expect(scope.$on).toHaveBeenCalledWith("NewDashboardCreated", jasmine.any(Function));
-    });
-    it("should stop the event propagation", function() {
-      expect(eventObject.stopPropagation).toHaveBeenCalled();
-    });
-    it("should add the dashboard to the scope", function() {
-      expect(scope.dashboards.length).toEqual(1);
-      expect(scope.dashboards).toContain({dashboardData: "test.new.dashboard", monitors: []});
-      expect(scope.$apply).toHaveBeenCalled();
-    });
-  });
 });

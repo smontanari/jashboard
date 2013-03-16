@@ -93,10 +93,10 @@ describe("CreateMonitorWorkflow", function() {
 
       expect(scope.$apply).toHaveBeenCalled();
     });
-    it("should emit the 'NewMonitorCreated'", function() {
+    it("should emit the 'MonitorSavingComplete'", function() {
       successHandler("test.monitor");
       
-      expect(scope.$emit).toHaveBeenCalledWith("NewMonitorCreated");
+      expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingComplete");
     });
     it("should emit the 'CloseMonitorDialog'", function() {
       expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");

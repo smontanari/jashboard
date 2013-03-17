@@ -21,13 +21,12 @@
         element.resizable(_.extend(defaultOptions, options));
       };
 
-      this.resizeFromParent = function(childrenSelector, parentSelector) {
-        var parentElement = $(parentSelector);
-        $(childrenSelector, parentElement).each(function(index, element) {
-          var position = $(element).position();
-          var calculatedHeight = $(parentElement).height() - position.top;
-          $(element).height(calculatedHeight);
-        });
+      this.resetContainerHeight = function(element) {
+        var container = $(element);
+        var position = container.position();
+        var height = container.height();
+        var totalOffset = (container.outerHeight() - height)/2 + position.top;
+        container.height(height - totalOffset);
       };
     }
   });

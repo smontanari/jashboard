@@ -1,11 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MainController: function(
-      scope,
-      locationService, 
-      menuDelegate, 
-      dashboardDelegate, 
-      repository) {
+    MainController: function(scope, locationService, menuDelegate, dashboardDelegate, repository) {
       var onDataLoadSuccess = function(data) {
         scope.dashboards = [];
         _.each(data, function(dashboard) {
@@ -15,12 +10,6 @@
         scope.$apply();
         scope.$broadcast("DataLoadingComplete");
         // scope.$evalAsync(function() {
-        //   $(".monitor-details").each(function() {
-        //     var detailsPanel = $(this);
-        //     var position = detailsPanel.position();
-        //     var totalOffset = detailsPanel.outerHeight() - detailsPanel.height() + position.top;
-        //     detailsPanel.height(detailsPanel.height() - totalOffset);
-        //   });
         //   $(".monitor-panel").each(function() {
         //     var panel = $(this);
         //     console.log(panel.css("position"));
@@ -34,13 +23,16 @@
       };
 
       scope.locationService = locationService;
-      menuDelegate.init(scope);
-      dashboardDelegate.init(scope);
+      scope.showDashboard = function(e) {
+        scope.$broadcast("DashboardVisible", this.dashboard.id);
+      };
       scope.$on("OverlayReady", function(event) {
         scope.$broadcast("DataLoadingStart");
         repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
         event.stopPropagation();
       });
+      menuDelegate.init(scope);
+      dashboardDelegate.init(scope);
     }
   });
   jashboard.application.controller("MainController", 

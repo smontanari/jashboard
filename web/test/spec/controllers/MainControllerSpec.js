@@ -15,6 +15,12 @@ describe("MainController", function() {
       scope, locationService, menuDelegate, dashboardDelegate, repository);
   });
 
+  it("should broadcast the 'DashboardVisible' event", function() {
+    var innerScope = {dashboard: {id: "test_id"}};
+    scope.showDashboard.apply(innerScope);
+    
+    expect(scope.$broadcast).toHaveBeenCalledWith("DashboardVisible", "test_id");
+  });
   it("should listen to the 'OverlayReady' event", function() {
     expect(scope.$on).toHaveBeenCalledWith("OverlayReady", jasmine.any(Function));
   });

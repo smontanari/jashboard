@@ -18,7 +18,7 @@ describe("TooltipService", function() {
   describe("attachHtmlTooltip()", function() {
     it("should create a simple text tooltip", function() {
       var contentElement = {
-        html: jasmine.createSpy().andReturn("test-content");
+        html: jasmine.createSpy().andReturn("test-content")
       }
       $stub.withArgs("content_selector").returns(contentElement);
       elementBinding.applyToElement = jasmine.createSpy().andCallFake(function(callback) {

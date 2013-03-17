@@ -58,29 +58,19 @@ describe("WidgetService", function() {
     });
   });
 
-  describe("resizeFromParent", function() {
-    var $childElement, $parentElement;
+  describe("resetContainerHeight", function() {
+    var $element;
     beforeEach(function() {
-      var child = {id: "child"}, parent = {id: "parent"};
-      $parentElement = jasmine.createSpyObj("$(parent)", ['height']);
-      $childElement = jasmine.createSpyObj("$(child)", ['position', 'height']);
-      $stub = testHelper.stubJQuery();
-      $stub.withArgs("parent-selector").returns(parent);
-      $stub.withArgs(parent).returns($parentElement);
-      $stub.withArgs("children-selector", parent).returns($stub);
-      $stub.withArgs(child).returns($childElement);
-      $stub.each = jasmine.createSpy("$.each()").andCallFake(function(callback) {
-        callback(null, child);
-      });
-
-      $parentElement.height = jasmine.createSpy("$.height").andReturn("150");
-      $childElement.position = jasmine.createSpy("$.position()").andReturn({top: 100, left: 200});
+      $element = testHelper.stubJQuery("test-selector");
+      $element.height = jasmine.createSpy("$.height()").andReturn(100);
+      $element.outerHeight = jasmine.createSpy("$.outerHeight()").andReturn(120);
+      $element.position = jasmine.createSpy("$.position()").andReturn({top: 30});
     });
 
-    it("should recalculate the height of the children elements", function() {
-      service.resizeFromParent("children-selector", "parent-selector");
+    it("should recalculate the height of the element", function() {
+      service.resetContainerHeight("test-selector");
 
-      expect($childElement.height).toHaveBeenCalledWith(50);
+      expect($element.height).toHaveBeenCalledWith(60);
     });
   });
 });

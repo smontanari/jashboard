@@ -3,7 +3,7 @@
   <div id="dashboard-navbar" class="hide" data-ng-class="{show: (dashboards.length > 0)}">
     <ul class="nav nav-tabs">
       <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
-        <a id="tab-{{dashboard.id}}" href="#{{dashboard.id}}" data-toggle="tab">{{dashboard.name}}</a>
+        <a id="tab-{{dashboard.id}}" href="#{{dashboard.id}}" data-toggle="tab" data-ng-click="showDashboard()">{{dashboard.name}}</a>
       </li>
     </ul>
   </div>
@@ -45,8 +45,8 @@
             <div class="hide" data-jb-tooltip-for="'error_' + monitor.id" data-jb-tooltip="{show: 'MonitorRuntimeError', hide: 'MonitorRuntimeOk'}">
               <div class="html-tooltip-error">{{errorMessage}}</div>
             </div>
-          <div class="monitor-details scrolling">
-            <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_partial.html'"></div>
+          <div class="monitor-details scrolling" data-jb-monitor-display>
+            <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_partial.html'" onload="resetSize()"></div>
           </div>
         </div>
       </div>

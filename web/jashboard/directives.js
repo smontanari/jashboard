@@ -6,7 +6,8 @@
     'Tooltip',
     'TooltipTarget',
     'Draggable',
-    'Resizable'
+    'Resizable',
+    'MonitorDisplay'
   ];
 
   steal("jashboard/directives/EventDirectiveDefinition.js")

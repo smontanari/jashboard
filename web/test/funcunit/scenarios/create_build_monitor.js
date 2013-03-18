@@ -8,6 +8,8 @@ $.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers
         name: "Zombie-Dash build",
         refresh_interval: 10,
         type: "build",
+        position: {top: 0, left: 0},
+        size: {width: 240, height: 140},
         configuration: {
           type: "jenkins",
           hostname: "zombie-dev.host.com",

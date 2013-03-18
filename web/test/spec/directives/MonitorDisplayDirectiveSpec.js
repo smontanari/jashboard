@@ -58,11 +58,21 @@ describe("MonitorDisplayDirective", function() {
         expect(cancelListener).toHaveBeenCalled();
       });
       it("should recalculate the size of the element at a later point in time", function() {
-        eventHandler({}, "test_dashboard_id");
+        var called = false;
+        widgetService.resetContainerHeight.andCallFake(function(element) {
+          called = true;
+        });
+        runs(function() {
+          eventHandler({}, "test_dashboard_id");
+        });
 
-        setTimeout(function() {
-          expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element");  
-        }, 0);
+        waitsFor(function() {
+          return called;
+        }, "asdasd", 200);
+
+        runs(function() {
+          expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element");
+        });      
       });
     });
   });

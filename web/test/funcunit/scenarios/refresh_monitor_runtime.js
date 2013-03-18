@@ -10,6 +10,8 @@
           name: "Epic build",
           refresh_interval: 15,
           type: "build",
+          position: {top: 0, left: 0},
+          size: {width: 240, height: 140},
           configuration: {
             type: "go",
             hostname: "epic-ci.test.com",

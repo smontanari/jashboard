@@ -1,11 +1,9 @@
 describe("CreateMonitorWorkflow", function() {
-  var workflow, scope, repository, pluginManager;
+  var workflow, saveCallback;
 
   beforeEach(function() {
-    scope = {};
-    repository = {};
-    pluginManager = {};
-    workflow = new jashboard.CreateMonitorWorkflow(scope, repository, pluginManager);
+    saveCallback = jasmine.createSpy();
+    workflow = new jashboard.CreateMonitorWorkflow(saveCallback);
   });
 
   it("should have one initial action equal to 'next'", function() {
@@ -41,65 +39,10 @@ describe("CreateMonitorWorkflow", function() {
   });
 
   describe("Action: save", function() {
-    var successHandler, adapter;
-    beforeEach(function() {
-      scope.$emit = jasmine.createSpy("scope.$emit()");
-      scope.$apply = jasmine.createSpy("scope.$apply()");
-      repository.createMonitor = jasmine.createSpy("repository.createMonitor()").andCallFake(function(dashboard_id, monitorParameters, handlers) {
-        successHandler = handlers.success;
-      });
-      adapter = {
-        validateConfiguration: jasmine.createSpy("validateConfiguration()").andReturn({test: "test_configuration"})
-      };
-      pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andReturn(adapter);
-      scope.monitorForm = {
-        dashboard_id: "test_dashboard", 
-        name: "test.name",
-        refreshInterval: "123",
-        type: "type2",
-        configuration: {
-          type1: "test1",
-          type2: "test2"
-        }
-      };
-      scope.dashboards = [
-        {id: "dashboard1", monitors: [{id: "m1"}]},
-        {id: "test_dashboard", monitors: [{id: "m2"}]}
-      ];
+    it("should invoke the callback", function() {
       workflow.save();
-    });
 
-    it("should call the repository to create a monitor", function() {
-      expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("type2");
-      expect(adapter.validateConfiguration).toHaveBeenCalledWith("test2");
-      expect(repository.createMonitor).toHaveBeenCalledWith(
-        "test_dashboard", 
-        {name: "test.name", type: "type2", refreshInterval: 123, configuration: {test: "test_configuration"}}, 
-        jasmine.any(Object)
-      );
-    });
-    it("should emit the 'MonitorSavingStart'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingStart");
-    });
-    it("should add the monitor to the dashboard", function() {
-      successHandler("test.monitor");
-
-      expect(scope.dashboards[0].monitors.length).toEqual(1);
-      expect(scope.dashboards[1].monitors.length).toEqual(2);
-      expect(scope.dashboards[1].monitors).toContain("test.monitor");
-    });
-    it("should syncronise the scope", function() {
-      successHandler("test.monitor");
-
-      expect(scope.$apply).toHaveBeenCalled();
-    });
-    it("should emit the 'MonitorSavingComplete'", function() {
-      successHandler("test.monitor");
-      
-      expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingComplete");
-    });
-    it("should emit the 'CloseMonitorDialog'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
+      expect(saveCallback).toHaveBeenCalled();
     });
   });
 });

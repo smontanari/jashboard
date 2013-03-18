@@ -6,8 +6,14 @@ When /^I request the creation of a dashboard with name "(.*)"$/ do |name|
   post '/ajax/dashboard', %({"name": "#{name}"})
 end
 
-When /^I request the creation of a monitor for dashboard "(.*)" with (.*), (\d+), of type (.*), configured as (.*)$/ do |dashboard_id, name, refresh_interval, type, config|
-  request_body = %({"name": "#{name}", "refresh_interval": #{refresh_interval}, "type": "#{type}", "configuration": #{eval(config).to_json}})
+When /^I request the creation of a monitor for dashboard "(.*)" with (.*), (\d+), of type (.*), position (\d+),(\d+), size (\d+)x(\d+), configured as (.*)$/ do |dashboard_id, name, refresh_interval, type, top, left, width, height, config|
+  request_body = %({
+      "name": "#{name}",
+      "refresh_interval": #{refresh_interval},
+      "type": "#{type}", 
+      "position": {"top": #{top}, "left": #{left}}, 
+      "size": {"width": #{width}, "height": #{height}}, 
+      "configuration": #{eval(config).to_json}})
   post "/ajax/dashboard/#{dashboard_id}/monitor", request_body
 end
 

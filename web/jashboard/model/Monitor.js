@@ -3,10 +3,10 @@
     Monitor: function(monitorData) {
       this.cssLayout = function() {
         var css = {};
-        if(_.isObject(this.position)) {
+        if (_.isObject(this.position)) {
           css = _.extend({position: 'absolute'}, this.position);
         }
-        if(_.isObject(this.size)) {
+        if (_.isObject(this.size)) {
           css = _.extend(css, this.size);
         }
         return css;

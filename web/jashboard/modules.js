@@ -14,6 +14,7 @@ steal('jashboard/jashboard.js')
   'jashboard/services/TooltipService.js',
   'jashboard/services/Repository.js',
   'jashboard/services/ModelMapper.js',
+  'jashboard/services/MonitorLayoutManager.js',
   'jashboard/services/PluginManager.js',
   'jashboard/services/MenuControllerDelegate.js',
   'jashboard/services/DashboardActionsHandler.js'

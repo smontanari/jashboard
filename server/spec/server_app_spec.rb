@@ -139,6 +139,18 @@ module Jashboard
           monitor = Monitor.new.tap {|m| m.id = new_monitor_id}
           @mock_repository.stub(:save_monitor).and_return(monitor)
           @mock_monitor_adapter.stub(:get_configuration)
+          @monitor_json = %(
+            {
+              "name": "test.monitor.name",
+              "refresh_interval": 345,
+              "type": 123,
+              "position": {"top": 10, "left": 20},
+              "size": {"width": 100, "height": 200},
+              "configuration": {
+                "attr1": "test_attr1",
+                "attr2": "test_attr2"
+              }
+            })
         end
 
         it("should persist the monitor to the repository") do
@@ -148,29 +160,26 @@ module Jashboard
             and_return(mock_configuration)
 
           @mock_repository.should_receive(:save_monitor) do |monitor|
-            monitor.type.should == 123
-            monitor.name.should == "test.monitor.name"
-            monitor.refresh_interval.should == 345
-            monitor.configuration.should == mock_configuration
+            @monitor = monitor
             monitor
           end
 
-          post '/ajax/dashboard/test.dashboard.id/monitor', %(
-            {
-              "name": "test.monitor.name",
-              "refresh_interval": 345,
-              "type": 123,
-              "configuration": {
-                "attr1": "test_attr1",
-                "attr2": "test_attr2"
-              }
-            })
+          post '/ajax/dashboard/test.dashboard.id/monitor', @monitor_json
+
+            @monitor.type.should == 123
+            @monitor.name.should == "test.monitor.name"
+            @monitor.refresh_interval.should == 345
+            @monitor.position.top.should == 10
+            @monitor.position.left.should == 20
+            @monitor.size.width.should == 100
+            @monitor.size.height.should == 200
+            @monitor.configuration.should == mock_configuration
         end
 
         it("should persist the dashboard with the added monitor") do
           @mock_repository.should_receive(:save_dashboard).with(@dashboard)
 
-          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+          post '/ajax/dashboard/test.dashboard.id/monitor', @monitor_json
 
           @dashboard.monitor_ids.length.should == 3
           @dashboard.monitor_ids.should include "123"
@@ -181,7 +190,7 @@ module Jashboard
         it("should return the monitor as json") do
           @mock_repository.stub(:save_monitor).and_return(Struct.new(:id, :attr).new("test_id", "test_attr"))
 
-          post '/ajax/dashboard/test.dashboard.id/monitor', "{}"
+          post '/ajax/dashboard/test.dashboard.id/monitor', @monitor_json
 
           last_response.status.should == 201
           last_response.content_type.should include('application/json')

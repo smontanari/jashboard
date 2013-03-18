@@ -65,7 +65,7 @@ module Jashboard
     put '/ajax/monitor/:id/position' do
       data = JSON.parse(request.body.read)
       monitor = @repository.load_monitor(params[:id])
-      monitor.position = Struct.new(:top, :left).new(data['top'], data['left'])
+      monitor.position = get_monitor_position(data)
       @repository.save_monitor(monitor)
       status 200
     end
@@ -73,7 +73,7 @@ module Jashboard
     put '/ajax/monitor/:id/size' do
       data = JSON.parse(request.body.read)
       monitor = @repository.load_monitor(params[:id])
-      monitor.size = Struct.new(:width, :height).new(data['width'], data['height'])
+      monitor.size = get_monitor_size(data)
       @repository.save_monitor(monitor)
       status 200
     end
@@ -97,8 +97,18 @@ module Jashboard
         monitor.refresh_interval = monitor_json['refresh_interval']
         monitor.type = monitor_json['type']
         monitor.configuration = @monitor_adapter.get_configuration(monitor_json['type'], monitor_json['configuration'])
+        monitor.position = get_monitor_position(monitor_json['position'])
+        monitor.size = get_monitor_size(monitor_json['size'])
       end
       @repository.save_monitor(new_monitor)
+    end
+
+    def get_monitor_position(data)
+      Struct.new(:top, :left).new(data['top'], data['left'])
+    end
+
+    def get_monitor_size(data)
+      Struct.new(:width, :height).new(data['width'], data['height'])
     end
 
     def add_monitor_to_dashboard(dashboard_id, monitor)

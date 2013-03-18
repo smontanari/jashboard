@@ -10,6 +10,8 @@
           name: "Epic build",
           refresh_interval: 15,
           type: "build",
+          position: {top: 0, left: 0},
+          size: {width: 240, height: 140},
           configuration: {
             type: "go",
             hostname: "epic-ci.test.com",
@@ -24,6 +26,8 @@
           name: "Forum build",
           refresh_interval: 30,
           type: "build",
+          position: {top: 0, left: 260},
+          size: {width: 240, height: 140},
           configuration: {
             type: "jenkins",
             hostname: "cibuild.host.com",

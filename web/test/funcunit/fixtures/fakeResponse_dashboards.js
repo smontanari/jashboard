@@ -11,6 +11,7 @@
             "name": "Epic build",
             "refresh_interval": 15,
             "position": {"top": 10, "left": 60},
+            "size": {"width": 240, "height": 140},
             "type": "build",
             "configuration": {
               "type": "go",

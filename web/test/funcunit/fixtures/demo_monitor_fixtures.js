@@ -36,6 +36,8 @@
         name: data.name,
         refresh_interval: data.refreshInterval,
         type: data.type,
+        position: data.position,
+        size: data.size,
         configuration: monitorConfigurationFixtures[data.type](data.configuration)
       },
       delay: jashboard.test.randomInt(3)

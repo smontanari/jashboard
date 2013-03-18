@@ -68,7 +68,7 @@ describe("MonitorDisplayDirective", function() {
 
         waitsFor(function() {
           return called;
-        }, "asdasd", 200);
+        }, "call to widgetService", 200);
 
         runs(function() {
           expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element");

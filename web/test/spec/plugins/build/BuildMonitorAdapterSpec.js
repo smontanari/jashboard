@@ -33,6 +33,12 @@ describe("BuildMonitorAdapter", function() {
     expect(jashboard.plugin.build.buildConfigurationValidator).toBeDefined();
   });
 
+  it("should return a default size for the build monitor", function() {
+    var size = plugin.defaultSize();
+
+    expect(size).toEqual({width: 240, height: 140});
+  });
+
   describe("monitor runtime handler", function() {
     var verifyProperty = function(testData) {
       testCase = testData.testCase || "";

@@ -52,7 +52,8 @@ describe("MonitorFormController", function() {
         successHandler = handlers.success;
       });
       adapter = {
-        validateConfiguration: jasmine.createSpy("validateConfiguration()").andReturn({test: "test_configuration"})
+        validateConfiguration: jasmine.createSpy("validateConfiguration()").andReturn({test: "test_configuration"}),
+        defaultSize: function() {return {width: 678, height: 654};}
       };
       pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andReturn(adapter);
       monitorLayoutManager.nextAvailableMonitorPosition = sinon.stub().withArgs({id: "test_dashboard", monitors: [{id: "m2"}]})
@@ -87,7 +88,7 @@ describe("MonitorFormController", function() {
           type: "type2",
           refreshInterval: 123,
           position: {top: 123, left: 456},
-          size: {width: 240, height: 140},
+          size: {width: 678, height: 654},
           configuration: {test: "test_configuration"}
         }, 
         jasmine.any(Object)

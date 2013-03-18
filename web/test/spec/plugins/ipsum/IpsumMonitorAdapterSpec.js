@@ -8,22 +8,31 @@ describe("IpsumMonitorAdapter", function() {
   it("should add itself to the plugin manager", function() {
     expect(jashboard.plugin.pluginManager.findMonitorAdapter('ipsum')).toBeDefined();
   });
+  
   it("should parse the ipsum monitor configuration", function() {
     var configuration = adapter.parseConfiguration({no_sentences: 10, language: "english"});
 
     expect(configuration.numberOfSentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
+
   it("should validate the form ipsum monitor configuration", function() {
     var configuration = adapter.validateConfiguration({numberOfSentences: "10", language: "english"});
 
     expect(configuration.no_sentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
+
   it("should parse the runtime information", function() {
     var runtimeInfo = adapter.parseRuntimeInfo({text: "some text"});
 
     expect(runtimeInfo).toEqual({text: "some text"});
+  });
+
+  it("should return a default size for the ipsum monitor", function() {
+    var size = adapter.defaultSize();
+
+    expect(size).toEqual({width: 300, height: 200});
   });
 });
 

@@ -18,6 +18,13 @@
       this.parseRuntimeInfo = function(runtimeInfo_data) {
         return runtimeInfo_data;
       };
+
+      this.defaultSize = function() {
+        return {
+          width: 300,
+          height: 200
+        }
+      }
     }
   });
 

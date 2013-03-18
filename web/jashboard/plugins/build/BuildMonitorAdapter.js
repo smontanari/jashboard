@@ -37,6 +37,10 @@
         };    
       };
 
+      this.defaultSize = function() {
+        return {width: 240, height: 140};
+      };
+
       this.init = function() {
         jashboard.plugin.build.buildConfigurationParser = buildConfigurationParser;
         jashboard.plugin.build.buildConfigurationValidator = buildConfigurationValidator;

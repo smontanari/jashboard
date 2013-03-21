@@ -32,7 +32,7 @@ describe("IpsumMonitorAdapter", function() {
   it("should return a default size for the ipsum monitor", function() {
     var size = adapter.defaultSize();
 
-    expect(size).toEqual({width: 300, height: 200});
+    expect(size).toEqual({width: 250, height: 150});
   });
 });
 

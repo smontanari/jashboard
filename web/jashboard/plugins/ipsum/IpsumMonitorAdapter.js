@@ -20,10 +20,7 @@
       };
 
       this.defaultSize = function() {
-        return {
-          width: 300,
-          height: 200
-        }
+        return { width: 250, height: 150 };
       }
     }
   });

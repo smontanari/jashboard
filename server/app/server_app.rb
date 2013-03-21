@@ -78,6 +78,14 @@ module Jashboard
       status 200
     end
 
+    delete '/ajax/dashboard/:dashboard_id' do
+      dashboard_id = params[:dashboard_id]
+      dashboard = @repository.load_dashboard(dashboard_id)
+      dashboard.monitor_ids.each { |id| @repository.delete_monitor(id) }
+      @repository.delete_dashboard(dashboard_id)
+      status 204
+    end
+
     delete '/ajax/dashboard/:dashboard_id/monitor/:monitor_id' do
       dashboard_id = params[:dashboard_id]
       monitor_id = params[:monitor_id]

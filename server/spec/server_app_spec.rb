@@ -93,6 +93,28 @@ module Jashboard
           @dashboard.monitor_ids.should include "monitor1"
         end
       end
+      describe("DELETE /ajax/dashboard/:dashboard_id") do
+        before(:each) do
+          @dashboard = DashboardBuilder.new.with_id("test_dashboard").with_monitor_id("monitor1").with_monitor_id("monitor2").build
+          @mock_repository.stub(:load_dashboard).with("test_dashboard").and_return(@dashboard)
+          @mock_repository.stub(:save_dashboard)
+          @mock_repository.stub(:delete_monitor)
+        end
+
+        it("should remove the dashboard from the repository") do
+          @mock_repository.should_receive(:delete_dashboard).with("test_dashboard")
+
+          delete '/ajax/dashboard/test_dashboard'
+
+          last_response.status.should == 204
+        end
+        it("should remove all the the monitors belonging to the dashboard") do
+          @mock_repository.should_receive(:delete_monitor).with("monitor1")
+          @mock_repository.should_receive(:delete_monitor).with("monitor2")
+
+          delete '/ajax/dashboard/test_dashboard'
+        end
+      end
     end
 
     context "Dashboard create" do

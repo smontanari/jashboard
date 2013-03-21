@@ -21,6 +21,10 @@ Then /^monitor (\w+) size should have dimensions updated to (\d+), (\d+)$/ do |m
   end
 end
 
+Then /^dashboard "(\w+)" should be removed from the repository$/ do |dashboard_id|
+  @db_helper.find_dashboard(dashboard_id).should be_nil
+end
+
 Then /^monitor "(\w+)" should be removed from the repository$/ do |monitor_id|
   @db_helper.find_monitor(monitor_id).should be_nil
 end

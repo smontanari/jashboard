@@ -10,7 +10,9 @@ describe("MonitorFormController", function() {
         listener = handler;
       })
     };
-    monitorLayoutManager = jasmine.createSpyObj("monitorLayoutManager", ['nextAvailableMonitorPosition']);
+    monitorLayoutManager = {
+      nextAvailableMonitorPosition: sinon.stub()
+    };
     repository = jasmine.createSpyObj("repository", ['createMonitor']);
   });
 
@@ -56,7 +58,7 @@ describe("MonitorFormController", function() {
         defaultSize: function() {return {width: 678, height: 654};}
       };
       pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andReturn(adapter);
-      monitorLayoutManager.nextAvailableMonitorPosition = sinon.stub().withArgs({id: "test_dashboard", monitors: [{id: "m2"}]})
+      monitorLayoutManager.nextAvailableMonitorPosition.withArgs({id: "test_dashboard", monitors: [{id: "m2"}]}, {width: 678, height: 654})
           .returns({top: 123, left: 456});
       scope.dashboards = [
         {id: "dashboard1", monitors: [{id: "m1"}]},

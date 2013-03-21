@@ -11,8 +11,8 @@
           name: scope.monitorForm.name,
           refreshInterval: parseInt(scope.monitorForm.refreshInterval, 10),
           type: scope.monitorForm.type,
-          position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard),
           size: monitorAdapter.defaultSize(),
+          position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
           configuration: monitorAdapter.validateConfiguration(scope.monitorForm.configuration[monitorType])
         };
         scope.$emit("MonitorSavingStart");

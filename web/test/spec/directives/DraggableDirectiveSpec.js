@@ -8,14 +8,14 @@ describe("DraggableDirective", function() {
     linkFunction = jashboard.angular.draggableDirective(widgetService);
   });
 
-  it("should invoke the widgetService with the 'handle' option", function() {
-    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({handleSelector: 'test-handle-selector'});
+  it("should invoke the widgetService with the 'handle' and 'stack' option", function() {
+    scope.$eval = jasmine.createSpy("scope.$eval()").andReturn({handleSelector: 'test-handle-selector', stackSelector: 'test-stack-selector'});
 
     linkFunction(scope, "test-element", {"jbDraggable": "test-map"});
 
     expect(scope.$eval).toHaveBeenCalledWith("test-map");
     expect(widgetService.makeDraggable).toHaveBeenCalledWith("test-element", 
-      {handle: "test-handle-selector"});
+      {handle: "test-handle-selector", stack: "test-stack-selector"});
   });
 
   it("should invoke the widgetService with the 'stop' callback emitting the given event", function() {

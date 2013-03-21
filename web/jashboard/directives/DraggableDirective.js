@@ -6,7 +6,8 @@
         
         if (_.isObject(directiveOptions)) {
           var options = {
-            handle: directiveOptions.handleSelector
+            handle: directiveOptions.handleSelector,
+            stack: directiveOptions.stackSelector
           };
           if (_.isString(directiveOptions.onDragStop)) {
             options.stop = function(event, ui) {

@@ -16,8 +16,7 @@ describe("WidgetService", function() {
 
       expect($stub.draggable).toHaveBeenCalledWith(
         { containment: "parent",
-          scroll: true,
-          stack: $stub
+          scroll: true
         });
     });
     it("should invoke $.draggable() with additional options", function() {
@@ -26,7 +25,6 @@ describe("WidgetService", function() {
       expect($stub.draggable).toHaveBeenCalledWith(
         { containment: "parent",
           scroll: true,
-          stack: $stub,
           option1: "test1",
           option2: "test2"
         });

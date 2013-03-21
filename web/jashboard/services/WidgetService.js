@@ -5,8 +5,7 @@
         var element = $(selector);
         var defaultOptions = {
           containment: "parent",
-          scroll: true,
-          stack: element
+          scroll: true
         };
 
         element.draggable(_.extend(defaultOptions, options));

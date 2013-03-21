@@ -5,8 +5,8 @@ Feature: Update monitor details
 
   Scenario Outline: Update monitor position
     Given the following monitors
-    | id        | name              | type  | refresh_interval | configuration                                                                    |
-    | monitor_1 | Zombie-Dash build | build | 10               | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
+    | id        | name              | type  | refresh_interval | position | size    | configuration                                                                    |
+    | monitor_1 | Zombie-Dash build | build | 10               | 100,200  | 230x120 | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
 
     When I request to update the position of monitor <monitor_id> with coordinates <top>, <left>
 
@@ -19,8 +19,8 @@ Feature: Update monitor details
 
   Scenario Outline: Update monitor size
     Given the following monitors
-    | id        | name      | type  | refresh_interval | configuration                            |
-    | monitor_1 | Some text | ipsum | 10               | { no_sentences: 1, language: "english" } |
+    | id        | name      | type  | refresh_interval | position | size    | configuration                                                                    |
+    | monitor_1 | Some text | ipsum | 10               | 100,200  | 230x120 | { no_sentences: 1, language: "english" } |
 
     When I request to update the size of monitor <monitor_id> with dimensions <width>, <height>
 

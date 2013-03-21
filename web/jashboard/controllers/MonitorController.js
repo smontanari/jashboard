@@ -22,7 +22,7 @@
           title: "Remove monitor " + currentMonitor.name,
           message: "If you delete this monitor you will lose all its data. Continue?",
           confirmAction: function() {
-            repository.deleteMonitor(currentMonitor.id, {
+            repository.deleteMonitor(currentDashboard.id, currentMonitor.id, {
               success: function() {
                 currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                 scope.$apply();

@@ -69,11 +69,10 @@ module Jashboard
     end
 
     context "Data deletion" do
-      describe("DELETE /ajax/monitor") do
+      describe("DELETE /ajax/dashboard/:dashboard_id/monitor/:monitor_id") do
         before(:each) do
-          dashboard1 = DashboardBuilder.new.with_id("dashboard2").with_monitor_id("monitor3").build
-          @dashboard2 = DashboardBuilder.new.with_id("dashboard1").with_monitor_id("monitor1").with_monitor_id("monitor2").build
-          @mock_repository.stub(:load_dashboards).and_return([dashboard1, @dashboard2])
+          @dashboard = DashboardBuilder.new.with_id("test_dashboard").with_monitor_id("monitor1").with_monitor_id("test-monitor-id").build
+          @mock_repository.stub(:load_dashboard).with("test_dashboard").and_return(@dashboard)
           @mock_repository.stub(:save_dashboard)
           @mock_repository.stub(:delete_monitor)
         end
@@ -81,17 +80,17 @@ module Jashboard
         it("should remove the monitor from the repository") do
           @mock_repository.should_receive(:delete_monitor).with("test-monitor-id")
 
-          delete '/ajax/monitor/test-monitor-id'
+          delete '/ajax/dashboard/test_dashboard/monitor/test-monitor-id'
 
-          last_response.should be_ok
+          last_response.status.should == 204
         end
         it("should persist the dashboard without the monitor") do
-          @mock_repository.should_receive(:save_dashboard).with(@dashboard2)
+          @mock_repository.should_receive(:save_dashboard).with(@dashboard)
 
-          delete '/ajax/monitor/monitor2'
+          delete '/ajax/dashboard/test_dashboard/monitor/test-monitor-id'
 
-          @dashboard2.monitor_ids.length.should == 1
-          @dashboard2.monitor_ids.should include "monitor1"
+          @dashboard.monitor_ids.length.should == 1
+          @dashboard.monitor_ids.should include "monitor1"
         end
       end
     end

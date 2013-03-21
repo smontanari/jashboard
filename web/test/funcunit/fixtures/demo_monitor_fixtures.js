@@ -85,12 +85,8 @@
     steal.dev.log("monitor[" + monitor_id + "] resized to [width: " + size.width + ", height: " + size.height + "]");
     return {returnCode: 201};
   });
-  server.fakeResponse("DELETE", /\/ajax\/monitor\/(\w+)/, function(request, monitor_id) {
+  server.fakeResponse("DELETE", /\/ajax\/dashboard\/(\w+)\/monitor\/(\w+)/, function(request, dashboard_id, monitor_id) {
     steal.dev.log("monitor[" + monitor_id + "] deleted");
-    // var monitor = _.find(storedMonitors, function(m) {
-    //   return monitor_id === m.id;
-    // });
-    // storedMonitors = _.without(storedMonitors, monitor);
-    return {returnCode: 201};
+    return {returnCode: 204};
   });
 }());

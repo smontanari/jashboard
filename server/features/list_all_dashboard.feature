@@ -5,10 +5,10 @@ Feature: Get dashboards
 
   Scenario: List all dashboards with monitors
     Given the following monitors
-    | id        | name              | type  | refresh_interval | configuration                                                                                                                     |
-    | monitor_1 | Zombie-Dash build | build | 10               | { type: "jenkins", hostname: "zombie-dev.host.com", port: 9080, build_id: "zombie_build" }                                        |
-    | monitor_2 | Epic build        | build | 15               | { type: "go", hostname: "epic-ci.test.com", port: 81, pipeline: "epic main", stage: "epic build", job: "unit-integration tests" } |
-    | monitor_3 | Random text       | ipsum | 30               | { no_sentences: 3, language: "english"}                                                                                           |
+    | id        | name              | type  | refresh_interval | position | size    | configuration                                                                                                                     |
+    | monitor_1 | Zombie-Dash build | build | 10               | 0,0      | 240x140 | { type: "jenkins", hostname: "zombie-dev.host.com", port: 9080, build_id: "zombie_build" }                                        |
+    | monitor_2 | Epic build        | build | 15               | 0,0      | 240x140 | { type: "go", hostname: "epic-ci.test.com", port: 81, pipeline: "epic main", stage: "epic build", job: "unit-integration tests" } |
+    | monitor_3 | Random text       | ipsum | 30               | 0,260    | 280x150 | { no_sentences: 3, language: "english"}                                                                                           |
 
     And a dashboard with id "dashboard_1" and name "first dashboard" and monitors "monitor_1"
     

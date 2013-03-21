@@ -9,12 +9,6 @@
         scope.dataLoadingStatus = jashboard.model.loadingStatus.completed;
         scope.$apply();
         scope.$broadcast("DataLoadingComplete");
-        // scope.$evalAsync(function() {
-        //   $(".monitor-panel").each(function() {
-        //     var panel = $(this);
-        //     console.log(panel.css("position"));
-        //   });
-        // });
       };
       var onDataLoadError = function(status, statusMessage) {
         scope.$broadcast("DataLoadingError");

@@ -131,20 +131,20 @@ describe("Repository", function() {
     });
   });
 
-  describe("Deleting a monitor", function() {
+  describe("Removing a monitor from a dashboard", function() {
     beforeEach(function() {
       httpService.delete = jasmine.createSpy("httpService.delete()").andReturn(
         new AjaxPromise("")
       );      
     });
     it("should use the http service to delete the monitor", function() {
-      repository.deleteMonitor("test_id", {success: successHandler});
+      repository.deleteMonitor("test_dashboard", "test_id", {success: successHandler});
 
-      expect(httpService.delete).toHaveBeenCalledWith("/ajax/monitor/test_id");
+      expect(httpService.delete).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard/monitor/test_id");
       expect(successHandler).toHaveBeenCalled();
     });    
     it("should invoke the error handler if the request fails", function() {
-      repository.deleteMonitor("test_id", {error: errorHandler});
+      repository.deleteMonitor("test_dashboard", "test_id", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
     });    

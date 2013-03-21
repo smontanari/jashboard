@@ -17,8 +17,8 @@ Feature: Create a new monitor
 
   Scenario Outline: Create Monitor links the monitor to the corresponding dashboard
     Given the following monitors
-    | id        | name              | type  | refresh_interval | configuration                                                                              |
-    | monitor_1 | Zombie-Dash build | build | 10               | { type: "jenkins", hostname: "zombie-dev.host.com", port: 9080, build_id: "zombie_build" } |
+    | id        | name              | type  | refresh_interval | position | size    | configuration                                                                              |
+    | monitor_1 | Zombie-Dash build | build | 10               | 40,10    | 300x140 | { type: "jenkins", hostname: "zombie-dev.host.com", port: 9080, build_id: "zombie_build" } |
 
     And a dashboard with id "dashboard_1" and name "first dashboard" and monitors "monitor_1"
 

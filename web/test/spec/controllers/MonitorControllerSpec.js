@@ -71,11 +71,11 @@ describe("MonitorController", function() {
         })
       };
       repository = {
-          deleteMonitor: jasmine.createSpy("repository.deleteMonitor()").andCallFake(function(monitor_id, handlers) {
+          deleteMonitor: jasmine.createSpy("repository.deleteMonitor()").andCallFake(function(dashboard_id, monitor_id, handlers) {
             deleteHandlers = handlers;
           })
       };
-      innerScope.dashboard = {monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
+      innerScope.dashboard = {id: "test_dashboard", monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
       innerScope.monitor = testMonitor;
 
       controller = new jashboard.MonitorController(scope, repository, alertService);
@@ -89,7 +89,7 @@ describe("MonitorController", function() {
     it("should delete the monitor on confirmation", function() {
       alertOptions.confirmAction();
 
-      expect(repository.deleteMonitor).toHaveBeenCalledWith("test_id", jasmine.any(Object));
+      expect(repository.deleteMonitor).toHaveBeenCalledWith("test_dashboard", "test_id", jasmine.any(Object));
     });
     it("should remove the monitor from the dashboard on successful deletion", function() {
       alertOptions.confirmAction();

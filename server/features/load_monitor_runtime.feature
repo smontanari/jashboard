@@ -10,8 +10,8 @@ Feature: Get monitor runtime data
     | zombie_build  | jenkins-lastbuild-success-response |
 
     And the following monitors
-    | id        | name              | type  | refresh_interval | configuration                                                                    |
-    | monitor_1 | Zombie-Dash build | build | 10               | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
+    | id        | name              | type  | refresh_interval | position | size    | configuration                                                                    |
+    | monitor_1 | Zombie-Dash build | build | 10               | 100,200  | 230x120 | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
 
     When I request the runtime info for monitor monitor_1
 
@@ -19,8 +19,8 @@ Feature: Get monitor runtime data
 
   Scenario: Load ipsum monitor runtime returns corresponding runtime data
     Given the following monitors
-    | id        | name          | type  | refresh_interval | configuration                           |
-    | monitor_1 | Ipsum Monitor | ipsum | 10               | { no_sentences: 3, language: "english"} |
+    | id        | name          | type  | refresh_interval | position | size    | configuration                                                                    |
+    | monitor_1 | Ipsum Monitor | ipsum | 10               | 100,200  | 230x120 | { no_sentences: 3, language: "english"} |
 
     When I request the runtime info for monitor monitor_1
 
@@ -28,8 +28,8 @@ Feature: Get monitor runtime data
 
   Scenario: Load build monitor runtime returns error
     Given the following monitors
-    | id        | name              | type  | refresh_interval | configuration                                                                    |
-    | monitor_1 | Zombie-Dash build | build | 10               | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
+    | id        | name              | type  | refresh_interval | position | size    | configuration                                                                    |
+    | monitor_1 | Zombie-Dash build | build | 10               | 100,200  | 230x120 | { type: "jenkins", hostname: "localhost", port: 8000, build_id: "zombie_build" } |
 
     When I request the runtime info for monitor monitor_1
 

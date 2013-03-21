@@ -49,3 +49,7 @@ end
 Then /^the app should return a successful response$/ do
   last_response.should be_ok
 end
+
+Then /^the app should return a successful response without content$/ do
+  last_response.status.should == 204
+end

@@ -29,6 +29,6 @@ When /^I request to update the size of monitor (\w+) with dimensions (\d+), (\d+
   put "/ajax/monitor/#{monitor_id}/size", %({"width": #{width}, "height": #{height}}) 
 end
 
-When /^I request the deletion of monitor "(\w+)"$/ do |monitor_id|
-  delete "/ajax/monitor/#{monitor_id}"
+When /^I request the deletion of monitor "(\w+)" in dashboard "(\w+)"$/ do |monitor_id, dashboard_id|
+  delete "/ajax/dashboard/#{dashboard_id}/monitor/#{monitor_id}"
 end

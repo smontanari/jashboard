@@ -131,6 +131,25 @@ describe("Repository", function() {
     });
   });
 
+  describe("Removing a dashboard and all its monitors", function() {
+    beforeEach(function() {
+      httpService.delete = jasmine.createSpy("httpService.delete()").andReturn(
+        new AjaxPromise("")
+      );      
+    });
+    it("should use the http service to delete the monitor", function() {
+      repository.deleteDashboard("test_dashboard", {success: successHandler});
+
+      expect(httpService.delete).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard");
+      expect(successHandler).toHaveBeenCalled();
+    });    
+    it("should invoke the error handler if the request fails", function() {
+      repository.deleteDashboard("test_dashboard", {error: errorHandler});
+
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
+    });    
+  });
+
   describe("Removing a monitor from a dashboard", function() {
     beforeEach(function() {
       httpService.delete = jasmine.createSpy("httpService.delete()").andReturn(

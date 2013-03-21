@@ -73,6 +73,13 @@
         http.putJSON("/ajax/monitor/" + monitor_id + "/size", size);
       }
 
+      this.deleteDashboard = function(dashboard_id, handlers) {
+        executeRequest(
+          http.delete("/ajax/dashboard/" + dashboard_id),
+          handlers
+        );
+      }
+
       this.deleteMonitor = function(dashboard_id, monitor_id, handlers) {
         executeRequest(
           http.delete("/ajax/dashboard/" + dashboard_id + "/monitor/" + monitor_id),

@@ -18,29 +18,33 @@
     box-shadow: 1px 1px 2px 0 #56b8e6;
     .gradient-bg(#d1f0ff, #d1f0ff, #75d1ff);
     .top-rounded-corners;
-  }
-  li.active {
-    .gradient-bg(#fff, #fff, #c2EBFF);
-    box-shadow: 2px 2px 1px 1px #fff;
-    height: 32px;
-    a {
-      background-color: transparent;
-      color: #333;
+    &.active {
+      .gradient-bg(#fff, #fff, #c2EBFF);
+      box-shadow: 2px 2px 1px 1px #fff;
+      height: 32px;
+      span {
+        background-color: transparent;
+        color: #333;
+        cursor: auto;
+      }
     }
-  }
 
-  li a {
-    padding: 4px 4px;
-    height: 24px;
-    line-height: 24px;
-    border: none;
-    text-shadow:#f8f8f8 0 1px 0;
-    .bottom-rounded-corners(0);
-    .top-rounded-corners;
-
-    &:hover {
+    span {
+      padding: 4px 4px;
+      height: 24px;
+      line-height: 24px;
       border: none;
-      background-color: #FFF;
+      display: block;
+      color: #0088CC;
+      text-shadow:#f8f8f8 0 1px 0;
+      cursor: pointer;
+      .bottom-rounded-corners(0);
+      .top-rounded-corners;
+      &:hover {
+        border: none;
+        background-color: #FFF;
+        color: #555555;
+      }
     }
   }
 }

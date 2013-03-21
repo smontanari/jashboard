@@ -2,14 +2,14 @@
   <div data-ng-include="'html/info_box_partial.html'"></div>
   <div id="dashboard-navbar" class="hide" data-ng-class="{show: (dashboards.length > 0)}">
     <ul class="nav nav-tabs">
-      <li class="dashboard-tab" data-ng-class="{active: ($index == 0)}" data-ng-repeat="dashboard in dashboards">
-        <a id="tab-{{dashboard.id}}" href="#{{dashboard.id}}" data-toggle="tab" data-ng-click="showDashboard()">{{dashboard.name}}</a>
+      <li class="dashboard-tab" data-ng-class="{active: isActiveDashboard()}" data-ng-repeat="dashboard in dashboards">
+        <span id="tab-{{dashboard.id}}" data-ng-click="showDashboard()">{{dashboard.name}}</span>
       </li>
     </ul>
   </div>
-  <div id="dashboard-container" class="tab-content">
-    <div id="{{dashboard.id}}" class="tab-pane" 
-      data-ng-class="{active: ($index == 0)}" 
+  <div id="dashboard-container">
+    <div id="{{dashboard.id}}" data-ng-class="{active: isActiveDashboard()}"
+      data-ng-show="isActiveDashboard()" 
       data-ng-repeat="dashboard in dashboards">
       <div class="menubar">
         <div class="dashboard-actions">
@@ -17,6 +17,7 @@
             <a id="{{dashboard.id}}-actions" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-actions">
               <li><a class="new-monitor" data-ng-click="dashboardAction('newMonitor')">New Monitor</a></li>
+              <li><a class="new-monitor" data-ng-click="dashboardAction('delete')">Delete</a></li>
             </ul>
           </div>
         </div>

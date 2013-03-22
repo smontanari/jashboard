@@ -18,7 +18,8 @@ steal(
     'dashboards_loading_error',
     'monitor_runtime_loading_error',
     'monitor_runtime_refresh',
-    'monitor_delete'
+    'monitor_delete',
+    'dashboard_delete'
   ];
 
   var selectFeatures = function() {

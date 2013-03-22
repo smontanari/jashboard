@@ -1,7 +1,7 @@
 funcunitHelper.testFeature("Build monitor create", "create_build_monitor", function() {
   var openMonitorDialog = function() {
     S("#dashboard_1-actions").click();
-    S("#dashboard_1 .dashboard-actions .new-monitor").visible("display new monitor menu action").click();
+    S("#dashboard_1 .dashboard-actions a:contains('New Monitor')").visible("display new monitor menu action").click();
     S("#new-monitor-form").visible("show new monitor modal");
   };
   var inputMonitorData = function(data) {

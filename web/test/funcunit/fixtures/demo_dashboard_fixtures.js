@@ -17,4 +17,9 @@
       delay: 1
     };
   });
+
+  server.fakeResponse("DELETE", /\/ajax\/dashboard\/(\w+)/, function(request, dashboard_id) {
+    steal.dev.log("dashboard[" + dashboard_id + "] deleted");
+    return {returnCode: 204};
+  });
 }());

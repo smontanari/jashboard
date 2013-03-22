@@ -41,7 +41,8 @@ describe("DashboardFormController", function() {
     var successHandler, scope;
     beforeEach(function() {
       scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
-      scope.dashboards = [];
+      scope.dashboards = [{id: "some dashbaord"}];
+      scope.context = {};
       repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handlers) {
         successHandler = handlers.success;
       });
@@ -55,17 +56,23 @@ describe("DashboardFormController", function() {
       expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Object));
     });
     it("should add the dashboard to the scope", function() {
-      successHandler("test.dashboard");
-      expect(scope.dashboards.length).toEqual(1);
-      expect(scope.dashboards).toContain("test.dashboard");
+      successHandler({id: "test.dashboard"});
+
+      expect(scope.dashboards.length).toEqual(2);
+      expect(scope.dashboards).toContain({id: "test.dashboard"});
       expect(scope.$apply).toHaveBeenCalled();
     });
-    it("should emit the 'DashboardSavingComplete' if successful", function() {
-      successHandler("test.dashboard");
-      expect(scope.$emit).toHaveBeenCalledWith("DashboardSavingComplete", "test.dashboard");
+    it("should set the current active dashboard", function() {
+      successHandler({id: "test_dashboard"});
+      
+      expect(scope.context.activeDashboardId).toEqual("test_dashboard");
     });
-    it("should emit the 'DashboardSavingStart' if successful", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("DashboardSavingStart");
+    it("should emit the 'DashboardCreateComplete' if successful", function() {
+      successHandler("test.dashboard");
+      expect(scope.$emit).toHaveBeenCalledWith("DashboardCreateComplete", "test.dashboard");
+    });
+    it("should emit the 'DashboardCreateStart' if successful", function() {
+      expect(scope.$emit).toHaveBeenCalledWith("DashboardCreateStart");
     });
   });
 });

@@ -14,7 +14,9 @@
               confirmAction: function() {
                 repository.deleteDashboard(currentScope.dashboard.id, {
                   success: function() {
-                    scope.$broadcast("RemoveDashboard", currentScope.dashboard);
+                    scope.dashboards = _.without(scope.dashboards, currentScope.dashboard);
+                    jashboard.scopeContextHelper.setDefaultActiveDashboard.apply(scope);
+                    scope.$apply();
                   }
                 });
               }

@@ -2,8 +2,7 @@
   jashboard = _.extend(module, {
     defineRoutes: function($routeProvider, $locationProvider) {
       $routeProvider.when('/', {
-        templateUrl: 'html/main_page_partial.html',
-        controller: 'MainController'
+        templateUrl: 'html/main_page_partial.html'
       }); 
       $routeProvider.when('/about', {
         templateUrl: 'html/about_partial.html'

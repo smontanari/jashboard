@@ -1,5 +1,5 @@
 describe("MainController", function() {
-  var repository, controller, scope, menuDelegate, dashboardDelegate, locationService, listeners;
+  var repository, controller, scope, menuDelegate, dashboardDelegate, locationService, listeners, scopeHelperSpy;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
@@ -11,16 +11,17 @@ describe("MainController", function() {
     scope.$on.andCallFake(function(eventName, fn) {
       listeners[eventName] = fn;
     });
+    scopeHelperSpy = spyOn(jashboard.scopeContextHelper, "setDefaultActiveDashboard");
 
     controller = new jashboard.MainController(
       scope, locationService, menuDelegate, dashboardDelegate, repository);
   });
 
+  it("should initialise a context object in the scope", function() {
+    expect(scope.context).toEqual({});
+  });
   it("should listen to the 'OverlayReady' event", function() {
     expect(scope.$on).toHaveBeenCalledWith("OverlayReady", jasmine.any(Function));
-  });
-  it("should listen to the 'RemoveDashboard' event", function() {
-    expect(scope.$on).toHaveBeenCalledWith("RemoveDashboard", jasmine.any(Function));
   });
   it("should inject the locationService into the scope", function() {
     expect(scope.locationService).toEqual(locationService);
@@ -35,7 +36,7 @@ describe("MainController", function() {
   describe("isActiveDashboard()", function() {
     var innerScope;
     beforeEach(function() {
-      scope.activeDashboardId = "current_dashboard";
+      scope.context.activeDashboardId = "current_dashboard";
     });
     it("should return the current dashboard as the active dashboard", function() {
       innerScope = {dashboard: {id: "current_dashboard"}};
@@ -54,30 +55,10 @@ describe("MainController", function() {
       scope.showDashboard.apply(innerScope);
     });
     it("should set the active dashboard id to the current dashboard", function() {
-      expect(scope.activeDashboardId).toEqual("test_id");
+      expect(scope.context.activeDashboardId).toEqual("test_id");
     });
     it("should broadcast the 'DashboardVisible' event", function() {
       expect(scope.$broadcast).toHaveBeenCalledWith("DashboardVisible", "test_id");
-    });
-  });
-
-  describe("'RemoveDashboard' event listener", function() {
-    var eventObject = {};
-    beforeEach(function() {
-      var currentDashboard = {id: "test_dashboard_id"};
-      scope.dashboards = [currentDashboard, {id: "another_dashboard"}];
-      eventObject.stopPropagation = jasmine.createSpy("event.stopPropagation()");
-      listeners['RemoveDashboard'](eventObject, currentDashboard);
-    });
-    it("should remove the current dashboard from the scope", function() {
-      expect(scope.dashboards.length).toEqual(1);
-      expect(scope.dashboards).toContain({id: "another_dashboard"});
-    });
-    it("should set the first dashboard in the scope as the active dashboard", function() {
-      expect(scope.activeDashboardId).toEqual("another_dashboard");
-    });
-    it("should stop the 'RemoveDashboard' event propagation", function() {
-      expect(eventObject.stopPropagation).toHaveBeenCalled();
     });
   });
 
@@ -112,8 +93,9 @@ describe("MainController", function() {
         expect(scope.dashboards).toEqual(test_dashboards);
         expect(scope.$apply).toHaveBeenCalled();
       });
-      it("should set the active dashboard id to the first dashboard", function() {
-        expect(scope.activeDashboardId).toEqual("test.dashboard.1");
+      it("should set the current active dashboard", function() {
+        expect(scopeHelperSpy).toHaveBeenCalled();
+        expect(scopeHelperSpy.calls[0].object).toEqual(scope);
       });
       it("should broadcast the 'DataLoadingComplete' event when data loading completes successfully", function() {
         expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingComplete");

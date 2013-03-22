@@ -9,8 +9,7 @@ describe("defineRoutes", function() {
 
   it("should define the main page route", function() {
     expect(routeProvider.when).toHaveBeenCalledWith("/", {
-      templateUrl: 'html/main_page_partial.html',
-      controller: 'MainController'
+      templateUrl: 'html/main_page_partial.html'
     });
   });
   it("should define the about page route", function() {

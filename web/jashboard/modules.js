@@ -22,6 +22,7 @@ steal('jashboard/jashboard.js')
   'jashboard/services/DashboardActionsHandler.js'
 )
 .then(
+  'jashboard/controllers/scopeContextHelper.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MainController.js',
   'jashboard/controllers/MonitorController.js',

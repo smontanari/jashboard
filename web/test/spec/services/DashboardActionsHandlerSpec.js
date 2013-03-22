@@ -2,7 +2,7 @@ describe("DashboardActionsHandler", function() {
   var delegate, scope, repository, alertService;
 
   beforeEach(function() {
-    scope = jasmine.createSpyObj("scope", ['$broadcast']);
+    scope = jasmine.createSpyObj("scope", ['$broadcast', '$apply']);
     repository = jasmine.createSpyObj("repository", ['deleteDashboard']);
     alertService = jasmine.createSpyObj("alertService", ['showAlert']);
 
@@ -20,15 +20,19 @@ describe("DashboardActionsHandler", function() {
     });
   });
   describe("scope.dashboardAction(): delete", function() {
-    var innerScope, deleteSuccessCallback, alertOptions;
+    var innerScope, deleteSuccessCallback, alertOptions, scopeHelperSpy;
     beforeEach(function() {
-      innerScope = { dashboard: {id: "test_dashboard_id", name: "test-dashboard"} };      
+      var currentDashboard = {id: "test_dashboard_id"};
+      scope.dashboards = [currentDashboard, {id: "another_dashboard"}];
+      innerScope = { dashboard: currentDashboard };
       repository.deleteDashboard.andCallFake(function(id, handlers) {
         deleteSuccessCallback = handlers.success;
       });
       alertService.showAlert.andCallFake(function(options) {
         alertOptions = options;
       });
+      scopeHelperSpy = spyOn(jashboard.scopeContextHelper, "setDefaultActiveDashboard");
+
       scope.dashboardAction.apply(innerScope, ['delete']);
     });
     it("should trigger an alert to confirm deletion", function() {
@@ -44,11 +48,20 @@ describe("DashboardActionsHandler", function() {
 
       expect(repository.deleteDashboard).toHaveBeenCalledWith("test_dashboard_id", jasmine.any(Object));
     });
-    it("should broadcast the 'RemoveDashboard' event", function() {
+    it("should remove the current dashboard from the scope", function() {
       alertOptions.confirmAction();
       deleteSuccessCallback();
 
-      expect(scope.$broadcast).toHaveBeenCalledWith("RemoveDashboard", {id: "test_dashboard_id", name: "test-dashboard"});
+      expect(scope.dashboards.length).toEqual(1);
+      expect(scope.dashboards).toContain({id: "another_dashboard"});
+      expect(scope.$apply).toHaveBeenCalled();
+    });
+    it("should set the current active dashboard", function() {
+      alertOptions.confirmAction();
+      deleteSuccessCallback();
+
+      expect(scopeHelperSpy).toHaveBeenCalled();
+      expect(scopeHelperSpy.calls[0].object).toEqual(scope);
     });
   });
 });

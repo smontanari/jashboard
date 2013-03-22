@@ -6,12 +6,13 @@
           scope.validationError = true;
           return;
         }
-        scope.$emit("DashboardSavingStart");
+        scope.$emit("DashboardCreateStart");
         repository.createDashboard({name: this.dashboardName}, {
           success: function(dashboard) {
             scope.dashboards.push(dashboard);
+            scope.context.activeDashboardId = dashboard.id;
             scope.$apply();
-            scope.$emit("DashboardSavingComplete", dashboard);
+            scope.$emit("DashboardCreateComplete", dashboard);
           }
         });
         scope.$emit("CloseDashboardDialog");

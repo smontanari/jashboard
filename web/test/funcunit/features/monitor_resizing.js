@@ -1,10 +1,8 @@
 funcunitHelper.testFeature("Monitor resizing", "monitor_layout_scenario", function() {
-  test("should display monitors with the given size", function() {
+  test("should display monitors with the given size and be able to resize them", function() {
     featureHelper.verifyElementSize("#monitor_1", {width: 240, height: 140});
     featureHelper.verifyElementSize("#monitor_2", {width: 270, height: 150});
-  });
 
-  test("should resize monitors", function() {
     featureHelper.mouseDrag({
       dragStartDelay: 500,
       elementSelector: "#monitor_1",

@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MainController: function(scope, locationService, menuDelegate, dashboardActionsHandler, repository) {
+    MainController: function(scope, locationService, menuDelegate, dashboardActionsHandler, monitorDelegate, repository) {
       var onDataLoadSuccess = function(data) {
         scope.dashboards = [];
         _.each(data, function(dashboard) {
@@ -32,6 +32,7 @@
       scope.context = {};
       scope.locationService = locationService;
       menuDelegate.init(scope);
+      monitorDelegate.init(scope);
       dashboardActionsHandler.init(scope);
     }
   });
@@ -40,6 +41,7 @@
      '$location',
      'MenuControllerDelegate',
      'DashboardActionsHandler',
+     'MonitorControllerDelegate',
      'Repository',
      jashboard.MainController]).run(function() {
     steal.dev.log("MainController initialized");

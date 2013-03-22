@@ -25,7 +25,6 @@
       <div class="dashboard-content">
         <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"
           data-ng-repeat="monitor in dashboard.monitors"
-          data-ng-controller="MonitorController"
           data-jb-draggable="{handleSelector: '.drag-handle', stackSelector: '.monitor-panel', onDragStop: 'MonitorPositionChanged'}"
           data-jb-resizable="{onResizeStop: 'MonitorSizeChanged', resizeChildren: '.monitor-details'}"
           data-ng-style="monitor.cssLayout()"

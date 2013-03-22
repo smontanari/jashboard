@@ -1,5 +1,5 @@
-describe("MonitorController", function() {
-  var controller, scope, repository, alertService, testMonitor;
+describe("MonitorControllerDelegate", function() {
+  var delegate, scope, repository, alertService, testMonitor;
 
   beforeEach(function() {
     testMonitor = 
@@ -40,7 +40,7 @@ describe("MonitorController", function() {
         }
       });
 
-      controller = new jashboard.MonitorController(scope, repository);
+      new jashboard.MonitorControllerDelegate(repository).init(scope);
     });
     it("should update the monitor position", function() {
       expect(testMonitor.position).toEqual({top: 10, left: 20});
@@ -78,13 +78,14 @@ describe("MonitorController", function() {
       innerScope.dashboard = {id: "test_dashboard", monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
       innerScope.monitor = testMonitor;
 
-      controller = new jashboard.MonitorController(scope, repository, alertService);
+      new jashboard.MonitorControllerDelegate(repository, alertService).init(scope);
       scope.removeMonitor.apply(innerScope);
     });
 
     it("should invoke the alert service to display the alert box", function() {
       expect(alertOptions.title).toEqual("Remove monitor test.monitor");
       expect(alertOptions.message).toEqual("If you delete this monitor you will lose all its data. Continue?");
+      expect(alertOptions.confirmLabel).toEqual("Delete");
     });
     it("should delete the monitor on confirmation", function() {
       alertOptions.confirmAction();
@@ -108,7 +109,7 @@ describe("MonitorController", function() {
             runtimeSynchHandlers = handlers;
           });
 
-      controller = new jashboard.MonitorController(scope, repository);
+      new jashboard.MonitorControllerDelegate(repository).init(scope);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
       scope.refreshRuntimeInfo.apply(innerScope);

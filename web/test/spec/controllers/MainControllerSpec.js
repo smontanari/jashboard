@@ -1,11 +1,14 @@
 describe("MainController", function() {
-  var repository, controller, scope, menuDelegate, dashboardDelegate, locationService, listeners, scopeHelperSpy;
+  var repository, controller, scope, 
+      monitorDelegate, menuDelegate, dashboardDelegate, 
+      locationService, listeners, scopeHelperSpy;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
     locationService = {id: "locationService"};
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
     menuDelegate = jasmine.createSpyObj("MenuControllerDelegate", ['init']);
+    monitorDelegate = jasmine.createSpyObj("MonitorControllerDelegate", ['init']);
     dashboardDelegate = jasmine.createSpyObj("DashboardActionsHandler", ['init']);
     listeners = {};
     scope.$on.andCallFake(function(eventName, fn) {
@@ -14,7 +17,7 @@ describe("MainController", function() {
     scopeHelperSpy = spyOn(jashboard.scopeContextHelper, "setDefaultActiveDashboard");
 
     controller = new jashboard.MainController(
-      scope, locationService, menuDelegate, dashboardDelegate, repository);
+      scope, locationService, menuDelegate, dashboardDelegate, monitorDelegate, repository);
   });
 
   it("should initialise a context object in the scope", function() {
@@ -25,6 +28,9 @@ describe("MainController", function() {
   });
   it("should inject the locationService into the scope", function() {
     expect(scope.locationService).toEqual(locationService);
+  });
+  it("should initialise a new MonitorControllerDelegate", function() {
+    expect(monitorDelegate.init).toHaveBeenCalledWith(scope);
   });
   it("should initialise a new MenuControllerDelegate", function() {
     expect(menuDelegate.init).toHaveBeenCalledWith(scope);

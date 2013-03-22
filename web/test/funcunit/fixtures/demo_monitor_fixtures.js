@@ -2,7 +2,7 @@
   var server = jashboard.test.getFakeServer();
   var monitorCounter = 0;
   var storedMonitors = [];
-  server.fakeResponse("POST", /\/ajax\/dashboard\/(\w+)\/monitor/, function(request, dashboard_id) {
+  server.fakeResponse("POST", /^\/ajax\/dashboard\/(\w+)\/monitor$/, function(request, dashboard_id) {
     var monitorConfigurationFixtures = {
       build: function(configuration) {
         var buildConfigurationFixtures = {
@@ -44,7 +44,7 @@
     };
   });
 
-  server.fakeResponse("GET", /\/ajax\/monitor\/(\w+)\/runtime/, function(request, monitor_id) {
+  server.fakeResponse("GET", /^\/ajax\/monitor\/(\w+)\/runtime$/, function(request, monitor_id) {
     var generateDate = function() {
       var oneMonth = 30 * 24 * 3600000;
       var date = new Date();
@@ -75,18 +75,18 @@
     };
   });
 
-  server.fakeResponse("PUT", /\/ajax\/monitor\/(\w+)\/position/, function(request, monitor_id) {
+  server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/position$/, function(request, monitor_id) {
     var position = JSON.parse(request.requestBody);
     steal.dev.log("monitor[" + monitor_id + "] moved to [top: " + position.top + ", left: " + position.left + "]");
     return {returnCode: 201};
   });
-  server.fakeResponse("PUT", /\/ajax\/monitor\/(\w+)\/size/, function(request, monitor_id) {
+  server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/size$/, function(request, monitor_id) {
     var size = JSON.parse(request.requestBody);
     steal.dev.log("monitor[" + monitor_id + "] resized to [width: " + size.width + ", height: " + size.height + "]");
     return {returnCode: 201};
   });
-  server.fakeResponse("DELETE", /\/ajax\/dashboard\/(\w+)\/monitor\/(\w+)/, function(request, dashboard_id, monitor_id) {
+  server.fakeResponse("DELETE", /^\/ajax\/dashboard\/(\w+)\/monitor\/(\w+)$/, function(request, dashboard_id, monitor_id) {
     steal.dev.log("monitor[" + monitor_id + "] deleted");
-    return {returnCode: 204};
+    return {returnCode: 204, delay: 1};
   });
 }());

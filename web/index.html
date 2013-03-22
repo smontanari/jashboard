@@ -11,6 +11,11 @@
   <div class="container">
     <div data-ng-view></div>
   </div>
+  <div class="hide" data-jb-overlay="{show: 'AjaxError'}" data-jb-overlay-options="{opacity: '0.0', autoHideAfter: 1500}">
+    <div class="overlay-msg alert alert-error">
+      <spam>Unfortunately an error occurred while processing your request.</spam>
+    </div>
+  </div>
   <div data-ng-include="'html/ajax_loader_overlay_partial.html'" onload="$emit('OverlayReady')"></div>
   <script type='text/javascript' src='steal/steal.js?jashboard/loader.js'></script>
 </body>

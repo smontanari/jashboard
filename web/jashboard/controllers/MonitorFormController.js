@@ -21,6 +21,9 @@
             dashboard.monitors.push(monitor);
             scope.$apply();
             scope.$emit("MonitorSavingComplete");
+          },
+          error: function() {
+            scope.$emit("AjaxError");
           }
         });
         scope.$emit("CloseMonitorDialog");

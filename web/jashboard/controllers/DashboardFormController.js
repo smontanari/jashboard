@@ -13,6 +13,9 @@
             scope.context.activeDashboardId = dashboard.id;
             scope.$apply();
             scope.$emit("DashboardCreateComplete", dashboard);
+          },
+          error: function() {
+            scope.$emit("AjaxError");
           }
         });
         scope.$emit("CloseDashboardDialog");

@@ -12,11 +12,16 @@
               message: "Deleting this dashboard will also remove all its monitors. Continue?",
               confirmLabel: "Delete",
               confirmAction: function() {
+                scope.$broadcast("DashboardDeleteStart");
                 repository.deleteDashboard(currentScope.dashboard.id, {
                   success: function() {
                     scope.dashboards = _.without(scope.dashboards, currentScope.dashboard);
                     jashboard.scopeContextHelper.setDefaultActiveDashboard.apply(scope);
                     scope.$apply();
+                    scope.$broadcast("DashboardDeleteComplete");
+                  },
+                  error: function() {
+                    scope.$broadcast("AjaxError");
                   }
                 });
               }

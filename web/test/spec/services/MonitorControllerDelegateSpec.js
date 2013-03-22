@@ -99,6 +99,12 @@ describe("MonitorControllerDelegate", function() {
       expect(innerScope.dashboard.monitors).toEqual([{id: "m1"}, {id: "m2"}]);
       expect(scope.$apply).toHaveBeenCalled();
     });
+    it("should fire the 'AjaxError' event when failing to remove the monitor", function() {
+      alertOptions.confirmAction();
+      deleteHandlers.error();
+
+      expect(scope.$broadcast).toHaveBeenCalledWith("AjaxError");
+    });
   });
 
   describe("scope.refreshRuntimeInfo()", function() {

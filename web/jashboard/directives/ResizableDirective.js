@@ -2,7 +2,7 @@
   jashboard.angular = _.extend(module, {
     resizableDirective: function (widgetService) {
       return function(scope, element, attrs) {
-        var directiveOptions = scope.$eval(attrs['jbResizable']);
+        var directiveOptions = scope.$eval(attrs.jbResizable);
         var options = {};
         if(_.isObject(directiveOptions)) {
           if (_.isString(directiveOptions.onResizeStop)) {

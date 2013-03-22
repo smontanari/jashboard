@@ -1,13 +1,13 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     overlayDirective: function (overlayService) {
-      return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(scope, element) {
+      return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(scope, element, attrs) {
         return {
           show: function() {
-            overlayService.show(element);
+            overlayService.show(element, scope.$eval(attrs.jbOverlayOptions));
           },
           hide: function() {
-            overlayService.hide(element);
+            overlayService.hide();
           }
         };
       });

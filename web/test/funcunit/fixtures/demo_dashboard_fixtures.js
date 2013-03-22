@@ -18,8 +18,8 @@
     };
   });
 
-  server.fakeResponse("DELETE", /\/ajax\/dashboard\/(\w+)/, function(request, dashboard_id) {
+  server.fakeResponse("DELETE", /^\/ajax\/dashboard\/(\w+)$/, function(request, dashboard_id) {
     steal.dev.log("dashboard[" + dashboard_id + "] deleted");
-    return {returnCode: 204};
+    return {returnCode: 204, delay: 1};
   });
 }());

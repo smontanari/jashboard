@@ -28,6 +28,9 @@
                 success: function() {
                   currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                   scope.$apply();
+                },
+                error: function() {
+                  scope.$broadcast("AjaxError");
                 }
               });
             }

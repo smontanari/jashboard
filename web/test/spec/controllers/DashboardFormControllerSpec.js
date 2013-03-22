@@ -38,13 +38,14 @@ describe("DashboardFormController", function() {
   });
 
   describe("saveDashboard()", function() {
-    var successHandler, scope;
+    var successHandler, errorHandler, scope;
     beforeEach(function() {
-      scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
+      scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply', '$broadcast']);
       scope.dashboards = [{id: "some dashbaord"}];
       scope.context = {};
       repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handlers) {
         successHandler = handlers.success;
+        errorHandler = handlers.error;
       });
       controller = new jashboard.DashboardFormController(scope, repository);
 
@@ -73,6 +74,11 @@ describe("DashboardFormController", function() {
     });
     it("should emit the 'DashboardCreateStart' if successful", function() {
       expect(scope.$emit).toHaveBeenCalledWith("DashboardCreateStart");
+    });
+    it("should fire the 'AjaxError' event when failing to save the dashboard", function() {
+      errorHandler();
+
+      expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
     });
   });
 });

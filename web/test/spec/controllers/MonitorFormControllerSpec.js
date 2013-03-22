@@ -42,7 +42,7 @@ describe("MonitorFormController", function() {
     expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
   });
   describe("save action callback", function() {
-    var successHandler, saveMonitorCallback, adapter;
+    var successHandler, errorHandler, saveMonitorCallback, adapter;
     beforeEach(function() {
       scope.$emit = jasmine.createSpy("scope.$emit()");
       scope.$apply = jasmine.createSpy("scope.$apply()");
@@ -52,6 +52,7 @@ describe("MonitorFormController", function() {
       });
       repository.createMonitor = jasmine.createSpy("repository.createMonitor()").andCallFake(function(dashboard_id, monitorParameters, handlers) {
         successHandler = handlers.success;
+        errorHandler = handlers.error;
       });
       adapter = {
         validateConfiguration: jasmine.createSpy("validateConfiguration()").andReturn({test: "test_configuration"}),
@@ -118,6 +119,11 @@ describe("MonitorFormController", function() {
     });
     it("should emit the 'CloseMonitorDialog'", function() {
       expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
+    });
+    it("should fire the 'AjaxError' event when failing to save the monitor", function() {
+      errorHandler();
+
+      expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
     });
   });
 });

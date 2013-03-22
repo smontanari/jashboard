@@ -18,7 +18,7 @@
       };
       this.removeTooltip = function(elementKey) {
         elementBinding.applyToElement(function(element, elementScope) {
-          $(element).tooltip('destroy');
+          $(element).tooltip().tooltip('destroy');
         }, elementKey);
       };
     }

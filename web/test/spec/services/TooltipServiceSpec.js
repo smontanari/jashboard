@@ -41,6 +41,7 @@ describe("TooltipService", function() {
       elementBinding.applyToElement = jasmine.createSpy().andCallFake(function(callback) {
         callback("target-selector", {});
       });
+      $stub.tooltip.andReturn($stub);
       service.removeTooltip("element_key");
       expect(elementBinding.applyToElement).toHaveBeenCalledWith(jasmine.any(Function), "element_key");
 

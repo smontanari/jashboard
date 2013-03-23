@@ -5,9 +5,9 @@ steal("test/funcunit/fixtures/fakeResponse_buildMonitorRuntime.js");
 
   server.fakeResponse("POST", "/ajax/dashboard", {
     returnCode: 501,
-    delay: 2
+    delay: 1
   });
   server.fakeResponse("DELETE", /^\/ajax\/dashboard\/(\w+)$/, function(request, dashboard_id) {
-    return {returnCode: 500, delay: 2};
+    return {returnCode: 500, delay: 1};
   });
 }());

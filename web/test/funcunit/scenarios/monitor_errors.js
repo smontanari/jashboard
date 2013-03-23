@@ -17,4 +17,13 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
     },
     delay: 1
   });
+
+  server.fakeResponse("POST", /^\/ajax\/dashboard\/(\w+)\/monitor$/, {
+    returnCode: 500,
+    delay: 1
+  });
+  server.fakeResponse("DELETE", /^\/ajax\/dashboard\/(\w+)\/monitor\/(\w+)$/, {
+    returnCode: 501,
+    delay: 1
+  });  
 }());

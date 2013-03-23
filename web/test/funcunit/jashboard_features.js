@@ -10,7 +10,7 @@ steal(
     'tabs_display',
     'no_tabs_display',
     'ajax_loader_display',
-    'dashboards_loading_error',
+    'data_loading_error',
     'dashboard_create',
     'dashboard_delete',
     'dashboard_actions_errors',
@@ -19,7 +19,7 @@ steal(
     'monitor_positioning',
     'monitor_resizing',
     'monitor_runtime_refresh',
-    'monitor_runtime_loading_error',
+    'monitor_actions_errors',
     'monitor_delete'
   ];
 

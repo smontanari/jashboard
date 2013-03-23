@@ -31,6 +31,6 @@ funcunitHelper.testFeature("Error handling: dashboard actions", "dashboard_error
     S(".overlay-msg.info").text(/Deleting dashboard/);
 
     S(".overlay-msg.alert.alert-error").visible("display error overlay");
-    S(".overlay-msg").text(/an error occurred/);
+    S(".overlay-msg.alert.alert-error").text(/an error occurred/);
   });
 });

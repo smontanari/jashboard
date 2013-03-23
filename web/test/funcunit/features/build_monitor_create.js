@@ -39,7 +39,7 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
       build_id: "jenkins-build-123"
     });
 
-    S("#configuration-save").visible().click()
+    S("#configuration-save").visible().click();
 
     S("#dashboard_1 .monitor-panel").size(2, function() {
       S("#monitor_2").visible();
@@ -71,7 +71,7 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
       job: "test-job"
     });
 
-    S("#configuration-save").visible().click()
+    S("#configuration-save").visible().click();
 
     S("#dashboard_1 .monitor-panel").size(2, function() {
       S("#monitor_2").visible();

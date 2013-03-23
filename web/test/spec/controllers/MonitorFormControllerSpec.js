@@ -97,8 +97,8 @@ describe("MonitorFormController", function() {
         jasmine.any(Object)
       );
     });
-    it("should emit the 'MonitorSavingStart'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingStart");
+    it("should emit the 'MonitorCreateStart'", function() {
+      expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateStart");
     });
     it("should add the monitor to the dashboard", function() {
       successHandler("test.monitor");
@@ -112,10 +112,10 @@ describe("MonitorFormController", function() {
 
       expect(scope.$apply).toHaveBeenCalled();
     });
-    it("should emit the 'MonitorSavingComplete'", function() {
+    it("should emit the 'MonitorCreateComplete'", function() {
       successHandler("test.monitor");
       
-      expect(scope.$emit).toHaveBeenCalledWith("MonitorSavingComplete");
+      expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateComplete");
     });
     it("should emit the 'CloseMonitorDialog'", function() {
       expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");

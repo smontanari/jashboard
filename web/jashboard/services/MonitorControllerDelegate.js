@@ -24,10 +24,12 @@
             message: "If you delete this monitor you will lose all its data. Continue?",
             confirmLabel: "Delete",
             confirmAction: function() {
+              scope.$broadcast("MonitorDeleteStart");
               repository.deleteMonitor(currentDashboard.id, currentMonitor.id, {
                 success: function() {
                   currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                   scope.$apply();
+                  scope.$broadcast("MonitorDeleteComplete");
                 },
                 error: function() {
                   scope.$broadcast("AjaxError");

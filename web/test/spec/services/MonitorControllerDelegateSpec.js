@@ -99,6 +99,17 @@ describe("MonitorControllerDelegate", function() {
       expect(innerScope.dashboard.monitors).toEqual([{id: "m1"}, {id: "m2"}]);
       expect(scope.$apply).toHaveBeenCalled();
     });
+    it("should fire the 'MonitorDeleteStart' event on confirmation", function() {
+      alertOptions.confirmAction();
+
+      expect(scope.$broadcast).toHaveBeenCalledWith("MonitorDeleteStart");
+    });
+    it("should fire the 'MonitorDeleteComplete' event on successful deletion", function() {
+      alertOptions.confirmAction();
+      deleteHandlers.success();
+      
+      expect(scope.$broadcast).toHaveBeenCalledWith("MonitorDeleteComplete");
+    });    
     it("should fire the 'AjaxError' event when failing to remove the monitor", function() {
       alertOptions.confirmAction();
       deleteHandlers.error();

@@ -15,12 +15,12 @@
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
           configuration: monitorAdapter.validateConfiguration(scope.monitorForm.configuration[monitorType])
         };
-        scope.$emit("MonitorSavingStart");
+        scope.$emit("MonitorCreateStart");
         repository.createMonitor(scope.monitorForm.dashboard_id, monitorParameters, {
           success: function(monitor) {
             dashboard.monitors.push(monitor);
             scope.$apply();
-            scope.$emit("MonitorSavingComplete");
+            scope.$emit("MonitorCreateComplete");
           },
           error: function() {
             scope.$emit("AjaxError");

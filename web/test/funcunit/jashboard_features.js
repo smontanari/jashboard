@@ -9,17 +9,18 @@ steal(
   var allFeatures = [
     'tabs_display',
     'no_tabs_display',
-    'monitor_display',
-    'dashboard_create',
-    'build_monitor_create',
     'ajax_loader_display',
+    'dashboards_loading_error',
+    'dashboard_create',
+    'dashboard_delete',
+    'dashboard_actions_errors',
+    'monitor_display',
+    'build_monitor_create',
     'monitor_positioning',
     'monitor_resizing',
-    'dashboards_loading_error',
-    'monitor_runtime_loading_error',
     'monitor_runtime_refresh',
-    'monitor_delete',
-    'dashboard_delete'
+    'monitor_runtime_loading_error',
+    'monitor_delete'
   ];
 
   var selectFeatures = function() {

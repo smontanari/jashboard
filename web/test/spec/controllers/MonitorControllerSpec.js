@@ -1,4 +1,4 @@
-describe("MonitorControllerDelegate", function() {
+describe("MonitorController", function() {
   var delegate, scope, repository, alertService, testMonitor;
 
   beforeEach(function() {
@@ -8,7 +8,7 @@ describe("MonitorControllerDelegate", function() {
       name: "test.monitor",
       type: "test_type"
     };
-    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
+    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$emit']);
     scope.dashboards = [
       {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
       {id: "dashboard2", monitors: [{id: "m3"}]}
@@ -40,7 +40,7 @@ describe("MonitorControllerDelegate", function() {
         }
       });
 
-      new jashboard.MonitorControllerDelegate(repository).init(scope);
+      new jashboard.MonitorController(scope, repository);
     });
     it("should update the monitor position", function() {
       expect(testMonitor.position).toEqual({top: 10, left: 20});
@@ -78,7 +78,7 @@ describe("MonitorControllerDelegate", function() {
       innerScope.dashboard = {id: "test_dashboard", monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
       innerScope.monitor = testMonitor;
 
-      new jashboard.MonitorControllerDelegate(repository, alertService).init(scope);
+      new jashboard.MonitorController(scope, repository, alertService);
       scope.removeMonitor.apply(innerScope);
     });
 
@@ -102,19 +102,19 @@ describe("MonitorControllerDelegate", function() {
     it("should fire the 'MonitorDeleteStart' event on confirmation", function() {
       alertOptions.confirmAction();
 
-      expect(scope.$broadcast).toHaveBeenCalledWith("MonitorDeleteStart");
+      expect(scope.$emit).toHaveBeenCalledWith("MonitorDeleteStart");
     });
     it("should fire the 'MonitorDeleteComplete' event on successful deletion", function() {
       alertOptions.confirmAction();
       deleteHandlers.success();
       
-      expect(scope.$broadcast).toHaveBeenCalledWith("MonitorDeleteComplete");
+      expect(scope.$emit).toHaveBeenCalledWith("MonitorDeleteComplete");
     });    
     it("should fire the 'AjaxError' event when failing to remove the monitor", function() {
       alertOptions.confirmAction();
       deleteHandlers.error();
 
-      expect(scope.$broadcast).toHaveBeenCalledWith("AjaxError");
+      expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
     });
   });
 
@@ -124,7 +124,7 @@ describe("MonitorControllerDelegate", function() {
       innerScope = {
         monitor: {}
       }
-      new jashboard.MonitorControllerDelegate(repository).init(scope);
+      new jashboard.MonitorController(scope, repository);
     });
     it ("should not start loading the data if the monitor loading status is completed", function() {
       innerScope.monitor.loadingStatus = jashboard.model.loadingStatus.completed;
@@ -150,7 +150,7 @@ describe("MonitorControllerDelegate", function() {
             runtimeSynchHandlers = handlers;
           });
 
-      new jashboard.MonitorControllerDelegate(repository).init(scope);
+      new jashboard.MonitorController(scope, repository);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
 

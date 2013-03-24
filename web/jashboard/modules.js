@@ -18,15 +18,15 @@ steal('jashboard/jashboard.js')
   'jashboard/services/MonitorPositioning.js',
   'jashboard/services/MonitorLayoutManager.js',
   'jashboard/services/PluginManager.js',
-  'jashboard/services/MenuControllerDelegate.js',
-  'jashboard/services/MonitorControllerDelegate.js',
-  'jashboard/services/DashboardActionsHandler.js'
+  'jashboard/services/DashboardActionsHandler.js',
+  'jashboard/services/MenuControllerDelegate.js'
 )
 .then(
   'jashboard/controllers/scopeContextHelper.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MainController.js',
   'jashboard/controllers/DashboardFormController.js',
+  'jashboard/controllers/MonitorController.js',
   'jashboard/controllers/MonitorFormController.js'
 )
 .then(

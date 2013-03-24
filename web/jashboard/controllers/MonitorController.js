@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorControllerDelegate: function(repository, alertService) {
+    MonitorController: function(scope, repository, alertService) {
       var updateMonitorRuntimeInfo = function(scope) {
         var monitor = scope.monitor;
         monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
@@ -22,7 +22,6 @@
           }
         );        
       };
-      this.init = function(scope) {
         scope.$on("MonitorPositionChanged", function(event, position) {
           var monitor = event.targetScope.monitor;
           monitor.position = position;
@@ -45,15 +44,15 @@
             message: "If you delete this monitor you will lose all its data. Continue?",
             confirmLabel: "Delete",
             confirmAction: function() {
-              scope.$broadcast("MonitorDeleteStart");
+              scope.$emit("MonitorDeleteStart");
               repository.deleteMonitor(currentDashboard.id, currentMonitor.id, {
                 success: function() {
                   currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
+                  scope.$emit("MonitorDeleteComplete");
                   scope.$apply();
-                  scope.$broadcast("MonitorDeleteComplete");
                 },
                 error: function() {
-                  scope.$broadcast("AjaxError");
+                  scope.$emit("AjaxError");
                 }
               });
             }
@@ -69,10 +68,9 @@
         scope.refreshRuntimeInfo = function() {
           updateMonitorRuntimeInfo(this);
         };
-      };
     }
   });
-  jashboard.services.service('MonitorControllerDelegate', ['Repository', 'AlertService', jashboard.MonitorControllerDelegate]).run(function() {
-    steal.dev.log("MonitorControllerDelegate initialized");
+  jashboard.application.controller('MonitorController', ['$scope', 'Repository', 'AlertService', jashboard.MonitorController]).run(function() {
+    steal.dev.log("MonitorController initialized");
   });
 }(jashboard || {}));

@@ -23,9 +23,6 @@ describe("MainController", function() {
   it("should initialise a context object in the scope", function() {
     expect(scope.context).toEqual({});
   });
-  it("should listen to the 'OverlayReady' event", function() {
-    expect(scope.$on).toHaveBeenCalledWith("OverlayReady", jasmine.any(Function));
-  });
   it("should inject the locationService into the scope", function() {
     expect(scope.locationService).toEqual(locationService);
   });
@@ -39,7 +36,7 @@ describe("MainController", function() {
     expect(dashboardDelegate.init).toHaveBeenCalledWith(scope);
   });
 
-  describe("isActiveDashboard()", function() {
+  describe("scope.isActiveDashboard()", function() {
     var innerScope;
     beforeEach(function() {
       scope.context.activeDashboardId = "current_dashboard";
@@ -54,7 +51,7 @@ describe("MainController", function() {
     });
   });
 
-  describe("showDashboard()", function() {
+  describe("scope.showDashboard()", function() {
     var innerScope;
     beforeEach(function() {
       innerScope = {dashboard: {id: "test_id"}};
@@ -68,21 +65,11 @@ describe("MainController", function() {
     });
   });
 
-  describe("'OverlayReady' event listener", function() {
-    var eventObject = {};
-    beforeEach(function() {
-      eventObject.stopPropagation = jasmine.createSpy("event.stopPropagation()");
-    });
-
+  describe("scope.loadData()", function() {
     it("should broadcast the 'DataLoadingStart' event", function() {
-      listeners['OverlayReady'](eventObject);
+      scope.loadData();
 
       expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingStart");
-    });
-    it("should stop the 'OverlayReady' event propagation", function() {
-      listeners['OverlayReady'](eventObject);
-
-      expect(eventObject.stopPropagation).toHaveBeenCalled();
     });
     describe("loadData successful", function() {
       var test_dashboards = [];
@@ -92,7 +79,7 @@ describe("MainController", function() {
           handlers.success(test_dashboards);
         });
 
-        listeners['OverlayReady'](eventObject);
+        scope.loadData();
       });
 
       it("should load all the dashboards in the scope", function() {
@@ -116,7 +103,7 @@ describe("MainController", function() {
           handlers.error();
         });
 
-        listeners['OverlayReady'](eventObject);
+        scope.loadData();
       });
       it("should set the dataLoadingStatus to error", function() {
         expect(scope.dataLoadingStatus).toEqual(jashboard.model.loadingStatus.error);

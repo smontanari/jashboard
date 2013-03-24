@@ -24,11 +24,10 @@
       scope.isActiveDashboard = function() {
         return scope.context.activeDashboardId === this.dashboard.id;
       };
-      scope.$on("OverlayReady", function(event) {
+      scope.loadData = function() {
         scope.$broadcast("DataLoadingStart");
         repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
-        event.stopPropagation();
-      });
+      };
       scope.context = {};
       scope.locationService = locationService;
       menuDelegate.init(scope);

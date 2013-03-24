@@ -28,7 +28,7 @@
           data-jb-draggable="{handleSelector: '.drag-handle', stackSelector: '.monitor-panel', onDragStop: 'MonitorPositionChanged'}"
           data-jb-resizable="{onResizeStop: 'MonitorSizeChanged', resizeChildren: '.monitor-details'}"
           data-ng-style="monitor.cssLayout()"
-          data-ng-init="refreshRuntimeInfo()">
+          data-ng-init="loadRuntimeInfo()">
           <div class="monitor-bar">
             <span class="drag-handle"></span>
             <span class="monitor-icon-delete" title="Delete" data-ng-click="removeMonitor()"></span>

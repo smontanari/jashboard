@@ -13,7 +13,7 @@ describe("MonitorControllerDelegate", function() {
       {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
       {id: "dashboard2", monitors: [{id: "m3"}]}
     ];
-    repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize']);
+    repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize', 'loadMonitorRuntimeInfo']);
   });
 
   describe("'MonitorPositionChanged' and 'MonitorSizeChanged' events handler", function() {
@@ -118,6 +118,30 @@ describe("MonitorControllerDelegate", function() {
     });
   });
 
+  describe("scope.loadRuntimeInfo()", function() {
+    var innerScope;
+    beforeEach(function() {
+      innerScope = {
+        monitor: {}
+      }
+      new jashboard.MonitorControllerDelegate(repository).init(scope);
+    });
+    it ("should not start loading the data if the monitor loading status is completed", function() {
+      innerScope.monitor.loadingStatus = jashboard.model.loadingStatus.completed;
+      
+      scope.loadRuntimeInfo.apply(innerScope);
+
+      expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+    });
+    it ("should not start loading the data if the monitor loading status is waiting", function() {
+      innerScope.monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
+      
+      scope.loadRuntimeInfo.apply(innerScope);
+
+      expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+    });
+  });
+
   describe("scope.refreshRuntimeInfo()", function() {
     var runtimeSynchHandlers, innerScope = jasmine.createSpyObj("innerScope", ['$apply', '$broadcast']);
     beforeEach(function() {
@@ -129,6 +153,7 @@ describe("MonitorControllerDelegate", function() {
       new jashboard.MonitorControllerDelegate(repository).init(scope);
       innerScope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
+
       scope.refreshRuntimeInfo.apply(innerScope);
     });
     it("should invoke the repository", function() {

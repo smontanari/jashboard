@@ -1,6 +1,27 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorControllerDelegate: function(repository, alertService) {
+      var updateMonitorRuntimeInfo = function(scope) {
+        var monitor = scope.monitor;
+        monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
+        repository.loadMonitorRuntimeInfo(
+          monitor.id,
+          monitor.type,
+          {
+            success: function(data) {
+              monitor.runtimeInfo = data;
+              monitor.loadingStatus = jashboard.model.loadingStatus.completed;
+              scope.$apply();
+            },
+            error: function(status, statusMessage, errorDetails) {
+              monitor.loadingStatus = jashboard.model.loadingStatus.error;
+              scope.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
+                    " [" + errorDetails + "]";
+              scope.$apply();
+            }
+          }
+        );        
+      };
       this.init = function(scope) {
         scope.$on("MonitorPositionChanged", function(event, position) {
           var monitor = event.targetScope.monitor;
@@ -39,27 +60,14 @@
           });
         };
 
+        scope.loadRuntimeInfo = function() {
+          if (_.isUndefined(this.monitor.loadingStatus)) {
+            updateMonitorRuntimeInfo(this);
+          }
+        };
+
         scope.refreshRuntimeInfo = function() {
-          var self = this;
-          var monitor = self.monitor;
-          monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
-          repository.loadMonitorRuntimeInfo(
-            monitor.id,
-            monitor.type,
-            {
-              success: function(data) {
-                monitor.runtimeInfo = data;
-                monitor.loadingStatus = jashboard.model.loadingStatus.completed;
-                self.$apply();
-              },
-              error: function(status, statusMessage, errorDetails) {
-                monitor.loadingStatus = jashboard.model.loadingStatus.error;
-                self.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
-                      " [" + errorDetails + "]";
-                self.$apply();
-              }
-            }
-          );
+          updateMonitorRuntimeInfo(this);
         };
       };
     }

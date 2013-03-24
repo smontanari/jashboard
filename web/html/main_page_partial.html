@@ -53,7 +53,25 @@
     </div>
   </div>
 </div>
-<div data-ng-include="'html/alert_msg_partial.html'"></div>
+<div class="hide" data-jb-overlay="{show: 'DashboardCreateStart', hide: 'DashboardCreateComplete'}">
+  <div class="overlay-msg info">
+    <spam class="ajax-loader-msg"> Saving dashboard... Please wait.</spam>
+  </div>
+</div>
+<div class="hide" data-jb-overlay="{show: 'DashboardDeleteStart', hide: 'DashboardDeleteComplete'}">
+  <div class="overlay-msg info">
+    <spam class="ajax-loader-msg"> Deleting dashboard... Please wait.</spam>
+  </div>
+</div>
+<div class="hide" data-jb-overlay="{show: 'MonitorCreateStart', hide: 'MonitorCreateComplete'}">
+  <div class="overlay-msg info">
+    <spam class="ajax-loader-msg"> Saving monitor... Please wait.</spam>
+  </div>
+</div>
+<div class="hide" data-jb-overlay="{show: 'MonitorDeleteStart', hide: 'MonitorDeleteComplete'}">
+  <div class="overlay-msg info">
+    <spam class="ajax-loader-msg"> Deleting monitor... Please wait.</spam>
+  </div>
+</div>
 <div data-ng-include="'html/new_monitor_dialog_partial.html'"></div>
 <div data-ng-include="'html/new_dashboard_dialog_partial.html'"></div>
-<div data-ng-include="'html/actions_overlays_partial.html'"></div>

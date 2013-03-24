@@ -70,7 +70,7 @@ describe("DashboardFormController", function() {
     });
     it("should emit the 'DashboardCreateComplete' if successful", function() {
       successHandler("test.dashboard");
-      expect(scope.$emit).toHaveBeenCalledWith("DashboardCreateComplete", "test.dashboard");
+      expect(scope.$emit).toHaveBeenCalledWith("DashboardCreateComplete");
     });
     it("should emit the 'DashboardCreateStart' if successful", function() {
       expect(scope.$emit).toHaveBeenCalledWith("DashboardCreateStart");

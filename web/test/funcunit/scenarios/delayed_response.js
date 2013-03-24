@@ -37,7 +37,7 @@
         }
       ],
     }],
-    delay: 2
+    delay: 1.5
   });
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {

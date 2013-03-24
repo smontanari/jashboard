@@ -12,7 +12,7 @@
             scope.dashboards.push(dashboard);
             scope.context.activeDashboardId = dashboard.id;
             scope.$apply();
-            scope.$emit("DashboardCreateComplete", dashboard);
+            scope.$emit("DashboardCreateComplete");
           },
           error: function() {
             scope.$emit("AjaxError");

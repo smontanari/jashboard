@@ -8,7 +8,7 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
     delay: 2
   });
 
-  server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {
+  server.fakeResponse("GET", "/ajax/monitor/monitor_3/runtime", {
     content: {
       last_build_time: "25-08-2012 15:56:45",
       duration: 126,

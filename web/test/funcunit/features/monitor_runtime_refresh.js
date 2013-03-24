@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_monitor_runtime", function() {
-  test("should reload the monitor runtime data", function() {
+  test("should update the monitor runtime data", function() {
     S("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible();
     featureHelper.verifyElementContent("#monitor_1", {
       '.monitor-title': "Epic build",
@@ -19,6 +19,16 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
         '.build-result': "success",
         '.build-status': "building"
       });
+    });
+  });
+  test("should update the monitor runtime data at the given intervals", function() {
+    S("#monitor_3 .monitor-title .monitor-icon-ajax-error").visible("should display an error icon");
+
+    FuncUnit.wait(3500, function() {
+      S("#monitor_3 .monitor-title .monitor-icon-ajax-error").invisible("should not display an error icon");
+    });
+    FuncUnit.wait(3500, function() {
+      S("#monitor_3 .monitor-title .monitor-icon-ajax-error").visible("should display an error icon");
     });
   });
 });

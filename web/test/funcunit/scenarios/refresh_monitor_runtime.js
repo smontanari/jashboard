@@ -1,30 +1,6 @@
+steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
 (function() {
   var server = jashboard.test.getFakeServer();
-
-  server.fakeResponse("GET", "/ajax/dashboards", {
-    content: [{
-      id: "dashboard_1", name: "my dashboard",
-      monitors: [
-        {
-          id: "monitor_1",
-          name: "Epic build",
-          refresh_interval: 15,
-          type: "build",
-          position: {top: 0, left: 0},
-          size: {width: 240, height: 140},
-          configuration: {
-            type: "go",
-            hostname: "epic-ci.test.com",
-            port: 81,
-            pipeline: "epic main",
-            stage: "epic build",
-            job: "unit-integration tests"
-          }
-        }
-      ],
-    }],
-    delay: 1
-  });
 
   var errorResponse = {
     returnCode: 500,
@@ -41,13 +17,15 @@
     delay: 1
   };
 
-  var requestCount = 0;
-  server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", function(request) {
-    requestCount++;
-    if (requestCount % 2 > 0) {
-      return errorResponse;
-    } else {
+  var requestCounts = {monitor_1: 0, monitor_3: 0};
+  server.fakeResponse("GET", /\/ajax\/monitor\/(\w+)\/runtime/, function(request, monitor_id) {
+    console.log(monitor_id);
+    requestCounts[monitor_id]++;
+    console.log(requestCounts[monitor_id]);
+    if (requestCounts[monitor_id] % 2 == 0) {
       return successResponse;
+    } else {
+      return errorResponse;
     }
   });
 }());

@@ -177,9 +177,15 @@ describe("MonitorController", function() {
       new jashboard.MonitorController(scope, repository, alertService, timeoutService);
     });
 
-    it("should save the scheduler into the monitor", function() {
+    it("should save the scheduler into the monitor after a successful data load", function() {
       scope.loadRuntimeInfo();
       handlers.success();
+
+      expect(scope.monitor.scheduler).toEqual(scheduler);
+    });
+    it("should save the scheduler into the monitor after a failed data load", function() {
+      scope.loadRuntimeInfo();
+      handlers.error();
 
       expect(scope.monitor.scheduler).toEqual(scheduler);
     });

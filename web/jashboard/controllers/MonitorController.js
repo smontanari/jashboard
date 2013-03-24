@@ -28,6 +28,9 @@
               scope.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
                     " [" + errorDetails + "]";
               scope.$apply();
+              if (scheduleNext) {
+                scheduleNextUpdate(scope);
+              }
             }
           }
         );        

@@ -25,8 +25,8 @@
           {
             id: "monitor_3",
             name: "Forum build",
-            refresh_interval: 30,
-            position: {top: 40, left: 320},
+            refresh_interval: 3,
+            position: {top: 10, left: 320},
             size: {width: 240, height: 140},
             type: "build",
             configuration: {

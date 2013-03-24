@@ -8,7 +8,7 @@
         {
           id: "monitor_1",
           name: "Epic build",
-          refresh_interval: 15,
+          refresh_interval: 5,
           type: "build",
           position: {top: 0, left: 0},
           size: {width: 240, height: 140},
@@ -24,7 +24,7 @@
         {
           id: "monitor_2",
           name: "Forum build",
-          refresh_interval: 30,
+          refresh_interval: 3,
           type: "build",
           position: {top: 0, left: 260},
           size: {width: 240, height: 140},

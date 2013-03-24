@@ -148,9 +148,6 @@ describe("MonitorControllerDelegate", function() {
       it("change the loading status to 'completed'", function() {
         expect(innerScope.monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
       });
-      it("should fire the 'MonitorRuntimeOk' event", function() {
-        expect(innerScope.$broadcast).toHaveBeenCalledWith("MonitorRuntimeOk");
-      });
     });
 
     describe("on failure", function() {
@@ -166,9 +163,6 @@ describe("MonitorControllerDelegate", function() {
       it("should set the error message into the scope", function() {
         expect(innerScope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");
         expect(innerScope.$apply).toHaveBeenCalled();
-      });
-      it("should fire the 'MonitorRuntimeError' event", function() {
-        expect(innerScope.$broadcast).toHaveBeenCalledWith("MonitorRuntimeError");
       });
     });
   });

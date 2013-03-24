@@ -51,14 +51,12 @@
                 monitor.runtimeInfo = data;
                 monitor.loadingStatus = jashboard.model.loadingStatus.completed;
                 self.$apply();
-                self.$broadcast("MonitorRuntimeOk");
               },
               error: function(status, statusMessage, errorDetails) {
                 monitor.loadingStatus = jashboard.model.loadingStatus.error;
                 self.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
                       " [" + errorDetails + "]";
                 self.$apply();
-                self.$broadcast("MonitorRuntimeError");
               }
             }
           );

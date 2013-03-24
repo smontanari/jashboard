@@ -42,7 +42,7 @@
             </span>
             <span>{{monitor.name}}</span>
           </div>
-            <div class="hide" data-jb-tooltip-for="'error_' + monitor.id" data-jb-tooltip="{show: 'MonitorRuntimeError', hide: 'MonitorRuntimeOk'}">
+            <div class="hide" data-jb-tooltip="'error_' + monitor.id" data-jb-tooltip-toggle="monitor.loadingStatus == 'error'">
               <div class="html-tooltip-error">{{errorMessage}}</div>
             </div>
           <div class="monitor-details scrolling" data-jb-monitor-display>

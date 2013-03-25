@@ -2,8 +2,8 @@
   jashboard.angular = _.extend(module, {
     tooltipDirective: function (tooltipService) {
       return function(scope, element, attrs) {
-        var targetSelector = scope.$eval(attrs.jbTooltip);
-        var toggleExpression = attrs.jbTooltipToggle;
+        var targetSelector = scope.$eval(attrs['jbTooltip']);
+        var toggleExpression = attrs['jbTooltipToggle'];
         scope.$watch(toggleExpression, function(newValue, oldValue) {
           if (newValue) {
             tooltipService.attachHtmlTooltip(targetSelector, element);

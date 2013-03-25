@@ -156,7 +156,7 @@ describe("MonitorController", function() {
   });
   describe("runtime data refresh scheduling", function() {
     var timeoutService, scheduleFunction, handlers, scheduler;
-    beforeEach(function() {
+    var testSetup = function() {
       scope.monitor = {
         id: "test_id",
         type: "test_type",
@@ -175,40 +175,52 @@ describe("MonitorController", function() {
         });
 
       new jashboard.MonitorController(scope, repository, alertService, timeoutService);
-    });
+    };
 
-    it("should save the scheduler into the monitor after a successful data load", function() {
-      scope.loadRuntimeInfo();
-      handlers.success();
+    _.each(['success', 'error'], function(action) {
+      beforeEach(function() {
+        testSetup();
+        scope.loadRuntimeInfo();
+      });
+      it("should save the scheduler into the monitor when data load is " + action, function() {
+        handlers[action]();
 
-      expect(scope.monitor.scheduler).toEqual(scheduler);
-    });
-    it("should save the scheduler into the monitor after a failed data load", function() {
-      scope.loadRuntimeInfo();
-      handlers.error();
+        expect(scope.monitor.scheduler).toEqual(scheduler);
+      });
+      it("should schedule the data load after the given interval", function() {
+        handlers[action]();
 
-      expect(scope.monitor.scheduler).toEqual(scheduler);
-    });
-    it("should schedule the data load after the given interval", function() {
-      scope.loadRuntimeInfo();
-      handlers.success();
+        expect(timeoutService).toHaveBeenCalledWith(jasmine.any(Function), 10000);
+      });
+      it("should schedule the call to the repository to load the data", function() {
+        handlers[action]();
 
-      expect(timeoutService).toHaveBeenCalledWith(jasmine.any(Function), 10000);
-    });
-    it("should schedule the call to the repository to load the data", function() {
-      scope.loadRuntimeInfo();
-      handlers.success();
+        scheduleFunction();
 
-      scheduleFunction();
+        expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
+        expect(timeoutService.calls.length).toEqual(2);
+      });
+      it("should not schedule a data load if the refresh interval is 0", function() {
+        scope.monitor.refreshInterval = 0;
+        
+        handlers[action]();
 
-      expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
-      expect(timeoutService.calls.length).toEqual(2);
+        expect(timeoutService).not.toHaveBeenCalled();
+      });
+      it("should not schedule a data load if the refresh interval is not a finite number", function() {
+        scope.monitor.refreshInterval = NaN;
+
+        handlers[action]();
+
+        expect(timeoutService).not.toHaveBeenCalled();
+      });
     });
   });
 
   describe("scope.refreshRuntimeInfo()", function() {
-    var handlers;
+    var handlers, timeoutService;
     beforeEach(function() {
+      timeoutService = jasmine.createSpy("$timeout");
       repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
           .andCallFake(function(monitor_id, monitor_type, callbacks) {
             handlers = callbacks;
@@ -237,6 +249,11 @@ describe("MonitorController", function() {
       it("change the loading status to 'completed'", function() {
         expect(scope.monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.completed);
       });
+      it("should not schedule the data load after the given interval", function() {
+        handlers.success();
+
+        expect(timeoutService).not.toHaveBeenCalled();
+      });
     });
 
     describe("on failure", function() {
@@ -252,6 +269,11 @@ describe("MonitorController", function() {
       it("should set the error message into the scope", function() {
         expect(scope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");
         expect(scope.$apply).toHaveBeenCalled();
+      });
+      it("should not schedule the data load after the given interval", function() {
+        handlers.success();
+
+        expect(timeoutService).not.toHaveBeenCalled();
       });
     });
   });

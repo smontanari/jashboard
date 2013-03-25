@@ -1,6 +1,13 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorFormController: function(scope, repository, pluginManager, monitorLayoutManager) {
+      var parseRefreshInterval = function(inputValue) {
+        var value = parseInt(inputValue, 10);
+        if (_.isFinite(value)) {
+          return value;
+        }
+        return 0;
+      };
       var saveMonitorCallback = function() {
         var dashboard = _.find(scope.dashboards, function(dashboard) {
           return (dashboard.id === scope.monitorForm.dashboard_id);
@@ -9,7 +16,7 @@
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         var monitorParameters = {
           name: scope.monitorForm.name,
-          refreshInterval: parseInt(scope.monitorForm.refreshInterval, 10),
+          refreshInterval: parseRefreshInterval(scope.monitorForm.refreshInterval),
           type: scope.monitorForm.type,
           size: monitorAdapter.defaultSize(),
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),

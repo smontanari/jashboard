@@ -4,7 +4,7 @@
       return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(scope, element, attrs) {
         return {
           show: function() {
-            overlayService.show(element, scope.$eval(attrs.jbOverlayOptions));
+            overlayService.show(element, scope.$eval(attrs['jbOverlayOptions']));
           },
           hide: function() {
             overlayService.hide();

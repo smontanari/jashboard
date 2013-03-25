@@ -2,12 +2,14 @@
   jashboard = _.extend(module, {
     MonitorController: function(scope, repository, alertService, timeoutService) {
       var scheduleNextUpdate = function scheduleNextUpdate(scope) {
-        var interval = scope.monitor.refreshInterval * 1000;
-        scope.monitor.scheduler = timeoutService(function() {
-          updateMonitorRuntimeInfo(scope);
-          scheduleNextUpdate(scope);
-        }, interval);
-      }
+        if (_.isFinite(scope.monitor.refreshInterval) && scope.monitor.refreshInterval > 0) {
+          var interval = scope.monitor.refreshInterval * 1000;
+          scope.monitor.scheduler = timeoutService(function() {
+            updateMonitorRuntimeInfo(scope);
+            scheduleNextUpdate(scope);
+          }, interval);
+        }
+      };
       var updateMonitorRuntimeInfo = function(scope, scheduleNext) {
         var monitor = scope.monitor;
         monitor.loadingStatus = jashboard.model.loadingStatus.waiting;

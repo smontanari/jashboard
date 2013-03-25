@@ -5,11 +5,11 @@ describe("MonitorFormController", function() {
       getAllMonitorTypes: jasmine.createSpy("pluginManager.getAllMonitorTypes()")
         .andReturn(['test_type1', 'test_type2'])
     };    
-    scope = {
-      $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-        listener = handler;
-      })
-    };
+    scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
+    
+    scope.$on.andCallFake(function(eventName, handler) {
+      listener = handler;
+    });
     monitorLayoutManager = {
       nextAvailableMonitorPosition: sinon.stub()
     };
@@ -44,12 +44,14 @@ describe("MonitorFormController", function() {
   describe("save action callback", function() {
     var successHandler, errorHandler, saveMonitorCallback, adapter;
     beforeEach(function() {
-      scope.$emit = jasmine.createSpy("scope.$emit()");
-      scope.$apply = jasmine.createSpy("scope.$apply()");
       spyOn(jashboard, "CreateMonitorWorkflow").andCallFake(function(handler) {
         saveMonitorCallback = handler;
         return {};
       });
+      scope.dashboards = [
+        {id: "dashboard1", monitors: [{id: "m1"}]},
+        {id: "test_dashboard", monitors: [{id: "m2"}]}
+      ];
       repository.createMonitor = jasmine.createSpy("repository.createMonitor()").andCallFake(function(dashboard_id, monitorParameters, handlers) {
         successHandler = handlers.success;
         errorHandler = handlers.error;
@@ -61,69 +63,113 @@ describe("MonitorFormController", function() {
       pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andReturn(adapter);
       monitorLayoutManager.nextAvailableMonitorPosition.withArgs({id: "test_dashboard", monitors: [{id: "m2"}]}, {width: 678, height: 654})
           .returns({top: 123, left: 456});
-      scope.dashboards = [
-        {id: "dashboard1", monitors: [{id: "m1"}]},
-        {id: "test_dashboard", monitors: [{id: "m2"}]}
-      ];
 
       controller = new jashboard.MonitorFormController(scope, repository, pluginManager, monitorLayoutManager);
       listener({}, "test_dashboard_id");
-      scope.monitorForm = {
-        dashboard_id: "test_dashboard", 
-        name: "test.name",
-        refreshInterval: "123",
-        type: "type2",
-        configuration: {
-          type1: "test1",
-          type2: "test2"
-        }
-      };
-      saveMonitorCallback();
     });
-
-    it("should call the repository to create a monitor", function() {
-      expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("type2");
-      expect(adapter.validateConfiguration).toHaveBeenCalledWith("test2");
-      expect(repository.createMonitor).toHaveBeenCalledWith(
-        "test_dashboard", 
-        {
+    
+    describe("Form data validation", function() {
+      it("should call the repository to create a monitor with parameters form the input form", function() {
+        scope.monitorForm = {
+          dashboard_id: "test_dashboard", 
           name: "test.name",
+          refreshInterval: "123",
           type: "type2",
-          refreshInterval: 123,
-          position: {top: 123, left: 456},
-          size: {width: 678, height: 654},
-          configuration: {test: "test_configuration"}
-        }, 
-        jasmine.any(Object)
-      );
-    });
-    it("should emit the 'MonitorCreateStart'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateStart");
-    });
-    it("should add the monitor to the dashboard", function() {
-      successHandler("test.monitor");
+          configuration: {
+            type1: "test1",
+            type2: "test2"
+          }
+        };
+        saveMonitorCallback();
 
-      expect(scope.dashboards[0].monitors.length).toEqual(1);
-      expect(scope.dashboards[1].monitors.length).toEqual(2);
-      expect(scope.dashboards[1].monitors).toContain("test.monitor");
-    });
-    it("should syncronise the scope", function() {
-      successHandler("test.monitor");
+        expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("type2");
+        expect(adapter.validateConfiguration).toHaveBeenCalledWith("test2");
+        expect(repository.createMonitor).toHaveBeenCalledWith(
+          "test_dashboard", 
+          {
+            name: "test.name",
+            type: "type2",
+            refreshInterval: 123,
+            position: {top: 123, left: 456},
+            size: {width: 678, height: 654},
+            configuration: {test: "test_configuration"}
+          }, 
+          jasmine.any(Object)
+        );
+      });
+      it("should use a default value of 0 for refreshInterval if not provided", function() {
+        scope.monitorForm = {
+          dashboard_id: "test_dashboard", 
+          name: "test.name",
+          refreshInterval: undefined,
+          type: "type2",
+          configuration: {
+            type1: "test1",
+            type2: "test2"
+          }
+        };
+        saveMonitorCallback();
 
-      expect(scope.$apply).toHaveBeenCalled();
+        expect(repository.createMonitor).toHaveBeenCalledWith(
+          "test_dashboard", 
+          {
+            name: "test.name",
+            type: "type2",
+            refreshInterval: 0,
+            position: {top: 123, left: 456},
+            size: {width: 678, height: 654},
+            configuration: {test: "test_configuration"}
+          }, 
+          jasmine.any(Object)
+        );
+      });
     });
-    it("should emit the 'MonitorCreateComplete'", function() {
-      successHandler("test.monitor");
-      
-      expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateComplete");
-    });
-    it("should emit the 'CloseMonitorDialog'", function() {
-      expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
-    });
-    it("should fire the 'AjaxError' event when failing to save the monitor", function() {
-      errorHandler();
 
-      expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+    describe("Data model update", function() {
+      it("should add the monitor to the dashboard", function() {
+        scope.monitorForm = {
+          dashboard_id: "test_dashboard", 
+          configuration: {}
+        };
+        saveMonitorCallback();
+
+        successHandler("test.monitor");
+
+        expect(scope.dashboards[0].monitors.length).toEqual(1);
+        expect(scope.dashboards[1].monitors.length).toEqual(2);
+        expect(scope.dashboards[1].monitors).toContain("test.monitor");
+      });
+    });
+
+    describe("Event handling", function() {
+      beforeEach(function() {
+        scope.monitorForm = {
+          dashboard_id: "test_dashboard", 
+          configuration: {}
+        };
+        saveMonitorCallback();
+      });
+      it("should emit the 'MonitorCreateStart'", function() {
+        expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateStart");
+      });
+      it("should syncronise the scope", function() {
+        successHandler("test.monitor");
+
+        expect(scope.$apply).toHaveBeenCalled();
+      });
+      it("should emit the 'MonitorCreateComplete'", function() {
+        successHandler("test.monitor");
+        
+        expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateComplete");
+      });
+      it("should emit the 'CloseMonitorDialog'", function() {
+        expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
+      });
+      it("should fire the 'AjaxError' event when failing to save the monitor", function() {
+        errorHandler();
+
+        expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+      });
     });
   });
 });

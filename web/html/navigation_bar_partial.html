@@ -8,7 +8,7 @@
         <li class="divider-vertical">
           <a href="#/about">About</a>
         </li>
-        <li class="divider-vertical dropdown" data-ng-show="locationService.path() == '/'">
+        <li class="divider-vertical dropdown" data-ng-show="context.currentPath() == '/'">
           <a id="menuActions" class="dropdown-toggle" data-toggle="dropdown" href="#">Actions <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="menuActions">
             <li>
@@ -20,3 +20,4 @@
     </div>
   </div>
 </div>
+

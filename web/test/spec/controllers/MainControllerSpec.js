@@ -5,7 +5,7 @@ describe("MainController", function() {
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
-    locationService = {id: "locationService"};
+    locationService = jasmine.createSpyObj("$location", ['path']);
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
     menuDelegate = jasmine.createSpyObj("MenuActionsHandler", ['init']);
     dashboardDelegate = jasmine.createSpyObj("DashboardActionsHandler", ['init']);
@@ -19,11 +19,10 @@ describe("MainController", function() {
       scope, locationService, menuDelegate, dashboardDelegate, repository);
   });
 
-  it("should initialise a context object in the scope", function() {
-    expect(scope.context).toEqual({});
-  });
-  it("should inject the locationService into the scope", function() {
-    expect(scope.locationService).toEqual(locationService);
+  it("context.currentPath() should return the current view path", function() {
+    locationService.path.andReturn("test-path");
+
+    expect(scope.context.currentPath()).toEqual("test-path");
   });
   it("should initialise a new MenuActionsHandler", function() {
     expect(menuDelegate.init).toHaveBeenCalledWith(scope);

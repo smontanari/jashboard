@@ -1,12 +1,13 @@
 describe("DashboardActionsHandler", function() {
-  var delegate, scope, repository, alertService;
+  var delegate, scope, repository, alertService, timeoutService;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$broadcast', '$apply']);
     repository = jasmine.createSpyObj("repository", ['deleteDashboard']);
     alertService = jasmine.createSpyObj("alertService", ['showAlert']);
+    timeoutService = jasmine.createSpyObj("$timeout", ['cancel']);
 
-    delegate = new jashboard.DashboardActionsHandler(repository, alertService);
+    delegate = new jashboard.DashboardActionsHandler(repository, alertService, timeoutService);
     delegate.init(scope);
   });
 
@@ -20,9 +21,9 @@ describe("DashboardActionsHandler", function() {
     });
   });
   describe("scope.dashboardAction(): delete", function() {
-    var innerScope, deleteSuccessCallback, deleteErrorCallback, alertOptions, scopeHelperSpy;
+    var innerScope, currentDashboard, deleteSuccessCallback, deleteErrorCallback, alertOptions, scopeHelperSpy;
     beforeEach(function() {
-      var currentDashboard = {id: "test_dashboard_id"};
+      currentDashboard = {id: "test_dashboard_id"};
       scope.dashboards = [currentDashboard, {id: "another_dashboard"}];
       innerScope = { dashboard: currentDashboard };
       repository.deleteDashboard.andCallFake(function(id, handlers) {
@@ -67,6 +68,18 @@ describe("DashboardActionsHandler", function() {
 
         expect(scopeHelperSpy).toHaveBeenCalled();
         expect(scopeHelperSpy.calls[0].object).toEqual(scope);
+      });
+      it("should cancel the update scheduler for each monitor belonging to the dashboard", function() {
+        currentDashboard.monitors = [
+          {runtimeUpdateScheduler: {id: "test_scheduler1"}},
+          {},
+          {runtimeUpdateScheduler: {id: "test_scheduler2"}},
+        ];
+
+        deleteSuccessCallback();
+
+        expect(timeoutService.cancel).toHaveBeenCalledWith({id: "test_scheduler1"});
+        expect(timeoutService.cancel).toHaveBeenCalledWith({id: "test_scheduler2"});
       });
       it("should fire the 'DashboardDeleteComplete' event", function() {
         deleteSuccessCallback();

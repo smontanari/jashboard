@@ -112,7 +112,7 @@ describe("MonitorController", function() {
       expect(scope.$emit).toHaveBeenCalledWith("MonitorDeleteComplete");
     });
     it("should cancel the monitor update scheduler on successful deletion", function() {
-      scope.monitor.scheduler = {id: "scheduler"};
+      scope.monitor.runtimeUpdateScheduler = {id: "scheduler"};
       alertOptions.confirmAction();
       deleteHandlers.success();
       
@@ -185,7 +185,7 @@ describe("MonitorController", function() {
       it("should save the scheduler into the monitor when data load is " + action, function() {
         handlers[action]();
 
-        expect(scope.monitor.scheduler).toEqual(scheduler);
+        expect(scope.monitor.runtimeUpdateScheduler).toEqual(scheduler);
       });
       it("should schedule the data load after the given interval", function() {
         handlers[action]();

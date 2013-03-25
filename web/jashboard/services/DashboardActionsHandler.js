@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    DashboardActionsHandler: function(repository, alertService) {
+    DashboardActionsHandler: function(repository, alertService, timeoutService) {
       this.init = function(scope) {
         var dashboardActions = {
           newMonitor: function(currentScope) {
@@ -19,6 +19,11 @@
                     jashboard.scopeContextHelper.setDefaultActiveDashboard.apply(scope);
                     scope.$apply();
                     scope.$broadcast("DashboardDeleteComplete");
+                    _.each(currentScope.dashboard.monitors, function(monitor) {
+                      if (_.isObject(monitor.runtimeUpdateScheduler)) {
+                        timeoutService.cancel(monitor.runtimeUpdateScheduler);
+                      }
+                    });
                   },
                   error: function() {
                     scope.$broadcast("AjaxError");
@@ -35,7 +40,7 @@
       };
     }
   });
-  jashboard.application.service('DashboardActionsHandler', ['Repository', 'AlertService', jashboard.DashboardActionsHandler]).run(function() {
+  jashboard.application.service('DashboardActionsHandler', ['Repository', 'AlertService', '$timeout', jashboard.DashboardActionsHandler]).run(function() {
     steal.dev.log("DashboardActionsHandler initialized");
   });
 }(jashboard || {}));

@@ -4,7 +4,7 @@
       var scheduleNextUpdate = function scheduleNextUpdate(scope) {
         if (_.isFinite(scope.monitor.refreshInterval) && scope.monitor.refreshInterval > 0) {
           var interval = scope.monitor.refreshInterval * 1000;
-          scope.monitor.scheduler = timeoutService(function() {
+          scope.monitor.runtimeUpdateScheduler = timeoutService(function() {
             updateMonitorRuntimeInfo(scope);
             scheduleNextUpdate(scope);
           }, interval);
@@ -65,7 +65,9 @@
                 currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                 scope.$emit("MonitorDeleteComplete");
                 scope.$apply();
-                timeoutService.cancel(currentMonitor.scheduler);
+                if (_.isObject(currentMonitor.runtimeUpdateScheduler)) {
+                  timeoutService.cancel(currentMonitor.runtimeUpdateScheduler);
+                }
               },
               error: function() {
                 scope.$emit("AjaxError");

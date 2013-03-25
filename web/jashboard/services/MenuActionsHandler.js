@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MenuControllerDelegate: function() {
+    MenuActionsHandler: function() {
       this.init = function(scope) {
         var menuActions = {
           newDashboard: function() {
@@ -13,7 +13,7 @@
       };
     }
   });
-  jashboard.services.service('MenuControllerDelegate', [jashboard.MenuControllerDelegate]).run(function() {
-    steal.dev.log("MenuControllerDelegate initialized");
+  jashboard.services.service('MenuActionsHandler', [jashboard.MenuActionsHandler]).run(function() {
+    steal.dev.log("MenuActionsHandler initialized");
   });
 }(jashboard || {}));

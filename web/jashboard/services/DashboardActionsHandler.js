@@ -1,10 +1,10 @@
 (function(module) {
   jashboard = _.extend(module, {
     DashboardActionsHandler: function(repository, alertService, timeoutService) {
-      this.init = function(scope) {
+      this.init = function(applicationScope) {
         var dashboardActions = {
           newMonitor: function(currentScope) {
-            scope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
+            applicationScope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
           },
           delete: function(currentScope) {
             alertService.showAlert({
@@ -12,13 +12,13 @@
               message: "Deleting this dashboard will also remove all its monitors. Continue?",
               confirmLabel: "Delete",
               confirmAction: function() {
-                scope.$broadcast("DashboardDeleteStart");
+                applicationScope.$broadcast("DashboardDeleteStart");
                 repository.deleteDashboard(currentScope.dashboard.id, {
                   success: function() {
-                    scope.dashboards = _.without(scope.dashboards, currentScope.dashboard);
-                    jashboard.scopeContextHelper.setDefaultActiveDashboard.apply(scope);
-                    scope.$apply();
-                    scope.$broadcast("DashboardDeleteComplete");
+                    applicationScope.dashboards = _.without(applicationScope.dashboards, currentScope.dashboard);
+                    jashboard.scopeContextHelper.setDefaultActiveDashboard.apply(applicationScope);
+                    applicationScope.$apply();
+                    applicationScope.$broadcast("DashboardDeleteComplete");
                     _.each(currentScope.dashboard.monitors, function(monitor) {
                       if (_.isObject(monitor.runtimeUpdateScheduler)) {
                         timeoutService.cancel(monitor.runtimeUpdateScheduler);
@@ -26,7 +26,7 @@
                     });
                   },
                   error: function() {
-                    scope.$broadcast("AjaxError");
+                    applicationScope.$broadcast("AjaxError");
                   }
                 });
               }
@@ -34,7 +34,7 @@
           }
         };
         
-        scope.dashboardAction = function(name) {
+        applicationScope.dashboardAction = function(name) {
           dashboardActions[name](this);
         };
       };

@@ -19,7 +19,7 @@ steal('jashboard/jashboard.js')
   'jashboard/services/MonitorLayoutManager.js',
   'jashboard/services/PluginManager.js',
   'jashboard/services/DashboardActionsHandler.js',
-  'jashboard/services/MenuControllerDelegate.js'
+  'jashboard/services/MenuActionsHandler.js'
 )
 .then(
   'jashboard/controllers/scopeContextHelper.js',

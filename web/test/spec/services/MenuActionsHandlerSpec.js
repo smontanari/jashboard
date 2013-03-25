@@ -1,8 +1,8 @@
-describe("MenuControllerDelegate", function() {
+describe("MenuActionsHandler", function() {
   var delegate, scope;
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$broadcast']);
-    delegate = new jashboard.MenuControllerDelegate();
+    delegate = new jashboard.MenuActionsHandler();
     delegate.init(scope);
   });
 

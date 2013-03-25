@@ -7,7 +7,7 @@ describe("MainController", function() {
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$broadcast']);
     locationService = {id: "locationService"};
     repository = jasmine.createSpyObj("repository", ['loadDashboards']);
-    menuDelegate = jasmine.createSpyObj("MenuControllerDelegate", ['init']);
+    menuDelegate = jasmine.createSpyObj("MenuActionsHandler", ['init']);
     dashboardDelegate = jasmine.createSpyObj("DashboardActionsHandler", ['init']);
     listeners = {};
     scope.$on.andCallFake(function(eventName, fn) {
@@ -25,10 +25,10 @@ describe("MainController", function() {
   it("should inject the locationService into the scope", function() {
     expect(scope.locationService).toEqual(locationService);
   });
-  it("should initialise a new MenuControllerDelegate", function() {
+  it("should initialise a new MenuActionsHandler", function() {
     expect(menuDelegate.init).toHaveBeenCalledWith(scope);
   });
-  it("should initialise a new DashboardControllerDelegate", function() {
+  it("should initialise a new DashboardActionsHandler", function() {
     expect(dashboardDelegate.init).toHaveBeenCalledWith(scope);
   });
 

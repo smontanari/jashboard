@@ -20,6 +20,13 @@ var featureHelper = (function(helper) {
     });
   };
 
+  helper.verifyElementDisabled = function(selector) {
+    S(selector).visible(function() {
+      var disabled = S(selector).attr("disabled");
+      ok(!_.isEmpty(disabled));
+    });
+  };
+
   helper.verifyElementPosition = function(selector, expectedPosition) {
     S(selector).visible(function() {
       var actualPosition = S(selector).position();
@@ -32,9 +39,9 @@ var featureHelper = (function(helper) {
       var actualWidth = S(selector).width();
       var actualHeight = S(selector).height();
       ok((expectedSize.width - 10) < actualWidth && actualWidth < (expectedSize.width + 10), 
-        "Monitor width should be == " + expectedSize.width);
+        "Element width should be == " + expectedSize.width);
       ok((expectedSize.height - 10) < actualHeight && actualHeight < (expectedSize.height + 10),
-        "Monitor height should be == " + expectedSize.height);
+        "Element height should be == " + expectedSize.height);
     });
   };
   helper.verifyElementContent = function(selector, expectedData) {

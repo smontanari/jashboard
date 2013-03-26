@@ -71,6 +71,9 @@ beforeEach(function() {
       };
       var actualCall = this.actual.getCall(order);
       return actualCall.calledWith.apply(actualCall, callArgs);
+    },
+    toBeEmpty: function() {
+      return _.isEmpty(this.actual);
     }
   });
 });

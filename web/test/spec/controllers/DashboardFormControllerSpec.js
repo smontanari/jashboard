@@ -3,37 +3,37 @@ describe("DashboardFormController", function() {
   var repository = {};
 
   describe("'OpenDashboardDialog' event listener", function() {
+    var validatorConstructor, dashboardRulesConstructor;
     beforeEach(function() {
-      scope = {};
-      scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-        handler();
-      });
+      scope = {
+        dashboardForm: "dashboardForm",
+        $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+          handler();
+        })
+      };
+
+      dashboardRulesConstructor = sinon.stub(jashboard, "DashboardFormValidationRules");
+      dashboardRulesConstructor.withArgs(scope).returns({id: "dashboardRules"});
+      validatorConstructor = sinon.stub(jashboard, "FormValidator");
+      validatorConstructor.withArgs("dashboardForm", {id: "dashboardRules"}).returns({id: "validator"});
     });
-    it("should reset the dashboardForm variable in the scope", function() {
+    afterEach(function() {
+      validatorConstructor.restore();
+      dashboardRulesConstructor.restore();
+    });
+
+    it("should reset the dashboardName variable in the scope", function() {
       scope.dashboardName = "test";
+      
       controller = new jashboard.DashboardFormController(scope, repository);
+
       expect(scope.dashboardName).toEqual("");
     });
-    it("should set the validation error to false", function() {
+    it("should set a new FormValidator with the dashboard form validation rules in the scope", function() {
       controller = new jashboard.DashboardFormController(scope, repository);
-      expect(scope.validationError).toBeFalsy();      
-    });
-  });
+      console.log(dashboardRulesConstructor.args);
 
-  describe("form validation", function() {
-    beforeEach(function() {
-      scope = jasmine.createSpyObj("scope", ['$on']);
-      repository.createDashboard = jasmine.createSpy("repository.createDashboard()");
-      controller = new jashboard.DashboardFormController(scope, repository);
-      scope.dashboardName = "";
-      scope.saveDashboard();
-    });
-
-    it("should set the validation error to true", function() {
-      expect(scope.validationError).toBeTruthy();
-    });
-    it("should not invoke the repository", function() {
-      expect(repository.createDashboard).not.toHaveBeenCalled();
+      expect(scope.dashboardFormValidator).toEqual({id: "validator"});
     });
   });
 

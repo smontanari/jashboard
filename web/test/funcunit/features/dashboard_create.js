@@ -35,13 +35,24 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     S("#new-dashboard-form").invisible("should not be visible");
   });
 
-  test("should display a validation error if the dashboard name is empty", function() {
-    var message = "Please provide a dashboard name.";
+  test("should disable the 'Save' button if the dashboard name is empty", function() {
     openDashboardDialog();
-    S("#errorMsg").invisible("should display the error message");
-    S("#saveDashboard").visible().click();
-    S("#errorMsg").visible(function() {
-      equal(S("#errorMsg").text().trim(), message, "The error message is equal to " + message);
+    featureHelper.verifyElementDisabled("#saveDashboard");
+  });
+
+  test("should display a validation error and disable the 'Save' button if the dashboard name is cleared", function() {
+    var expectedMessage = "You must provide a dashboard name.";
+    openDashboardDialog();
+    S("#dashboardFormErrors").invisible("should not display errors");
+    
+    featureHelper.inputText("input[name='dashboardName']", "test name");
+    
+    FuncUnit.wait(500, function() {
+      featureHelper.inputText("input[name='dashboardName']", "");
+      S("#dashboardFormErrors").visible(function() {
+        equal(S("#dashboardFormErrors").text().trim(), expectedMessage, "The error message is equal to " + expectedMessage);
+      }, "should display errors");
+      featureHelper.verifyElementDisabled("#saveDashboard");
     });
   });
 });

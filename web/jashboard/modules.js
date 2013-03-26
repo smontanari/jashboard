@@ -22,9 +22,12 @@ steal('jashboard/jashboard.js')
   'jashboard/services/MenuActionsHandler.js'
 )
 .then(
+  'jashboard/validation/FormValidator.js',
+  'jashboard/validation/ScopeValidationRules.js',
   'jashboard/controllers/scopeContextHelper.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MainController.js',
+  'jashboard/controllers/DashboardFormValidationRules.js',
   'jashboard/controllers/DashboardFormController.js',
   'jashboard/controllers/MonitorController.js',
   'jashboard/controllers/MonitorFormController.js'

@@ -31,7 +31,6 @@ describe("DashboardFormController", function() {
     });
     it("should set a new FormValidator with the dashboard form validation rules in the scope", function() {
       controller = new jashboard.DashboardFormController(scope, repository);
-      console.log(dashboardRulesConstructor.args);
 
       expect(scope.dashboardFormValidator).toEqual({id: "validator"});
     });

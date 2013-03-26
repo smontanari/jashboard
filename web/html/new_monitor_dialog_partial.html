@@ -5,22 +5,22 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
-  <form data-ng-controller="MonitorFormController">
+  <form name="monitorForm" data-ng-controller="MonitorFormController">
     <div id="configurationInput" class="modal-body" data-ng-class="workflow.state">
       <div class="genericConfiguration">
         <div class="table-like">
           <div class="controls">
             <label for="monitorName">Name</label>
-            <input type="text" name="monitorName" class="input-large" placeholder="monitor name" data-ng-model="monitorForm.name">
+            <input type="text" name="monitorName" class="input-large" placeholder="monitor name" data-ng-model="inputMonitor.name">
           </div>
           <div class="controls">
             <label class="control-label" for="monitorRefresh">Refresh interval</label>
-            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorForm.refreshInterval"> seconds
+            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="inputMonitor.refreshInterval"> seconds
           </div>
           <div class="controls">
             <label>Type</label>
             <select name="monitorType" class="input-medium" 
-              data-ng-model="monitorForm.type" 
+              data-ng-model="inputMonitor.type" 
               data-ng-options="t for t in availableMonitorTypes">
               <option value="">choose type</option>
             </select>

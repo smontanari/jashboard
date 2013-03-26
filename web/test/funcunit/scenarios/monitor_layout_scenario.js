@@ -22,7 +22,6 @@ $.fixture("PUT /ajax/monitor/monitor_2/position", function(ajaxOriginalOptions, 
 
 $.fixture("PUT /ajax/monitor/monitor_1/size", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var data = JSON.parse(ajaxOptions.data);
-  console.log(data);
 
   if (data.width === 295 && data.height === 340) {
     return [200, "success", {}, {} ];

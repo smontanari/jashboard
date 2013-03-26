@@ -5,7 +5,7 @@
       scope.availableLanguages = languages;
 
       scope.$on("OpenMonitorDialog", function(event) {
-        scope.monitorForm.configuration.ipsum = {
+        scope.inputMonitor.configuration.ipsum = {
           language: languages[0]
         };
       });

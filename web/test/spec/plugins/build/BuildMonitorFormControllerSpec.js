@@ -14,7 +14,7 @@ describe("BuildMonitorFormController", function() {
       expect(scope.availableBuildSettingsTypes).toEqual(["test_build_type1", "test_build_type2"]);
     });
     it("should set the selected type in the scope", function() {
-      scope.monitorForm = {
+      scope.inputMonitor = {
         configuration: {
           build: {
             hostname: "test-host", 
@@ -28,7 +28,7 @@ describe("BuildMonitorFormController", function() {
       controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
       scope.setConfigurationType("test-type2");
 
-      expect(scope.monitorForm.configuration.build.type).toEqual("test-type2");
+      expect(scope.inputMonitor.configuration.build.type).toEqual("test-type2");
 
     });
   });
@@ -42,7 +42,7 @@ describe("BuildMonitorFormController", function() {
           getAllRegisteredTypes: jasmine.createSpy("buildConfigurationParser.getAllRegisteredTypes")
             .andReturn(["test_build_type1", "test_build_type2"])
       };
-      scope.monitorForm = {
+      scope.inputMonitor = {
         configuration: {
           build: {
             hostname: "test-host", 
@@ -58,10 +58,10 @@ describe("BuildMonitorFormController", function() {
 
       expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
     });
-    it("should reset the monitorForm.configuration variable in the scope", function() {
+    it("should reset the inputMonitor.configuration variable in the scope", function() {
       controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
 
-      expect(scope.monitorForm.configuration.build).toEqual({type: "test_build_type1"});
+      expect(scope.inputMonitor.configuration.build).toEqual({type: "test_build_type1"});
     });
   });
 });

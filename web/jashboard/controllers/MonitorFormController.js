@@ -10,20 +10,20 @@
       };
       var saveMonitorCallback = function() {
         var dashboard = _.find(scope.dashboards, function(dashboard) {
-          return (dashboard.id === scope.monitorForm.dashboard_id);
+          return (dashboard.id === scope.inputMonitor.dashboard_id);
         });
-        var monitorType = scope.monitorForm.type;
+        var monitorType = scope.inputMonitor.type;
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         var monitorParameters = {
-          name: scope.monitorForm.name,
-          refreshInterval: parseRefreshInterval(scope.monitorForm.refreshInterval),
-          type: scope.monitorForm.type,
+          name: scope.inputMonitor.name,
+          refreshInterval: parseRefreshInterval(scope.inputMonitor.refreshInterval),
+          type: scope.inputMonitor.type,
           size: monitorAdapter.defaultSize(),
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
-          configuration: monitorAdapter.validateConfiguration(scope.monitorForm.configuration[monitorType])
+          configuration: monitorAdapter.validateConfiguration(scope.inputMonitor.configuration[monitorType])
         };
         scope.$emit("MonitorCreateStart");
-        repository.createMonitor(scope.monitorForm.dashboard_id, monitorParameters, {
+        repository.createMonitor(scope.inputMonitor.dashboard_id, monitorParameters, {
           success: function(monitor) {
             dashboard.monitors.push(monitor);
             scope.$apply();
@@ -38,7 +38,7 @@
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
 
       scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
-        scope.monitorForm = {dashboard_id: dashboard_id, configuration: {}};
+        scope.inputMonitor = {dashboard_id: dashboard_id, configuration: {}};
         scope.workflow = new jashboard.CreateMonitorWorkflow(saveMonitorCallback);
       });
     }

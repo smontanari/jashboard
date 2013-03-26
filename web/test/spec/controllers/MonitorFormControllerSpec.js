@@ -24,10 +24,10 @@ describe("MonitorFormController", function() {
     it("should inject the array of available monitor types into the scope", function() {
       expect(scope.availableMonitorTypes).toEqual(["test_type1", "test_type2"]);
     });
-    it("should reset the monitorForm variable in the scope", function() {
-      scope.monitorForm = {test: "test"};
+    it("should reset the inputMonitor variable in the scope", function() {
+      scope.inputMonitor = {test: "test"};
       listener({}, "test_dashboard_id");
-      expect(scope.monitorForm).toEqual({dashboard_id: "test_dashboard_id", configuration: {}});
+      expect(scope.inputMonitor).toEqual({dashboard_id: "test_dashboard_id", configuration: {}});
     });
     it("should instantiate a new workflow", function() {
       listener({}, "test_dashboard_id");
@@ -70,7 +70,7 @@ describe("MonitorFormController", function() {
     
     describe("Form data validation", function() {
       it("should call the repository to create a monitor with parameters form the input form", function() {
-        scope.monitorForm = {
+        scope.inputMonitor = {
           dashboard_id: "test_dashboard", 
           name: "test.name",
           refreshInterval: "123",
@@ -98,7 +98,7 @@ describe("MonitorFormController", function() {
         );
       });
       it("should use a default value of 0 for refreshInterval if not provided", function() {
-        scope.monitorForm = {
+        scope.inputMonitor = {
           dashboard_id: "test_dashboard", 
           name: "test.name",
           refreshInterval: undefined,
@@ -127,7 +127,7 @@ describe("MonitorFormController", function() {
 
     describe("Data model update", function() {
       it("should add the monitor to the dashboard", function() {
-        scope.monitorForm = {
+        scope.inputMonitor = {
           dashboard_id: "test_dashboard", 
           configuration: {}
         };
@@ -143,7 +143,7 @@ describe("MonitorFormController", function() {
 
     describe("Event handling", function() {
       beforeEach(function() {
-        scope.monitorForm = {
+        scope.inputMonitor = {
           dashboard_id: "test_dashboard", 
           configuration: {}
         };

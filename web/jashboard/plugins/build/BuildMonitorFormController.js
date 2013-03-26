@@ -5,13 +5,13 @@
       scope.availableBuildSettingsTypes = buildTypes;
     
       scope.$on("OpenMonitorDialog", function(event) {
-        scope.monitorForm.configuration.build = {
+        scope.inputMonitor.configuration.build = {
           type: buildTypes[0]
         };
       });
 
       scope.setConfigurationType = function(type) {
-        scope.monitorForm.configuration.build.type = type;
+        scope.inputMonitor.configuration.build.type = type;
       };
     }
   });

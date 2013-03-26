@@ -19,9 +19,7 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
 
   var requestCounts = {monitor_1: 0, monitor_3: 0};
   server.fakeResponse("GET", /\/ajax\/monitor\/(\w+)\/runtime/, function(request, monitor_id) {
-    console.log(monitor_id);
     requestCounts[monitor_id]++;
-    console.log(requestCounts[monitor_id]);
     if (requestCounts[monitor_id] % 2 == 0) {
       return successResponse;
     } else {

@@ -15,7 +15,7 @@ describe("IpsumMonitorFormController", function() {
   });
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      scope.monitorForm = {
+      scope.inputMonitor = {
         configuration: {
           ipsum: {
             language: "test-language", 
@@ -27,10 +27,10 @@ describe("IpsumMonitorFormController", function() {
     it("should listen to the 'OpenMonitorDialog' event", function() {
       expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
     });
-    it("should reset the monitorForm.configuration variable in the scope", function() {
+    it("should reset the inputMonitor.configuration variable in the scope", function() {
       eventListener({});
 
-      expect(scope.monitorForm.configuration.ipsum).toEqual({language: "english"});
+      expect(scope.inputMonitor.configuration.ipsum).toEqual({language: "english"});
     });
   });
 });

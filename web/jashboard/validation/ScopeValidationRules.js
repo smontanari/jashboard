@@ -15,7 +15,15 @@
             return {required: true};
           };
         }
-      }
+      };
+      this.number = function(path) {
+        return function() {
+          var value = evaluatePath(path);
+          if (!_.isEmpty(value) && !_.isFinite(parseInt(value, 10))) {
+            return {number: "not a number"};
+          }
+        };
+      };
     }
   });
 }(jashboard || {}));

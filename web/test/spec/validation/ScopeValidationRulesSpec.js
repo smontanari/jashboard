@@ -27,4 +27,25 @@ describe("ScopeValidationRules", function() {
       expect(errors).toEqual({required: true});
     });
   });
+  describe("number rule", function() {
+    it("should return no errors when the value is a valid number", function() {
+      scope.testForm = { testModel: "123" };
+
+      var errors = rules.number("testForm.testModel")();
+
+      expect(errors).toBeEmpty();
+    });
+    it("should return no error when the value is undefined", function() {
+      var errors = rules.number("testForm.testModel")();
+
+      expect(errors).toBeEmpty();
+    });
+    it("should return an error when the value is not a number", function() {
+      scope.testForm = { testModel: "abc" };
+
+      var errors = rules.number("testForm.testModel")();
+
+      expect(errors).toEqual({number: "not a number"});
+    });
+  });
 });

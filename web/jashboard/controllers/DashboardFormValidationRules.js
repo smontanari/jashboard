@@ -3,7 +3,7 @@
     DashboardFormValidationRules: function(scope) {
       var scopeRules = new jashboard.ScopeValidationRules(scope);
       
-      this.dashboardName = scopeRules.required('dashboardName');      
+      this.dashboardName = scopeRules.required('dashboardName');
     }
   });
 }(jashboard || {}));

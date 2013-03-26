@@ -1,23 +1,25 @@
 describe("DashboardFormValidationRules", function() {
-  var rules, rulesRulesContructor, scopeRules, scope;
+  var rules, scopeRulesContructor, scopeRules, scope;
   beforeEach(function() {
     scope = {id: "scope"};
 
     scopeRules = {
-      required: jasmine.createSpy("ScopeValidationRules.required()").andReturn("required() impl")
+      required: sinon.stub()
     };
-    rulesRulesContructor = sinon.stub(jashboard, "ScopeValidationRules");
-    rulesRulesContructor.withArgs(scope).returns(scopeRules);
-    
-    rules = new jashboard.DashboardFormValidationRules(scope);
+    scopeRulesContructor = sinon.stub(jashboard, "ScopeValidationRules");
+    scopeRulesContructor.withArgs(scope).returns(scopeRules);
   });
 
   afterEach(function() {
-    rulesRulesContructor.restore();
+    scopeRulesContructor.restore();
   });
 
   it("should validate the 'dashboardName' field with the 'required' rule", function() {
-    expect(scopeRules.required).toHaveBeenCalledWith("dashboardName");
-    expect(rules.dashboardName).toEqual("required() impl");
+    var validationFn = function() {return "test_validation_result"; };
+    scopeRules.required.withArgs("dashboardName").returns(validationFn);
+
+    rules = new jashboard.DashboardFormValidationRules(scope);
+
+    expect(rules.dashboardName()).toEqual("test_validation_result");
   });
 });

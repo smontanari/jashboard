@@ -7,7 +7,7 @@ describe("MonitorFormValidationRules", function() {
       required: sinon.stub(),
       number: sinon.stub()
     };
-    scopeRulesContructor = sinon.stub(jashboard, "ScopeValidationRules");
+    scopeRulesContructor = sinon.stub(jashboard, "ScopeValidationRulesBuilder");
     scopeRulesContructor.withArgs(scope).returns(scopeRules);
   });
 

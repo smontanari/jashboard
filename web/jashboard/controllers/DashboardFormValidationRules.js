@@ -1,9 +1,11 @@
 (function(module) {
   jashboard = _.extend(module, {
     DashboardFormValidationRules: function(scope) {
-      var scopeRules = new jashboard.ScopeValidationRules(scope);
+      var validation = new jashboard.ScopeValidationRulesBuilder()
+        .withRule('required')
+        .build();
       
-      this.dashboardName = scopeRules.required('dashboardName');
+      this.dashboardName = function() { return validation(scope.dashboardName) };
     }
   });
 }(jashboard || {}));

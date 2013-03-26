@@ -23,7 +23,7 @@ steal('jashboard/jashboard.js')
 )
 .then(
   'jashboard/validation/FormValidator.js',
-  'jashboard/validation/ScopeValidationRules.js',
+  'jashboard/validation/ScopeValidationRulesBuilder.js',
   'jashboard/controllers/scopeContextHelper.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MainController.js',

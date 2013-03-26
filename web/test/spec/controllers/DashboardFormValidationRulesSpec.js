@@ -1,22 +1,24 @@
 describe("DashboardFormValidationRules", function() {
-  var rules, scopeRulesContructor, scopeRules, scope;
+  var rules, rulesBuilderConstructor, rulesBuilder, validationFn, scope;
   beforeEach(function() {
-    scope = {id: "scope"};
+    scope = {dashboardName: "test_value"};
 
-    scopeRules = {
-      required: sinon.stub()
+    validationFn = sinon.stub();
+    rulesBuilder = {
+      withRule: sinon.stub(),
+      build: function() {return validationFn;}
     };
-    scopeRulesContructor = sinon.stub(jashboard, "ScopeValidationRules");
-    scopeRulesContructor.withArgs(scope).returns(scopeRules);
+    rulesBuilderConstructor = sinon.stub(jashboard, "ScopeValidationRulesBuilder");
+    rulesBuilderConstructor.returns(rulesBuilder);
   });
 
   afterEach(function() {
-    scopeRulesContructor.restore();
+    rulesBuilderConstructor.restore();
   });
 
   it("should validate the 'dashboardName' field with the 'required' rule", function() {
-    var validationFn = function() {return "test_validation_result"; };
-    scopeRules.required.withArgs("dashboardName").returns(validationFn);
+    rulesBuilder.withRule.withArgs("required").returns(rulesBuilder);
+    validationFn.withArgs("test_value").returns("test_validation_result");
 
     rules = new jashboard.DashboardFormValidationRules(scope);
 

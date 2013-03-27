@@ -37,8 +37,9 @@ steal(
   }
 
   steal(
-    "./funcunit_helper.js",
-    "./features/feature_helper.js"
+    "./features/page_helper.js",
+    "./features/jashboard_feature_helper.js",
+    "./funcunit_helper.js"
   ).then(function() {
     steal.apply(window, _.map(selectFeatures(), featurePath));
   })

@@ -17,7 +17,7 @@ describe("DashboardFormValidationRules", function() {
   });
 
   it("should validate the 'dashboardName' field with the 'required' rule", function() {
-    rulesBuilder.withRule.withArgs(jashboard.CommonValidationRules.required).returns(rulesBuilder);
+    rulesBuilder.withRule.withArgs(jashboard.commonValidationRules.required).returns(rulesBuilder);
     validationFn.withArgs("test_value").returns("test_validation_result");
 
     rules = new jashboard.DashboardFormValidationRules(scope);

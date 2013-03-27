@@ -1,14 +1,8 @@
 funcunitHelper.testFeature("Error handling: dashboard actions", "dashboard_errors", function() {
-  var openDashboardDialog = function() {
-    S("#menuActions").click();
-    S("#navbarMenu .menuAction-new-dashboard").visible("display new dashboard menu action link").click();
-    S("#new-dashboard-form").visible("show new dashboard input dialog");
-  };
-
   test("should display an error overlay when failing to create a new dashboard", function() {
     FuncUnit.wait(1500, function() {
-      openDashboardDialog();
-      featureHelper.inputText("input[name='dashboardName']", "test new-dashboard");
+      jashboardFeatureHelper.openDashboardDialog();
+      pageHelper.inputText("input[name='dashboardName']", "test new-dashboard");
     });
 
     S("#saveDashboard").visible().click();

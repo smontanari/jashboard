@@ -34,7 +34,7 @@ describe("DashboardFormController", function() {
       expect(formValidator.initForm).toHaveBeenCalledWith("dashboardForm");
     });
     it("should reset the dashboardName variable in the scope", function() {
-      expect(scope.dashboardName).toEqual("");
+      expect(scope.dashboardName).toBeNull();
     });
   });
 

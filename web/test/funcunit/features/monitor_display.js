@@ -3,7 +3,7 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
     S("#tab-dashboard_3").visible().click();
     S(".build-panel-runtime").invisible("No build monitors are visible");
     S("#tab-dashboard_2").visible().click();
-    featureHelper.verifyElementContent("#monitor_2",
+    pageHelper.verifyElementContent("#monitor_2",
       {
         '.monitor-title': "Epic build",
         '.build-time': "28-08-2012 11:25:10",
@@ -12,14 +12,14 @@ funcunitHelper.testFeature("Monitor display", "display_dashboards_data", functio
         '.build-status': "building"
       }
     );
-    featureHelper.verifyElementContent("#monitor_3",
+    pageHelper.verifyElementContent("#monitor_3",
       {
         '.monitor-title': "Random text",
         'pre': "some very random generated text\nwith some very random generated words"
       }
     );
     S("#tab-dashboard_1").visible().click();
-    featureHelper.verifyElementContent("#monitor_1",
+    pageHelper.verifyElementContent("#monitor_1",
       {
         '.monitor-title': "Zombie-Dash build",
         '.build-time': "05-11-2012 09:35:08",

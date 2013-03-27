@@ -3,11 +3,11 @@
     MonitorFormValidationRules: function(scope) {
       var rules = {
         monitorName: new jashboard.ValidationRulesBuilder()
-          .withRule(jashboard.CommonValidationRules.required)
+          .withRule(jashboard.commonValidationRules.required)
           .build(),
         monitorRefresh: new jashboard.ValidationRulesBuilder()
-          .withRule(jashboard.CommonValidationRules.number)
-          .withRule(jashboard.CommonValidationRules.positiveNumber)
+          .withRule(jashboard.commonValidationRules.number)
+          .withRule(jashboard.commonValidationRules.positiveNumber)
           .build()
       };
       

@@ -21,7 +21,7 @@
       scope.$on("OpenDashboardDialog", function(event) {
         formValidator.initForm(scope.dashboardForm);
         scope.dashboardFormValidator = formValidator;
-        scope.dashboardName = "";
+        scope.dashboardName = null;
       });
     }
   });

@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    CommonValidationRules: {
+    commonValidationRules: {
       required: function(value) {
         if (_.isEmpty(value)) {
           return {required: true};

@@ -1,4 +1,4 @@
-var featureHelper = (function(helper) {
+var pageHelper = (function(helper) {
   helper.inputText = function(selector, text) {
     S(selector).visible().focus().type(text, function() {
       S(selector).trigger('input');
@@ -52,4 +52,4 @@ var featureHelper = (function(helper) {
     });
   };
   return helper;
-}(featureHelper || {}));
+}(pageHelper || {}));

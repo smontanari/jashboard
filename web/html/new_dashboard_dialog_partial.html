@@ -4,19 +4,17 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="dashboardModalLabel">Create new dashboard</h3>
   </div>
-  <form name="dashboardForm" data-ng-controller="DashboardFormController">
+  <form name="dashboardForm" class="form-horizontal" data-ng-controller="DashboardFormController">
     <div class="modal-body">
       <div class="control-group" data-ng-class="{'error': dashboardFormValidator.inputInError('dashboardName')}">
-        <div class="table-like">
-          <div class="controls">
-            <label class="control-label" for="dashboardName">Name</label>
-            <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
-            data-ng-model="dashboardName" data-ng-change="dashboardFormValidator.onInputChange('dashboardName')">
-          </div>
-          <div class="controls">
-            <div/>
-            <div id="dashboardNameRequiredError" class="help-inline" data-ng-show="dashboardForm.dashboardName.$error.required">You must provide a dashboard name.</div>
-          </div>
+        <label class="control-label" for="dashboardName">Name</label>
+        <div class="controls">
+          <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
+          data-ng-model="dashboardName" data-ng-change="dashboardFormValidator.onInputChange('dashboardName')">
+        </div>
+        <div class="controls">
+          <div/>
+          <div id="dashboardNameRequiredError" class="help-inline" data-ng-show="dashboardForm.dashboardName.$error.required">You must provide a dashboard name.</div>
         </div>
       </div>
     </div>

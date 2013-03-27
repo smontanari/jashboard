@@ -1,36 +1,29 @@
 describe("ValidationRulesBuilder", function() {
-  describe("required rule", function() {
-    it("should return no errors when the value is not empty", function() {
-      var errors = new jashboard.ValidationRulesBuilder().withRule('required').build()("test-value");
+  it("should build a validation function with one rule", function() {
+    var rule = sinon.stub()
+    rule.withArgs("test-value").returns({rule: "test-rule"});
 
-      expect(errors).toBeEmpty();
-    });
-    it("should return an error when the value is empty", function() {
-      var errors = new jashboard.ValidationRulesBuilder().withRule('required').build()("");
+    var validation = new jashboard.ValidationRulesBuilder().withRule(rule).build();
+    var result = validation("test-value");
 
-      expect(errors).toEqual({required: true});
-    });
-    it("should return an error when the value is undefined", function() {
-      var errors = new jashboard.ValidationRulesBuilder().withRule('required').build()(undefined);
-
-      expect(errors).toEqual({required: true});
-    });
+    expect(result).toEqual({rule: "test-rule"});
   });
-  describe("number rule", function() {
-    it("should return no errors when the value is a valid number", function() {
-      var errors = new jashboard.ValidationRulesBuilder().withRule('number').build()("123");
+  it("should build a validation function with multiple rules", function() {
+    var rule1 = sinon.stub();
+    var rule2 = sinon.stub();
+    var rule3 = sinon.stub();
 
-      expect(errors).toBeEmpty();
-    });
-    it("should return no error when the value is undefined", function() {
-      var errors = new jashboard.ValidationRulesBuilder().withRule('number').build()(undefined);
+    rule1.withArgs("test-value").returns({rule1: true});
+    rule3.withArgs("test-value").returns({rule3: true});
 
-      expect(errors).toBeEmpty();
-    });
-    it("should return an error when the value is not a number", function() {
-      var errors = new jashboard.ValidationRulesBuilder().withRule('number').build()("abc");
+    var validation = new jashboard.ValidationRulesBuilder()
+      .withRule(rule1)
+      .withRule(rule2)
+      .withRule(rule3)
+      .build();
 
-      expect(errors).toEqual({number: "not a number"});
-    });
+    var result = validation("test-value");
+
+    expect(result).toEqual({rule1: true, rule3: true});
   });
 });

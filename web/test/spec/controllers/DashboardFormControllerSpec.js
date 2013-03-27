@@ -30,7 +30,6 @@ describe("DashboardFormController", function() {
     it("should set a FormValidator with the dashboard form validation rules in the scope", function() {
       expect(scope.dashboardFormValidator).toEqual(formValidator);
     });
-
     it("should init the form validator", function() {
       expect(formValidator.initForm).toHaveBeenCalledWith("dashboardForm");
     });

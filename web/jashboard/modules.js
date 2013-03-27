@@ -23,11 +23,13 @@ steal('jashboard/jashboard.js')
 )
 .then(
   'jashboard/validation/FormValidator.js',
+  'jashboard/validation/CommonValidationRules.js',
   'jashboard/validation/ValidationRulesBuilder.js',
   'jashboard/controllers/scopeContextHelper.js',
   'jashboard/controllers/CreateMonitorWorkflow.js',
   'jashboard/controllers/MainController.js',
   'jashboard/controllers/DashboardFormValidationRules.js',
+  'jashboard/controllers/MonitorFormValidationRules.js',
   'jashboard/controllers/DashboardFormController.js',
   'jashboard/controllers/MonitorController.js',
   'jashboard/controllers/MonitorFormController.js'

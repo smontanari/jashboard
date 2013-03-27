@@ -1,16 +1,20 @@
 <div id="buildMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'build'), 'hiddenConfiguration': (inputMonitor.type != 'build')}" data-ng-controller="BuildMonitorFormController">
   <div class="buildFormOptions">
-    <div class="controls table-like">
-      <div>
+    <div class="form-horizontal">
+      <div class="control-group">
         <label class="control-label" for="serverName">Hostname</label>
-        <input name="serverName" type="text" placeholder="ci hostname" class="input-large" data-ng-model="inputMonitor.configuration.build.hostname">
+        <div class="controls">
+          <input name="serverName" type="text" placeholder="ci hostname" class="input-large" data-ng-model="inputMonitor.configuration.build.hostname">
+        </div>
       </div>
-      <div>
+      <div class="control-group">
         <label class="control-label" for="serverPort">Port</label>
-        <input name="serverPort" type="text" class="input-mini" data-ng-model="inputMonitor.configuration.build.port">
+        <div class="controls">
+          <input name="serverPort" type="text" class="input-mini" data-ng-model="inputMonitor.configuration.build.port">
+        </div>
       </div>
     </div>
-    <div class="controls">
+    <div class="buildType-options">
       <input type="hidden" name="configurationType" data-ng-model="inputMonitor.configuration.build.type">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
@@ -19,7 +23,7 @@
         </li>
       </ul>
       <div class="tab-content">
-        <div id="buildSettings-{{settingsType}}" class="tab-pane table-like" data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
+        <div id="buildSettings-{{settingsType}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
           <div data-ng-include="'html/plugins/build/' + settingsType + '_monitor_settings_form_partial.html'"></div>
         </div>
       </div>

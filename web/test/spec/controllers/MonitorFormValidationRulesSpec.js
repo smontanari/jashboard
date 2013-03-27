@@ -2,8 +2,10 @@ describe("MonitorFormValidationRules", function() {
   var rules, rulesBuilderConstructor, scopeRules, rulesBuilder, validationFn, scope;
   beforeEach(function() {
     scope = {
-      monitorName: "test_monitor_name",
-      monitorRefresh: "test_monitor_refresh"
+      inputMonitor: {
+        name: "test_monitor_name",
+        refreshInterval: "test_monitor_refresh"
+      }
     };
 
     validationFn = sinon.stub();
@@ -24,7 +26,7 @@ describe("MonitorFormValidationRules", function() {
     rules = new jashboard.MonitorFormValidationRules(scope);
 
     expect(rules.monitorName()).toEqual("test_validation_result");
-    expect(rulesBuilder.withRule).toHaveBeenCalledWith("required");
+    expect(rulesBuilder.withRule).toHaveBeenCalledWith(jashboard.CommonValidationRules.required);
   });
 
   describe("'monitorRefresh' field validation", function() {
@@ -35,7 +37,11 @@ describe("MonitorFormValidationRules", function() {
     });
     it("should validate with the 'number' rule", function() {
       expect(rules.monitorRefresh()).toEqual("test_validation_result");
-      expect(rulesBuilder.withRule).toHaveBeenCalledWith("number");
+      expect(rulesBuilder.withRule).toHaveBeenCalledWith(jashboard.CommonValidationRules.number);
+    });
+    it("should validate with the 'positiveNumber' rule", function() {
+      expect(rules.monitorRefresh()).toEqual("test_validation_result");
+      expect(rulesBuilder.withRule).toHaveBeenCalledWith(jashboard.CommonValidationRules.positiveNumber);
     });
   });
 });

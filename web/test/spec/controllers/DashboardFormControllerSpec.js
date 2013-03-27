@@ -1,52 +1,53 @@
 describe("DashboardFormController", function() {
-  var scope, controller;
-  var repository = {};
+  var scope, controller, formValidator, repository, validatorConstructor, dashboardRulesConstructor, eventHandler;
+
+  beforeEach(function() {
+    scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
+    scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+      eventHandler = handler;
+    });
+    dashboardRulesConstructor = sinon.stub(jashboard, "DashboardFormValidationRules");
+    dashboardRulesConstructor.withArgs(scope).returns({id: "dashboardRules"});
+    formValidator = jasmine.createSpyObj("FormValidator", ['initForm']);
+    validatorConstructor = sinon.stub(jashboard, "FormValidator");
+    validatorConstructor.withArgs({id: "dashboardRules"}).returns(formValidator);
+
+    controller = new jashboard.DashboardFormController(scope, repository);
+  });
+  afterEach(function() {
+    validatorConstructor.restore();
+    dashboardRulesConstructor.restore();
+  });
 
   describe("'OpenDashboardDialog' event listener", function() {
-    var validatorConstructor, dashboardRulesConstructor;
     beforeEach(function() {
-      scope = {
-        dashboardForm: "dashboardForm",
-        $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
-          handler();
-        })
-      };
-
-      dashboardRulesConstructor = sinon.stub(jashboard, "DashboardFormValidationRules");
-      dashboardRulesConstructor.withArgs(scope).returns({id: "dashboardRules"});
-      validatorConstructor = sinon.stub(jashboard, "FormValidator");
-      validatorConstructor.withArgs("dashboardForm", {id: "dashboardRules"}).returns({id: "validator"});
-    });
-    afterEach(function() {
-      validatorConstructor.restore();
-      dashboardRulesConstructor.restore();
-    });
-
-    it("should reset the dashboardName variable in the scope", function() {
+      repository = {};
+      scope.dashboardForm = "dashboardForm";
       scope.dashboardName = "test";
-      
-      controller = new jashboard.DashboardFormController(scope, repository);
-
-      expect(scope.dashboardName).toEqual("");
+      eventHandler();
     });
-    it("should set a new FormValidator with the dashboard form validation rules in the scope", function() {
-      controller = new jashboard.DashboardFormController(scope, repository);
 
-      expect(scope.dashboardFormValidator).toEqual({id: "validator"});
+    it("should set a FormValidator with the dashboard form validation rules in the scope", function() {
+      expect(scope.dashboardFormValidator).toEqual(formValidator);
+    });
+
+    it("should init the form validator", function() {
+      expect(formValidator.initForm).toHaveBeenCalledWith("dashboardForm");
+    });
+    it("should reset the dashboardName variable in the scope", function() {
+      expect(scope.dashboardName).toEqual("");
     });
   });
 
   describe("saveDashboard()", function() {
-    var successHandler, errorHandler, scope;
+    var successHandler, errorHandler;
     beforeEach(function() {
-      scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply', '$broadcast']);
       scope.dashboards = [{id: "some dashbaord"}];
       scope.context = {};
       repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handlers) {
         successHandler = handlers.success;
         errorHandler = handlers.error;
       });
-      controller = new jashboard.DashboardFormController(scope, repository);
 
       scope.dashboardName = "test.name";
       scope.saveDashboard();

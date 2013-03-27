@@ -8,7 +8,7 @@ describe("DashboardFormValidationRules", function() {
       withRule: sinon.stub(),
       build: function() {return validationFn;}
     };
-    rulesBuilderConstructor = sinon.stub(jashboard, "ScopeValidationRulesBuilder");
+    rulesBuilderConstructor = sinon.stub(jashboard, "ValidationRulesBuilder");
     rulesBuilderConstructor.returns(rulesBuilder);
   });
 

@@ -1,15 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
-    ScopeValidationRulesBuilder: function() {
+    ValidationRulesBuilder: function() {
       var rules = [];
-      // var evaluatePath = function(path) {
-      //   return _.reduce(path.split("."), function(object, property) {
-      //     if (_.isNull(object) || _.isUndefined(object)) {
-      //       return null;
-      //     }
-      //     return object[property];
-      //   }, scope);
-      // };
       var validationRules = {
         required: function(value) {
           if (_.isEmpty(value)) {

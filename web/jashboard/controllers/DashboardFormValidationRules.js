@@ -1,7 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
     DashboardFormValidationRules: function(scope) {
-      var validation = new jashboard.ScopeValidationRulesBuilder()
+      var validation = new jashboard.ValidationRulesBuilder()
         .withRule('required')
         .build();
       

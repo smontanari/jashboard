@@ -1,6 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
     DashboardFormController: function(scope, repository) {
+      var formValidator = new jashboard.FormValidator(new jashboard.DashboardFormValidationRules(scope));
       scope.saveDashboard = function() {
         scope.$emit("DashboardCreateStart");
         repository.createDashboard({name: this.dashboardName}, {
@@ -18,8 +19,9 @@
       };
 
       scope.$on("OpenDashboardDialog", function(event) {
+        formValidator.initForm(scope.dashboardForm);
+        scope.dashboardFormValidator = formValidator;
         scope.dashboardName = "";
-        scope.dashboardFormValidator = new jashboard.FormValidator(scope.dashboardForm, new jashboard.DashboardFormValidationRules(scope));
       });
     }
   });

@@ -1,10 +1,16 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorFormValidationRules: function(scope) {
-      var scopeRules = new jashboard.ScopeValidationRulesBuilder(scope);
+      var monitorNameValidation = new jashboard.ValidationRulesBuilder()
+        .withRule('required')
+        .build();
+
+      var monitorRefreshValidation = new jashboard.ValidationRulesBuilder()
+        .withRule('number')
+        .build();
       
-      this.monitorName = scopeRules.required('monitorName');
-      this.monitorRefresh = scopeRules.number("monitorRefresh");
+      this.monitorName = function() { return monitorNameValidation(scope.monitorName) };
+      this.monitorRefresh = function() { return monitorRefreshValidation(scope.monitorRefresh) };
     }
   });
 }(jashboard || {}));

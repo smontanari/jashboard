@@ -8,8 +8,10 @@ describe("FormValidator", function() {
         input2: {}
       };
     });
+
     it("should initialise the form attributes", function() {
-      formValidator = new jashboard.FormValidator(form, {});
+      formValidator = new jashboard.FormValidator({});
+      formValidator.initForm(form);
 
       expect(form.$pristine).toBeTruthy();
       expect(form.$dirty).toBeFalsy();
@@ -20,7 +22,8 @@ describe("FormValidator", function() {
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
       
       _.each(['input1', 'input2'], function(inputName) {
         expect(form[inputName].$pristine).toBeTruthy();
@@ -34,7 +37,8 @@ describe("FormValidator", function() {
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
 
       expect(fieldValidation.input1).toHaveBeenCalled();
       expect(fieldValidation.input2).toHaveBeenCalled();
@@ -45,7 +49,8 @@ describe("FormValidator", function() {
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
 
       expect(form.isValid).toBeTruthy();
     });
@@ -54,7 +59,8 @@ describe("FormValidator", function() {
         input1: jasmine.createSpy("fieldValidation.input1").andReturn({test: "error"}),
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
 
       expect(form.isValid).toBeFalsy();
     });
@@ -66,8 +72,8 @@ describe("FormValidator", function() {
         input1: jasmine.createSpy("fieldValidation.input1").andReturn({test: "error"})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
-
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
       formValidator.onInputChange('input1');
 
       expect(form.input1.$error).toEqual({test: "error"});
@@ -78,7 +84,8 @@ describe("FormValidator", function() {
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
       formValidator.onInputChange('input1');
 
       expect(fieldValidation.input1.calls.length).toEqual(3);
@@ -90,7 +97,8 @@ describe("FormValidator", function() {
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
       formValidator.onInputChange('input1');
 
       expect(form.isValid).toBeTruthy();
@@ -101,8 +109,9 @@ describe("FormValidator", function() {
         input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
       }
 
-      formValidator = new jashboard.FormValidator(form, fieldValidation);
       fieldValidation.input2.andReturn({test: "error"});
+      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator.initForm(form);
 
       formValidator.onInputChange('input1');
 
@@ -112,7 +121,8 @@ describe("FormValidator", function() {
   
   describe("inputInError()", function() {
     it("should return input in error if dirty and with an error", function() {
-      formValidator = new jashboard.FormValidator(form, {});
+      formValidator = new jashboard.FormValidator({});
+      formValidator.initForm(form);
 
       form.input2.$dirty = true;
       form.input2.$error = {test: "error"};
@@ -120,7 +130,8 @@ describe("FormValidator", function() {
       expect(formValidator.inputInError('input2')).toBeTruthy();
     });
     it("should return input not in error if not dirty", function() {
-      formValidator = new jashboard.FormValidator(form, {});
+      formValidator = new jashboard.FormValidator({});
+      formValidator.initForm(form);
 
       form.input2.$dirty = false;
       form.input2.$error = {test: "error"};
@@ -128,7 +139,8 @@ describe("FormValidator", function() {
       expect(formValidator.inputInError('input2')).toBeFalsy();
     });
     it("should return input not in error if with no errors", function() {
-      formValidator = new jashboard.FormValidator(form, {});
+      formValidator = new jashboard.FormValidator({});
+      formValidator.initForm(form);
 
       form.input2.$dirty = true;
       form.input2.$error = {};

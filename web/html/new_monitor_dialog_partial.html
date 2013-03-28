@@ -5,7 +5,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
-  <form name="monitorForm" data-ng-controller="MonitorFormController">
+  <div data-ng-form="monitorForm" data-ng-controller="MonitorFormController">
     <div id="configurationInput" class="modal-body" data-ng-class="workflow.state">
       <div class="genericConfiguration form-horizontal">
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorName')}">
@@ -52,5 +52,5 @@
       </span>
       <button id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</button>
     </div>
-  </form>
+  </div>
 </div>

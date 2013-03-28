@@ -1,6 +1,6 @@
 <div id="buildMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'build'), 'hiddenConfiguration': (inputMonitor.type != 'build')}" data-ng-controller="BuildMonitorFormController">
   <div class="buildFormOptions">
-    <div class="form-horizontal">
+    <div class="form-horizontal" data-ng-form="buildMonitorForm">
       <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('serverName')}">
         <label class="control-label" for="serverName">Hostname</label>
         <div class="controls">
@@ -8,19 +8,20 @@
             data-ng-model="inputMonitor.configuration.build.hostname" data-ng-change="buildMonitorFormValidator.onInputChange('serverName')">
         </div>
         <div class="controls">
-          <div id="serverNameRequiredError" class="help-inline" data-ng-show="monitorForm.serverName.$error.required">You must provide a CI server name.</div>
+          <div id="serverNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverName.$error.required">You must provide a CI server name.</div>
         </div>
       </div>
       <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('serverPort')}">
         <label class="control-label" for="serverPort">Port</label>
         <div class="controls">
-          <input name="serverPort" type="text" class="input-mini" data-ng-model="inputMonitor.configuration.build.port">
+          <input name="serverPort" type="text" class="input-mini" 
+            data-ng-model="inputMonitor.configuration.build.port" data-ng-change="buildMonitorFormValidator.onInputChange('serverPort')">
         </div>
         <div class="controls">
-          <div id="serverPortRequiredError" class="help-inline" data-ng-show="monitorForm.serverPort.$error.required">You must provide a CI server port.</div>
+          <div id="serverPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.required">You must provide a CI server port.</div>
         </div>
         <div class="controls">
-          <div id="serverPortNumberError" class="help-inline" data-ng-show="monitorForm.serverPort.$error.positiveInteger">You must enter a valid port number.</div>
+          <div id="serverPortNumberError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.positiveInteger">You must enter a valid port number.</div>
         </div>
       </div>
     </div>

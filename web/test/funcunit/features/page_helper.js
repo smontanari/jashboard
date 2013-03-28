@@ -20,10 +20,10 @@ var pageHelper = (function(helper) {
     });
   };
 
-  helper.verifyElementDisabled = function(selector) {
+  helper.verifyElementDisabled = function(selector, message) {
     S(selector).visible(function() {
       var disabled = S(selector).attr("disabled");
-      ok(!_.isEmpty(disabled));
+      ok(!_.isEmpty(disabled), message);
     });
   };
 
@@ -51,5 +51,17 @@ var pageHelper = (function(helper) {
       });
     });
   };
+  helper.verifyInputError = function(input, expectedError, callback) {
+    FuncUnit.wait(500, function() {
+      pageHelper.inputText("input[name='" + input.inputName + "']", input.inputValue);
+      S(expectedError.errorSelector).visible(function() {
+        equal(S(expectedError.errorSelector).text().trim(), expectedError.errorMessage, "The error message is equal to " + expectedError.message);
+      }, "should display error");
+      if (_.isFunction(callback)) {
+        callback();
+      }
+    });
+  };
+
   return helper;
 }(pageHelper || {}));

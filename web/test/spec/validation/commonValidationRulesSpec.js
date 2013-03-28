@@ -28,7 +28,7 @@ describe("commonValidationRules", function() {
       expect(errors).toBeEmpty();
     });
     it("should return an error when the value is not a number", function() {
-      var errors = jashboard.commonValidationRules.number("abc");
+      var errors = jashboard.commonValidationRules.number("123abc");
 
       expect(errors).toEqual({number: true});
     });

@@ -14,8 +14,8 @@
             <input type="text" name="monitorName" class="input-large" placeholder="monitor name" 
               data-ng-model="inputMonitor.name" data-ng-change="monitorFormValidator.onInputChange('monitorName')">
           </div>
-          <div id="monitorNameErrors" class="controls">
-            <div class="help-inline" data-ng-show="monitorForm.monitorName.$error.required">You must provide a monitor name.</div>
+          <div class="controls">
+            <div id="monitorNameRequiredError" class="help-inline" data-ng-show="monitorForm.monitorName.$error.required">You must provide a monitor name.</div>
           </div>
         </div>
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorRefresh')}">
@@ -24,10 +24,10 @@
             <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="inputMonitor.refreshInterval" 
               data-ng-change="monitorFormValidator.onInputChange('monitorRefresh')"> seconds
           </div>
-          <div id="monitorNameErrors" class="controls">
+          <div class="controls">
             <div/>
-            <div class="help-inline" data-ng-show="monitorForm.monitorRefresh.$error.number">You must enter a valid number.</div>
-            <div class="help-inline" data-ng-show="monitorForm.monitorRefresh.$error.positiveNumber">You must enter a positive number.</div>
+            <div id="monitorRefreshRequiredError" class="help-inline" data-ng-show="monitorForm.monitorRefresh.$error.number">You must enter a valid number.</div>
+            <div id="monitorRefreshNumberError" class="help-inline" data-ng-show="monitorForm.monitorRefresh.$error.positiveNumber">You must enter a positive number.</div>
           </div>
         </div>
         <div class="control-group">
@@ -47,7 +47,8 @@
     </div>
     <div class="modal-footer">
       <span data-ng-repeat="workflowAction in workflow.actions">
-        <button id="configuration-{{workflowAction}}" class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</button>
+        <button id="configuration-{{workflowAction}}" data-ng-disabled="monitorForm.$pristine || !monitorForm.isValid"
+          class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</button>
       </span>
       <button id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</button>
     </div>

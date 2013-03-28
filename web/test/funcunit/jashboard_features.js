@@ -15,6 +15,7 @@ steal(
     'dashboard_delete',
     'dashboard_actions_errors',
     'monitor_display',
+    'monitor_create_validation',
     'build_monitor_create',
     'monitor_positioning',
     'monitor_resizing',

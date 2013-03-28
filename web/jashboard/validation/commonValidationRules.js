@@ -7,7 +7,7 @@
         }
       },
       number: function(value) {
-        if (!_.isEmpty(value) && !_.isFinite(parseInt(value, 10))) {
+        if (!_.isEmpty(value) && !_.isFinite(value)) {
           return {number: true};
         }
       },

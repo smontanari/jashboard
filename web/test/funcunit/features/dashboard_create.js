@@ -29,24 +29,21 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     S("#new-dashboard-form").invisible("should not be visible");
   });
 
-  test("should disable the 'Save' button if the dashboard name is empty", function() {
+  test("Dashboard name validation", function() {
     jashboardFeatureHelper.openDashboardDialog();
-    pageHelper.verifyElementDisabled("#saveDashboard");
-  });
+    pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
 
-  test("should display a validation error and disable the 'Save' button if the dashboard name is cleared", function() {
-    var expectedMessage = "You must provide a dashboard name.";
-    jashboardFeatureHelper.openDashboardDialog();
     S("#dashboardNameRequiredError").invisible("should not display error");
     
     pageHelper.inputText("input[name='dashboardName']", "test name");
     
+    var expectedMessage = "You must provide a dashboard name.";
     FuncUnit.wait(500, function() {
       pageHelper.inputText("input[name='dashboardName']", "");
       S("#dashboardNameRequiredError").visible(function() {
         equal(S("#dashboardNameRequiredError").text().trim(), expectedMessage, "The error message is equal to " + expectedMessage);
       }, "should display error");
-      pageHelper.verifyElementDisabled("#saveDashboard");
+      pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
     });
   });
 });

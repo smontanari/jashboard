@@ -34,16 +34,14 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
     pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
 
     S("#dashboardNameRequiredError").invisible("should not display error");
-    
     pageHelper.inputText("input[name='dashboardName']", "test name");
     
-    var expectedMessage = "You must provide a dashboard name.";
-    FuncUnit.wait(500, function() {
-      pageHelper.inputText("input[name='dashboardName']", "");
-      S("#dashboardNameRequiredError").visible(function() {
-        equal(S("#dashboardNameRequiredError").text().trim(), expectedMessage, "The error message is equal to " + expectedMessage);
-      }, "should display error");
-      pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
-    });
+    pageHelper.verifyInputError(
+      {inputName: "dashboardName", inputValue: ""},
+      {errorSelector: "#dashboardNameRequiredError", errorMessage: "You must provide a dashboard name."},
+      function() {
+        pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
+      }
+    );
   });
 });

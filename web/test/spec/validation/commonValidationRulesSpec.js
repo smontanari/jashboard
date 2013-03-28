@@ -40,7 +40,7 @@ describe("commonValidationRules", function() {
       expect(errors).toBeEmpty();
     });
     it("should return no errors when the value is a positive number", function() {
-      var errors = jashboard.commonValidationRules.positiveNumber("123");
+      var errors = jashboard.commonValidationRules.positiveNumber("123.345");
 
       expect(errors).toBeEmpty();
     });
@@ -53,6 +53,28 @@ describe("commonValidationRules", function() {
       var errors = jashboard.commonValidationRules.positiveNumber("-123");
 
       expect(errors).toEqual({positiveNumber: true});
+    });
+  });
+  describe("'positiveInteger'", function() {
+    it("should return no errors when the value is not a number", function() {
+      var errors = jashboard.commonValidationRules.positiveInteger("");
+
+      expect(errors).toBeEmpty();
+    });
+    it("should return no errors when the value is a positive integer", function() {
+      var errors = jashboard.commonValidationRules.positiveInteger("123");
+
+      expect(errors).toBeEmpty();
+    });
+    it("should return an error when the value is 0", function() {
+      var errors = jashboard.commonValidationRules.positiveInteger("0");
+
+      expect(errors).toEqual({positiveInteger: true});
+    });
+    it("should return an error when the value is negative", function() {
+      var errors = jashboard.commonValidationRules.positiveInteger("-123");
+
+      expect(errors).toEqual({positiveInteger: true});
     });
   });
 });

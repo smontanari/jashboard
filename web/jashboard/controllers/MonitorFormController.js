@@ -2,11 +2,10 @@
   jashboard = _.extend(module, {
     MonitorFormController: function(scope, repository, pluginManager, monitorLayoutManager) {
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
-      var formValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
+      scope.monitorFormValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
       var parseRefreshInterval = function(inputValue) {
-        var value = parseInt(inputValue, 10);
-        if (_.isFinite(value)) {
-          return value;
+        if (_.isFinite(inputValue)) {
+          return parseInt(inputValue, 10);
         }
         return 0;
       };
@@ -39,10 +38,8 @@
       };
 
       scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
-        scope.inputMonitor = {};
-        formValidator.initForm(scope.monitorForm);
-        scope.monitorFormValidator = formValidator;
         scope.inputMonitor = {dashboard_id: dashboard_id, configuration: {}};
+        scope.monitorFormValidator.initForm(scope.monitorForm);
         scope.workflow = new jashboard.CreateMonitorWorkflow(saveMonitorCallback);
       });
     }

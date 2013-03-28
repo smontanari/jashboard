@@ -9,9 +9,13 @@
 
       this.build = function() {
         return function(value) {
+          var v = value;
+          if (_.isString(value)) {
+            v = value.trim();
+          }
           var errors = {};
           _.each(rules, function(rule) {
-            errors = _.extend(errors, rule(value));
+            errors = _.extend(errors, rule(v));
           });
           return errors;
         };

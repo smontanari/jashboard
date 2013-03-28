@@ -15,6 +15,14 @@
         if (parseInt(value, 10) <= 0) {
           return {positiveNumber: true};
         }
+      },
+      positiveInteger: function(value) {
+        if (!_.isEmpty(value)) {
+          var match = /^[1-9]\d*$/.exec(value);
+          if (_.isNull(match)) {
+            return {positiveInteger: true};
+          }
+        }
       }
     }
   });

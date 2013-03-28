@@ -5,7 +5,7 @@
       {
         "id": "monitor_1",
         "name": "Zombie-Dash build",
-        "refresh_interval": 10,
+        "refresh_interval": 0,
         "type": "build",
         "position": {"top": 0, "left": 0},
         "size": {"width": 240, "height": 140},
@@ -24,7 +24,7 @@
       {
         "id": "monitor_2",
         "name": "Epic build",
-        "refresh_interval": 15,
+        "refresh_interval": 0,
         "type": "build",
         "position": {"top": 0, "left": 0},
         "size": {"width": 240, "height": 140},
@@ -40,7 +40,7 @@
       {
         "id": "monitor_3",
         "name": "Random text",
-        "refresh_interval": 30,
+        "refresh_interval": 0,
         "type": "ipsum",
         "position": {"top": 0, "left": 260},
         "size": {"width": 280, "height": 150},

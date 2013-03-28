@@ -1,11 +1,15 @@
 describe("FormValidator", function() {
-  var formValidator, form;
+  var formValidator, form, validationRules;
 
   describe("Initialisation", function() {
     beforeEach(function() {
       form = {
         input1: {},
         input2: {}
+      };
+      validationRules = {
+        input1: jasmine.createSpy("validationRules.input1").andReturn({}),
+        input2: jasmine.createSpy("validationRules.input2").andReturn({})
       };
     });
 
@@ -17,12 +21,7 @@ describe("FormValidator", function() {
       expect(form.$dirty).toBeFalsy();
     });
     it("should initialise the input fields", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
-      }
-
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator = new jashboard.FormValidator(validationRules);
       formValidator.initForm(form);
       
       _.each(['input1', 'input2'], function(inputName) {
@@ -32,34 +31,24 @@ describe("FormValidator", function() {
       });
     });
     it("should validate the form invoking all validation rules", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
-      }
-
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator = new jashboard.FormValidator(validationRules);
       formValidator.initForm(form);
 
-      expect(fieldValidation.input1).toHaveBeenCalled();
-      expect(fieldValidation.input2).toHaveBeenCalled();
+      expect(validationRules.input1).toHaveBeenCalled();
+      expect(validationRules.input2).toHaveBeenCalled();
     });
     it("should set the form as valid when all validation rules succeed", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
-      }
-
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator = new jashboard.FormValidator(validationRules);
       formValidator.initForm(form);
 
       expect(form.isValid).toBeTruthy();
     });
     it("should set the form as not valid when some validation rules fail", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({test: "error"}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
-      }
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      var rules = {
+        input1: jasmine.createSpy("validationRules.input1").andReturn({test: "error"}),
+        input2: jasmine.createSpy("validationRules.input2").andReturn({})
+      };
+      formValidator = new jashboard.FormValidator(rules);
       formValidator.initForm(form);
 
       expect(form.isValid).toBeFalsy();
@@ -68,49 +57,39 @@ describe("FormValidator", function() {
 
   describe("onInputChange()", function() {
     it("should get the error object from the validation rule", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({test: "error"})
+      var rules = {
+        input1: jasmine.createSpy("validationRules.input1").andReturn({test: "error"})
       }
 
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator = new jashboard.FormValidator(rules);
       formValidator.initForm(form);
       formValidator.onInputChange('input1');
 
       expect(form.input1.$error).toEqual({test: "error"});
     });
     it("should re-validate the form invoking all validation rules", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
-      }
-
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator = new jashboard.FormValidator(validationRules);
       formValidator.initForm(form);
       formValidator.onInputChange('input1');
 
-      expect(fieldValidation.input1.calls.length).toEqual(3);
-      expect(fieldValidation.input2.calls.length).toEqual(2);
+      expect(validationRules.input1.calls.length).toEqual(3);
+      expect(validationRules.input2.calls.length).toEqual(2);
     });
     it("should set the form as valid when all validation rules succeed", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
-      }
-
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      formValidator = new jashboard.FormValidator(validationRules);
       formValidator.initForm(form);
       formValidator.onInputChange('input1');
 
       expect(form.isValid).toBeTruthy();
     });
     it("should set the form as not valid when some validation rules fail", function() {
-      var fieldValidation = {
-        input1: jasmine.createSpy("fieldValidation.input1").andReturn({test: "error"}),
-        input2: jasmine.createSpy("fieldValidation.input2").andReturn({})
+      var validationRules = {
+        input1: jasmine.createSpy("validationRules.input1").andReturn({test: "error"}),
+        input2: jasmine.createSpy("validationRules.input2").andReturn({})
       }
 
-      fieldValidation.input2.andReturn({test: "error"});
-      formValidator = new jashboard.FormValidator(fieldValidation);
+      validationRules.input2.andReturn({test: "error"});
+      formValidator = new jashboard.FormValidator(validationRules);
       formValidator.initForm(form);
 
       formValidator.onInputChange('input1');
@@ -120,6 +99,11 @@ describe("FormValidator", function() {
   });
   
   describe("inputInError()", function() {
+    it("should return undefined if the form has not been yet initialised", function() {
+      formValidator = new jashboard.FormValidator({});
+
+      expect(formValidator.inputInError('test_intpu')).toBeUndefined();
+    });
     it("should return input in error if dirty and with an error", function() {
       formValidator = new jashboard.FormValidator({});
       formValidator.initForm(form);

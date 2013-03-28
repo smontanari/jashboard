@@ -1,12 +1,12 @@
-describe("MonitorFormValidationRules", function() {
+describe("BuildMonitorFormValidationRules", function() {
   var rules, rulesBuilderConstructor, scopeRules, rulesBuilder, validationFn, scope;
   beforeEach(function() {
-    scope = {
-      inputMonitor: {
-        name: "test_monitor_name",
-        refreshInterval: "test_monitor_refresh"
+    scope = {inputMonitor: {configuration: {
+      build: {
+        hostname: "test_server_name",
+        port: "1234"
       }
-    };
+    }}};
 
     validationFn = sinon.stub();
     var fakeRulesBuilder = jasmine.createSpyObj("ValidationRulesBuilder", ['withRule', 'build']);
@@ -24,23 +24,23 @@ describe("MonitorFormValidationRules", function() {
     rulesBuilderConstructor.restore();
   });
 
-  it("should validate the 'monitorName' field with the 'required' rule", function() {
+  it("should validate the 'serverName' field with the 'required' rule", function() {
     rulesBuilder.withRule.withArgs(jashboard.commonValidationRules.required).returns(rulesBuilder);
-    validationFn.withArgs("test_monitor_name").returns("test_validation_result");
+    validationFn.withArgs("test_server_name").returns("test_validation_result");
 
-    rules = new jashboard.MonitorFormValidationRules(scope);
+    rules = new jashboard.BuildMonitorFormValidationRules(scope);
 
-    expect(rules.monitorName()).toEqual("test_validation_result");
+    expect(rules.serverName()).toEqual("test_validation_result");
   });
 
-  it("should validate the 'monitorRefresh' field with the 'number' and 'positiveNumber' rule", function() {
-    _.each(['number', 'positiveNumber'], function(rule) {
+  it("should validate the 'serverPort' field with the 'required' and 'positiveInteger' rule", function() {
+    _.each(['required', 'positiveInteger'], function(rule) {
       rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
     });
-    validationFn.withArgs("test_monitor_refresh").returns("test_validation_result");
+    validationFn.withArgs("1234").returns("test_validation_result");
 
-    rules = new jashboard.MonitorFormValidationRules(scope);
+    rules = new jashboard.BuildMonitorFormValidationRules(scope);
 
-    expect(rules.monitorRefresh()).toEqual("test_validation_result");
+    expect(rules.serverPort()).toEqual("test_validation_result");
   });
 });

@@ -1,6 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
-    FormValidator: function(validationRules) {
+    FormValidator: function(rules) {
+      var validationRules = rules;
       var form;
 
       var validateForm = function() {
@@ -24,7 +25,9 @@
         validateForm();
       };
       this.inputInError = function(inputName) {
-        return form[inputName].$dirty && !_.isEmpty(form[inputName].$error);
+        if (!_.isUndefined(form)) {
+          return form[inputName].$dirty && !_.isEmpty(form[inputName].$error);
+        }
       };
     }
   });

@@ -26,11 +26,10 @@
       </div>
     </div>
     <div class="buildType-options">
-      <input type="hidden" name="configurationType" data-ng-model="inputMonitor.configuration.build.type">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
         <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-          <a id="buildSettings-{{settingsType}}-tab" data-toggle="tab" href="#buildSettings-{{settingsType}}" data-ng-click="setConfigurationType(settingsType)">{{settingsType}}</a>
+          <a id="buildSettings-{{settingsType}}-tab" data-toggle="tab" href="#buildSettings-{{settingsType}}" data-ng-click="inputMonitor.configuration.build.type = settingsType">{{settingsType}}</a>
         </li>
       </ul>
       <div class="tab-content">

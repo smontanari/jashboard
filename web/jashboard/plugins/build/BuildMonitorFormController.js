@@ -11,10 +11,6 @@
         };
         scope.buildMonitorFormValidator.initForm(scope.buildMonitorForm);
       });
-
-      scope.setConfigurationType = function(type) {
-        scope.inputMonitor.configuration.build.type = type;
-      };
     }
   });
   jashboard.application.controller("BuildMonitorFormController", ['$scope', jashboard.plugin.build.BuildMonitorFormController])

@@ -1,15 +1,13 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorFormController: function(scope, repository, pluginManager, monitorLayoutManager) {
-      scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
-      scope.monitorFormValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
       var parseRefreshInterval = function(inputValue) {
         if (_.isFinite(inputValue)) {
           return parseInt(inputValue, 10);
         }
         return 0;
       };
-      var saveMonitorCallback = function() {
+      var saveMonitor = function() {
         var dashboard = _.find(scope.dashboards, function(dashboard) {
           return (dashboard.id === scope.inputMonitor.dashboard_id);
         });
@@ -37,10 +35,17 @@
         scope.$emit("CloseMonitorDialog");
       };
 
+      scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+      scope.monitorFormValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
+
       scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
-        scope.inputMonitor = {dashboard_id: dashboard_id, configuration: {}};
-        scope.monitorFormValidator.initForm(scope.monitorForm);
-        scope.workflow = new jashboard.CreateMonitorWorkflow(saveMonitorCallback);
+        scope.inputMonitor = {
+          dashboard_id: dashboard_id,
+          type: _.first(scope.availableMonitorTypes),
+          configuration: {}
+        };
+        scope.monitorFormValidator.initForm(scope.baseMonitorForm);
+        scope.workflow = new jashboard.CreateMonitorWorkflow(saveMonitor);
       });
     }
   });

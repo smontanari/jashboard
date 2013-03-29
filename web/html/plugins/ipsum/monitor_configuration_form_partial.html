@@ -1,5 +1,5 @@
-<div id="ipsumMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'ipsum'), 'hiddenConfiguration': (inputMonitor.type != 'ipsum')}" data-ng-controller="IpsumMonitorFormController">
-  <div class="form-horizontal">
+<div id="ipsumMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'ipsum'), 'hiddenConfiguration': (inputMonitor.type != 'ipsum')}">
+  <div class="form-horizontal" data-ng-controller="IpsumMonitorFormController">
     <div class="control-group">
       <label class="control-label" for="numberOfSentences">Number of sentences</label>
       <div class="controls">
@@ -12,7 +12,6 @@
         <select name="language" class="input-medium" 
           data-ng-model="inputMonitor.configuration.ipsum.language" 
           data-ng-options="l for l in availableLanguages">
-          <option value="">choose language</option>
         </select>
       </div>
     </div>

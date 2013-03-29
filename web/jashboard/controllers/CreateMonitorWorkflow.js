@@ -2,7 +2,7 @@
   jashboard = _.extend(module, {
     CreateMonitorWorkflow: function(saveCallback) {
       this.actions = ["next"];
-      this.state = "showGenericConfiguration";
+      this.state = "showBaseConfiguration";
 
       this.next = function() {
         this.state = "showSelectedConfiguration";
@@ -10,7 +10,7 @@
       };
 
       this.back = function() {
-        this.state = "showGenericConfiguration";
+        this.state = "showBaseConfiguration";
         this.actions = ["next"];
       };
 

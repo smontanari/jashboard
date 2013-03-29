@@ -43,17 +43,21 @@ describe("MonitorFormController", function() {
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
       spyOn(jashboard, "CreateMonitorWorkflow").andReturn({test: "workflow"});
-      scope.monitorForm = "monitorForm";
+      scope.baseMonitorForm = "baseMonitorForm";
       scope.inputMonitor = {test: "test"};
 
       listener({}, "test_dashboard_id");
     });
   
     it("should init the form validator", function() {
-      expect(formValidator.initForm).toHaveBeenCalledWith("monitorForm");
+      expect(formValidator.initForm).toHaveBeenCalledWith("baseMonitorForm");
     });
     it("should reset the inputMonitor variable in the scope", function() {
-      expect(scope.inputMonitor).toEqual({dashboard_id: "test_dashboard_id", configuration: {}});
+      expect(scope.inputMonitor).toEqual({
+        dashboard_id: "test_dashboard_id",
+        type: "test_type1",
+        configuration: {}
+      });
     });
     it("should instantiate a new workflow", function() {
       expect(jashboard.CreateMonitorWorkflow).toHaveBeenCalledWith(jasmine.any(Function));

@@ -9,8 +9,8 @@ describe("CreateMonitorWorkflow", function() {
   it("should have one initial action equal to 'next'", function() {
     expect(workflow.actions).toEqual(["next"]);
   })
-  it("should have the state equal to 'showGenericConfiguration'", function() {
-    expect(workflow.state).toEqual("showGenericConfiguration");
+  it("should have the state equal to 'showBaseConfiguration'", function() {
+    expect(workflow.state).toEqual("showBaseConfiguration");
   });
 
   describe("Action: next", function() {
@@ -30,8 +30,8 @@ describe("CreateMonitorWorkflow", function() {
       workflow['next']();
       workflow['back']();
     });
-    it("should have the state equal to 'showGenericConfiguration'", function() {
-      expect(workflow.state).toEqual("showGenericConfiguration");
+    it("should have the state equal to 'showBaseConfiguration'", function() {
+      expect(workflow.state).toEqual("showBaseConfiguration");
     })
     it("should have one initial action equal to 'Next'", function() {
       expect(workflow.actions).toEqual(["next"]);

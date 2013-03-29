@@ -5,9 +5,9 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
-  <div data-ng-form="monitorForm" data-ng-controller="MonitorFormController">
+  <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController">
     <div id="configurationInput" class="modal-body" data-ng-class="workflow.state">
-      <div class="genericConfiguration form-horizontal">
+      <div class="baseConfiguration form-horizontal">
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorName')}">
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">
@@ -15,7 +15,7 @@
               data-ng-model="inputMonitor.name" data-ng-change="monitorFormValidator.onInputChange('monitorName')">
           </div>
           <div class="controls">
-            <div id="monitorNameRequiredError" class="help-inline" data-ng-show="monitorForm.monitorName.$error.required">You must provide a monitor name.</div>
+            <div id="monitorNameRequiredError" class="help-inline" data-ng-show="baseMonitorForm.monitorName.$error.required">You must provide a monitor name.</div>
           </div>
         </div>
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorRefresh')}">
@@ -26,8 +26,8 @@
           </div>
           <div class="controls">
             <div/>
-            <div id="monitorRefreshRequiredError" class="help-inline" data-ng-show="monitorForm.monitorRefresh.$error.number">You must enter a valid number.</div>
-            <div id="monitorRefreshNumberError" class="help-inline" data-ng-show="monitorForm.monitorRefresh.$error.positiveNumber">You must enter a positive number.</div>
+            <div id="monitorRefreshRequiredError" class="help-inline" data-ng-show="baseMonitorForm.monitorRefresh.$error.number">You must enter a valid number.</div>
+            <div id="monitorRefreshNumberError" class="help-inline" data-ng-show="baseMonitorForm.monitorRefresh.$error.positiveNumber">You must enter a positive number.</div>
           </div>
         </div>
         <div class="control-group">
@@ -36,7 +36,6 @@
             <select name="monitorType" class="input-medium" 
               data-ng-model="inputMonitor.type" 
               data-ng-options="t for t in availableMonitorTypes">
-              <option value="">choose type</option>
             </select>
           </div>
         </div>
@@ -47,7 +46,7 @@
     </div>
     <div class="modal-footer">
       <span data-ng-repeat="workflowAction in workflow.actions">
-        <button id="configuration-{{workflowAction}}" data-ng-disabled="monitorForm.$pristine || !monitorForm.isValid"
+        <button id="configuration-{{workflowAction}}" data-ng-disabled="baseMonitorForm.$pristine || !baseMonitorForm.isValid"
           class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</button>
       </span>
       <button id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</button>

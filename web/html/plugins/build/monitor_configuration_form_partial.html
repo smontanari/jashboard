@@ -1,6 +1,6 @@
-<div id="buildMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'build'), 'hiddenConfiguration': (inputMonitor.type != 'build')}" data-ng-controller="BuildMonitorFormController">
-  <div class="buildFormOptions">
-    <div class="form-horizontal" data-ng-form="buildMonitorForm">
+<div id="buildMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'build'), 'hiddenConfiguration': (inputMonitor.type != 'build')}">
+  <div class="buildFormOptions" data-ng-form="buildMonitorForm" data-ng-controller="BuildMonitorFormController">
+    <div class="form-horizontal">
       <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('serverName')}">
         <label class="control-label" for="serverName">Hostname</label>
         <div class="controls">

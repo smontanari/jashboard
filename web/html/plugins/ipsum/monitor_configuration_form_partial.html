@@ -1,9 +1,14 @@
 <div id="ipsumMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'ipsum'), 'hiddenConfiguration': (inputMonitor.type != 'ipsum')}">
-  <div class="form-horizontal" data-ng-controller="IpsumMonitorFormController">
-    <div class="control-group">
+  <div class="form-horizontal" data-ng-form="ipsumMonitorForm" data-ng-controller="IpsumMonitorFormController">
+    <div class="control-group" data-ng-class="{'error': ipsumMonitorFormValidator.inputInError('numberOfSentences')}">
       <label class="control-label" for="numberOfSentences">Number of sentences</label>
       <div class="controls">
-        <input name="numberOfSentences" type="text" class="input-mini" data-ng-model="inputMonitor.configuration.ipsum.numberOfSentences">
+        <input name="numberOfSentences" type="text" class="input-mini"
+          data-ng-model="inputMonitor.configuration.ipsum.numberOfSentences" data-ng-change="ipsumMonitorFormValidator.onInputChange('numberOfSentences')">
+      </div>
+      <div class="controls">
+        <div id="numberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.required">You must provide a number of sentences.</div>
+        <div id="numberOfSentencesNumberError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.positiveInteger">You must enter a valid number.</div>
       </div>
     </div>
     <div class="control-group">

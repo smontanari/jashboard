@@ -3,11 +3,14 @@
     IpsumMonitorFormController: function(scope) {
       var languages = ['english', 'french', 'latin'];
       scope.availableLanguages = languages;
+      scope.ipsumMonitorFormValidator = new jashboard.FormValidator(new jashboard.IpsumMonitorFormValidationRules(scope));
 
       scope.$on("OpenMonitorDialog", function(event) {
         scope.inputMonitor.configuration.ipsum = {
-          language: languages[0]
+          language: _.first(languages)
         };
+        scope.ipsumMonitorFormValidator.initForm(scope.ipsumMonitorForm);
+        scope.workflow.registerMonitorTypeForm("ipsum", scope.ipsumMonitorForm);
       });
     }
   });

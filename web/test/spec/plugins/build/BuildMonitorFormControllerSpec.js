@@ -1,5 +1,5 @@
 describe("BuildMonitorFormController", function() {
-  var scope, monitorRulesConstructor, validatorConstructor, listener;
+  var scope, monitorRulesConstructor, validatorConstructor, listener, formValidator;
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$on']);
 

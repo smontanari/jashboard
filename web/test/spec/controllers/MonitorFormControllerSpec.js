@@ -60,7 +60,7 @@ describe("MonitorFormController", function() {
       });
     });
     it("should instantiate a new workflow", function() {
-      expect(jashboard.CreateMonitorWorkflow).toHaveBeenCalledWith(jasmine.any(Function));
+      expect(jashboard.CreateMonitorWorkflow).toHaveBeenCalledWith(scope.baseMonitorForm, scope.inputMonitor, jasmine.any(Function));
       expect(scope.workflow).toEqual({test: "workflow"});
     });
   });
@@ -68,7 +68,7 @@ describe("MonitorFormController", function() {
   describe("save action callback", function() {
     var successHandler, errorHandler, saveMonitorCallback, adapter;
     beforeEach(function() {
-      spyOn(jashboard, "CreateMonitorWorkflow").andCallFake(function(handler) {
+      spyOn(jashboard, "CreateMonitorWorkflow").andCallFake(function(form, model, handler) {
         saveMonitorCallback = handler;
         return {};
       });

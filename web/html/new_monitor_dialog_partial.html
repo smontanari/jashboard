@@ -46,7 +46,7 @@
     </div>
     <div class="modal-footer">
       <span data-ng-repeat="workflowAction in workflow.actions">
-        <button id="configuration-{{workflowAction}}" data-ng-disabled="baseMonitorForm.$pristine || !baseMonitorForm.isValid"
+        <button id="configuration-{{workflowAction}}" data-ng-disabled="!workflow.isActionEnabled(workflowAction)"
           class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</button>
       </span>
       <button id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</button>

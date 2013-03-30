@@ -10,6 +10,7 @@
           type: _.first(buildTypes)
         };
         scope.buildMonitorFormValidator.initForm(scope.buildMonitorForm);
+        scope.workflow.registerMonitorTypeForm("build", scope.buildMonitorForm);
       });
     }
   });

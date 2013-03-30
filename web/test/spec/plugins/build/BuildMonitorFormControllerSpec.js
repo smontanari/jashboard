@@ -43,6 +43,7 @@ describe("BuildMonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
+      scope.workflow = jasmine.createSpyObj("workflow", ['registerMonitorTypeForm']);
       scope.buildMonitorForm = "buildMonitorForm";
       listener({});
     });
@@ -51,6 +52,9 @@ describe("BuildMonitorFormController", function() {
     });
     it("should reset the inputMonitor.configuration variable in the scope", function() {
       expect(scope.inputMonitor.configuration.build).toEqual({type: "test_build_type1"});
+    });
+    it("should register the buildMonitorForm to the workflow", function() {
+      expect(scope.workflow.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");
     });
   });
 });

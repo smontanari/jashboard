@@ -45,7 +45,7 @@
           configuration: {}
         };
         scope.monitorFormValidator.initForm(scope.baseMonitorForm);
-        scope.workflow = new jashboard.CreateMonitorWorkflow(saveMonitor);
+        scope.workflow = new jashboard.CreateMonitorWorkflow(scope.baseMonitorForm, scope.inputMonitor, saveMonitor);
       });
     }
   });

@@ -32,7 +32,7 @@ describe("BuildMonitorFormController", function() {
   });
 
   it("should put in the scope the different settings types", function() {
-    expect(scope.availableBuildSettingsTypes).toEqual(["test_build_type1", "test_build_type2"]);
+    expect(scope.availableCiServerTypes).toEqual(["test_build_type1", "test_build_type2"]);
   });
   it("should listen to the 'OpenMonitorDialog' event", function() {
     expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));

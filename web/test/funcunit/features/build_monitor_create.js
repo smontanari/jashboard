@@ -13,8 +13,12 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
 
     pageHelper.inputText("input[name='serverName']", data.serverName);
     pageHelper.inputText("input[name='serverPort']", data.serverPort);
-    S("#buildSettings-" + data.configurationType + "-tab").visible().click();
+    S("#ciServerType-" + data.configurationType + "-tab").visible().click();
     monitorTypeConfigurationInput[data.configurationType](data);
+  };
+
+  var verifySaveButtonDisabled = function() {
+    pageHelper.verifyElementDisabled("#configuration-save", "the Save button should be disabled");
   };
 
   test("should create a new jenkins build monitor", function() {
@@ -82,6 +86,65 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
         );
       });
     });
+  });
+  test("Build monitor form fields validation", function() {
+    jashboardFeatureHelper.openMonitorDialog("dashboard_1");
+    jashboardFeatureHelper.inputGenericMonitorData({
+      monitorName: "Test jenkins-monitor",
+      monitorRefresh: "30",
+      monitorType: "build"
+    });
+    verifySaveButtonDisabled();
+
+    S("#buildServerNameRequiredError").invisible("should not display error");
+    S("#buildServerPortRequiredError").invisible("should not display error");
+    S("#buildServerPortNumberError").invisible("should not display error");
+    pageHelper.inputText("input[name='serverName']", "test name");
+    pageHelper.inputText("input[name='serverPort']", "123");
+    
+    pageHelper.verifyInputError(
+      {inputName: "serverName", inputValue: ""},
+      {errorSelector: "#buildServerNameRequiredError", errorMessage: "You must provide a CI server name."},
+      verifySaveButtonDisabled
+    );
+    pageHelper.inputText("input[name='serverName']", "test name");
+    pageHelper.verifyInputError(
+      {inputName: "serverPort", inputValue: ""},
+      {errorSelector: "#buildServerPortRequiredError", errorMessage: "You must provide a CI server port."},
+      verifySaveButtonDisabled
+    );
+    pageHelper.verifyInputError(
+      {inputName: "serverPort", inputValue: "abc"},
+      {errorSelector: "#buildServerPortNumberError", errorMessage: "You must enter a valid port number."},
+      verifySaveButtonDisabled
+    );
+
+    pageHelper.inputText("input[name='jenkins_build_id']", "test_build_id");
+    pageHelper.verifyInputError(
+      {inputName: "jenkins_build_id", inputValue: ""},
+      {errorSelector: "#jenkinsBuildIdRequiredError", errorMessage: "You must provide a Jenkins build id."},
+      verifySaveButtonDisabled
+    );
+
+    S("#ciServerType-go-tab").visible().click();
+    pageHelper.inputText("input[name='go_pipeline']", "test_pipeline");
+    pageHelper.verifyInputError(
+      {inputName: "go_pipeline", inputValue: ""},
+      {errorSelector: "#goPipelineRequiredError", errorMessage: "You must provide a Go pipeline."},
+      verifySaveButtonDisabled
+    );
+    pageHelper.inputText("input[name='go_stage']", "test_stage");
+    pageHelper.verifyInputError(
+      {inputName: "go_stage", inputValue: ""},
+      {errorSelector: "#goStageRequiredError", errorMessage: "You must provide a Go stage."},
+      verifySaveButtonDisabled
+    );
+    pageHelper.inputText("input[name='go_job']", "test_job");
+    pageHelper.verifyInputError(
+      {inputName: "go_job", inputValue: ""},
+      {errorSelector: "#goJobRequiredError", errorMessage: "You must provide a Go job."},
+      verifySaveButtonDisabled
+    );
   });
 });
 

@@ -23,7 +23,7 @@ describe("BuildMonitorAdapter", function() {
   });
 
   it("should invoke a build configuration validator", function() {
-    plugin.validateConfiguration("test");
+    plugin.getMonitorConfiguration("test");
 
     expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
   });

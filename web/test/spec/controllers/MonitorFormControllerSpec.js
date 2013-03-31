@@ -81,7 +81,7 @@ describe("MonitorFormController", function() {
         errorHandler = handlers.error;
       });
       adapter = {
-        validateConfiguration: jasmine.createSpy("validateConfiguration()").andReturn({test: "test_configuration"}),
+        getMonitorConfiguration: jasmine.createSpy("getMonitorConfiguration()").andReturn({test: "test_configuration"}),
         defaultSize: function() {return {width: 678, height: 654};}
       };
       pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andReturn(adapter);
@@ -107,7 +107,7 @@ describe("MonitorFormController", function() {
         saveMonitorCallback();
 
         expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("type2");
-        expect(adapter.validateConfiguration).toHaveBeenCalledWith("test2");
+        expect(adapter.getMonitorConfiguration).toHaveBeenCalledWith("test2");
         expect(repository.createMonitor).toHaveBeenCalledWith(
           "test_dashboard", 
           {

@@ -23,7 +23,7 @@
         return buildConfigurationParser.toObject(configuration_data);    
       };
 
-      this.validateConfiguration = function(configuration_input) {
+      this.getMonitorConfiguration = function(configuration_input) {
         return buildConfigurationValidator.toObject(configuration_input);    
       };
 

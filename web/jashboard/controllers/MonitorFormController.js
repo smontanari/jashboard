@@ -19,7 +19,7 @@
           type: scope.inputMonitor.type,
           size: monitorAdapter.defaultSize(),
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
-          configuration: monitorAdapter.validateConfiguration(scope.inputMonitor.configuration[monitorType])
+          configuration: monitorAdapter.getMonitorConfiguration(scope.inputMonitor.configuration[monitorType])
         };
         scope.$emit("MonitorCreateStart");
         repository.createMonitor(scope.inputMonitor.dashboard_id, monitorParameters, {

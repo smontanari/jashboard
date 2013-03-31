@@ -8,7 +8,7 @@
             data-ng-model="inputMonitor.configuration.build.hostname" data-ng-change="buildMonitorFormValidator.onInputChange('serverName')">
         </div>
         <div class="controls">
-          <div id="serverNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverName.$error.required">You must provide a CI server name.</div>
+          <div id="buildServerNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverName.$error.required">You must provide a CI server name.</div>
         </div>
       </div>
       <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('serverPort')}">
@@ -18,21 +18,21 @@
             data-ng-model="inputMonitor.configuration.build.port" data-ng-change="buildMonitorFormValidator.onInputChange('serverPort')">
         </div>
         <div class="controls">
-          <div id="serverPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.required">You must provide a CI server port.</div>
-          <div id="serverPortNumberError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.positiveInteger">You must enter a valid port number.</div>
+          <div id="buildServerPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.required">You must provide a CI server port.</div>
+          <div id="buildServerPortNumberError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.positiveInteger">You must enter a valid port number.</div>
         </div>
       </div>
     </div>
     <div class="buildType-options">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
-        <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableBuildSettingsTypes">
-          <a id="buildSettings-{{ciServerType}}-tab" data-toggle="tab" href="#buildSettings-{{ciServerType}}"
+        <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableCiServerTypes">
+          <a id="ciServerType-{{ciServerType}}-tab" data-toggle="tab" href="#ciServerType-{{ciServerType}}"
             data-ng-click="setCiServerType(ciServerType)">{{ciServerType}}</a>
         </li>
       </ul>
       <div class="tab-content">
-        <div id="buildSettings-{{ciServerType}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableBuildSettingsTypes">
+        <div id="ciServerType-{{ciServerType}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableCiServerTypes">
           <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_settings_form_partial.html'"></div>
         </div>
       </div>

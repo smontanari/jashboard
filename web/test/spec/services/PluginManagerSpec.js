@@ -4,7 +4,7 @@ describe("PluginManager", function() {
   var adapterMethods = [
     'parseConfiguration',
     'parseRuntimeInfo',
-    'validateConfiguration',
+    'getMonitorConfiguration',
     'defaultSize',
     'init'
   ];
@@ -52,23 +52,23 @@ describe("PluginManager", function() {
     expect(f).toThrow("Adapter for [test] already exists");
   });
   it("should throw an error if the plugin does not implement a parseConfiguration method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseRuntimeInfo', 'validateConfiguration', 'defaultSize']);
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseRuntimeInfo', 'getMonitorConfiguration', 'defaultSize']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
 
     expect(f).toThrow("Adapter for [test] does not implement a parseConfiguration method");
   });
-  it("should throw an error if the plugin does not implement a validateConfiguration method", function() {
+  it("should throw an error if the plugin does not implement a getMonitorConfiguration method", function() {
     mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseRuntimeInfo', 'parseConfiguration', 'defaultSize']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
 
-    expect(f).toThrow("Adapter for [test] does not implement a validateConfiguration method");
+    expect(f).toThrow("Adapter for [test] does not implement a getMonitorConfiguration method");
   });
   it("should throw an error if the plugin does not implement a parseRuntimeInfo method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'validateConfiguration', 'defaultSize']);
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'getMonitorConfiguration', 'defaultSize']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
@@ -76,7 +76,7 @@ describe("PluginManager", function() {
     expect(f).toThrow("Adapter for [test] does not implement a parseRuntimeInfo method");
   });
   it("should throw an error if the plugin does not implement a defaultSize method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'validateConfiguration', 'parseRuntimeInfo']);
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'getMonitorConfiguration', 'parseRuntimeInfo']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };

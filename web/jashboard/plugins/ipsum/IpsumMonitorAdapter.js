@@ -8,7 +8,7 @@
         };
       };
 
-      this.validateConfiguration = function(configuration_data) {
+      this.getMonitorConfiguration = function(configuration_data) {
         return {
           no_sentences: parseInt(configuration_data.numberOfSentences, 10),
           language: configuration_data.language

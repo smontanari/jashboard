@@ -10,7 +10,7 @@
           language: _.first(languages)
         };
         scope.ipsumMonitorFormValidator.initForm(scope.ipsumMonitorForm);
-        scope.workflow.registerMonitorTypeForm("ipsum", scope.ipsumMonitorForm);
+        scope.formHelper.registerMonitorTypeForm("ipsum", scope.ipsumMonitorForm);
       });
     }
   });

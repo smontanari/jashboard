@@ -6,7 +6,7 @@
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
   <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController">
-    <div id="configurationInput" class="modal-body" data-ng-class="workflow.state">
+    <div id="configurationInput" class="modal-body" data-ng-class="formHelper.state">
       <div class="baseConfiguration form-horizontal">
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorName')}">
           <label class="control-label" for="monitorName">Name</label>
@@ -45,9 +45,9 @@
       </div>
     </div>
     <div class="modal-footer">
-      <span data-ng-repeat="workflowAction in workflow.actions">
-        <button id="configuration-{{workflowAction}}" data-ng-disabled="!workflow.isActionEnabled(workflowAction)"
-          class="btn btn-primary btn-label" data-ng-click="workflow[workflowAction]()">{{workflowAction}}</button>
+      <span data-ng-repeat="action in formHelper.actions">
+        <button id="configuration-{{action}}" data-ng-disabled="!formHelper.isActionEnabled(action)"
+          class="btn btn-primary btn-label" data-ng-click="formHelper[action]()">{{action}}</button>
       </span>
       <button id="cancelMonitor" data-dismiss="modal" class="btn">Cancel</button>
     </div>

@@ -1,5 +1,5 @@
 describe("MonitorFormController", function() {
-  var scope, controller, listener, workflow, repository, pluginManager, monitorLayoutManager,
+  var scope, controller, listener, formHelper, repository, pluginManager, monitorLayoutManager,
       monitorRulesConstructor, validatorConstructor;
   beforeEach(function() {
     pluginManager = {
@@ -42,7 +42,7 @@ describe("MonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      spyOn(jashboard, "CreateMonitorWorkflow").andReturn({test: "workflow"});
+      spyOn(jashboard, "CreateMonitorFormHelper").andReturn({test: "formHelper"});
       scope.baseMonitorForm = "baseMonitorForm";
       scope.inputMonitor = {test: "test"};
 
@@ -59,16 +59,16 @@ describe("MonitorFormController", function() {
         configuration: {}
       });
     });
-    it("should instantiate a new workflow", function() {
-      expect(jashboard.CreateMonitorWorkflow).toHaveBeenCalledWith(scope.baseMonitorForm, scope.inputMonitor, jasmine.any(Function));
-      expect(scope.workflow).toEqual({test: "workflow"});
+    it("should instantiate a new formHelper", function() {
+      expect(jashboard.CreateMonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.inputMonitor, jasmine.any(Function));
+      expect(scope.formHelper).toEqual({test: "formHelper"});
     });
   });
 
   describe("save action callback", function() {
     var successHandler, errorHandler, saveMonitorCallback, adapter;
     beforeEach(function() {
-      spyOn(jashboard, "CreateMonitorWorkflow").andCallFake(function(form, model, handler) {
+      spyOn(jashboard, "CreateMonitorFormHelper").andCallFake(function(form, model, handler) {
         saveMonitorCallback = handler;
         return {};
       });

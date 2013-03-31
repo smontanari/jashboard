@@ -40,15 +40,15 @@ describe("IpsumMonitorFormController", function() {
         }
       };
       scope.ipsumMonitorForm = "ipsumMonitorForm";
-      scope.workflow = jasmine.createSpyObj("workflow", ['registerMonitorTypeForm']);
+      scope.formHelper = jasmine.createSpyObj("formHelper", ['registerMonitorTypeForm']);
 
       eventListener({});
     });
     it("should init the form validator", function() {
       expect(scope.ipsumMonitorFormValidator.initForm).toHaveBeenCalledWith("ipsumMonitorForm");
     });
-    it("should register the ipsumMonitorForm to the workflow", function() {
-      expect(scope.workflow.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
+    it("should register the ipsumMonitorForm to the formHelper", function() {
+      expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
     });
     it("should reset the inputMonitor.configuration variable in the scope", function() {
       expect(scope.inputMonitor.configuration.ipsum).toEqual({language: "english"});

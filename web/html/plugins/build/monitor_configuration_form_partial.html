@@ -26,13 +26,14 @@
     <div class="buildType-options">
       <ul class="nav nav-tabs">
         <li><label>CI Server</label></li>
-        <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-          <a id="buildSettings-{{settingsType}}-tab" data-toggle="tab" href="#buildSettings-{{settingsType}}" data-ng-click="inputMonitor.configuration.build.type = settingsType">{{settingsType}}</a>
+        <li data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableBuildSettingsTypes">
+          <a id="buildSettings-{{ciServerType}}-tab" data-toggle="tab" href="#buildSettings-{{ciServerType}}"
+            data-ng-click="setCiServerType(ciServerType)">{{ciServerType}}</a>
         </li>
       </ul>
       <div class="tab-content">
-        <div id="buildSettings-{{settingsType}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="settingsType in availableBuildSettingsTypes">
-          <div data-ng-include="'html/plugins/build/' + settingsType + '_monitor_settings_form_partial.html'"></div>
+        <div id="buildSettings-{{ciServerType}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableBuildSettingsTypes">
+          <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_settings_form_partial.html'"></div>
         </div>
       </div>
     </div>

@@ -1,8 +1,12 @@
 <div class="form-horizontal">
-  <div class="control-group">
-    <label class="control-label" for="buildSettings-Jenkins-build_id">build_id</label>
+  <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('jenkins_build_id')}">
+    <label class="control-label" for="jenkins_build_id">build_id</label>
     <div class="controls">
-      <input name="buildSettings-Jenkins-build_id" type="text" placeholder="build_id" class="input-medium" data-ng-model="inputMonitor.configuration.build.build_id">
+      <input name="jenkins_build_id" type="text" placeholder="build_id" class="input-medium" 
+        data-ng-model="inputMonitor.configuration.build.build_id" data-ng-change="buildMonitorFormValidator.onInputChange('jenkins_build_id')">
+    </div>
+    <div class="controls">
+      <div id="jenkinsBuildIdRequiredError" class="help-inline" data-ng-show="buildMonitorForm.jenkins_build_id.$error.required">You must provide a Jenkins build id.</div>
     </div>
   </div>
 </div>

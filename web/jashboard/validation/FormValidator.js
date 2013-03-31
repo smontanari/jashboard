@@ -21,7 +21,9 @@
         validateForm();
       };
       this.onInputChange = function(inputName) {
-        form[inputName].$error = validationRules[inputName]() || {};
+        if (_.isString(inputName)) {
+          form[inputName].$error = validationRules[inputName]() || {};
+        }
         validateForm();
       };
       this.inputInError = function(inputName) {

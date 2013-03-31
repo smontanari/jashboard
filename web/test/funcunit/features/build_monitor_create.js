@@ -2,12 +2,12 @@ funcunitHelper.testFeature("Build monitor create", "create_build_monitor", funct
   var inputBuildMonitorData = function(data) {
     var monitorTypeConfigurationInput = {
       jenkins: function(data) {
-        pageHelper.inputText("input[name='buildSettings-Jenkins-build_id']", data.build_id);
+        pageHelper.inputText("input[name='jenkins_build_id']", data.build_id);
       },
       go: function(data) {
-        pageHelper.inputText("input[name='buildSettings-go-pipeline']", data.pipeline);
-        pageHelper.inputText("input[name='buildSettings-go-stage']", data.stage);
-        pageHelper.inputText("input[name='buildSettings-go-job']", data.job);
+        pageHelper.inputText("input[name='go_pipeline']", data.pipeline);
+        pageHelper.inputText("input[name='go_stage']", data.stage);
+        pageHelper.inputText("input[name='go_job']", data.job);
       }
     };
 

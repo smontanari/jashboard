@@ -1,4 +1,11 @@
 describe("commonValidationRules", function() {
+  describe("'noValidation' rule", function() {
+    it("should return no errors", function() {
+      var errors = jashboard.commonValidationRules.noValidation("test-value");
+
+      expect(errors).toBeEmpty();
+    });
+  });
   describe("'required' rule", function() {
     it("should return no errors when the value is not empty", function() {
       var errors = jashboard.commonValidationRules.required("test-value");

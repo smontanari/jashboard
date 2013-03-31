@@ -5,7 +5,7 @@ describe("BuildMonitorFormController", function() {
 
     monitorRulesConstructor = sinon.stub(jashboard, "BuildMonitorFormValidationRules");
     monitorRulesConstructor.withArgs(scope).returns({id: "buildMonitorRules"});
-    formValidator = jasmine.createSpyObj("FormValidator", ['initForm']);
+    formValidator = jasmine.createSpyObj("FormValidator", ['initForm', 'onInputChange']);
     validatorConstructor = sinon.stub(jashboard, "FormValidator");
     validatorConstructor.withArgs({id: "buildMonitorRules"}).returns(formValidator);
     
@@ -19,7 +19,7 @@ describe("BuildMonitorFormController", function() {
     scope.monitorFormValidator = jasmine.createSpyObj("monitorFormValidator", ['addRules']);
     scope.inputMonitor = {
       configuration: {
-        build: { type: "test-type1" }
+        build: {}
       }
     };
 
@@ -39,6 +39,19 @@ describe("BuildMonitorFormController", function() {
   });
   it("should set a FormValidator with the build monitor form validation rules in the scope", function() {
     expect(scope.buildMonitorFormValidator).toEqual(formValidator);
+  });
+
+  describe("scope.setCiServerType()", function() {
+    it("should set the coniguration build.type", function() {
+      scope.setCiServerType("test_type");
+
+      expect(scope.inputMonitor.configuration.build.type).toEqual("test_type");
+    });
+    it("should trigger the input change on the formValidator", function() {
+      scope.setCiServerType("test_type");
+
+      expect(formValidator.onInputChange).toHaveBeenCalled();
+    });
   });
 
   describe("'OpenMonitorDialog' event listener", function() {

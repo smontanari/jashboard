@@ -6,8 +6,8 @@
     <h3 id="monitorModalLabel">Create new monitor</h3>
   </div>
   <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController">
-    <div id="configurationInput" class="modal-body" data-ng-class="formHelper.state">
-      <div class="baseConfiguration form-horizontal">
+    <div id="configurationInput" class="modal-body">
+      <div class="baseConfiguration form-horizontal" data-ng-show="formHelper.showForm('default')">
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorName')}">
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">

@@ -1,4 +1,4 @@
-<div id="ipsumMonitorInput" data-ng-class="{'selectedConfiguration': (inputMonitor.type == 'ipsum'), 'hiddenConfiguration': (inputMonitor.type != 'ipsum')}">
+<div id="ipsumMonitorInput" data-ng-show="formHelper.showForm('ipsum')">
   <div class="form-horizontal" data-ng-form="ipsumMonitorForm" data-ng-controller="IpsumMonitorFormController">
     <div class="control-group" data-ng-class="{'error': ipsumMonitorFormValidator.inputInError('numberOfSentences')}">
       <label class="control-label" for="numberOfSentences">Number of sentences</label>

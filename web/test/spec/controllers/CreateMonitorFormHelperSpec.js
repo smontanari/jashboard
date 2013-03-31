@@ -6,18 +6,26 @@ describe("CreateMonitorFormHelper", function() {
       $dirty: false,
       isValid: false
     };
+
     monitor = {
       type: undefined
     };
     saveCallback = jasmine.createSpy();
+
     formHelper = new jashboard.CreateMonitorFormHelper(monitorForm, monitor, saveCallback);
+    formHelper.registerMonitorTypeForm("test_type", {});
+    formHelper.registerMonitorTypeForm("another_type", {});
   });
 
   it("should have one initial action equal to 'next'", function() {
     expect(formHelper.actions).toEqual(["next"]);
   })
-  it("should have the state equal to 'showBaseConfiguration'", function() {
-    expect(formHelper.state).toEqual("showBaseConfiguration");
+  it("should show the default monitor form", function() {
+    expect(formHelper.showForm("default")).toEqual(true);
+  });
+  it("should not show the monitor form for any other type", function() {
+    expect(formHelper.showForm("test_type")).toEqual(false);
+    expect(formHelper.showForm("another_type")).toEqual(false);
   });
 
   describe("isActionEnabled()", function() {
@@ -42,11 +50,16 @@ describe("CreateMonitorFormHelper", function() {
 
   describe("Action: next", function() {
     beforeEach(function() {
+      monitor.type = "test_type";
       formHelper.next();
     });
-    it("should have the state equal to 'showSelectedConfiguration'", function() {
-      expect(formHelper.state).toEqual("showSelectedConfiguration");
-    })
+    it("should show the form for monitor 'test_type'", function() {
+      expect(formHelper.showForm("test_type")).toEqual(true);
+    });
+    it("should not show the form for any other type", function() {
+      expect(formHelper.showForm("default")).toEqual(false);
+      expect(formHelper.showForm("another_type")).toEqual(false);
+    });
     it("should have two actions: 'back' and 'save'", function() {
       expect(formHelper.actions).toEqual(["back", "save"]);
     });
@@ -56,12 +69,16 @@ describe("CreateMonitorFormHelper", function() {
     beforeEach(function() {
       formHelper.back();
     });
-    it("should have the state equal to 'showBaseConfiguration'", function() {
-      expect(formHelper.state).toEqual("showBaseConfiguration");
-    })
+    it("should show the default monitor form", function() {
+      expect(formHelper.showForm("default")).toEqual(true);
+    });
+    it("should not show the monitor form for any other type", function() {
+      expect(formHelper.showForm("test_type")).toEqual(false);
+      expect(formHelper.showForm("another_type")).toEqual(false);
+    });
     it("should have one initial action equal to 'Next'", function() {
       expect(formHelper.actions).toEqual(["next"]);
-    })
+    });
   });
 
   describe("Action: save", function() {

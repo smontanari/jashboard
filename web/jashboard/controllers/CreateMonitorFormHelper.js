@@ -3,24 +3,27 @@
     CreateMonitorFormHelper: function(initialForm, monitorModel, saveCallback) {
       var monitorForms = {
         default: initialForm
-      }
+      };
+      initialForm.id = "default";
       var currentForm = monitorForms.default;
       this.actions = ["next"];
-      this.state = "showBaseConfiguration";
+
+      this.showForm = function(value) {
+        return currentForm === monitorForms[value];
+      };
 
       this.next = function() {
-        this.state = "showSelectedConfiguration";
         this.actions = ["back", "save"];
         currentForm = monitorForms[monitorModel.type];
       };
 
       this.back = function() {
-        this.state = "showBaseConfiguration";
         this.actions = ["next"];
         currentForm = monitorForms.default;
       };
 
       this.registerMonitorTypeForm = function(type, form) {
+        form.id = type;
         monitorForms[type] = form;
       }
 

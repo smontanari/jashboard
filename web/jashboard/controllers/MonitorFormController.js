@@ -38,7 +38,7 @@
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
       scope.monitorFormValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
 
-      scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
+      scope.$on("NewMonitorDialog", function(event, dashboard_id) {
         scope.inputMonitor = {
           dashboard_id: dashboard_id,
           type: _.first(scope.availableMonitorTypes),
@@ -47,6 +47,11 @@
         scope.monitorFormValidator.initForm(scope.baseMonitorForm);
         scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.inputMonitor, saveMonitor);
       });
+      // scope.$on("EditMonitorDialog", function(event, monitor) {
+      //   scope.inputMonitor = monitor;
+      //   scope.monitorFormValidator.initForm(scope.baseMonitorForm);
+      //   scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.inputMonitor, saveMonitor);
+      // });
     }
   });
   jashboard.application.controller("MonitorFormController", ['$scope', 'Repository', 'PluginManager', 'MonitorLayoutManager', jashboard.MonitorFormController]).run(function() {

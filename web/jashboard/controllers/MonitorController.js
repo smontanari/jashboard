@@ -51,6 +51,10 @@
         event.stopPropagation();
       });
 
+      // scope.editMonitor = function() {
+      //   rootScope.$broadcast("EditMonitorDialog", scope.monitor);
+      // };
+
       scope.removeMonitor = function() {
         var currentDashboard = scope.dashboard;
         var currentMonitor = scope.monitor;

@@ -33,14 +33,14 @@ describe("MonitorFormController", function() {
     expect(scope.availableMonitorTypes).toEqual(["test_type1", "test_type2"]);
   });
 
-  it("should listen to the 'OpenMonitorDialog' event", function() {
-    expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
+  it("should listen to the 'NewMonitorDialog' event", function() {
+    expect(scope.$on).toHaveBeenCalledWith("NewMonitorDialog", jasmine.any(Function));
   });
   it("should set a FormValidator with the monitor form validation rules in the scope", function() {
     expect(scope.monitorFormValidator).toEqual(formValidator);
   });
 
-  describe("'OpenMonitorDialog' event listener", function() {
+  describe("'NewMonitorDialog' event listener", function() {
     beforeEach(function() {
       spyOn(jashboard, "CreateMonitorFormHelper").andReturn({test: "formHelper"});
       scope.baseMonitorForm = "baseMonitorForm";

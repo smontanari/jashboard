@@ -12,12 +12,12 @@ describe("DashboardActionsHandler", function() {
   });
 
   describe("scope.dashboardAction(): newMonitor", function() {
-    it("should broadcast the 'OpenMonitorDialog' event on 'newMonitor' action", function() {
+    it("should broadcast the 'NewMonitorDialog' event on 'newMonitor' action", function() {
       var innerScope = { dashboard: {id: "test_dashboard_id"} };
 
       scope.dashboardAction.apply(innerScope, ['newMonitor']);
       
-      expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", "test_dashboard_id");
+      expect(scope.$broadcast).toHaveBeenCalledWith("NewMonitorDialog", "test_dashboard_id");
     });
   });
   describe("scope.dashboardAction(): delete", function() {

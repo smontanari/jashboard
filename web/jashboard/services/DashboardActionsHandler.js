@@ -4,7 +4,7 @@
       this.init = function(applicationScope) {
         var dashboardActions = {
           newMonitor: function(currentScope) {
-            applicationScope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
+            applicationScope.$broadcast("NewMonitorDialog", currentScope.dashboard.id);
           },
           delete: function(currentScope) {
             alertService.showAlert({

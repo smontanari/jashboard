@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorPositioning: function() {
+    MonitorPositioningStrategy: function() {
       var maxWidth = $("#dashboard-container").width();
       var neighbourPosition = {
         right: function(monitor, requiredArea) {
@@ -43,7 +43,7 @@
       };
     }
   });
-  jashboard.services.service('MonitorPositioning', [jashboard.MonitorPositioning]).run(function() {
-    steal.dev.log("MonitorPositioning initialized");
+  jashboard.services.service('MonitorPositioningStrategy', [jashboard.MonitorPositioningStrategy]).run(function() {
+    steal.dev.log("MonitorPositioningStrategy initialized");
   });
 }(jashboard || {}));

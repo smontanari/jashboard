@@ -16,7 +16,7 @@ steal('jashboard/jashboard.js')
   'jashboard/services/Repository.js',
   'jashboard/services/ModelMapper.js',
   'jashboard/services/IntersectionDetector.js',
-  'jashboard/services/MonitorPositioning.js',
+  'jashboard/services/MonitorPositioningStrategy.js',
   'jashboard/services/MonitorLayoutManager.js',
   'jashboard/services/PluginManager.js',
   'jashboard/services/DashboardActionsHandler.js',

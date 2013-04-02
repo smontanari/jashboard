@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorLayoutManager: function(intersectionDetector, monitorPositioning) {
+    MonitorLayoutManager: function(intersectionDetector, positioningStrategy) {
       var defaultPosition = {top: 0, left: 0};
       var margin = 20;
 
@@ -33,7 +33,7 @@
         }        
         for (var i = 0; i < monitors.length; i++) {
           var location = {position: monitors[i].position, size: sizeWithMargin(monitors[i].size)};
-          var positions = monitorPositioning.neighbourPositions(location, monitorSize);
+          var positions = positioningStrategy.neighbourPositions(location, monitorSize);
           var availablePosition = _.find(positions, function(position) {
             return noOverlapWithMonitors({ position: position, size: monitorSize }, monitors);
           });
@@ -46,7 +46,7 @@
       };
     }
   });
-  jashboard.services.service('MonitorLayoutManager', ['IntersectionDetector', 'MonitorPositioning', jashboard.MonitorLayoutManager]).run(function() {
+  jashboard.services.service('MonitorLayoutManager', ['IntersectionDetector', 'MonitorPositioningStrategy', jashboard.MonitorLayoutManager]).run(function() {
     steal.dev.log("MonitorLayoutManager initialized");
   });
 }(jashboard || {}));

@@ -1,7 +1,7 @@
 funcunitHelper.testFeature("Monitor delete", "delete_monitor", function() {
   test("should delete the monitor", function() {
     S("#tab-dashboard_2").visible().click();
-    S("#monitor_2 .monitor-icon-delete").visible().click();
+    S("#monitor_2 .monitor-action.action-delete").visible().click();
     
     S("#alertConfirm").visible().click();
 
@@ -10,7 +10,7 @@ funcunitHelper.testFeature("Monitor delete", "delete_monitor", function() {
   });
   test("should not delete the monitor", function() {
     S("#tab-dashboard_2").visible().click();
-    S("#monitor_2 .monitor-icon-delete").visible().click();
+    S("#monitor_2 .monitor-action.action-delete").visible().click();
     
     S("#alertCancel").visible().click();
 

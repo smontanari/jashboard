@@ -11,17 +11,10 @@
     <div id="{{dashboard.id}}" data-ng-class="{active: isActiveDashboard()}"
       data-ng-show="isActiveDashboard()" 
       data-ng-repeat="dashboard in dashboards">
-      <div class="menubar">
-        <div class="dashboard-actions">
-          <div class="dropdown">
-            <a id="{{dashboard.id}}-actions" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-actions">
-              <li><a data-ng-click="dashboardAction('editDashboard')">Dashboard properties</a></li>
-              <li><a data-ng-click="dashboardAction('newMonitor')">New Monitor</a></li>
-              <li><a data-ng-click="dashboardAction('delete')">Delete</a></li>
-            </ul>
-          </div>
-        </div>
+      <div class="dashboard-actions">
+        <span class="dashboard-action action-delete" data-ng-click="dashboardAction('delete')">Delete</span>
+        <span class="dashboard-action action-edit" data-ng-click="dashboardAction('editDashboard')">Properties</span>
+        <span class="dashboard-action action-new" data-ng-click="dashboardAction('newMonitor')">New monitor</span>
       </div>
       <div class="dashboard-content">
         <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"
@@ -33,8 +26,9 @@
           data-ng-init="loadRuntimeInfo()">
           <div class="monitor-bar">
             <span class="drag-handle"></span>
-            <span class="monitor-icon-delete" title="Delete" data-ng-click="removeMonitor()"></span>
-            <span class="monitor-icon-refresh" title="Refresh" data-ng-click="refreshRuntimeInfo()"></span>
+            <span class="monitor-action action-delete" title="Delete" data-ng-click="removeMonitor()"></span>
+            <span class="monitor-action action-edit" title="Settings" data-ng-click="editMonitor()"></span>
+            <span class="monitor-action action-refresh" title="Refresh" data-ng-click="refreshRuntimeInfo()"></span>
           </div>
           <div class="monitor-title">
             <span class="monitor-icon-ajax-loader" data-ng-show="monitor.loadingStatus == 'waiting'"></span>

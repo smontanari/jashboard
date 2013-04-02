@@ -9,7 +9,7 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
       '.build-status': ""
     });
 
-    S("#monitor_1 .monitor-bar .monitor-icon-refresh").visible().click();
+    S("#monitor_1 .monitor-action.action-refresh").visible().click();
     
     FuncUnit.wait(1500, function() {
       pageHelper.verifyElementContent("#monitor_1", {

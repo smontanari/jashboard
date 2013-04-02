@@ -2,7 +2,7 @@ describe("MonitorPositioning", function() {
   var monitorPositioning;
   describe("Available positions around one rectangle", function() {
     beforeEach(function() {
-      $stub = testHelper.stubJQuery(".container");
+      $stub = testHelper.stubJQuery("#dashboard-container");
       $stub.width = jasmine.createSpy().andReturn(100);
       monitorPositioning = new jashboard.MonitorPositioning();
     });

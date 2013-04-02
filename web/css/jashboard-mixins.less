@@ -31,10 +31,10 @@
 }
 
 .iconised (@icon-image, @size, @margin: 0px) {
-  width: @size;
-  height: @size;
+  width: ~"@{size}px";
+  height: ~"@{size}px";
   margin: @margin;
-  background: url("@{img_path_prefix}/@{icon-image}") no-repeat;
+  background: url("@{img_path_prefix}/@{icon-image}-@{size}.png") no-repeat;
 }
 
 .message-box (@border-color, @shadow-color) {

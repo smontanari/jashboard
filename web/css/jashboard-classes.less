@@ -50,11 +50,11 @@
 }
 
 .iconised-info {
-  .iconised('icon-info.png', 32px);
+  .iconised('icon-info', 32);
 }
 
 .iconised-error {
-  .iconised('icon-error.png', 32px);
+  .iconised('icon-error', 32);
 }
 
 .no-data-available {
@@ -113,11 +113,29 @@
 }
 
 .dashboard-actions {
-  height: 22px;
-  padding: 5px 10px 0 0;
-  div {
-    margin-left: 10px;
+  height: 24px;
+  padding: 5px;
+  border-bottom: 1px groove #2C2C2C;
+  .dashboard-action {
     float: right;
+    cursor: pointer;
+    margin-left: 3px;
+    padding: 0 2px 0 28px;
+    height: 24px;
+    line-height: 24px;
+    &:hover {
+      background-color: #f4f4f4;
+      box-shadow: -1px 0px 1px 1px #2C2C2C;
+    }
+  }
+  .action-new {
+    background: url("@{img_path_prefix}/icon-new-24.png") no-repeat 2px;
+  }
+  .action-edit {
+    background: url("@{img_path_prefix}/icon-edit-24.png") no-repeat;
+  }
+  .action-delete {
+    background: url("@{img_path_prefix}/icon-delete-24.png") no-repeat;
   }
 }
 
@@ -148,11 +166,13 @@
   text-overflow: ellipsis;
   .monitor-icon-ajax-loader {
     float: right;
-    .iconised('icon-ajax-loader-indicator.gif', 16px);
+    width: 16px;
+    height: 16px;
+    background: url("@{img_path_prefix}/ajax-loader-indicator.gif") no-repeat;
   }
   .monitor-icon-ajax-error {
     float: right;
-    .iconised('icon-ajax-loader-error.png', 16px);
+    .iconised('icon-ajax-loader-error', 16);
   }
 }
 
@@ -163,17 +183,20 @@
   .drag-handle {
     float: left;
     cursor: move;
-    .iconised('icon-draggable.png', 16px);
+    .iconised('icon-draggable', 16);
   }
-  .monitor-icon-refresh {
+  .monitor-action {
     float: right;
-    cursor: pointer;
-    .iconised('icon-refresh.png', 16px, 0 2px);
+    cursor: pointer;    
   }
-  .monitor-icon-delete {
-    float: right;
-    cursor: pointer;
-    .iconised('icon-delete.png', 16px, 0 2px);
+  .action-refresh {
+    .iconised('icon-refresh', 16, 0 2px);
+  }
+  .action-delete {
+    .iconised('icon-delete', 16, 0 2px);
+  }
+  .action-edit {
+    .iconised('icon-settings', 16, 0 2px);
   }
 }
 

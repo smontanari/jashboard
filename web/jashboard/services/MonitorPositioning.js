@@ -1,7 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorPositioning: function() {
-      var maxWidth = $(".container").width();
+      var maxWidth = $("#dashboard-container").width();
       var neighbourPosition = {
         right: function(monitor, requiredArea) {
           var leftOffset = monitor.position.left + monitor.size.width;

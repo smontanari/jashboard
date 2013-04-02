@@ -16,8 +16,7 @@ funcunitHelper.testFeature("Error handling: dashboard actions", "dashboard_error
 
   test("should display an error overlay when failing to delete a dashboard", function() {
     S("#tab-dashboard_2").visible().click();
-    S("#dashboard_2-actions").click();
-    S("#dashboard_2 .dashboard-actions a:contains('Delete')").visible("display delete menu action").click();
+    S("#dashboard_2 .dashboard-action.action-delete").visible("display delete action").click();
 
     S("#alertConfirm").visible().click();
 

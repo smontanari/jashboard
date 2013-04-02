@@ -8,8 +8,8 @@ describe("MonitorLayoutManager", function() {
 
   beforeEach(function() {
     newMonitorSize = {width: 200, height: 100};
-    $stub = testHelper.stubJQuery(".container");
-    $stub.width = jasmine.createSpy().andReturn(940);
+    $stub = testHelper.stubJQuery("#dashboard-container");
+    $stub.width = jasmine.createSpy().andReturn(930);
     monitorPositioning = new jashboard.MonitorPositioning();
     monitorPositioning.neighbourPositions = sinon.stub(monitorPositioning, "neighbourPositions");
     mockIntersectionDetector = new jashboard.IntersectionDetector();

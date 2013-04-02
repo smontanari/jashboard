@@ -29,7 +29,7 @@ funcunitHelper.testFeature("Error handling: monitor actions", "monitor_errors", 
   });
   
   test("should display an error when failing to create a monitor", function() {
-    S("#monitor_3 .monitor-icon-delete").visible().click();
+    S("#monitor_3 .monitor-action.action-delete").visible().click();
     
     S("#alertConfirm").visible().click();
 

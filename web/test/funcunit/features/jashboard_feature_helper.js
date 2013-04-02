@@ -6,8 +6,7 @@ var jashboardFeatureHelper = (function(helper) {
   };
 
   helper.openMonitorDialog = function(dashboard_id) {
-    S("#" + dashboard_id + "-actions").click();
-    S("#" + dashboard_id + " .dashboard-actions a:contains('New Monitor')").visible("display new monitor menu action").click();
+    S("#" + dashboard_id + " .dashboard-action.action-new").visible("display new monitor menu action").click();
     S("#new-monitor-form").visible("show new monitor modal");
   };
 

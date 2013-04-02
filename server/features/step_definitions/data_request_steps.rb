@@ -36,3 +36,10 @@ end
 When /^I request the deletion of monitor "(\w+)" in dashboard "(\w+)"$/ do |monitor_id, dashboard_id|
   delete "/ajax/dashboard/#{dashboard_id}/monitor/#{monitor_id}"
 end
+
+When /^I request to update the dashboard with id "(.+)" with name "(.+)"$/ do |id, name|
+  @current_dashboard = Jashboard::Dashboard.new
+  @current_dashboard.id = id
+  @current_dashboard.name = name
+  put "/ajax/dashboard/#{id}", %({"name":"#{name}"})
+end

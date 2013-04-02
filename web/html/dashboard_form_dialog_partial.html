@@ -1,16 +1,16 @@
-<div id="dashboard-form" data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}" class="modal hide fade" role="dialog" 
-     aria-labelledby="dashboardModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3 id="dashboardModalLabel">Create new dashboard</h3>
-  </div>
+<div id="dashboard-form" data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}" class="modal hide fade" role="dialog" aria-hidden="true">
   <div data-ng-form="dashboardForm" class="form-horizontal" data-ng-controller="DashboardFormController">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 data-ng-show="editMode == 'create'">Create new dashboard</h3>
+      <h3 data-ng-show="editMode == 'update'">Dashboard properties</h3>
+    </div>
     <div class="modal-body">
       <div class="control-group" data-ng-class="{'error': dashboardFormValidator.inputInError('dashboardName')}">
         <label class="control-label" for="dashboardName">Name</label>
         <div class="controls">
           <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
-          data-ng-model="dashboardName" data-ng-change="dashboardFormValidator.onInputChange('dashboardName')">
+          data-ng-model="inputDashboard.name" data-ng-change="dashboardFormValidator.onInputChange('dashboardName')">
         </div>
         <div class="controls">
           <div id="dashboardNameRequiredError" class="help-inline" data-ng-show="dashboardForm.dashboardName.$error.required">You must provide a dashboard name.</div>

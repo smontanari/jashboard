@@ -16,7 +16,6 @@
           configuration: monitorAdapter.getMonitorConfiguration(scope.inputMonitor.configuration[monitorType])
         };
         scope.$emit("MonitorCreateStart");
-        console.log(monitorParameters);
         repository.createMonitor(scope.inputMonitor.dashboard_id, monitorParameters, {
           success: function(monitor) {
             dashboard.monitors.push(monitor);
@@ -39,12 +38,12 @@
           type: _.first(scope.availableMonitorTypes),
           configuration: {}
         };
-        scope.monitorFormValidator.initForm(scope.baseMonitorForm);
+        scope.monitorFormValidator.prepareForm(scope.baseMonitorForm);
         scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.inputMonitor, saveMonitor);
       });
       // scope.$on("EditMonitorDialog", function(event, monitor) {
       //   scope.inputMonitor = monitor;
-      //   scope.monitorFormValidator.initForm(scope.baseMonitorForm);
+      //   scope.monitorFormValidator.prepareForm(scope.baseMonitorForm);
       //   scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.inputMonitor, saveMonitor);
       // });
     }

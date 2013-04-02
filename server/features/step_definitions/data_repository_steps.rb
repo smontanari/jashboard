@@ -1,9 +1,6 @@
 Then /^the dashboard should be saved in the repository$/ do
-  response = JSON.parse(last_response.body)
-
-  @db_helper.validate_dashboard(response['id']) do |dashboard|
-    dashboard.should_not be_nil
-    dashboard.name.should == response['name']
+  @db_helper.validate_dashboard(@current_dashboard.id) do |dashboard|
+    dashboard.name.should == @current_dashboard.name
   end
 end
 

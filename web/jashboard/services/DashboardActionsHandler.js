@@ -6,6 +6,12 @@
           newMonitor: function(currentScope) {
             applicationScope.$broadcast("NewMonitorDialog", currentScope.dashboard.id);
           },
+          editDashboard: function(currentScope) {
+            applicationScope.$broadcast("OpenDashboardDialog", {
+              mode: jashboard.inputOptions.updateMode,
+              parameters: { dashboard: currentScope.dashboard }
+            })
+          },
           delete: function(currentScope) {
             alertService.showAlert({
               title: "Remove dashboard test-dashboard",

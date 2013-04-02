@@ -22,6 +22,9 @@ Then /^the app should return a response containing an empty dashboard with name 
   response['id'].should_not be_empty
   response['name'].should == name
   response['monitors'].should be_empty
+  @current_dashboard = Jashboard::Dashboard.new
+  @current_dashboard.id = response['id']
+  @current_dashboard.name = response['name']
 end
 
 Then /^the app should return a response containing a new monitor with name (.*), refresh interval (.*), type (.*) and an id$/ do |name, refresh_interval, type|

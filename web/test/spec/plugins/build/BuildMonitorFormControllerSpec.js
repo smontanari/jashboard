@@ -5,7 +5,7 @@ describe("BuildMonitorFormController", function() {
 
     monitorRulesConstructor = sinon.stub(jashboard, "BuildMonitorFormValidationRules");
     monitorRulesConstructor.withArgs(scope).returns({id: "buildMonitorRules"});
-    formValidator = jasmine.createSpyObj("FormValidator", ['initForm', 'onInputChange']);
+    formValidator = jasmine.createSpyObj("FormValidator", ['prepareForm', 'onInputChange']);
     validatorConstructor = sinon.stub(jashboard, "FormValidator");
     validatorConstructor.withArgs({id: "buildMonitorRules"}).returns(formValidator);
     
@@ -61,7 +61,7 @@ describe("BuildMonitorFormController", function() {
       listener({});
     });
     it("should init the form validator", function() {
-      expect(scope.buildMonitorFormValidator.initForm).toHaveBeenCalledWith("buildMonitorForm");
+      expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm");
     });
     it("should reset the inputMonitor.configuration variable in the scope", function() {
       expect(scope.inputMonitor.configuration.build).toEqual({type: "test_build_type1"});

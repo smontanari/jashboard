@@ -16,6 +16,7 @@
           <div class="dropdown">
             <a id="{{dashboard.id}}-actions" class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard actions<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="{{dashboard.id}}-actions">
+              <li><a data-ng-click="dashboardAction('editDashboard')">Dashboard properties</a></li>
               <li><a data-ng-click="dashboardAction('newMonitor')">New Monitor</a></li>
               <li><a data-ng-click="dashboardAction('delete')">Delete</a></li>
             </ul>
@@ -54,7 +55,7 @@
     </div>
   </div>
 </div>
-<div class="hide" data-jb-overlay="{show: 'DashboardCreateStart', hide: 'DashboardCreateComplete'}">
+<div class="hide" data-jb-overlay="{show: 'DashboardSaveStart', hide: 'DashboardSaveComplete'}">
   <div class="overlay-msg info">
     <spam class="ajax-loader-msg"> Saving dashboard... Please wait.</spam>
   </div>
@@ -75,4 +76,4 @@
   </div>
 </div>
 <div data-ng-include="'html/new_monitor_dialog_partial.html'"></div>
-<div data-ng-include="'html/new_dashboard_dialog_partial.html'"></div>
+<div data-ng-include="'html/dashboard_form_dialog_partial.html'"></div>

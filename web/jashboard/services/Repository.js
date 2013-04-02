@@ -1,6 +1,8 @@
 (function(module) {
   jashboard = _.extend(module, {
     Repository: function(http, modelMapper) {
+      var AJAX_DASHBOARD = "/ajax/dashboard";
+      var AJAX_MONITOR = "/ajax/monitor";
       var parseError = function(request) {
         if (_.isString(request.responseText)) {
           return request.responseText;
@@ -10,7 +12,14 @@
         if(_.isFunction(handlers.success)) {
           promise.done(function(data) {
             if (_.isFunction(dataMapperFn)) {
-              data = dataMapperFn(data);
+              try {
+                data = dataMapperFn(data);
+              } catch (error) {
+                if (_.isFunction(handlers.error)) {
+                  handlers.error("Error mapping data", error);
+                  throw error;
+                }
+              }
             }
             handlers.success(data);
           });
@@ -27,38 +36,38 @@
           http.getJSON("/ajax/dashboards"),
           handlers,
           function(data) {
-            try {
-              return _.map(data, modelMapper.mapDashboard);
-            } catch (error) {
-              if (_.isFunction(handlers.error)) {
-                handlers.error("Error mapping data", error);
-                throw error;
-              }
-            }
+            return _.map(data, modelMapper.mapDashboard);
           });
       };
       
       this.loadMonitorRuntimeInfo = function(monitor_id, monitorType, handlers) {
         executeRequest(
-          http.getJSON("/ajax/monitor/" + monitor_id + "/runtime"), 
+          http.getJSON(AJAX_MONITOR + "/" + monitor_id + "/runtime"), 
           handlers,
           function(data) {
             return modelMapper.mapMonitorRuntimeInfo(monitorType, data);
           });
       };
 
-      this.createDashboard = function(parameters, handlers) {
+      this.createDashboard = function(dashboardProperties, handlers) {
         executeRequest(
-          http.postJSON("/ajax/dashboard", parameters),
+          http.postJSON(AJAX_DASHBOARD, dashboardProperties),
           handlers,
           function(data) {
             return modelMapper.mapDashboard(data);
           });
       };
 
+      this.updateDashboard = function(dashboardProperties, handlers) {
+        executeRequest(
+          http.putJSON(AJAX_DASHBOARD + "/" + dashboardProperties.id, _.omit(dashboardProperties, "id")),
+          handlers
+        );
+      };
+
       this.createMonitor = function(dashboard_id, monitorParameters, handlers) {
         executeRequest(
-          http.postJSON("/ajax/dashboard/" + dashboard_id + "/monitor", monitorParameters),
+          http.postJSON(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor", monitorParameters),
           handlers,
           function(data) {
             return modelMapper.mapMonitor(data);
@@ -66,23 +75,23 @@
       };
 
       this.updateMonitorPosition = function(monitor_id, position) {
-        http.putJSON("/ajax/monitor/" + monitor_id + "/position", position);
+        http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/position", position);
       }
 
       this.updateMonitorSize = function(monitor_id, size) {
-        http.putJSON("/ajax/monitor/" + monitor_id + "/size", size);
+        http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/size", size);
       }
 
       this.deleteDashboard = function(dashboard_id, handlers) {
         executeRequest(
-          http.delete("/ajax/dashboard/" + dashboard_id),
+          http.delete(AJAX_DASHBOARD + "/" + dashboard_id),
           handlers
         );
       }
 
       this.deleteMonitor = function(dashboard_id, monitor_id, handlers) {
         executeRequest(
-          http.delete("/ajax/dashboard/" + dashboard_id + "/monitor/" + monitor_id),
+          http.delete(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor/" + monitor_id),
           handlers
         );
       }

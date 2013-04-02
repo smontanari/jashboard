@@ -14,7 +14,7 @@
         scope.inputMonitor.configuration.build = {
           type: _.first(buildTypes)
         };
-        scope.buildMonitorFormValidator.initForm(scope.buildMonitorForm);
+        scope.buildMonitorFormValidator.prepareForm(scope.buildMonitorForm);
         scope.formHelper.registerMonitorTypeForm("build", scope.buildMonitorForm);
       });
     }

@@ -9,7 +9,7 @@
         scope.inputMonitor.configuration.ipsum = {
           language: _.first(languages)
         };
-        scope.ipsumMonitorFormValidator.initForm(scope.ipsumMonitorForm);
+        scope.ipsumMonitorFormValidator.prepareForm(scope.ipsumMonitorForm);
         scope.formHelper.registerMonitorTypeForm("ipsum", scope.ipsumMonitorForm);
       });
     }

@@ -72,13 +72,13 @@ describe("Repository", function() {
     });
   });
 
-  describe("Creating a dashboard", function() {
+  describe("createDashboard()", function() {
     beforeEach(function() {
       httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
         new AjaxPromise("test_dashboard")
-      );      
+      );
     });
-    it("should use the http service to save the dashboard data and invoke the callback", function() {
+    it("should use the http service to save the dashboard data and invoke the success handler", function() {
       modelMapper.mapDashboard = jasmine.createSpy("modelMapper.mapDashboard()").andCallFake(function(data) {
         return {id: data};
       });
@@ -92,14 +92,33 @@ describe("Repository", function() {
       repository.createDashboard("test", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
-    });    
+    });
   });
 
-  describe("Creating a monitor", function() {
+  describe("updateDashboard()", function() {
+    beforeEach(function() {
+      httpService.putJSON = jasmine.createSpy("httpService.putJSON()").andReturn(
+        new AjaxPromise("")
+      );
+    });
+    it("should use the http service to save the dashboard data and invoke the success handler", function() {
+      repository.updateDashboard({id:"test_dashboard_id", name: "test.dashboard"}, {success: successHandler});
+
+      expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard_id", {name: "test.dashboard"});
+      expect(successHandler).toHaveBeenCalledWith("");
+    });
+    it("should invoke the error handler if the request fails", function() {
+      repository.updateDashboard("test", {error: errorHandler});
+
+      expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
+    });
+  });
+
+  describe("createMonitor()", function() {
     beforeEach(function() {
       httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
         new AjaxPromise("test_monitor")
-      );      
+      );
     });
     it("should use the http service to save the monitor data and invoke the callback", function() {
       modelMapper.mapMonitor = jasmine.createSpy("modelMapper.mapMonitor()").andCallFake(function(data) {
@@ -115,7 +134,7 @@ describe("Repository", function() {
       repository.createMonitor("test", "test", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
-    });    
+    });
   });
   
   describe("Updating a monitor", function() {
@@ -135,37 +154,37 @@ describe("Repository", function() {
     beforeEach(function() {
       httpService.delete = jasmine.createSpy("httpService.delete()").andReturn(
         new AjaxPromise("")
-      );      
+      );
     });
     it("should use the http service to delete the monitor", function() {
       repository.deleteDashboard("test_dashboard", {success: successHandler});
 
       expect(httpService.delete).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard");
       expect(successHandler).toHaveBeenCalled();
-    });    
+    });
     it("should invoke the error handler if the request fails", function() {
       repository.deleteDashboard("test_dashboard", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
-    });    
+    });
   });
 
   describe("Removing a monitor from a dashboard", function() {
     beforeEach(function() {
       httpService.delete = jasmine.createSpy("httpService.delete()").andReturn(
         new AjaxPromise("")
-      );      
+      );
     });
     it("should use the http service to delete the monitor", function() {
       repository.deleteMonitor("test_dashboard", "test_id", {success: successHandler});
 
       expect(httpService.delete).toHaveBeenCalledWith("/ajax/dashboard/test_dashboard/monitor/test_id");
       expect(successHandler).toHaveBeenCalled();
-    });    
+    });
     it("should invoke the error handler if the request fails", function() {
       repository.deleteMonitor("test_dashboard", "test_id", {error: errorHandler});
 
       expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
-    });    
+    });
   });
 });

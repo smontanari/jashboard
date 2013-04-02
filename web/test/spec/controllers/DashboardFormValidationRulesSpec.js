@@ -1,7 +1,7 @@
 describe("DashboardFormValidationRules", function() {
   var rules, rulesBuilderConstructor, rulesBuilder, validationFn, scope;
   beforeEach(function() {
-    scope = {dashboardName: "test_value"};
+    scope = {inputDashboard: {name: "test_value"}};
 
     validationFn = sinon.stub();
     rulesBuilder = {

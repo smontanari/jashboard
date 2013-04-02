@@ -4,7 +4,7 @@
       this.init = function(scope) {
         var menuActions = {
           newDashboard: function() {
-            scope.$broadcast("OpenDashboardDialog");
+            scope.$broadcast("OpenDashboardDialog", {mode: jashboard.inputOptions.createMode});
           }
         };
         scope.menuAction = function(name) {

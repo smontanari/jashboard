@@ -4,7 +4,8 @@ steal('jashboard/jashboard.js')
 .then(
   'jashboard/model/Dashboard.js',
   'jashboard/model/Monitor.js',
-  'jashboard/model/LoadingStatus.js',
+  'jashboard/model/loadingStatus.js',
+  'jashboard/model/inputOptions.js',
   'jashboard/services/ElementBinding.js',
   'jashboard/services/AlertService.js',
   'jashboard/services/OverlayService.js',

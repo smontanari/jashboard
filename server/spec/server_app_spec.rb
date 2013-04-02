@@ -143,6 +143,29 @@ module Jashboard
       end
     end
 
+    context "Dashboard update" do
+      describe("PUT /ajax/dashboard/:dashboard_id") do
+        before(:each) do
+          @dashboard = Dashboard.new
+          @mock_repository.should_receive(:load_dashboard).with("test_id").and_return(@dashboard)
+          @mock_repository.stub(:save_dashboard)
+        end
+        it("should return a successful response") do
+          put '/ajax/dashboard/test_id', %({"name":"test.dashboard.name"})
+
+          last_response.status.should == 204
+          last_response.body.should be_empty
+        end
+        it("should persist the dashboard to the repository") do
+          @mock_repository.should_receive(:save_dashboard).with(@dashboard)
+
+          put '/ajax/dashboard/test_id', %({"name":"test.dashboard.name"})
+
+          @dashboard.name.should == "test.dashboard.name"
+        end
+      end
+    end
+
     context "Monitor create" do
       describe("POST /ajax/dashboard/:dashboard_id/monitor") do
         before(:each) do
@@ -231,7 +254,7 @@ module Jashboard
         it("should return a successful response") do
           put '/ajax/monitor/test-monitor-id/position', %({"top": 243, "left": 765})
 
-          last_response.should be_ok
+          last_response.status.should == 204
           last_response.body.should be_empty
         end
         it("should update the monitor position") do
@@ -254,7 +277,7 @@ module Jashboard
         it("should return a successful response") do
           put '/ajax/monitor/test-monitor-id/size', %({"width": 243, "height": 765})
 
-          last_response.should be_ok
+          last_response.status.should == 204
           last_response.body.should be_empty
         end
         it("should update the monitor size") do

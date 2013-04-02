@@ -10,7 +10,7 @@ Feature: Update monitor details
 
     When I request to update the position of monitor <monitor_id> with coordinates <top>, <left>
 
-    Then the app should return a successful response
+    Then the app should return a successful response without content
     And monitor <monitor_id> position should have coordinates updated to <top>, <left>
 
     Examples:
@@ -24,7 +24,7 @@ Feature: Update monitor details
 
     When I request to update the size of monitor <monitor_id> with dimensions <width>, <height>
 
-    Then the app should return a successful response
+    Then the app should return a successful response without content
     And monitor <monitor_id> size should have dimensions updated to <width>, <height>
 
     Examples:

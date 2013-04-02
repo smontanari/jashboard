@@ -5,7 +5,7 @@
         .withRule(jashboard.commonValidationRules.required)
         .build();
       
-      this.dashboardName = function() { return validation(scope.dashboardName) };
+      this.dashboardName = function() { return validation(scope.inputDashboard.name) };
     }
   });
 }(jashboard || {}));

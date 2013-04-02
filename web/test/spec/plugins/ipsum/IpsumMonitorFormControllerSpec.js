@@ -9,7 +9,7 @@ describe("IpsumMonitorFormController", function() {
     };
     monitorRulesConstructor = sinon.stub(jashboard, "IpsumMonitorFormValidationRules");
     monitorRulesConstructor.withArgs(scope).returns({id: "ipsumMonitorRules"});
-    formValidator = jasmine.createSpyObj("FormValidator", ['initForm']);
+    formValidator = jasmine.createSpyObj("FormValidator", ['prepareForm']);
     validatorConstructor = sinon.stub(jashboard, "FormValidator");
     validatorConstructor.withArgs({id: "ipsumMonitorRules"}).returns(formValidator);
 
@@ -45,7 +45,7 @@ describe("IpsumMonitorFormController", function() {
       eventListener({});
     });
     it("should init the form validator", function() {
-      expect(scope.ipsumMonitorFormValidator.initForm).toHaveBeenCalledWith("ipsumMonitorForm");
+      expect(scope.ipsumMonitorFormValidator.prepareForm).toHaveBeenCalledWith("ipsumMonitorForm");
     });
     it("should register the ipsumMonitorForm to the formHelper", function() {
       expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");

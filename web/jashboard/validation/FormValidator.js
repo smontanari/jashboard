@@ -9,15 +9,18 @@
           return _.isEmpty(validationRules[inputName]());
         });
       };
-      this.initForm = function(inputForm) {
-        form = inputForm;
-        form.$pristine = true;
-        form.$dirty = false;
+      var initForm = function(isNew) {
+        form.$pristine = isNew;
+        form.$dirty = !isNew;
         _.each(_.keys(validationRules), function(inputName) {
-          form[inputName].$pristine = true;
-          form[inputName].$dirty = false;
+          form[inputName].$pristine = isNew;
+          form[inputName].$dirty = !isNew;
           form[inputName].$error = {};
         });
+      };
+      this.prepareForm = function(inputForm, newForm) {
+        form = inputForm;
+        initForm(newForm || false);
         validateForm();
       };
       this.onInputChange = function(inputName) {

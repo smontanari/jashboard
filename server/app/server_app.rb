@@ -28,6 +28,9 @@ module Jashboard
     end
 
     error do
+      # puts "*************"
+      # puts env['sinatra.error']
+      # puts "*************"
       status 500
       env['sinatra.error'].to_s
     end
@@ -54,6 +57,14 @@ module Jashboard
       json(DashboardView.new(dashboard))
     end
 
+    put '/ajax/dashboard/:dashboard_id' do
+      dashboard_params = JSON.parse(request.body.read)
+      dashboard = @repository.load_dashboard(params[:dashboard_id])
+      dashboard.name = dashboard_params['name']
+      dashboard = @repository.save_dashboard(dashboard)
+      status 204
+    end
+
     post '/ajax/dashboard/:dashboard_id/monitor' do
       data = JSON.parse(request.body.read)
       monitor = create_monitor(data)
@@ -67,7 +78,7 @@ module Jashboard
       monitor = @repository.load_monitor(params[:id])
       monitor.position = get_monitor_position(data)
       @repository.save_monitor(monitor)
-      status 200
+      status 204
     end
 
     put '/ajax/monitor/:id/size' do
@@ -75,7 +86,7 @@ module Jashboard
       monitor = @repository.load_monitor(params[:id])
       monitor.size = get_monitor_size(data)
       @repository.save_monitor(monitor)
-      status 200
+      status 204
     end
 
     delete '/ajax/dashboard/:dashboard_id' do

@@ -5,7 +5,7 @@
       scope.availableLanguages = languages;
       scope.ipsumMonitorFormValidator = new jashboard.FormValidator(new jashboard.IpsumMonitorFormValidationRules(scope));
 
-      scope.$on("NewMonitorDialog", function(event) {
+      scope.$on("OpenMonitorDialog", function(event) {
         scope.inputMonitor.configuration.ipsum = {
           language: _.first(languages)
         };

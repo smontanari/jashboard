@@ -10,7 +10,7 @@
         scope.buildMonitorFormValidator.onInputChange();
       }
 
-      scope.$on("NewMonitorDialog", function(event) {
+      scope.$on("OpenMonitorDialog", function(event) {
         scope.inputMonitor.configuration.build = {
           type: _.first(buildTypes)
         };

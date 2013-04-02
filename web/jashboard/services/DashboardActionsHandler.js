@@ -4,7 +4,7 @@
       this.init = function(applicationScope) {
         var dashboardActions = {
           newMonitor: function(currentScope) {
-            applicationScope.$broadcast("NewMonitorDialog", currentScope.dashboard.id);
+            applicationScope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
           },
           editDashboard: function(currentScope) {
             applicationScope.$broadcast("OpenDashboardDialog", {

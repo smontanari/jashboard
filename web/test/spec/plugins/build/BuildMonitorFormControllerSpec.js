@@ -34,8 +34,8 @@ describe("BuildMonitorFormController", function() {
   it("should put in the scope the different settings types", function() {
     expect(scope.availableCiServerTypes).toEqual(["test_build_type1", "test_build_type2"]);
   });
-  it("should listen to the 'NewMonitorDialog' event", function() {
-    expect(scope.$on).toHaveBeenCalledWith("NewMonitorDialog", jasmine.any(Function));
+  it("should listen to the 'OpenMonitorDialog' event", function() {
+    expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
   });
   it("should set a FormValidator with the build monitor form validation rules in the scope", function() {
     expect(scope.buildMonitorFormValidator).toEqual(formValidator);
@@ -54,7 +54,7 @@ describe("BuildMonitorFormController", function() {
     });
   });
 
-  describe("'NewMonitorDialog' event listener", function() {
+  describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
       scope.formHelper = jasmine.createSpyObj("formHelper", ['registerMonitorTypeForm']);
       scope.buildMonitorForm = "buildMonitorForm";

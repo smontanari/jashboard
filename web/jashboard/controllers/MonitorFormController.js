@@ -32,7 +32,7 @@
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
       scope.monitorFormValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
 
-      scope.$on("NewMonitorDialog", function(event, dashboard_id) {
+      scope.$on("OpenMonitorDialog", function(event, dashboard_id) {
         scope.inputMonitor = {
           dashboard_id: dashboard_id,
           type: _.first(scope.availableMonitorTypes),

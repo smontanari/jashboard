@@ -121,11 +121,11 @@ describe("MonitorFormController", function() {
           jasmine.any(Object)
         );
       });
-      it("should use a default value of 0 for refreshInterval if not provided", function() {
+      it("should pass NaN for refreshInterval if not provided", function() {
         scope.inputMonitor = {
           dashboard_id: "test_dashboard", 
           name: "test.name",
-          refreshInterval: undefined,
+          refreshInterval: "",
           type: "type2",
           configuration: {
             type1: "test1",
@@ -133,19 +133,7 @@ describe("MonitorFormController", function() {
           }
         };
         saveMonitorCallback();
-
-        expect(repository.createMonitor).toHaveBeenCalledWith(
-          "test_dashboard", 
-          {
-            name: "test.name",
-            type: "type2",
-            refreshInterval: 0,
-            position: {top: 123, left: 456},
-            size: {width: 678, height: 654},
-            configuration: {test: "test_configuration"}
-          }, 
-          jasmine.any(Object)
-        );
+        expect(repository.createMonitor.mostRecentCall.args[1].refreshInterval).toBeNaN();
       });
     });
 

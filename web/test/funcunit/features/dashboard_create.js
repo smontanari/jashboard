@@ -26,7 +26,7 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
   test("should close the dialog on Cancel", function() {
     jashboardFeatureHelper.openDashboardDialog();
     S("#cancelDashboard").visible().click();
-    S("#new-dashboard-form").invisible("should not be visible");
+    S("#dashboard-form").invisible("should not be visible");
   });
 
   test("Dashboard name validation", function() {

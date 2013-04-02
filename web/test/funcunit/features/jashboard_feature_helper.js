@@ -2,7 +2,7 @@ var jashboardFeatureHelper = (function(helper) {
   helper.openDashboardDialog = function() {
     S("#menuActions").click();
     S("#navbarMenu .menuAction-new-dashboard").visible("display new dashboard menu action link").click();
-    S("#new-dashboard-form").visible("show new dashboard input dialog");
+    S("#dashboard-form").visible("show new dashboard input dialog");
   };
 
   helper.openMonitorDialog = function(dashboard_id) {

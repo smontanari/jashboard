@@ -1,12 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorFormController: function(scope, repository, pluginManager, monitorLayoutManager) {
-      var parseRefreshInterval = function(inputValue) {
-        if (_.isFinite(inputValue)) {
-          return parseInt(inputValue, 10);
-        }
-        return 0;
-      };
       var saveMonitor = function() {
         var dashboard = _.find(scope.dashboards, function(dashboard) {
           return (dashboard.id === scope.inputMonitor.dashboard_id);
@@ -15,13 +9,14 @@
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         var monitorParameters = {
           name: scope.inputMonitor.name,
-          refreshInterval: parseRefreshInterval(scope.inputMonitor.refreshInterval),
+          refreshInterval: parseInt(scope.inputMonitor.refreshInterval, 10),
           type: scope.inputMonitor.type,
           size: monitorAdapter.defaultSize(),
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
           configuration: monitorAdapter.getMonitorConfiguration(scope.inputMonitor.configuration[monitorType])
         };
         scope.$emit("MonitorCreateStart");
+        console.log(monitorParameters);
         repository.createMonitor(scope.inputMonitor.dashboard_id, monitorParameters, {
           success: function(monitor) {
             dashboard.monitors.push(monitor);

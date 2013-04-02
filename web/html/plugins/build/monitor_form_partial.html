@@ -33,7 +33,7 @@
       </ul>
       <div class="tab-content">
         <div id="ciServerType-{{ciServerType}}" class="tab-pane" data-ng-class="{active: ($index == 0)}" data-ng-repeat="ciServerType in availableCiServerTypes">
-          <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_settings_form_partial.html'"></div>
+          <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_form_partial.html'"></div>
         </div>
       </div>
     </div>

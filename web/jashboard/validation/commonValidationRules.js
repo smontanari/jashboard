@@ -5,7 +5,7 @@
         return {};
       },
       required: function(value) {
-        if (_.isEmpty(value)) {
+        if (!_.isNumber(value) && _.isEmpty(value)) {
           return {required: true};
         }
       },

@@ -79,15 +79,34 @@ describe("BuildMonitorFormController", function() {
         expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");
       });
     });
-    xdescribe("update mode when monitor of type 'build'", function() {
+
+    describe("update mode when monitor not of type 'build'", function() {
       beforeEach(function() {
         listener({}, {
           mode: jashboard.inputOptions.updateMode,
-          parameters: {monitor: {type: 'build'}}
+          parameters: {monitor: {type: 'test_type', configuration: "test_configuration"}}
+        });
+      });
+      it("should not init the form validator", function() {
+        expect(scope.buildMonitorFormValidator.prepareForm).not.toHaveBeenCalled();
+      });
+      it("should not update the monitorConfigurationData", function() {
+        expect(scope.monitorConfigurationData.build).toEqual("test_build");
+      });
+    });
+    
+    describe("update mode when monitor of type 'build'", function() {
+      beforeEach(function() {
+        listener({}, {
+          mode: jashboard.inputOptions.updateMode,
+          parameters: {monitor: {type: 'build', configuration: "test_configuration"}}
         });
       });
       it("should init the form validator", function() {
         expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm", false);
+      });
+      it("should update the monitorConfigurationData according to the current monitor configuration", function() {
+        expect(scope.monitorConfigurationData.build).toEqual("test_configuration");
       });
       it("should register the buildMonitorForm to the formHelper", function() {
         expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");

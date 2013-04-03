@@ -30,6 +30,7 @@
       };
 
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+      scope.monitorConfigurationData = {};
       scope.monitorFormValidator = new jashboard.FormValidator(new jashboard.MonitorFormValidationRules(scope));
 
       scope.$on("OpenMonitorDialog", function(event, options) {
@@ -41,7 +42,6 @@
             refreshInterval: null,
             type: _.first(scope.availableMonitorTypes)
           };
-          scope.monitorConfigurationData = {};
           _.each(scope.availableMonitorTypes, function(type) {
             scope.monitorConfigurationData[type] = {};
           });

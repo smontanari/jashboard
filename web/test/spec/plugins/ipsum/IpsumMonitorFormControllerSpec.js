@@ -33,23 +33,62 @@ describe("IpsumMonitorFormController", function() {
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
       scope.monitorConfigurationData = {
-        ipsum: {
-          language: "test-language"
-        }
+        test_type: "test",
+        ipsum: "test_ipsum"
       };
       scope.ipsumMonitorForm = "ipsumMonitorForm";
       scope.formHelper = jasmine.createSpyObj("formHelper", ['registerMonitorTypeForm']);
+    });
 
-      eventListener({});
+    describe("create mode", function() {
+      beforeEach(function() {
+        eventListener({}, {
+          mode: jashboard.inputOptions.createMode,
+          parameters: {}
+        });
+      });
+      it("should register the ipsumMonitorForm to the formHelper", function() {
+        expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
+      });
+      it("should reset the variables in the scope", function() {
+        expect(scope.monitorConfigurationData.ipsum).toEqual({language: "english"});
+      });
+      it("should init the form validator", function() {
+        expect(scope.ipsumMonitorFormValidator.prepareForm).toHaveBeenCalledWith("ipsumMonitorForm", true);
+      });
     });
-    it("should init the form validator", function() {
-      expect(scope.ipsumMonitorFormValidator.prepareForm).toHaveBeenCalledWith("ipsumMonitorForm");
+
+    describe("update mode when monitor not of type 'ipsum'", function() {
+      beforeEach(function() {
+        eventListener({}, {
+          mode: jashboard.inputOptions.updateMode,
+          parameters: {monitor: {type: 'test_type', configuration: "test_configuration"}}
+        });
+      });
+      it("should not init the form validator", function() {
+        expect(scope.ipsumMonitorFormValidator.prepareForm).not.toHaveBeenCalled();
+      });
+      it("should not update the monitorConfigurationData", function() {
+        expect(scope.monitorConfigurationData.ipsum).toEqual("test_ipsum");
+      });
     });
-    it("should register the ipsumMonitorForm to the formHelper", function() {
-      expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
-    });
-    it("should reset the variables in the scope", function() {
-      expect(scope.monitorConfigurationData.ipsum).toEqual({language: "english"});
+    
+    describe("update mode when monitor of type 'ipsum'", function() {
+      beforeEach(function() {
+        eventListener({}, {
+          mode: jashboard.inputOptions.updateMode,
+          parameters: {monitor: {type: 'ipsum', configuration: "test_configuration"}}
+        });
+      });
+      it("should init the form validator", function() {
+        expect(scope.ipsumMonitorFormValidator.prepareForm).toHaveBeenCalledWith("ipsumMonitorForm", false);
+      });
+      it("should update the monitorConfigurationData according to the current monitor configuration", function() {
+        expect(scope.monitorConfigurationData.ipsum).toEqual("test_configuration");
+      });
+      it("should register the ipsumMonitorForm to the formHelper", function() {
+        expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
+      });
     });
   });
 });

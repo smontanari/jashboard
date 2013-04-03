@@ -11,10 +11,15 @@
       }
 
       scope.$on("OpenMonitorDialog", function(event, options) {
-        scope.monitorConfigurationData.build = {
-          type: _.first(buildTypes)
-        };
-        scope.buildMonitorFormValidator.prepareForm(scope.buildMonitorForm, true);
+        if (options.mode === jashboard.inputOptions.createMode) {
+          scope.monitorConfigurationData.build = {
+            type: _.first(buildTypes)
+          };
+          scope.buildMonitorFormValidator.prepareForm(scope.buildMonitorForm, true);
+        } else if (options.parameters.monitor.type === 'build') {
+          scope.monitorConfigurationData.build = options.parameters.monitor.configuration;
+          scope.buildMonitorFormValidator.prepareForm(scope.buildMonitorForm, false);
+        }
         scope.formHelper.registerMonitorTypeForm("build", scope.buildMonitorForm);
       });
     }

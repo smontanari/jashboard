@@ -32,12 +32,14 @@ describe("MonitorFormController", function() {
   it("should inject the array of available monitor types into the scope", function() {
     expect(scope.availableMonitorTypes).toEqual(["test_type1", "test_type2"]);
   });
-
   it("should listen to the 'OpenMonitorDialog' event", function() {
     expect(scope.$on).toHaveBeenCalledWith("OpenMonitorDialog", jasmine.any(Function));
   });
   it("should set a FormValidator with the monitor form validation rules in the scope", function() {
     expect(scope.monitorFormValidator).toEqual(formValidator);
+  });
+  it("should initialise the monitorConfigurationData object in the scope", function() {
+    expect(scope.monitorConfigurationData).toEqual({});
   });
 
   describe("'OpenMonitorDialog' event listener", function() {

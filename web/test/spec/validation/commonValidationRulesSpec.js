@@ -7,13 +7,23 @@ describe("commonValidationRules", function() {
     });
   });
   describe("'required' rule", function() {
-    it("should return no errors when the value is not empty", function() {
+    it("should return no errors when the value is a number", function() {
+      var errors = jashboard.commonValidationRules.required(123);
+
+      expect(errors).toBeEmpty();
+    });
+    it("should return no errors when the value is a non empty string", function() {
       var errors = jashboard.commonValidationRules.required("test-value");
 
       expect(errors).toBeEmpty();
     });
-    it("should return an error when the value is empty", function() {
+    it("should return an error when the value is an empty string", function() {
       var errors = jashboard.commonValidationRules.required("");
+
+      expect(errors).toEqual({required: true});
+    });
+    it("should return an error when the value is null", function() {
+      var errors = jashboard.commonValidationRules.required(null);
 
       expect(errors).toEqual({required: true});
     });

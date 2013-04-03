@@ -5,10 +5,10 @@ describe("ModelMapper", function() {
     pluginManager = {
       findMonitorAdapter: jasmine.createSpy("pluginManager.findMonitorAdapter()").andCallFake(function(type) {
         return {
-          parseConfiguration: function(configData) {
+          convertDataToMonitorConfiguration: function(configData) {
             return {data: configData};
           },
-          parseRuntimeInfo: function(runtimeData) {
+          convertDataToRuntimeInfo: function(runtimeData) {
             return {data: runtimeData};
           }
         };

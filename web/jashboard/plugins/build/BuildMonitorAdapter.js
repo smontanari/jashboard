@@ -1,8 +1,9 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorAdapter: function() {
-      var buildConfigurationParser = new jashboard.plugin.TypeAdapter();
-      var buildConfigurationValidator = new jashboard.plugin.TypeAdapter();
+      var buildDataConverter = new jashboard.plugin.TypeAdapter();
+      var buildConfigurationConverter = new jashboard.plugin.TypeAdapter();
+      var buildConfigurationFormParser = new jashboard.plugin.TypeAdapter();
 
       var getBuildStatus = function(status) {
         switch(status) {
@@ -19,15 +20,32 @@
         return result ? "success" : "failure";
       };
 
-      this.parseConfiguration = function(configuration_data) {
-        return buildConfigurationParser.toObject(configuration_data);    
+      var extractBuildTypeProperties = function(object) {
+        return _.omit(object, "hostname", "port")
       };
 
-      this.getMonitorConfiguration = function(configuration_input) {
-        return buildConfigurationValidator.toObject(configuration_input);    
+      this.convertDataToMonitorConfiguration = function(configurationData) {
+        return _.extend({
+          hostname: configurationData.hostname,
+          port: configurationData.port
+        }, buildDataConverter.toObject(extractBuildTypeProperties(configurationData)));
       };
 
-      this.parseRuntimeInfo = function(runtimeInfo_data) {
+      this.convertMonitorConfigurationToData = function(configurationModel) {
+        return _.extend({
+          hostname: configurationModel.hostname,
+          port: configurationModel.port,
+        }, buildConfigurationConverter.toObject(extractBuildTypeProperties(configurationModel)));
+      };
+
+      this.parseMonitorConfigurationForm = function(formModel) {
+        return _.extend({
+          hostname: formModel.hostname,
+          port: parseInt(formModel.port, 10),
+        }, buildConfigurationFormParser.toObject(extractBuildTypeProperties(formModel)));
+      };
+
+      this.convertDataToRuntimeInfo = function(runtimeInfo_data) {
         return {
           lastBuildTime: jashboard.variableProcessor.validateData(runtimeInfo_data.last_build_time, "n/a"),
           lastBuildDuration: jashboard.variableProcessor.validateData(runtimeInfo_data.duration, "n/a", jashboard.timeConverter.secondsToTime),
@@ -42,8 +60,9 @@
       };
 
       this.init = function() {
-        jashboard.plugin.build.buildConfigurationParser = buildConfigurationParser;
-        jashboard.plugin.build.buildConfigurationValidator = buildConfigurationValidator;
+        jashboard.plugin.build.buildDataConverter = buildDataConverter;
+        jashboard.plugin.build.buildConfigurationConverter = buildConfigurationConverter;
+        jashboard.plugin.build.buildConfigurationFormParser = buildConfigurationFormParser;
       };
     }
   });

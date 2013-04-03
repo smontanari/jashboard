@@ -32,14 +32,15 @@
         scope.$emit("CloseDashboardDialog");
       };
 
-      scope.dashboardFormValidator = new jashboard.FormValidator(new jashboard.DashboardFormValidationRules(scope));
+      var validationRules = new jashboard.DashboardFormValidationRules(scope);
+      scope.dashboardFormValidator = new jashboard.FormValidator();
       scope.$on("OpenDashboardDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
           scope.inputDashboard = {};
-          scope.dashboardFormValidator.prepareForm(scope.dashboardForm, true);
+          scope.dashboardFormValidator.prepareFormForCreate(scope.dashboardForm, validationRules);
         } else {
           scope.inputDashboard = _.pick(options.parameters.dashboard, "id", "name");
-          scope.dashboardFormValidator.prepareForm(scope.dashboardForm, false);
+          scope.dashboardFormValidator.prepareFormForUpdate(scope.dashboardForm, validationRules);
         }
         scope.editMode = options.mode;
       });

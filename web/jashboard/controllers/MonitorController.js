@@ -5,8 +5,7 @@
         if (_.isFinite(scope.monitor.refreshInterval) && scope.monitor.refreshInterval > 0) {
           var interval = scope.monitor.refreshInterval * 1000;
           scope.monitor.runtimeUpdateScheduler = timeoutService(function() {
-            updateMonitorRuntimeInfo(scope);
-            scheduleNextUpdate(scope);
+            updateMonitorRuntimeInfo(scope, true);
           }, interval);
         }
       };

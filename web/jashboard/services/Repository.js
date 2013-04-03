@@ -74,6 +74,13 @@
           });
       };
 
+      this.updateMonitorConfiguration = function(monitor_id, configuration, handlers) {
+        executeRequest(
+          http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/configuration", configuration, handlers),
+          handlers
+        );
+      };
+
       this.updateMonitorPosition = function(monitor_id, position) {
         http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/position", position);
       }

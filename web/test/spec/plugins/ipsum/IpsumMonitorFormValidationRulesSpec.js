@@ -1,7 +1,7 @@
 describe("IpsumMonitorFormValidationRules", function() {
   var rules, rulesBuilderConstructor, scopeRules, rulesBuilder, validationFn, scope;
   beforeEach(function() {
-    scope = {monitorConfigurationData: {
+    scope = {monitorConfigurationFormModel: {
       ipsum: {
         numberOfSentences: "123"
       }

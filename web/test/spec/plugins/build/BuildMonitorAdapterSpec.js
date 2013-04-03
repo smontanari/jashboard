@@ -1,36 +1,73 @@
 describe("BuildMonitorAdapter", function() {
-  var plugin, mockTypeAdapter;
+  var plugin, mockTypeAdapter, configData, configForm, configModel;
 
   beforeEach(function() {
-    mockTypeAdapter = jasmine.createSpyObj("typeAdapter", ["registerTypeHandler", "toObject"]);
+    mockTypeAdapter = {
+      toObject: sinon.stub()
+    };
     spyOn(jashboard.plugin, "TypeAdapter").andReturn(mockTypeAdapter);
     plugin = new jashboard.plugin.build.BuildMonitorAdapter();
+    configData = {
+      type: "test_type",
+      hostname: "test.host.name",
+      port: 123,
+      dataParameter: "test_data_param"
+    };
+    configModel = {
+      type: "test_type",
+      hostname: "test.host.name",
+      port: 123,
+      modelParameter: "test_model_param"
+    };
+    configForm = {
+      type: "test_type",
+      hostname: "test.host.name",
+      port: "123",
+      formParameter: "test_form_param"
+    };
   });
 
   it("should add itself to the plugin manager", function() {
     expect(jashboard.plugin.pluginManager.findMonitorAdapter('build')).toBeDefined();
   });
 
-  it("should invoke a build configuration type handler", function() {
-    plugin.parseConfiguration("test");
+  it("should invoke a build data converter", function() {
+    mockTypeAdapter.toObject.withArgs({type: "test_type", dataParameter: "test_data_param"}).returns({type: "test_type", modelParameter: "test_model_param"});
+    
+    var configuration = plugin.convertDataToMonitorConfiguration(configData);
 
-    expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
+    expect(configuration).toEqual(configModel);
   });
 
-  it("should create a buildConfigurationParser at initialisation", function() {
+  it("should create a buildDataConverter at initialisation", function() {
     plugin.init();
-    expect(jashboard.plugin.build.buildConfigurationParser).toBeDefined();
+    expect(jashboard.plugin.build.buildDataConverter).toBeDefined();
   });
 
-  it("should invoke a build configuration validator", function() {
-    plugin.getMonitorConfiguration("test");
+  it("should invoke a build configuration converter", function() {
+    mockTypeAdapter.toObject.withArgs({type: "test_type", modelParameter: "test_model_param"}).returns({type: "test_type", dataParameter: "test_data_param"});
+    
+    var data = plugin.convertMonitorConfigurationToData(configModel);
 
-    expect(mockTypeAdapter.toObject).toHaveBeenCalledWith("test");
+    expect(data).toEqual(configData);
   });
 
-  it("should create a buildConfigurationValidator at initialisation", function() {
+  it("should create a buildConfigurationConverter at initialisation", function() {
     plugin.init();
-    expect(jashboard.plugin.build.buildConfigurationValidator).toBeDefined();
+    expect(jashboard.plugin.build.buildConfigurationConverter).toBeDefined();
+  });
+
+  it("should invoke a build configuration form parser", function() {
+    mockTypeAdapter.toObject.withArgs({type: "test_type", formParameter: "test_form_param"}).returns({type: "test_type", modelParameter: "test_model_param"});
+
+    var model = plugin.parseMonitorConfigurationForm(configForm);
+
+    expect(model).toEqual(configModel);
+  });
+
+  it("should create a configuration form parser at initialisation", function() {
+    plugin.init();
+    expect(jashboard.plugin.build.buildConfigurationFormParser).toBeDefined();
   });
 
   it("should return a default size for the build monitor", function() {
@@ -43,7 +80,7 @@ describe("BuildMonitorAdapter", function() {
     var verifyProperty = function(testData) {
       testCase = testData.testCase || "";
       it("should create a build runtime object with correct " + testData.property + " " + testCase, function() {
-        var runtimeInfo = plugin.parseRuntimeInfo(testData.data);
+        var runtimeInfo = plugin.convertDataToRuntimeInfo(testData.data);
         expect(runtimeInfo[testData.property]).toEqual(testData.expectedValue);
       });
     };

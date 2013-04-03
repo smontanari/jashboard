@@ -1,5 +1,5 @@
 describe("DashboardFormController", function() {
-  var scope, controller, formValidator, repository, validatorConstructor, dashboardRulesConstructor, eventHandler;
+  var scope, controller, formValidator, repository, dashboardRulesConstructor, eventHandler;
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
@@ -9,14 +9,12 @@ describe("DashboardFormController", function() {
     repository = {};
     dashboardRulesConstructor = sinon.stub(jashboard, "DashboardFormValidationRules");
     dashboardRulesConstructor.withArgs(scope).returns({id: "dashboardRules"});
-    formValidator = jasmine.createSpyObj("FormValidator", ['prepareForm']);
-    validatorConstructor = sinon.stub(jashboard, "FormValidator");
-    validatorConstructor.withArgs({id: "dashboardRules"}).returns(formValidator);
+    formValidator = jasmine.createSpyObj("FormValidator", ['prepareFormForCreate', 'prepareFormForUpdate']);
+    spyOn(jashboard, "FormValidator").andReturn(formValidator);
 
     controller = new jashboard.DashboardFormController(scope, repository);
   });
   afterEach(function() {
-    validatorConstructor.restore();
     dashboardRulesConstructor.restore();
   });
 
@@ -33,7 +31,7 @@ describe("DashboardFormController", function() {
         eventHandler({}, {mode: jashboard.inputOptions.createMode});
       });
       it("should init the form validator", function() {
-        expect(formValidator.prepareForm).toHaveBeenCalledWith("dashboardForm", true);
+        expect(formValidator.prepareFormForCreate).toHaveBeenCalledWith("dashboardForm", {id: "dashboardRules"});
       });
       it("should reset the inputDashboard variable in the scope", function() {
         expect(scope.inputDashboard).toEqual({});
@@ -52,7 +50,7 @@ describe("DashboardFormController", function() {
         });
       });
       it("should init the form validator", function() {
-        expect(formValidator.prepareForm).toHaveBeenCalledWith("dashboardForm", false);
+        expect(formValidator.prepareFormForUpdate).toHaveBeenCalledWith("dashboardForm", {id: "dashboardRules"});
       });
       it("should update the inputDashboard variable in the scope", function() {
         expect(scope.inputDashboard).toEqual({id: "test_dashboard_id", name: "test_dashboard_name"});

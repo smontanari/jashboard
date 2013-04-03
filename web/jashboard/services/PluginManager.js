@@ -5,7 +5,14 @@
 
       this.addMonitorAdapter = function(typeIdentifier, adapterConstructor) {
         var validateAdapter = function(adapter) {
-          _.each(["parseConfiguration", "parseRuntimeInfo", "getMonitorConfiguration", "defaultSize"], function(method) {
+          var requiredMethods = [
+            "convertDataToMonitorConfiguration",
+            "parseMonitorConfigurationForm",
+            "convertDataToRuntimeInfo",
+            "convertMonitorConfigurationToData",
+            "defaultSize"
+          ];
+          _.each(requiredMethods, function(method) {
             if(!_.contains(_.functions(adapter), method)) {
               throw "Adapter for [" + typeIdentifier + "] does not implement a " + method + " method";
             };

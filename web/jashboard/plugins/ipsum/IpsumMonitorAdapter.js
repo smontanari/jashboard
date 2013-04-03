@@ -1,23 +1,28 @@
 (function(module) {
   jashboard.plugin.ipsum = _.extend(module, {
     IpsumMonitorAdapter: function() {
-      this.parseConfiguration = function(configuration_data) {
+      this.convertDataToMonitorConfiguration = function(configurationData) {
         return {
-          numberOfSentences: configuration_data.no_sentences,
-          language: configuration_data.language
+          numberOfSentences: configurationData.no_sentences,
+          language: configurationData.language
         };
       };
 
-      this.getMonitorConfiguration = function(configuration_data) {
+      this.convertMonitorConfigurationToData = function(configuration) {
         return {
-          no_sentences: parseInt(configuration_data.numberOfSentences, 10),
-          language: configuration_data.language
+          no_sentences: parseInt(configuration.numberOfSentences, 10),
+          language: configuration.language
         };
       };
 
-      this.parseRuntimeInfo = function(runtimeInfo_data) {
-        return runtimeInfo_data;
+      this.parseMonitorConfigurationForm = function(configurationForm) {
+        return {
+          numberOfSentences: parseInt(configurationForm.numberOfSentences, 10),
+          language: configurationForm.language
+        };
       };
+
+      this.convertDataToRuntimeInfo = _.clone;
 
       this.defaultSize = function() {
         return { width: 250, height: 150 };

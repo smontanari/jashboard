@@ -216,7 +216,7 @@ describe("MonitorController", function() {
         scheduleFunction();
 
         expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
-        expect(timeoutService.calls.length).toEqual(2);
+        expect(repository.loadMonitorRuntimeInfo.calls.length).toEqual(2);
       });
       it("should not schedule a data load if the refresh interval is 0", function() {
         scope.monitor.refreshInterval = 0;

@@ -8,16 +8,20 @@
         var buildConfigurationFixtures = {
           jenkins: function() {
             return {
-              "type": "jenkins",
-              "build_id": configuration.build_id
+              type: "jenkins",
+              hostname: configuration.hostname,
+              port: configuration.port,
+              build_id: configuration.build_id
             };
           },
           go: function() {
             return {
-              "type": "go",
-              "hostname": configuration.hostname,
-              "port": configuration.port,
-              "build_id": configuration.build_id              
+              type: "go",
+              hostname: configuration.hostname,
+              port: configuration.port,
+              pipeline: configuration.pipeline,              
+              stage: configuration.stage,              
+              job: configuration.job              
             };
           }
         };
@@ -75,15 +79,20 @@
     };
   });
 
+  server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/configuration$/, function(request, monitor_id) {
+    steal.dev.log("monitor[" + monitor_id + "] configuration changed to ");
+    steal.dev.log(request.requestBody);
+    return {returnCode: 204};
+  });
   server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/position$/, function(request, monitor_id) {
     var position = JSON.parse(request.requestBody);
     steal.dev.log("monitor[" + monitor_id + "] moved to [top: " + position.top + ", left: " + position.left + "]");
-    return {returnCode: 201};
+    return {returnCode: 204};
   });
   server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/size$/, function(request, monitor_id) {
     var size = JSON.parse(request.requestBody);
     steal.dev.log("monitor[" + monitor_id + "] resized to [width: " + size.width + ", height: " + size.height + "]");
-    return {returnCode: 201};
+    return {returnCode: 204};
   });
   server.fakeResponse("DELETE", /^\/ajax\/dashboard\/(\w+)\/monitor\/(\w+)$/, function(request, dashboard_id, monitor_id) {
     steal.dev.log("monitor[" + monitor_id + "] deleted");

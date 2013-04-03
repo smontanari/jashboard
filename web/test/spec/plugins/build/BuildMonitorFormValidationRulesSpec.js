@@ -36,7 +36,7 @@ describe("BuildMonitorFormValidationRules", function() {
   };
 
   beforeEach(function() {
-    scope = {monitorConfigurationData: {
+    scope = {monitorConfigurationFormModel: {
       build: {
         hostname: "test_server_name",
         port: "1234",
@@ -70,19 +70,19 @@ describe("BuildMonitorFormValidationRules", function() {
 
   describe("Jenkins build monitor validation when monitor type is 'jenkins'", function() {
     beforeEach(function() {
-      scope.monitorConfigurationData.build.type = 'jenkins';
+      scope.monitorConfigurationFormModel.build.type = 'jenkins';
     });
     verifyValidationPerformed("jenkins_build_id", "test_build_id", ["required"]);
   });
   describe("Jenkins build monitor validation when monitor type is not 'jenkins'", function() {
     beforeEach(function() {
-      scope.monitorConfigurationData.build.type = 'another_type';
+      scope.monitorConfigurationFormModel.build.type = 'another_type';
     });
     verifyNoValidationPerformed("jenkins_build_id");
   });
   describe("Go build monitor validation when monitor type is 'go'", function() {
     beforeEach(function() {
-      scope.monitorConfigurationData.build.type = 'go';
+      scope.monitorConfigurationFormModel.build.type = 'go';
     });
     verifyValidationPerformed("go_pipeline", "test_pipeline", ["required"]);
     verifyValidationPerformed("go_stage", "test_stage", ["required"]);
@@ -90,7 +90,7 @@ describe("BuildMonitorFormValidationRules", function() {
   });
   describe("Go build monitor validation when monitor type is not 'go'", function() {
     beforeEach(function() {
-      scope.monitorConfigurationData.build.type = 'another_type';
+      scope.monitorConfigurationFormModel.build.type = 'another_type';
     });
     verifyNoValidationPerformed("go_pipeline");
     verifyNoValidationPerformed("go_stage");

@@ -3,17 +3,18 @@
     IpsumMonitorFormController: function(scope) {
       var languages = ['english', 'french', 'latin'];
       scope.availableLanguages = languages;
-      scope.ipsumMonitorFormValidator = new jashboard.FormValidator(new jashboard.IpsumMonitorFormValidationRules(scope));
+      var validationRules = new jashboard.IpsumMonitorFormValidationRules(scope);
+      scope.ipsumMonitorFormValidator = new jashboard.FormValidator();
 
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
-          scope.monitorConfigurationData.ipsum = {
+          scope.monitorConfigurationFormModel.ipsum = {
             language: _.first(languages)
           };
-          scope.ipsumMonitorFormValidator.prepareForm(scope.ipsumMonitorForm, true);
+          scope.ipsumMonitorFormValidator.prepareFormForCreate(scope.ipsumMonitorForm, validationRules);
         } else if (options.parameters.monitor.type === 'ipsum'){
-          scope.monitorConfigurationData.ipsum = options.parameters.monitor.configuration;
-          scope.ipsumMonitorFormValidator.prepareForm(scope.ipsumMonitorForm, false);
+          scope.monitorConfigurationFormModel.ipsum = options.parameters.monitor.configuration;
+          scope.ipsumMonitorFormValidator.prepareFormForUpdate(scope.ipsumMonitorForm, validationRules);
         }
         scope.formHelper.registerMonitorTypeForm("ipsum", scope.ipsumMonitorForm);
       });

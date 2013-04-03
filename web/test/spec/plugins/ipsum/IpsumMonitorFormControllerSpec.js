@@ -1,5 +1,5 @@
 describe("IpsumMonitorFormController", function() {
-  var controller, scope, eventListener, monitorRulesConstructor, validatorConstructor, formValidator;
+  var controller, scope, eventListener, rulesConstructor, formValidator;
 
   beforeEach(function() {
     scope = {
@@ -7,17 +7,15 @@ describe("IpsumMonitorFormController", function() {
         eventListener = handler;
       })
     };
-    monitorRulesConstructor = sinon.stub(jashboard, "IpsumMonitorFormValidationRules");
-    monitorRulesConstructor.withArgs(scope).returns({id: "ipsumMonitorRules"});
-    formValidator = jasmine.createSpyObj("FormValidator", ['prepareForm']);
-    validatorConstructor = sinon.stub(jashboard, "FormValidator");
-    validatorConstructor.withArgs({id: "ipsumMonitorRules"}).returns(formValidator);
+    rulesConstructor = sinon.stub(jashboard, "IpsumMonitorFormValidationRules");
+    rulesConstructor.withArgs(scope).returns({id: "ipsumMonitorRules"});
+    formValidator = jasmine.createSpyObj("FormValidator", ['prepareFormForCreate', 'prepareFormForUpdate']);
+    spyOn(jashboard, "FormValidator").andReturn(formValidator);
 
     controller = new jashboard.plugin.ipsum.IpsumMonitorFormController(scope);
   });
   afterEach(function() {
-    monitorRulesConstructor.restore();
-    validatorConstructor.restore();
+    rulesConstructor.restore();
   });
 
   it("should put in the scope the different languages", function() {
@@ -32,7 +30,7 @@ describe("IpsumMonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      scope.monitorConfigurationData = {
+      scope.monitorConfigurationFormModel = {
         test_type: "test",
         ipsum: "test_ipsum"
       };
@@ -51,10 +49,10 @@ describe("IpsumMonitorFormController", function() {
         expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
       });
       it("should reset the variables in the scope", function() {
-        expect(scope.monitorConfigurationData.ipsum).toEqual({language: "english"});
+        expect(scope.monitorConfigurationFormModel.ipsum).toEqual({language: "english"});
       });
       it("should init the form validator", function() {
-        expect(scope.ipsumMonitorFormValidator.prepareForm).toHaveBeenCalledWith("ipsumMonitorForm", true);
+        expect(scope.ipsumMonitorFormValidator.prepareFormForCreate).toHaveBeenCalledWith("ipsumMonitorForm", {id: "ipsumMonitorRules"});
       });
     });
 
@@ -66,10 +64,10 @@ describe("IpsumMonitorFormController", function() {
         });
       });
       it("should not init the form validator", function() {
-        expect(scope.ipsumMonitorFormValidator.prepareForm).not.toHaveBeenCalled();
+        expect(scope.ipsumMonitorFormValidator.prepareFormForUpdate).not.toHaveBeenCalled();
       });
-      it("should not update the monitorConfigurationData", function() {
-        expect(scope.monitorConfigurationData.ipsum).toEqual("test_ipsum");
+      it("should not update the monitorConfigurationFormModel", function() {
+        expect(scope.monitorConfigurationFormModel.ipsum).toEqual("test_ipsum");
       });
     });
     
@@ -81,10 +79,10 @@ describe("IpsumMonitorFormController", function() {
         });
       });
       it("should init the form validator", function() {
-        expect(scope.ipsumMonitorFormValidator.prepareForm).toHaveBeenCalledWith("ipsumMonitorForm", false);
+        expect(scope.ipsumMonitorFormValidator.prepareFormForUpdate).toHaveBeenCalledWith("ipsumMonitorForm", {id: "ipsumMonitorRules"});
       });
-      it("should update the monitorConfigurationData according to the current monitor configuration", function() {
-        expect(scope.monitorConfigurationData.ipsum).toEqual("test_configuration");
+      it("should update the monitorConfigurationFormModel according to the current monitor configuration", function() {
+        expect(scope.monitorConfigurationFormModel.ipsum).toEqual("test_configuration");
       });
       it("should register the ipsumMonitorForm to the formHelper", function() {
         expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");

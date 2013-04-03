@@ -1,7 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
-    FormValidator: function(rules) {
-      var validationRules = rules;
+    FormValidator: function() {
+      var validationRules;
       var form;
 
       var validateForm = function() {
@@ -9,21 +9,25 @@
           return _.isEmpty(validationRules[inputName]());
         });
       };
-      var initForm = function(isNew) {
-        form.$pristine = isNew;
-        form.$dirty = !isNew;
+      var init = function(inputForm, rules, isNewForm) {
+        form = inputForm;
+        validationRules = rules;
+        form.$pristine = isNewForm;
+        form.$dirty = !isNewForm;
         _.each(_.keys(validationRules), function(inputName) {
-          form[inputName].$pristine = isNew;
-          form[inputName].$dirty = !isNew;
+          form[inputName].$pristine = isNewForm;
+          form[inputName].$dirty = !isNewForm;
           form[inputName].$error = {};
         });
-      };
-      this.prepareForm = function(inputForm, newForm) {
-        form = inputForm;
-        initForm(newForm || false);
         validateForm();
       };
-      this.onInputChange = function(inputName) {
+      this.prepareFormForCreate = function(inputForm, rules) {
+        init(inputForm, rules, true);
+      };
+      this.prepareFormForUpdate = function(inputForm, rules) {
+        init(inputForm, rules, false);
+      };
+      this.triggerValidation = function(inputName) {
         if (_.isString(inputName)) {
           form[inputName].$error = validationRules[inputName]() || {};
         }

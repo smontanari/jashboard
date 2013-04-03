@@ -2,9 +2,10 @@ describe("PluginManager", function() {
   var monitorPlugin, mockAdapter;
   var TestAdapter = function() {return mockAdapter;};
   var adapterMethods = [
-    'parseConfiguration',
-    'parseRuntimeInfo',
-    'getMonitorConfiguration',
+    'convertDataToMonitorConfiguration',
+    'convertDataToRuntimeInfo',
+    'parseMonitorConfigurationForm',
+    'convertMonitorConfigurationToData',
     'defaultSize',
     'init'
   ];
@@ -51,36 +52,44 @@ describe("PluginManager", function() {
 
     expect(f).toThrow("Adapter for [test] already exists");
   });
-  it("should throw an error if the plugin does not implement a parseConfiguration method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseRuntimeInfo', 'getMonitorConfiguration', 'defaultSize']);
+  it("should throw an error if the plugin does not implement a convertDataToMonitorConfiguration method", function() {
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToRuntimeInfo', 'convertMonitorConfigurationToData', 'defaultSize', 'parseMonitorConfigurationForm']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
 
-    expect(f).toThrow("Adapter for [test] does not implement a parseConfiguration method");
+    expect(f).toThrow("Adapter for [test] does not implement a convertDataToMonitorConfiguration method");
   });
-  it("should throw an error if the plugin does not implement a getMonitorConfiguration method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseRuntimeInfo', 'parseConfiguration', 'defaultSize']);
+  it("should throw an error if the plugin does not implement a convertMonitorConfigurationToData method", function() {
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToRuntimeInfo', 'convertDataToMonitorConfiguration', 'defaultSize', 'parseMonitorConfigurationForm']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
 
-    expect(f).toThrow("Adapter for [test] does not implement a getMonitorConfiguration method");
+    expect(f).toThrow("Adapter for [test] does not implement a convertMonitorConfigurationToData method");
   });
-  it("should throw an error if the plugin does not implement a parseRuntimeInfo method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'getMonitorConfiguration', 'defaultSize']);
+  it("should throw an error if the plugin does not implement a convertDataToRuntimeInfo method", function() {
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToMonitorConfiguration', 'convertMonitorConfigurationToData', 'defaultSize', 'parseMonitorConfigurationForm']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
 
-    expect(f).toThrow("Adapter for [test] does not implement a parseRuntimeInfo method");
+    expect(f).toThrow("Adapter for [test] does not implement a convertDataToRuntimeInfo method");
   });
   it("should throw an error if the plugin does not implement a defaultSize method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['parseConfiguration', 'getMonitorConfiguration', 'parseRuntimeInfo']);
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToMonitorConfiguration', 'convertMonitorConfigurationToData', 'convertDataToRuntimeInfo', 'parseMonitorConfigurationForm']);
     var f = function() {
       pluginManager.addMonitorAdapter("test", TestAdapter);
     };
 
     expect(f).toThrow("Adapter for [test] does not implement a defaultSize method");
+  });
+  it("should throw an error if the plugin does not implement a parseMonitorConfigurationForm method", function() {
+    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToMonitorConfiguration', 'convertMonitorConfigurationToData', 'convertDataToRuntimeInfo', 'defaultSize']);
+    var f = function() {
+      pluginManager.addMonitorAdapter("test", TestAdapter);
+    };
+
+    expect(f).toThrow("Adapter for [test] does not implement a parseMonitorConfigurationForm method");
   });
 });

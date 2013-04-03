@@ -148,6 +148,22 @@ describe("Repository", function() {
 
       expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/size", "test.size");
     });
+
+    describe("Updating monitor configuration", function() {
+      beforeEach(function() {
+        httpService.putJSON = jasmine.createSpy("httpService.putJSON()").andReturn(
+          new AjaxPromise("")
+        );
+        repository.updateMonitorConfiguration("test_id", "test.configuration", {success: successHandler, error: errorHandler});
+      });
+      it("should use the http service to update the monitor size", function() {
+        expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/configuration", "test.configuration", jasmine.any(Object));
+      });
+      it("should invoke the ajax callback handlers", function() {
+        expect(successHandler).toHaveBeenCalled();
+        expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
+      });
+    });
   });
 
   describe("Removing a dashboard and all its monitors", function() {

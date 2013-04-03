@@ -10,7 +10,7 @@
         return horizontalIntersection && verticalIntersection;
       }
       this.intersect = function(rectangle1, rectangle2) {
-        return intersectsWith.apply(rectangle1, [rectangle2]) || intersectsWith.apply(rectangle2, [rectangle1]);
+        return intersectsWith.call(rectangle1, rectangle2) || intersectsWith.call(rectangle2, rectangle1);
       };
     }
   });

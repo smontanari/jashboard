@@ -10,7 +10,7 @@
         <label class="control-label" for="dashboardName">Name</label>
         <div class="controls">
           <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
-          data-ng-model="inputDashboard.name" data-ng-change="dashboardFormValidator.onInputChange('dashboardName')">
+          data-ng-model="inputDashboard.name" data-ng-change="dashboardFormValidator.triggerValidation('dashboardName')">
         </div>
         <div class="controls">
           <div id="dashboardNameRequiredError" class="help-inline" data-ng-show="dashboardForm.dashboardName.$error.required">You must provide a dashboard name.</div>

@@ -9,22 +9,29 @@ describe("IpsumMonitorAdapter", function() {
     expect(jashboard.plugin.pluginManager.findMonitorAdapter('ipsum')).toBeDefined();
   });
   
-  it("should parse the ipsum monitor configuration", function() {
-    var configuration = adapter.parseConfiguration({no_sentences: 10, language: "english"});
+  it("should convert the ipsum monitor data", function() {
+    var configuration = adapter.convertDataToMonitorConfiguration({no_sentences: 10, language: "english"});
 
     expect(configuration.numberOfSentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
 
-  it("should validate the form ipsum monitor configuration", function() {
-    var configuration = adapter.getMonitorConfiguration({numberOfSentences: "10", language: "english"});
+  it("should convert the ipsum monitor configuration", function() {
+    var configuration = adapter.convertMonitorConfigurationToData({numberOfSentences: "10", language: "english"});
 
     expect(configuration.no_sentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
 
-  it("should parse the runtime information", function() {
-    var runtimeInfo = adapter.parseRuntimeInfo({text: "some text"});
+  it("should parse the ipsum monitor configuration form", function() {
+    var configuration = adapter.parseMonitorConfigurationForm({numberOfSentences: "10", language: "english"});
+
+    expect(configuration.numberOfSentences).toEqual(10);
+    expect(configuration.language).toEqual("english");
+  });
+
+  it("should convert data to the runtime information", function() {
+    var runtimeInfo = adapter.convertDataToRuntimeInfo({text: "some text"});
 
     expect(runtimeInfo).toEqual({text: "some text"});
   });

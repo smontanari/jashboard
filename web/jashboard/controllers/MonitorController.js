@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorController: function(scope, repository, alertService, timeoutService) {
+    MonitorController: function(rootScope, scope, repository, alertService, timeoutService) {
       var scheduleNextUpdate = function scheduleNextUpdate(scope) {
         if (_.isFinite(scope.monitor.refreshInterval) && scope.monitor.refreshInterval > 0) {
           var interval = scope.monitor.refreshInterval * 1000;
@@ -51,9 +51,14 @@
         event.stopPropagation();
       });
 
-      // scope.editMonitor = function() {
-      //   rootScope.$broadcast("EditMonitorDialog", scope.monitor);
-      // };
+      scope.editMonitor = function() {
+        rootScope.$broadcast("OpenMonitorDialog", {
+          mode: jashboard.inputOptions.updateMode,
+          parameters: {
+            monitor: scope.monitor
+          }
+        });
+      };
 
       scope.removeMonitor = function() {
         var currentDashboard = scope.dashboard;
@@ -93,6 +98,7 @@
     }
   });
   jashboard.application.controller('MonitorController', [
+    '$rootScope',
     '$scope',
     'Repository',
     'AlertService',

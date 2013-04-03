@@ -4,7 +4,10 @@
       this.init = function(applicationScope) {
         var dashboardActions = {
           newMonitor: function(currentScope) {
-            applicationScope.$broadcast("OpenMonitorDialog", currentScope.dashboard.id);
+            applicationScope.$broadcast("OpenMonitorDialog", {
+              mode: jashboard.inputOptions.createMode,
+              parameters: {dashboard_id: currentScope.dashboard.id}
+            });
           },
           editDashboard: function(currentScope) {
             applicationScope.$broadcast("OpenDashboardDialog", {

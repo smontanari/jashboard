@@ -60,14 +60,17 @@ describe("BuildMonitorFormController", function() {
       scope.buildMonitorForm = "buildMonitorForm";
       listener({});
     });
-    it("should init the form validator", function() {
-      expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm");
-    });
-    it("should reset the inputMonitor.configuration variable in the scope", function() {
-      expect(scope.inputMonitor.configuration.build).toEqual({type: "test_build_type1"});
-    });
-    it("should register the buildMonitorForm to the formHelper", function() {
-      expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");
+
+    describe("create mode", function() {
+      it("should init the form validator", function() {
+        expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm");
+      });
+      it("should reset the inputMonitor.configuration variable in the scope", function() {
+        expect(scope.inputMonitor.configuration.build).toEqual({type: "test_build_type1"});
+      });
+      it("should register the buildMonitorForm to the formHelper", function() {
+        expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");
+      });
     });
   });
 });

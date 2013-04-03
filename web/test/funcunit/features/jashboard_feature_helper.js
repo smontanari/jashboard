@@ -7,7 +7,7 @@ var jashboardFeatureHelper = (function(helper) {
 
   helper.openMonitorDialog = function(dashboard_id) {
     S("#" + dashboard_id + " .dashboard-action.action-new").visible("display new monitor menu action").click();
-    S("#new-monitor-form").visible("show new monitor modal");
+    S("#monitor-form").visible("show new monitor modal");
   };
 
   helper.inputGenericMonitorData = function(data) {

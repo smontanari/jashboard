@@ -3,12 +3,13 @@ Given /^the following monitors$/ do |test_monitor_data|
     configuration_hash = eval(monitor_data[:configuration])
     position_match = monitor_data['position'].match(/(\d+),(\d+)/)
     size_match = monitor_data['size'].match(/(\d+)x(\d+)/)
+    refresh_interval = monitor_data['refresh_interval'].to_i if monitor_data['refresh_interval'].match(/\d+/)
     @db_helper.serialize_monitor(
       Jashboard::MonitorBuilder.new.
         with_id(monitor_data[:id]).
         with_name(monitor_data[:name]).
         with_type(monitor_data[:type]).
-        with_refresh_interval(monitor_data[:refresh_interval].to_i).
+        with_refresh_interval(refresh_interval).
         with_position(Struct.new(:top, :left).new(position_match[1].to_i, position_match[2].to_i)).
         with_size(Struct.new(:width, :height).new(size_match[1].to_i, size_match[2].to_i)).
         with_configuration(

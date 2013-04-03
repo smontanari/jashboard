@@ -1,7 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
     DashboardFormController: function(scope, repository) {
-      var formValidator = new jashboard.FormValidator(new jashboard.DashboardFormValidationRules(scope));
       var onSuccessfulCreate = function(dashboard) {
         scope.dashboards.push(dashboard);
         scope.context.activeDashboardId = dashboard.id;
@@ -33,16 +32,16 @@
         scope.$emit("CloseDashboardDialog");
       };
 
+      scope.dashboardFormValidator = new jashboard.FormValidator(new jashboard.DashboardFormValidationRules(scope));
       scope.$on("OpenDashboardDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
           scope.inputDashboard = {};
-          formValidator.prepareForm(scope.dashboardForm, true);
+          scope.dashboardFormValidator.prepareForm(scope.dashboardForm, true);
         } else {
           scope.inputDashboard = _.pick(options.parameters.dashboard, "id", "name");
-          formValidator.prepareForm(scope.dashboardForm, false);
+          scope.dashboardFormValidator.prepareForm(scope.dashboardForm, false);
         }
         scope.editMode = options.mode;
-        scope.dashboardFormValidator = formValidator;
       });
     }
   });

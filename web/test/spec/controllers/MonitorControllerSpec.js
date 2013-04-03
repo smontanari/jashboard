@@ -1,5 +1,5 @@
 describe("MonitorController", function() {
-  var delegate, scope, repository, alertService, testMonitor;
+  var delegate, rootScope, scope, repository, alertService, testMonitor;
 
   beforeEach(function() {
     testMonitor = 
@@ -8,6 +8,7 @@ describe("MonitorController", function() {
       name: "test.monitor",
       type: "test_type"
     };
+    rootScope = jasmine.createSpyObj("rootScope", ['$broadcast']);
     scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$emit']);
     scope.dashboards = [
       {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
@@ -40,7 +41,7 @@ describe("MonitorController", function() {
         }
       });
 
-      new jashboard.MonitorController(scope, repository);
+      new jashboard.MonitorController(rootScope, scope, repository);
     });
     it("should update the monitor position", function() {
       expect(testMonitor.position).toEqual({top: 10, left: 20});
@@ -62,6 +63,23 @@ describe("MonitorController", function() {
     });
   });
 
+  describe("scope.editMonitor()", function() {
+    beforeEach(function() {
+      scope.monitor = "test_monitor";
+
+      new jashboard.MonitorController(rootScope, scope, repository);
+      scope.editMonitor();
+    });
+    it("should broadcast the 'OpenMonitorDialog' event from the root scope with the given parameters", function() {
+      expect(rootScope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", {
+        mode: jashboard.inputOptions.updateMode,
+        parameters: {
+          monitor: "test_monitor"
+        }
+      });
+    });
+  });
+
   describe("scope.removeMonitor()", function() {
     var deleteHandlers, alertOptions, timeoutService;
     beforeEach(function() {
@@ -79,7 +97,7 @@ describe("MonitorController", function() {
       scope.dashboard = {id: "test_dashboard", monitors: [{id: "m1"}, {id: "m2"}, testMonitor]};
       scope.monitor = testMonitor;
 
-      new jashboard.MonitorController(scope, repository, alertService, timeoutService);
+      new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
       scope.removeMonitor();
     });
 
@@ -132,7 +150,7 @@ describe("MonitorController", function() {
         id: "test_id",
         type: "test_type"          
       }
-      new jashboard.MonitorController(scope, repository);
+      new jashboard.MonitorController(rootScope, scope, repository);
     });
     it ("should not start loading the data if the monitor loading status is completed", function() {
       scope.monitor.loadingStatus = jashboard.model.loadingStatus.completed;
@@ -174,7 +192,7 @@ describe("MonitorController", function() {
           handlers = callbacks;
         });
 
-      new jashboard.MonitorController(scope, repository, alertService, timeoutService);
+      new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
     };
 
     _.each(['success', 'error'], function(action) {
@@ -226,7 +244,7 @@ describe("MonitorController", function() {
             handlers = callbacks;
           });
 
-      new jashboard.MonitorController(scope, repository);
+      new jashboard.MonitorController(rootScope, scope, repository);
       scope.monitor = testMonitor;
       testMonitor.runtimeInfo = "test_initial_runtime";
 

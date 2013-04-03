@@ -25,12 +25,12 @@ describe("DashboardFormController", function() {
       scope.dashboardForm = "dashboardForm";
       scope.inputDashboard = {id: "test", name: "test_name"};
     });
+    it("should set a FormValidator with the dashboard form validation rules in the scope", function() {
+      expect(scope.dashboardFormValidator).toEqual(formValidator);
+    });
     describe("create mode", function() {
       beforeEach(function() {
         eventHandler({}, {mode: jashboard.inputOptions.createMode});
-      });
-      it("should set a FormValidator with the dashboard form validation rules in the scope", function() {
-        expect(scope.dashboardFormValidator).toEqual(formValidator);
       });
       it("should init the form validator", function() {
         expect(formValidator.prepareForm).toHaveBeenCalledWith("dashboardForm", true);
@@ -51,13 +51,10 @@ describe("DashboardFormController", function() {
           }
         });
       });
-      it("should set a FormValidator with the dashboard form validation rules in the scope", function() {
-        expect(scope.dashboardFormValidator).toEqual(formValidator);
-      });
       it("should init the form validator", function() {
         expect(formValidator.prepareForm).toHaveBeenCalledWith("dashboardForm", false);
       });
-      it("should reset the inputDashboard variable in the scope", function() {
+      it("should update the inputDashboard variable in the scope", function() {
         expect(scope.inputDashboard).toEqual({id: "test_dashboard_id", name: "test_dashboard_name"});
       });
       it("should set the editMode variable in the scope", function() {

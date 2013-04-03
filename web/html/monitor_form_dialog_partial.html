@@ -1,11 +1,11 @@
-<div id="new-monitor-form" class="modal hide fade" role="dialog" 
-     aria-labelledby="monitorModalLabel" aria-hidden="true" 
+<div id="monitor-form" class="modal hide fade" role="dialog" aria-hidden="true" 
      data-jb-dialog="{show: 'OpenMonitorDialog', hide: 'CloseMonitorDialog'}">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3 id="monitorModalLabel">Create new monitor</h3>
-  </div>
   <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3 data-ng-show="editMode == 'create'">Create new monitor</h3>
+      <h3 data-ng-show="editMode == 'update'">Monitor configuration</h3>
+    </div>
     <div class="modal-body">
       <div class="baseConfiguration form-horizontal" data-ng-show="formHelper.showForm('default')">
         <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorName')}">

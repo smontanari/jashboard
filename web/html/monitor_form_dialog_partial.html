@@ -32,11 +32,14 @@
         </div>
         <div class="control-group">
           <label class="control-label">Type</label>
-          <div class="controls">
+          <div class="controls" data-ng-show="editMode == 'create'">
             <select name="monitorType" class="input-medium" 
               data-ng-model="baseMonitorData.type" 
               data-ng-options="t for t in availableMonitorTypes">
             </select>
+          </div>
+          <div class="controls" data-ng-show="editMode == 'update'">
+            <span class="readonly-field">{{baseMonitorData.type}}</span>
           </div>
         </div>
       </div>

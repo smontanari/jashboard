@@ -13,14 +13,14 @@ describe("DashboardActionsHandler", function() {
 
   describe("scope.dashboardAction(): newMonitor", function() {
     it("should broadcast the 'OpenMonitorDialog' event on 'newMonitor' action", function() {
-      var innerScope = { dashboard: {id: "test_dashboard_id"} };
+      var innerScope = { dashboard: "test-dashboard" };
 
       scope.dashboardAction.apply(innerScope, ['newMonitor']);
       
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", {
         mode: jashboard.inputOptions.createMode,
         parameters: {
-          dashboard_id: "test_dashboard_id"
+          dashboard: "test-dashboard"
         }
       });
     });

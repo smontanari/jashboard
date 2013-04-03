@@ -1,10 +1,21 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorFormController: function(scope, repository, pluginManager, monitorLayoutManager) {
-      var saveMonitor = function() {
-        var dashboard = _.find(scope.dashboards, function(dashboard) {
-          return (dashboard.id === scope.dashboard_id);
+      var createMonitor = function(dashboard, monitorParameters) {
+        scope.$emit("MonitorSaveStart");
+        repository.createMonitor(dashboard.id, monitorParameters, {
+          success: function(monitor) {
+            dashboard.monitors.push(monitor);
+            scope.$apply();
+            scope.$emit("MonitorSaveComplete");
+          },
+          error: function() {
+            scope.$emit("AjaxError");
+          }
         });
+        scope.$emit("CloseMonitorDialog");
+      };
+      var saveMonitor = function(dashboard) {
         var monitorType = scope.baseMonitorData.type;
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         var monitorParameters = {
@@ -15,18 +26,7 @@
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
           configuration: monitorAdapter.getMonitorConfiguration(scope.monitorConfigurationData[monitorType])
         };
-        scope.$emit("MonitorCreateStart");
-        repository.createMonitor(scope.dashboard_id, monitorParameters, {
-          success: function(monitor) {
-            dashboard.monitors.push(monitor);
-            scope.$apply();
-            scope.$emit("MonitorCreateComplete");
-          },
-          error: function() {
-            scope.$emit("AjaxError");
-          }
-        });
-        scope.$emit("CloseMonitorDialog");
+        createMonitor(dashboard, monitorParameters);
       };
 
       scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
@@ -35,7 +35,7 @@
 
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
-          scope.dashboard_id = options.parameters.dashboard_id;
+          scope.dashboard_id = options.parameters.dashboard.id;
           scope.baseMonitorData = {
             id: null,
             name: null,
@@ -52,7 +52,9 @@
           scope.monitorFormValidator.prepareForm(scope.baseMonitorForm, false);
         }
         scope.editMode = options.mode;
-        scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.baseMonitorData, saveMonitor);
+        scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.baseMonitorData, function() {
+          saveMonitor(options.parameters.dashboard);
+        });
       });
     }
   });

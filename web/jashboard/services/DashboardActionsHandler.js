@@ -6,7 +6,7 @@
           newMonitor: function(currentScope) {
             applicationScope.$broadcast("OpenMonitorDialog", {
               mode: jashboard.inputOptions.createMode,
-              parameters: {dashboard_id: currentScope.dashboard.id}
+              parameters: {dashboard: currentScope.dashboard}
             });
           },
           editDashboard: function(currentScope) {

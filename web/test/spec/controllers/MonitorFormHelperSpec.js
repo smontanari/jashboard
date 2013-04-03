@@ -1,4 +1,4 @@
-describe("CreateMonitorFormHelper", function() {
+describe("MonitorFormHelper", function() {
   var formHelper, monitorForm, monitor, saveCallback;
 
   beforeEach(function() {
@@ -12,7 +12,7 @@ describe("CreateMonitorFormHelper", function() {
     };
     saveCallback = jasmine.createSpy();
 
-    formHelper = new jashboard.CreateMonitorFormHelper(monitorForm, monitor, saveCallback);
+    formHelper = new jashboard.MonitorFormHelper(monitorForm, monitor, saveCallback);
     formHelper.registerMonitorTypeForm("test_type", {});
     formHelper.registerMonitorTypeForm("another_type", {});
   });

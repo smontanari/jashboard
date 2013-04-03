@@ -44,7 +44,7 @@ describe("MonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      spyOn(jashboard, "CreateMonitorFormHelper").andReturn({test: "formHelper"});
+      spyOn(jashboard, "MonitorFormHelper").andReturn({test: "formHelper"});
       scope.baseMonitorForm = "baseMonitorForm";
       scope.baseMonitorData = {test: "test"};
     });
@@ -55,14 +55,14 @@ describe("MonitorFormController", function() {
         parameters: {monitor: {}}
       });
 
-      expect(jashboard.CreateMonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
+      expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
       expect(scope.formHelper).toEqual({test: "formHelper"});
     });
     describe("create mode", function() {
       beforeEach(function() {
         listener({}, {
           mode: jashboard.inputOptions.createMode,
-          parameters: {dashboard_id: "test_dashboard_id"}
+          parameters: {dashboard: {id: "test_dashboard_id"}}
         });
       });
       it("should init the form validator", function() {
@@ -119,16 +119,13 @@ describe("MonitorFormController", function() {
   });
 
   describe("save action callback", function() {
-    var successHandler, errorHandler, saveMonitorCallback, adapter;
+    var successHandler, errorHandler, saveMonitorCallback, adapter, dashboard;
     beforeEach(function() {
-      spyOn(jashboard, "CreateMonitorFormHelper").andCallFake(function(form, model, handler) {
+      spyOn(jashboard, "MonitorFormHelper").andCallFake(function(form, model, handler) {
         saveMonitorCallback = handler;
         return {};
       });
-      scope.dashboards = [
-        {id: "dashboard1", monitors: [{id: "m1"}]},
-        {id: "test_dashboard", monitors: [{id: "m2"}]}
-      ];
+      dashboard = {id: "test_dashboard", monitors: [{id: "m2"}]};
       repository.createMonitor = jasmine.createSpy("repository.createMonitor()").andCallFake(function(dashboard_id, monitorParameters, handlers) {
         successHandler = handlers.success;
         errorHandler = handlers.error;
@@ -144,13 +141,12 @@ describe("MonitorFormController", function() {
       controller = new jashboard.MonitorFormController(scope, repository, pluginManager, monitorLayoutManager);
       listener({}, {
         mode: jashboard.inputOptions.createMode,
-        parameters: {dashboard_id: "test_dashboard_id"}
+        parameters: {dashboard: dashboard}
       });
     });
     
     describe("Form data evaluation", function() {
       it("should call the repository to create a monitor with parameters from the input form", function() {
-        scope.dashboard_id = "test_dashboard";
         scope.baseMonitorData = {
           name: "test.name",
           refreshInterval: "123",
@@ -196,36 +192,33 @@ describe("MonitorFormController", function() {
 
     describe("Data model update", function() {
       it("should add the monitor to the dashboard", function() {
-        scope.dashboard_id = "test_dashboard";
         scope.baseMonitorData = {};
         saveMonitorCallback();
 
         successHandler("test.monitor");
 
-        expect(scope.dashboards[0].monitors.length).toEqual(1);
-        expect(scope.dashboards[1].monitors.length).toEqual(2);
-        expect(scope.dashboards[1].monitors).toContain("test.monitor");
+        expect(dashboard.monitors.length).toEqual(2);
+        expect(dashboard.monitors).toContain("test.monitor");
       });
     });
 
     describe("Event handling", function() {
       beforeEach(function() {
-        scope.dashboard_id = "test_dashboard";
         scope.baseMonitorData = {};
         saveMonitorCallback();
       });
-      it("should emit the 'MonitorCreateStart'", function() {
-        expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateStart");
+      it("should emit the 'MonitorSaveStart'", function() {
+        expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveStart");
       });
       it("should syncronise the scope", function() {
         successHandler("test.monitor");
 
         expect(scope.$apply).toHaveBeenCalled();
       });
-      it("should emit the 'MonitorCreateComplete'", function() {
+      it("should emit the 'MonitorSaveComplete'", function() {
         successHandler("test.monitor");
         
-        expect(scope.$emit).toHaveBeenCalledWith("MonitorCreateComplete");
+        expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveComplete");
       });
       it("should emit the 'CloseMonitorDialog'", function() {
         expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");

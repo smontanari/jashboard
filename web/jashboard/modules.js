@@ -27,7 +27,7 @@ steal('jashboard/jashboard.js')
   'jashboard/validation/commonValidationRules.js',
   'jashboard/validation/ValidationRulesBuilder.js',
   'jashboard/controllers/scopeContextHelper.js',
-  'jashboard/controllers/CreateMonitorFormHelper.js',
+  'jashboard/controllers/MonitorFormHelper.js',
   'jashboard/controllers/MainController.js',
   'jashboard/controllers/DashboardFormValidationRules.js',
   'jashboard/controllers/MonitorFormValidationRules.js',

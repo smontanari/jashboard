@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    CreateMonitorFormHelper: function(initialForm, monitorModel, saveCallback) {
+    MonitorFormHelper: function(initialForm, monitorModel, saveCallback) {
       var monitorForms = {
         default: initialForm
       };

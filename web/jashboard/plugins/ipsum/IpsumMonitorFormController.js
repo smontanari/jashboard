@@ -6,7 +6,7 @@
       scope.ipsumMonitorFormValidator = new jashboard.FormValidator(new jashboard.IpsumMonitorFormValidationRules(scope));
 
       scope.$on("OpenMonitorDialog", function(event) {
-        scope.inputMonitor.configuration.ipsum = {
+        scope.monitorConfigurationData.ipsum = {
           language: _.first(languages)
         };
         scope.ipsumMonitorFormValidator.prepareForm(scope.ipsumMonitorForm);

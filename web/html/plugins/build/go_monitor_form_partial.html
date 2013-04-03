@@ -3,7 +3,7 @@
     <label class="control-label" for="go_pipeline">Pipeline</label>
     <div class="controls">
       <input name="go_pipeline" class="input-medium" type="text" placeholder="pipeline name" 
-        data-ng-model="inputMonitor.configuration.build.pipeline" data-ng-change="buildMonitorFormValidator.onInputChange('go_pipeline')">
+        data-ng-model="monitorConfigurationData.build.pipeline" data-ng-change="buildMonitorFormValidator.onInputChange('go_pipeline')">
     </div>
     <div class="controls">
       <div id="goPipelineRequiredError" class="help-inline" data-ng-show="buildMonitorForm.go_pipeline.$error.required">You must provide a Go pipeline.</div>
@@ -13,7 +13,7 @@
     <label class="control-label" for="go_stage">Stage</label>
     <div class="controls">
       <input name="go_stage" type="text" placeholder="stage name" class="input-small" 
-        data-ng-model="inputMonitor.configuration.build.stage" data-ng-change="buildMonitorFormValidator.onInputChange('go_stage')">
+        data-ng-model="monitorConfigurationData.build.stage" data-ng-change="buildMonitorFormValidator.onInputChange('go_stage')">
     </div>
     <div class="controls">
       <div id="goStageRequiredError" class="help-inline" data-ng-show="buildMonitorForm.go_stage.$error.required">You must provide a Go stage.</div>
@@ -23,7 +23,7 @@
     <label class="control-label" for="go_job">Job</label>
     <div class="controls">
       <input name="go_job" type="text" placeholder="job name" class="input-medium" 
-        data-ng-model="inputMonitor.configuration.build.job" data-ng-change="buildMonitorFormValidator.onInputChange('go_job')">
+        data-ng-model="monitorConfigurationData.build.job" data-ng-change="buildMonitorFormValidator.onInputChange('go_job')">
     </div>
     <div class="controls">
       <div id="goJobRequiredError" class="help-inline" data-ng-show="buildMonitorForm.go_job.$error.required">You must provide a Go job.</div>

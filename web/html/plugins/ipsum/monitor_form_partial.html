@@ -4,7 +4,7 @@
       <label class="control-label" for="numberOfSentences">Number of sentences</label>
       <div class="controls">
         <input name="numberOfSentences" type="text" class="input-mini"
-          data-ng-model="inputMonitor.configuration.ipsum.numberOfSentences" data-ng-change="ipsumMonitorFormValidator.onInputChange('numberOfSentences')">
+          data-ng-model="monitorConfigurationData.ipsum.numberOfSentences" data-ng-change="ipsumMonitorFormValidator.onInputChange('numberOfSentences')">
       </div>
       <div class="controls">
         <div id="numberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.required">You must provide a number of sentences.</div>
@@ -15,7 +15,7 @@
       <label class="control-label" for="language">Language</label>
       <div class="controls">
         <select name="language" class="input-medium" 
-          data-ng-model="inputMonitor.configuration.ipsum.language" 
+          data-ng-model="monitorConfigurationData.ipsum.language" 
           data-ng-options="l for l in availableLanguages">
         </select>
       </div>

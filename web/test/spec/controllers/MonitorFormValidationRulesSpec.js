@@ -2,7 +2,7 @@ describe("MonitorFormValidationRules", function() {
   var rules, rulesBuilderConstructor, scopeRules, rulesBuilder, validationFn, scope;
   beforeEach(function() {
     scope = {
-      inputMonitor: {
+      baseMonitorData: {
         name: "test_monitor_name",
         refreshInterval: "test_monitor_refresh"
       }

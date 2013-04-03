@@ -6,15 +6,15 @@
       scope.buildMonitorFormValidator = new jashboard.FormValidator(new jashboard.BuildMonitorFormValidationRules(scope));
       
       scope.setCiServerType = function(type) {
-        scope.inputMonitor.configuration.build.type = type;
+        scope.monitorConfigurationData.build.type = type;
         scope.buildMonitorFormValidator.onInputChange();
       }
 
-      scope.$on("OpenMonitorDialog", function(event) {
-        scope.inputMonitor.configuration.build = {
+      scope.$on("OpenMonitorDialog", function(event, options) {
+        scope.monitorConfigurationData.build = {
           type: _.first(buildTypes)
         };
-        scope.buildMonitorFormValidator.prepareForm(scope.buildMonitorForm);
+        scope.buildMonitorFormValidator.prepareForm(scope.buildMonitorForm, true);
         scope.formHelper.registerMonitorTypeForm("build", scope.buildMonitorForm);
       });
     }

@@ -17,10 +17,8 @@ describe("BuildMonitorFormController", function() {
        listener = handler;
     });
     scope.monitorFormValidator = jasmine.createSpyObj("monitorFormValidator", ['addRules']);
-    scope.inputMonitor = {
-      configuration: {
-        build: {}
-      }
+    scope.monitorConfigurationData = {
+      build: {type: "test some type"}
     };
 
     controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
@@ -45,7 +43,7 @@ describe("BuildMonitorFormController", function() {
     it("should set the coniguration build.type", function() {
       scope.setCiServerType("test_type");
 
-      expect(scope.inputMonitor.configuration.build.type).toEqual("test_type");
+      expect(scope.monitorConfigurationData.build.type).toEqual("test_type");
     });
     it("should trigger the input change on the formValidator", function() {
       scope.setCiServerType("test_type");
@@ -58,15 +56,38 @@ describe("BuildMonitorFormController", function() {
     beforeEach(function() {
       scope.formHelper = jasmine.createSpyObj("formHelper", ['registerMonitorTypeForm']);
       scope.buildMonitorForm = "buildMonitorForm";
-      listener({});
+      scope.monitorConfigurationData = {
+        test_type: "test other type",
+        build: "test_build"
+      };
     });
 
     describe("create mode", function() {
-      it("should init the form validator", function() {
-        expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm");
+      beforeEach(function() {
+        listener({}, {
+          mode: jashboard.inputOptions.createMode,
+          parameters: {}
+        });
       });
-      it("should reset the inputMonitor.configuration variable in the scope", function() {
-        expect(scope.inputMonitor.configuration.build).toEqual({type: "test_build_type1"});
+      it("should init the form validator", function() {
+        expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm", true);
+      });
+      it("should reset the configuration value in the scope", function() {
+        expect(scope.monitorConfigurationData.build).toEqual({type: "test_build_type1"});
+      });
+      it("should register the buildMonitorForm to the formHelper", function() {
+        expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");
+      });
+    });
+    xdescribe("update mode when monitor of type 'build'", function() {
+      beforeEach(function() {
+        listener({}, {
+          mode: jashboard.inputOptions.updateMode,
+          parameters: {monitor: {type: 'build'}}
+        });
+      });
+      it("should init the form validator", function() {
+        expect(scope.buildMonitorFormValidator.prepareForm).toHaveBeenCalledWith("buildMonitorForm", false);
       });
       it("should register the buildMonitorForm to the formHelper", function() {
         expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("build", "buildMonitorForm");

@@ -44,7 +44,7 @@ describe("MonitorFormController", function() {
     beforeEach(function() {
       spyOn(jashboard, "CreateMonitorFormHelper").andReturn({test: "formHelper"});
       scope.baseMonitorForm = "baseMonitorForm";
-      scope.inputMonitor = {test: "test"};
+      scope.baseMonitorData = {test: "test"};
     });
 
     it("should put a new formHelper in the scope", function() {
@@ -53,7 +53,7 @@ describe("MonitorFormController", function() {
         parameters: {monitor: {}}
       });
 
-      expect(jashboard.CreateMonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.inputMonitor, jasmine.any(Function));
+      expect(jashboard.CreateMonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
       expect(scope.formHelper).toEqual({test: "formHelper"});
     });
     describe("create mode", function() {
@@ -68,10 +68,15 @@ describe("MonitorFormController", function() {
       });
       it("should reset the input variables in the scope", function() {
         expect(scope.dashboard_id).toEqual("test_dashboard_id");
-        expect(scope.inputMonitor).toEqual({
+        expect(scope.baseMonitorData).toEqual({
           id: null,
-          type: "test_type1",
-          configuration: {}
+          name: null,
+          refreshInterval: null,
+          type: "test_type1"
+        });
+        expect(scope.monitorConfigurationData).toEqual({
+          test_type1: {},
+          test_type2: {}
         });
       });
       it("should set the editMode variable as 'create' in the scope", function() {
@@ -88,7 +93,8 @@ describe("MonitorFormController", function() {
             name: "test_name",
             type: "test_type",
             refreshInterval: 123,
-            configuration: "test_configuration"
+            configuration: "test_configuration",
+            runtimeInfo: "test_runtime_info"
           }}
         });
       });
@@ -97,12 +103,11 @@ describe("MonitorFormController", function() {
       });
       it("should update the input variables in the scope", function() {
         expect(scope.dashboard_id).toBeNull();
-        expect(scope.inputMonitor).toEqual({
+        expect(scope.baseMonitorData).toEqual({
           id: "test_monitor_id",
           name: "test_name",
           type: "test_type",
-          refreshInterval: 123,
-          configuration: "test_configuration"
+          refreshInterval: 123
         });
       });
       it("should set the editMode variable as 'update' in the scope", function() {
@@ -141,17 +146,17 @@ describe("MonitorFormController", function() {
       });
     });
     
-    describe("Form data validation", function() {
+    describe("Form data evaluation", function() {
       it("should call the repository to create a monitor with parameters from the input form", function() {
         scope.dashboard_id = "test_dashboard";
-        scope.inputMonitor = {
+        scope.baseMonitorData = {
           name: "test.name",
           refreshInterval: "123",
-          type: "type2",
-          configuration: {
-            type1: "test1",
-            type2: "test2"
-          }
+          type: "type2"
+        };
+        scope.monitorConfigurationData = {
+          type1: "test1",
+          type2: "test2"
         };
         saveMonitorCallback();
 
@@ -171,11 +176,13 @@ describe("MonitorFormController", function() {
         );
       });
       it("should pass NaN for refreshInterval if not provided", function() {
-        scope.inputMonitor = {
+        scope.baseMonitorData = {
           name: "test.name",
           refreshInterval: "",
-          type: "type2",
-          configuration: {
+          type: "type2"
+        };
+        scope.monitorConfigurationData = {
+          build: {
             type1: "test1",
             type2: "test2"
           }
@@ -188,9 +195,7 @@ describe("MonitorFormController", function() {
     describe("Data model update", function() {
       it("should add the monitor to the dashboard", function() {
         scope.dashboard_id = "test_dashboard";
-        scope.inputMonitor = {
-          configuration: {}
-        };
+        scope.baseMonitorData = {};
         saveMonitorCallback();
 
         successHandler("test.monitor");
@@ -204,9 +209,7 @@ describe("MonitorFormController", function() {
     describe("Event handling", function() {
       beforeEach(function() {
         scope.dashboard_id = "test_dashboard";
-        scope.inputMonitor = {
-          configuration: {}
-        };
+        scope.baseMonitorData = {};
         saveMonitorCallback();
       });
       it("should emit the 'MonitorCreateStart'", function() {

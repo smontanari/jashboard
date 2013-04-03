@@ -6,7 +6,7 @@
         .withRule(jashboard.commonValidationRules.positiveInteger)
         .build();
       
-      this.numberOfSentences = function() { return validationRule(scope.inputMonitor.configuration.ipsum.numberOfSentences) };
+      this.numberOfSentences = function() { return validationRule(scope.monitorConfigurationData.ipsum.numberOfSentences) };
     }
   });
 }(jashboard || {}));

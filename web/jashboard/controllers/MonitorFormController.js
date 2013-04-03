@@ -5,15 +5,15 @@
         var dashboard = _.find(scope.dashboards, function(dashboard) {
           return (dashboard.id === scope.dashboard_id);
         });
-        var monitorType = scope.inputMonitor.type;
+        var monitorType = scope.baseMonitorData.type;
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         var monitorParameters = {
-          name: scope.inputMonitor.name,
-          refreshInterval: parseInt(scope.inputMonitor.refreshInterval, 10),
-          type: scope.inputMonitor.type,
+          name: scope.baseMonitorData.name,
+          refreshInterval: parseInt(scope.baseMonitorData.refreshInterval, 10),
+          type: scope.baseMonitorData.type,
           size: monitorAdapter.defaultSize(),
           position: monitorLayoutManager.nextAvailableMonitorPosition(dashboard, monitorAdapter.defaultSize()),
-          configuration: monitorAdapter.getMonitorConfiguration(scope.inputMonitor.configuration[monitorType])
+          configuration: monitorAdapter.getMonitorConfiguration(scope.monitorConfigurationData[monitorType])
         };
         scope.$emit("MonitorCreateStart");
         repository.createMonitor(scope.dashboard_id, monitorParameters, {
@@ -35,19 +35,24 @@
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
           scope.dashboard_id = options.parameters.dashboard_id;
-          scope.inputMonitor = {
+          scope.baseMonitorData = {
             id: null,
-            type: _.first(scope.availableMonitorTypes),
-            configuration: {}
+            name: null,
+            refreshInterval: null,
+            type: _.first(scope.availableMonitorTypes)
           };
+          scope.monitorConfigurationData = {};
+          _.each(scope.availableMonitorTypes, function(type) {
+            scope.monitorConfigurationData[type] = {};
+          });
           scope.monitorFormValidator.prepareForm(scope.baseMonitorForm, true);
         } else {
-          scope.inputMonitor = _.pick(options.parameters.monitor, "id", "name", "type", "refreshInterval", "configuration");
+          scope.baseMonitorData = _.pick(options.parameters.monitor, "id", "name", "type", "refreshInterval");
           scope.dashboard_id = null;
           scope.monitorFormValidator.prepareForm(scope.baseMonitorForm, false);
         }
         scope.editMode = options.mode;
-        scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.inputMonitor, saveMonitor);
+        scope.formHelper = new jashboard.CreateMonitorFormHelper(scope.baseMonitorForm, scope.baseMonitorData, saveMonitor);
       });
     }
   });

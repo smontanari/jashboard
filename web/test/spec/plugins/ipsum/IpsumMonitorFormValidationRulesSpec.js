@@ -1,11 +1,11 @@
 describe("IpsumMonitorFormValidationRules", function() {
   var rules, rulesBuilderConstructor, scopeRules, rulesBuilder, validationFn, scope;
   beforeEach(function() {
-    scope = {inputMonitor: {configuration: {
+    scope = {monitorConfigurationData: {
       ipsum: {
         numberOfSentences: "123"
       }
-    }}};
+    }};
 
     validationFn = sinon.stub();
     var fakeRulesBuilder = jasmine.createSpyObj("ValidationRulesBuilder", ['withRule', 'build']);

@@ -32,11 +32,9 @@ describe("IpsumMonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      scope.inputMonitor = {
-        configuration: {
-          ipsum: {
-            language: "test-language"
-          }
+      scope.monitorConfigurationData = {
+        ipsum: {
+          language: "test-language"
         }
       };
       scope.ipsumMonitorForm = "ipsumMonitorForm";
@@ -50,8 +48,8 @@ describe("IpsumMonitorFormController", function() {
     it("should register the ipsumMonitorForm to the formHelper", function() {
       expect(scope.formHelper.registerMonitorTypeForm).toHaveBeenCalledWith("ipsum", "ipsumMonitorForm");
     });
-    it("should reset the inputMonitor.configuration variable in the scope", function() {
-      expect(scope.inputMonitor.configuration.ipsum).toEqual({language: "english"});
+    it("should reset the variables in the scope", function() {
+      expect(scope.monitorConfigurationData.ipsum).toEqual({language: "english"});
     });
   });
 });

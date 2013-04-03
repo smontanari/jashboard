@@ -11,8 +11,8 @@
           .build()
       };
       
-      this.monitorName = function() { return rules.monitorName(scope.inputMonitor.name) };
-      this.monitorRefresh = function() { return rules.monitorRefresh(scope.inputMonitor.refreshInterval) };
+      this.monitorName = function() { return rules.monitorName(scope.baseMonitorData.name) };
+      this.monitorRefresh = function() { return rules.monitorRefresh(scope.baseMonitorData.refreshInterval) };
     }
   });
 }(jashboard || {}));

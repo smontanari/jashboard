@@ -13,8 +13,8 @@
       data-ng-repeat="dashboard in dashboards">
       <div class="dashboard-actions">
         <span class="dashboard-action action-delete" data-ng-click="dashboardAction('delete')">Delete</span>
-        <span class="dashboard-action action-edit" data-ng-click="dashboardAction('editDashboard')">Properties</span>
-        <span class="dashboard-action action-new" data-ng-click="dashboardAction('newMonitor')">New monitor</span>
+        <span class="dashboard-action action-edit" data-ng-click="dashboardAction('editDashboard')">Edit</span>
+        <span class="dashboard-action action-new" data-ng-click="dashboardAction('newMonitor')">Add monitor</span>
       </div>
       <div class="dashboard-content">
         <div id="{{monitor.id}}" class="monitor-panel" data-ng-class="monitor.type + '-monitor-panel'"

@@ -1,16 +1,19 @@
 <div id="dashboard-form" data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}" class="modal hide fade" role="dialog" aria-hidden="true">
-  <div data-ng-form="dashboardForm" class="form-horizontal" data-ng-controller="DashboardFormController">
+  <div data-ng-form="dashboardForm" class="form-horizontal" data-ng-controller="DashboardFormController" 
+    data-jb-form-validation="{triggerOn: 'OpenDashboardDialog', validationRules: 'DashboardFormValidationRules'}">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 data-ng-show="editMode == 'create'">Create new dashboard</h3>
-      <h3 data-ng-show="editMode == 'update'">Edit dashboard</h3>
+      <div data-ng-switch="$editMode">
+        <h3 data-ng-switch-when="create">Create new dashboard</h3>
+        <h3 data-ng-switch-when="update">Edit dashboard</h3>
+      </div>
     </div>
     <div class="modal-body">
-      <div class="control-group" data-ng-class="{'error': dashboardFormValidator.inputInError('dashboardName')}">
+      <div class="control-group" data-ng-class="{'error': inputInError('dashboardName')}">
         <label class="control-label" for="dashboardName">Name</label>
         <div class="controls">
           <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
-          data-ng-model="inputDashboard.name" data-ng-change="dashboardFormValidator.triggerValidation('dashboardName')">
+          data-ng-model="dashboardFormModel.name" data-ng-change="validateField('dashboardName')">
         </div>
         <div class="controls">
           <div id="dashboardNameRequiredError" class="help-inline" data-ng-show="dashboardForm.dashboardName.$error.required">You must provide a dashboard name.</div>

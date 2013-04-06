@@ -1,21 +1,22 @@
 <div id="buildMonitorInput" data-ng-show="formHelper.showForm('build')">
-  <div class="buildFormOptions" data-ng-form="buildMonitorForm" data-ng-controller="BuildMonitorFormController">
+  <div class="buildFormOptions" data-ng-form="buildMonitorForm" data-ng-controller="BuildMonitorFormController"
+    data-jb-form-validation="{triggerOn: 'OpenMonitorDialog', validationRules: 'plugin.build.BuildMonitorFormValidationRules'}">
     <div class="form-horizontal">
-      <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('serverName')}">
+      <div class="control-group" data-ng-class="{'error': inputInError('serverName')}">
         <label class="control-label" for="serverName">Hostname</label>
         <div class="controls">
           <input name="serverName" type="text" placeholder="ci hostname" class="input-large" 
-            data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="buildMonitorFormValidator.triggerValidation('serverName')">
+            data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="validateField('serverName')">
         </div>
         <div class="controls">
           <div id="buildServerNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverName.$error.required">You must provide a CI server name.</div>
         </div>
       </div>
-      <div class="control-group" data-ng-class="{'error': buildMonitorFormValidator.inputInError('serverPort')}">
+      <div class="control-group" data-ng-class="{'error': inputInError('serverPort')}">
         <label class="control-label" for="serverPort">Port</label>
         <div class="controls">
           <input name="serverPort" type="text" class="input-mini" 
-            data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="buildMonitorFormValidator.triggerValidation('serverPort')">
+            data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="validateField('serverPort')">
         </div>
         <div class="controls">
           <div id="buildServerPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.required">You must provide a CI server port.</div>
@@ -24,16 +25,29 @@
       </div>
     </div>
     <div class="buildType-options">
-      <ul class="nav nav-tabs">
-        <li><label>CI Server</label></li>
-        <li data-ng-class="{active: (ciServerType == monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
-          <a id="ciServerType-{{ciServerType}}-tab" data-toggle="tab" href="#ciServerType-{{ciServerType}}"
-            data-ng-click="setCiServerType(ciServerType)">{{ciServerType}}</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div id="ciServerType-{{ciServerType}}" class="tab-pane" data-ng-class="{active: (ciServerType == monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
-          <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_form_partial.html'"></div>
+      <div data-ng-switch="$editMode">
+        <div data-ng-switch-when="create">
+          <ul class="nav nav-tabs">
+            <li><label>CI Server</label></li>
+            <li data-ng-class="{active: (ciServerType == monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
+              <a id="ciServerType-{{ciServerType}}-tab" data-toggle="tab" href="#ciServerType-{{ciServerType}}"
+                data-ng-click="setCiServerType(ciServerType)">{{ciServerType}}</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="ciServerType-{{ciServerType}}" class="tab-pane" data-ng-class="{active: (ciServerType == monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
+              <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_form_partial.html'"></div>
+            </div>
+          </div>
+        </div>
+        <div data-ng-switch-when="update">
+          <div class="control-group form-horizontal">
+            <label class="control-label">CI Server</label>
+            <div class="controls">
+              <span class="readonly-field">{{monitorConfigurationFormModel.build.type}}</span>
+            </div>
+          </div>
+          <div data-ng-include="'html/plugins/build/' + monitorConfigurationFormModel.build.type + '_monitor_form_partial.html'"></div>
         </div>
       </div>
     </div>

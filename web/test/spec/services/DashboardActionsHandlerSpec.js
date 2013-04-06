@@ -19,9 +19,7 @@ describe("DashboardActionsHandler", function() {
       
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", {
         mode: jashboard.inputOptions.createMode,
-        parameters: {
-          dashboard: "test-dashboard"
-        }
+        parameters: {dashboard: "test-dashboard"}
       });
     });
   });
@@ -34,9 +32,7 @@ describe("DashboardActionsHandler", function() {
       
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog", {
         mode: jashboard.inputOptions.updateMode,
-        parameters: {
-          dashboard: {id: "test_dashboard_id"}
-        }
+        parameters: {dashboard: {id: "test_dashboard_id"}}
       });
     });
   });

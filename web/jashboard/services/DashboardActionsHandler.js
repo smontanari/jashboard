@@ -12,8 +12,8 @@
           editDashboard: function(currentScope) {
             applicationScope.$broadcast("OpenDashboardDialog", {
               mode: jashboard.inputOptions.updateMode,
-              parameters: { dashboard: currentScope.dashboard }
-            })
+              parameters: {dashboard: currentScope.dashboard}
+            });
           },
           delete: function(currentScope) {
             alertService.showAlert({

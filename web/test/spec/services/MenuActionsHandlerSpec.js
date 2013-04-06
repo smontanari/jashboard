@@ -10,9 +10,7 @@ describe("MenuActionsHandler", function() {
     it("should broadcast the 'OpenDashboardDialog' event", function() {
 
       scope.menuAction('newDashboard');
-      expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog", {
-        mode: jashboard.inputOptions.createMode
-      });  
+      expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog", {mode: jashboard.inputOptions.createMode});  
     });
   });
 });

@@ -1,48 +1,43 @@
 (function(module) {
   jashboard = _.extend(module, {
     DashboardFormController: function(scope, repository) {
-      var onSuccessfulCreate = function(dashboard) {
-        scope.dashboards.push(dashboard);
-        scope.context.activeDashboardId = dashboard.id;
-        scope.$apply();
-        scope.$emit("DashboardSaveComplete");
-      };
-      var onSuccessfulUpdate = function() {
-        var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.inputDashboard.id});
-        dashboard.name = scope.inputDashboard.name;
-        scope.$apply();
-        scope.$emit("DashboardSaveComplete");
-      };
-      var onError = function() {
-        scope.$emit("AjaxError");
-      };
-      scope.saveDashboard = function() {
+      var invokeRepository = function(repositoryFn, parameters, onSuccess) {
         scope.$emit("DashboardSaveStart");
-        if (scope.editMode === jashboard.inputOptions.createMode) {
-          repository.createDashboard({name: scope.inputDashboard.name}, {
-            success: onSuccessfulCreate,
-            error: onError
-          });
-        } else {
-          repository.updateDashboard(scope.inputDashboard, {
-            success: onSuccessfulUpdate,
-            error: onError
-          });
-        }
+        parameters.push({
+          success: function(data) {
+            onSuccess(data);
+            scope.$apply();
+            scope.$emit("DashboardSaveComplete");
+          },
+          error: function() {
+            scope.$emit("AjaxError");
+          }
+        });
+        repository[repositoryFn].apply(null, parameters);
         scope.$emit("CloseDashboardDialog");
       };
+      var createDashboard = function() {
+        invokeRepository("createDashboard", [{name: scope.dashboardFormModel.name}], function(dashboard) {
+          scope.dashboards.push(dashboard);
+          scope.context.activeDashboardId = dashboard.id;
+        });
+      };
+      var updateDashboard = function() {
+        invokeRepository("updateDashboard", [scope.dashboardFormModel], function() {
+          var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.dashboardFormModel.id});
+          dashboard.name = scope.dashboardFormModel.name;
+        });
+      };
 
-      var validationRules = new jashboard.DashboardFormValidationRules(scope);
-      scope.dashboardFormValidator = new jashboard.FormValidator();
       scope.$on("OpenDashboardDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
-          scope.inputDashboard = {};
-          scope.dashboardFormValidator.prepareFormForCreate(scope.dashboardForm, validationRules);
-        } else {
-          scope.inputDashboard = _.pick(options.parameters.dashboard, "id", "name");
-          scope.dashboardFormValidator.prepareFormForUpdate(scope.dashboardForm, validationRules);
+          scope.dashboardFormModel = {};
+          scope.saveDashboard = createDashboard;
+        } else if (options.mode === jashboard.inputOptions.updateMode) {
+          scope.dashboardFormModel = _.pick(options.parameters.dashboard, "id", "name");
+          scope.saveDashboard = updateDashboard;
         }
-        scope.editMode = options.mode;
+        scope.$editMode = options.mode;
       });
     }
   });

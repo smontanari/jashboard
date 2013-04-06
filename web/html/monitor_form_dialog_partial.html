@@ -1,28 +1,31 @@
 <div id="monitor-form" class="modal hide fade" role="dialog" aria-hidden="true" 
      data-jb-dialog="{show: 'OpenMonitorDialog', hide: 'CloseMonitorDialog'}">
-  <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController">
+  <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController"
+    data-jb-form-validation="{triggerOn: 'OpenMonitorDialog', validationRules: 'MonitorFormValidationRules'}">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3 data-ng-show="editMode == 'create'">Create new monitor</h3>
-      <h3 data-ng-show="editMode == 'update'">Edit monitor configuration</h3>
+      <div data-ng-switch="$editMode">
+        <h3 data-ng-switch-when="create">Create new monitor</h3>
+        <h3 data-ng-switch-when="update">Edit monitor</h3>
+      </div>
     </div>
     <div class="modal-body">
       <div class="baseConfiguration form-horizontal" data-ng-show="formHelper.showForm('default')">
-        <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorName')}">
+        <div class="control-group" data-ng-class="{'error': inputInError('monitorName')}">
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">
             <input type="text" name="monitorName" class="input-large" placeholder="monitor name" 
-              data-ng-model="baseMonitorData.name" data-ng-change="monitorFormValidator.triggerValidation('monitorName')">
+              data-ng-model="baseMonitorData.name" data-ng-change="validateField('monitorName')">
           </div>
           <div class="controls">
             <div id="monitorNameRequiredError" class="help-inline" data-ng-show="baseMonitorForm.monitorName.$error.required">You must provide a monitor name.</div>
           </div>
         </div>
-        <div class="control-group" data-ng-class="{'error': monitorFormValidator.inputInError('monitorRefresh')}">
+        <div class="control-group" data-ng-class="{'error': inputInError('monitorRefresh')}">
           <label class="control-label" for="monitorRefresh">Refresh interval</label>
           <div class="controls">
             <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="baseMonitorData.refreshInterval" 
-              data-ng-change="monitorFormValidator.triggerValidation('monitorRefresh')"> seconds
+              data-ng-change="validateField('monitorRefresh')"> seconds
           </div>
           <div class="controls">
             <div/>
@@ -32,14 +35,16 @@
         </div>
         <div class="control-group">
           <label class="control-label">Type</label>
-          <div class="controls" data-ng-show="editMode == 'create'">
-            <select name="monitorType" class="input-medium" 
-              data-ng-model="baseMonitorData.type" 
-              data-ng-options="t for t in availableMonitorTypes">
-            </select>
-          </div>
-          <div class="controls" data-ng-show="editMode == 'update'">
-            <span class="readonly-field">{{baseMonitorData.type}}</span>
+          <div data-ng-switch="$editMode">
+            <div class="controls" data-ng-switch-when="create">
+              <select name="monitorType" class="input-medium" 
+                data-ng-model="baseMonitorData.type" 
+                data-ng-options="t for t in availableMonitorTypes">
+              </select>
+            </div>
+            <div class="controls" data-ng-switch-when="update">
+              <span class="readonly-field">{{baseMonitorData.type}}</span>
+            </div>
           </div>
         </div>
       </div>

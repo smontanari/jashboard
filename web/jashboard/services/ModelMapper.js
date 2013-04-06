@@ -2,22 +2,34 @@
   jashboard = _.extend(module, {
     ModelMapper: function(pluginManager) {
       var that = this;
-      this.mapMonitor = function(monitorData) {
+      this.mapDataToMonitor = function(monitorData) {
         return _.tap(new jashboard.model.Monitor(monitorData), function(monitor) {
           var monitorAdapter = pluginManager.findMonitorAdapter(monitor.type);
           monitor.configuration = monitorAdapter.convertDataToMonitorConfiguration(monitorData.configuration);
         });
       };
 
-      this.mapMonitorRuntimeInfo = function(monitorType, monitorRuntimeData) {
+      this.mapDataToMonitorRuntimeInfo = function(monitorType, monitorRuntimeData) {
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         return monitorAdapter.convertDataToRuntimeInfo(monitorRuntimeData);
       };
 
-      this.mapDashboard = function(dashboardData) {
+      this.mapMonitorConfigurationToData = function(monitorType, monitorConfiguration) {
+        var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
+        return monitorAdapter.convertMonitorConfigurationToData(monitorConfiguration);
+      };
+
+      this.mapMonitorToData = function(monitor) {
+        var monitorAdapter = pluginManager.findMonitorAdapter(monitor.type);
+        return _.tap(_.pick(monitor, "name", "refreshInterval", "type", "size", "position"), function(data) {
+          data.configuration = monitorAdapter.convertMonitorConfigurationToData(monitor.configuration)
+        });
+      };
+
+      this.mapDataToDashboard = function(dashboardData) {
         return _.tap(new jashboard.model.Dashboard(dashboardData), function(dashboard) {
           _.each(dashboardData.monitors, function(monitorData) {
-            dashboard.monitors.push(that.mapMonitor(monitorData));
+            dashboard.monitors.push(that.mapDataToMonitor(monitorData));
           });
         });
       };

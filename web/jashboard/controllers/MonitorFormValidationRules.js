@@ -1,18 +1,13 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorFormValidationRules: function(scope) {
-      var rules = {
-        monitorName: new jashboard.ValidationRulesBuilder()
-          .withRule(jashboard.commonValidationRules.required)
-          .build(),
-        monitorRefresh: new jashboard.ValidationRulesBuilder()
-          .withRule(jashboard.commonValidationRules.number)
-          .withRule(jashboard.commonValidationRules.positiveNumber)
-          .build()
-      };
+    MonitorFormValidationRules: function() {
+      var monitorRefreshRule = new jashboard.ValidationRulesBuilder()
+        .withRule(jashboard.commonValidationRules.number)
+        .withRule(jashboard.commonValidationRules.positiveNumber)
+        .build();
       
-      this.monitorName = function() { return rules.monitorName(scope.baseMonitorData.name) };
-      this.monitorRefresh = function() { return rules.monitorRefresh(scope.baseMonitorData.refreshInterval) };
+      this.monitorName = function(scope) { return jashboard.commonValidationRules.required(scope.baseMonitorData.name); };
+      this.monitorRefresh = function(scope) { return monitorRefreshRule(scope.baseMonitorData.refreshInterval); };;
     }
   });
 }(jashboard || {}));

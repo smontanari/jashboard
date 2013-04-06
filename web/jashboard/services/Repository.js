@@ -36,7 +36,7 @@
           http.getJSON("/ajax/dashboards"),
           handlers,
           function(data) {
-            return _.map(data, modelMapper.mapDashboard);
+            return _.map(data, modelMapper.mapDataToDashboard);
           });
       };
       
@@ -45,7 +45,7 @@
           http.getJSON(AJAX_MONITOR + "/" + monitor_id + "/runtime"), 
           handlers,
           function(data) {
-            return modelMapper.mapMonitorRuntimeInfo(monitorType, data);
+            return modelMapper.mapDataToMonitorRuntimeInfo(monitorType, data);
           });
       };
 
@@ -54,7 +54,7 @@
           http.postJSON(AJAX_DASHBOARD, dashboardProperties),
           handlers,
           function(data) {
-            return modelMapper.mapDashboard(data);
+            return modelMapper.mapDataToDashboard(data);
           });
       };
 
@@ -65,18 +65,19 @@
         );
       };
 
-      this.createMonitor = function(dashboard_id, monitorParameters, handlers) {
+      this.createMonitor = function(dashboard_id, monitorModel, handlers) {
         executeRequest(
-          http.postJSON(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor", monitorParameters),
+          http.postJSON(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor", modelMapper.mapMonitorToData(monitorModel)),
           handlers,
           function(data) {
-            return modelMapper.mapMonitor(data);
-          });
+            return modelMapper.mapDataToMonitor(data);
+          }
+        );
       };
 
-      this.updateMonitorConfiguration = function(monitor_id, configuration, handlers) {
+      this.updateMonitorConfiguration = function(monitor_id, configurationModel, handlers) {
         executeRequest(
-          http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/configuration", configuration, handlers),
+          http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/configuration", modelMapper.mapMonitorConfigurationToData(configurationModel)),
           handlers
         );
       };

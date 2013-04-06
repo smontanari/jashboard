@@ -1,25 +1,21 @@
 (function(module) {
-  jashboard = _.extend(module, {
+  jashboard.plugin.build = _.extend(module, {
     BuildMonitorFormValidationRules: function(scope) {
       var serverPortRule = new jashboard.ValidationRulesBuilder()
         .withRule(jashboard.commonValidationRules.required)
         .withRule(jashboard.commonValidationRules.positiveInteger)
         .build();
 
-      var requiredRuleForBuildType = function(type, buildProperty) {
-        if (scope.monitorConfigurationFormModel.build.type === type) {
-          return jashboard.commonValidationRules.required(scope.monitorConfigurationFormModel.build[buildProperty]);
-        } else {
-          return jashboard.commonValidationRules.noValidation();
+      this.serverName = function(scope) {
+        if (scope.monitorConfigurationFormModel.build) {
+          return jashboard.commonValidationRules.required(scope.monitorConfigurationFormModel.build.hostname);
         }
       };
-
-      this.serverName = function() { return jashboard.commonValidationRules.required(scope.monitorConfigurationFormModel.build.hostname); };
-      this.serverPort = function() { return serverPortRule(scope.monitorConfigurationFormModel.build.port); };
-      this.jenkins_build_id = function() { return requiredRuleForBuildType("jenkins", "build_id"); };
-      this.go_pipeline = function() { return requiredRuleForBuildType("go", "pipeline"); };
-      this.go_stage = function() { return requiredRuleForBuildType("go", "stage"); };
-      this.go_job = function() { return requiredRuleForBuildType("go", "job"); };
+      this.serverPort = function(scope) {
+        if (scope.monitorConfigurationFormModel.build) {
+          return serverPortRule(scope.monitorConfigurationFormModel.build.port);
+        }
+      };
     }
   });
-}(jashboard || {}));
+}(jashboard.plugin.build || {}));

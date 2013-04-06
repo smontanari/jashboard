@@ -4,7 +4,6 @@
       var monitorForms = {
         default: initialForm
       };
-      initialForm.id = "default";
       var currentForm = monitorForms.default;
       this.actions = ["next"];
 
@@ -23,7 +22,6 @@
       };
 
       this.registerMonitorTypeForm = function(type, form) {
-        form.id = type;
         monitorForms[type] = form;
       }
 

@@ -2,13 +2,11 @@
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorFormController: function(scope) {
       var buildTypes = jashboard.plugin.build.buildDataConverter.getAllRegisteredTypes();
-      var validationRules = new jashboard.BuildMonitorFormValidationRules(scope);
       scope.availableCiServerTypes = buildTypes;
-      scope.buildMonitorFormValidator = new jashboard.FormValidator();
       
       scope.setCiServerType = function(type) {
         scope.monitorConfigurationFormModel.build.type = type;
-        scope.buildMonitorFormValidator.triggerValidation();
+        scope.$formValidator.validate();
       }
 
       scope.$on("OpenMonitorDialog", function(event, options) {
@@ -16,11 +14,10 @@
           scope.monitorConfigurationFormModel.build = {
             type: _.first(buildTypes)
           };
-          scope.buildMonitorFormValidator.prepareFormForCreate(scope.buildMonitorForm, validationRules);
-        } else if (options.parameters.monitor.type === 'build') {
-          scope.monitorConfigurationFormModel.build = options.parameters.monitor.configuration;
-          scope.buildMonitorFormValidator.prepareFormForUpdate(scope.buildMonitorForm, validationRules);
         }
+        // } else if (options.parameters.monitor.type === 'build') {
+        //   scope.monitorConfigurationFormModel.build = options.parameters.monitor.configuration;
+        // }
         scope.formHelper.registerMonitorTypeForm("build", scope.buildMonitorForm);
       });
     }

@@ -1,27 +1,12 @@
 describe("DashboardFormValidationRules", function() {
-  var rules, rulesBuilderConstructor, rulesBuilder, validationFn, scope;
-  beforeEach(function() {
-    scope = {inputDashboard: {name: "test_value"}};
-
-    validationFn = sinon.stub();
-    rulesBuilder = {
-      withRule: sinon.stub(),
-      build: function() {return validationFn;}
-    };
-    rulesBuilderConstructor = sinon.stub(jashboard, "ValidationRulesBuilder");
-    rulesBuilderConstructor.returns(rulesBuilder);
-  });
-
-  afterEach(function() {
-    rulesBuilderConstructor.restore();
-  });
-
   it("should validate the 'dashboardName' field with the 'required' rule", function() {
-    rulesBuilder.withRule.withArgs(jashboard.commonValidationRules.required).returns(rulesBuilder);
-    validationFn.withArgs("test_value").returns("test_validation_result");
+    var requiredRule = spyOn(jashboard.commonValidationRules, "required");
+    requiredRule.andReturn("test-result");
+    var scope = {dashboardFormModel: {name: "test-name"}};
+    
+    var rules = new jashboard.DashboardFormValidationRules();
 
-    rules = new jashboard.DashboardFormValidationRules(scope);
-
-    expect(rules.dashboardName()).toEqual("test_validation_result");
+    expect(rules.dashboardName(scope)).toEqual("test-result");
+    expect(requiredRule).toHaveBeenCalledWith("test-name");
   });
 });

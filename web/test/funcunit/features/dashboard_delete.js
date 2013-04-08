@@ -1,9 +1,9 @@
 funcunitHelper.testFeature("Delete a dashboard", "delete_dashboard", function() {
   test("should remove the dashboard tab and focus on the first available one", function() {
     S("#tab-dashboard_2").visible().click();
-    S("#dashboard_2 .dashboard-action.action-delete").visible("display delete action").click();
+    jashboardFeatureHelper.triggerDashboardAction("#dashboard_2", "delete");
 
-    S("#alertConfirm").visible().click();
+    jashboardFeatureHelper.confirmAlert();
     S("#tab-dashboard_2").size(0, "Dashboard tab for 'dashboard_2' should not exist");
 
     _.each(["dashboard_1", "dashboard_3"],function(tab_id) {
@@ -13,9 +13,9 @@ funcunitHelper.testFeature("Delete a dashboard", "delete_dashboard", function() 
   });
   test("should not remove the dashboard tab", function() {
     S("#tab-dashboard_2").visible().click();
-    S("#dashboard_2 .dashboard-action.action-delete").visible("display delete action").click();
+    jashboardFeatureHelper.triggerDashboardAction("#dashboard_2", "delete");
 
-    S("#alertCancel").visible().click();
+    jashboardFeatureHelper.cancelAlert();
     S("#tab-dashboard_2").size(1, "Dashboard tab for 'dashboard_2' should still exist");
 
     S("#dashboard_2 .dashboard-content").visible("dashboard_2 content should be visible");

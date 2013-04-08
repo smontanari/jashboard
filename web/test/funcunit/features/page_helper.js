@@ -1,5 +1,6 @@
 var pageHelper = (function(helper) {
   helper.inputText = function(selector, text) {
+    S(selector).visible().focus().type("");
     S(selector).visible().focus().type(text, function() {
       S(selector).trigger('input');
     });
@@ -17,6 +18,13 @@ var pageHelper = (function(helper) {
     FuncUnit.wait(options.dragStartDelay, function() {
       S(options.handleSelector).mouseover();
       S(options.handleSelector).drag({to: options.offset, duration: options.duration});
+    });
+  };
+
+  helper.verifyElementEnabled = function(selector, message) {
+    S(selector).visible(function() {
+      var disabled = S(selector).attr("disabled");
+      ok(_.isEmpty(disabled), message);
     });
   };
 

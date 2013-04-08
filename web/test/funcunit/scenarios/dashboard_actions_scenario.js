@@ -8,3 +8,12 @@ $.fixture("POST /ajax/dashboard", function(ajaxOriginalOptions, ajaxOptions, hea
   }
   throw "unexpected data in the POST request: " + ajaxOptions.data;
 });
+
+$.fixture("PUT /ajax/dashboard/dashboard_1", function(ajaxOriginalOptions, ajaxOptions, headers) {
+  var data = JSON.parse(ajaxOptions.data);
+
+  if ("dashboard_new_name" === data.name) {
+    return [204, "success", {}, {} ];
+  }
+  throw "unexpected data in the POST request: " + ajaxOptions.data;
+});

@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
+funcunitHelper.testFeature("Dashboard create", "dashboard_actions_scenario", function() {
   test("should create a new dashboard and display the new tab", function() {
     jashboardFeatureHelper.openDashboardDialog();
     var name = "test new-dashboard";
@@ -21,27 +21,5 @@ funcunitHelper.testFeature("Dashboard create", "create_dashboard", function() {
       jashboardFeatureHelper.openDashboardDialog();
       S("input[name='dashboardName']").visible().text("");
     });
-  });
-
-  test("should close the dialog on Cancel", function() {
-    jashboardFeatureHelper.openDashboardDialog();
-    S("#cancelDashboard").visible().click();
-    S("#dashboard-form").invisible("should not be visible");
-  });
-
-  test("Dashboard name validation", function() {
-    jashboardFeatureHelper.openDashboardDialog();
-    pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
-
-    S("#dashboardNameRequiredError").invisible("should not display error");
-    pageHelper.inputText("input[name='dashboardName']", "test name");
-    
-    pageHelper.verifyInputError(
-      {inputName: "dashboardName", inputValue: ""},
-      {errorSelector: "#dashboardNameRequiredError", errorMessage: "You must provide a dashboard name."},
-      function() {
-        pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
-      }
-    );
   });
 });

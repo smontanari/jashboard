@@ -31,4 +31,12 @@ describe("Jashboard utility functions", function() {
       expect(result).toEqual("some value");
     });
   });
+
+  describe("stringUtils", function() {
+    it("should capitalise a given string", function() {
+      var result = jashboard.stringUtils.capitalise("testString");
+
+      expect(result).toEqual("TestString");
+    });
+  });
 });

@@ -12,12 +12,7 @@ funcunitHelper.testFeature("Display build monitor information", "display_dashboa
         '.build-status': "building"
       }
     );
-    pageHelper.verifyElementContent("#monitor_3",
-      {
-        '.monitor-title': "Random text",
-        'pre': "some very random generated text\nwith some very random generated words"
-      }
-    );
+
     S("#tab-dashboard_1").visible().click();
     pageHelper.verifyElementContent("#monitor_1",
       {

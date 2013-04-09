@@ -28,6 +28,13 @@
         if (_.isFunction(convertFunction)) return convertFunction(data);
         return data;
       }
+    },
+    stringUtils: {
+      capitalise: function(s) {
+        if (_.isString(s) && !_.isEmpty(s)) {
+          return s.slice(0, 1).toUpperCase() + s.slice(1);
+        }
+      }
     }
   });
 }(jashboard || {}));

@@ -8,9 +8,9 @@
           }
         };
       };
-      this.go_pipeline = requiredRuleFor("pipeline");
-      this.go_stage = requiredRuleFor("stage");
-      this.go_job = requiredRuleFor("job");
+      this.goPipeline = requiredRuleFor("pipeline");
+      this.goStage = requiredRuleFor("stage");
+      this.goJob = requiredRuleFor("job");
     }
   });
 }(jashboard.plugin.build || {}));

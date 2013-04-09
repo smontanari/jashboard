@@ -8,7 +8,7 @@
         {
           id: "monitor_1",
           name: "Epic build",
-          refresh_interval: 5,
+          refresh_interval: 5000,
           type: "build",
           position: {top: 0, left: 0},
           size: {width: 240, height: 140},
@@ -24,7 +24,7 @@
         {
           id: "monitor_2",
           name: "Forum build",
-          refresh_interval: 3,
+          refresh_interval: 10000,
           type: "build",
           position: {top: 0, left: 260},
           size: {width: 240, height: 140},
@@ -47,7 +47,7 @@
       success: true,
       status: 1
     },
-    delay: 3
+    delay: 2
   });
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {

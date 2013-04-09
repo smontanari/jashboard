@@ -22,16 +22,16 @@ describe("BuildMonitorFormValidationRules", function() {
     rulesBuilderConstructor.restore();
   });
 
-  it("should validate the 'serverName' field with the 'required' rule", function() {
+  it("should validate the 'buildServerName' field with the 'required' rule", function() {
     var rules = new jashboard.plugin.build.BuildMonitorFormValidationRules();
     var requiredRule = spyOn(jashboard.commonValidationRules, "required");
     requiredRule.andReturn("required_validation_result");
 
-    expect(rules.serverName(scope)).toEqual("required_validation_result");
+    expect(rules.buildServerName(scope)).toEqual("required_validation_result");
     expect(requiredRule).toHaveBeenCalledWith("test_hostname");
   });
 
-  it("should validate the 'serverPort' field with the 'required' and 'positiveInteger' rule", function() {
+  it("should validate the 'buildServerPort' field with the 'required' and 'positiveInteger' rule", function() {
     _.each(['required', 'positiveInteger'], function(rule) {
       rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
     });
@@ -39,6 +39,6 @@ describe("BuildMonitorFormValidationRules", function() {
 
     rules = new jashboard.plugin.build.BuildMonitorFormValidationRules();
 
-    expect(rules.serverPort(scope)).toEqual("test_validation_result");
+    expect(rules.buildServerPort(scope)).toEqual("test_validation_result");
   });
 });

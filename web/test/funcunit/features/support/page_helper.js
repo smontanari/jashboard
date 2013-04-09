@@ -60,7 +60,7 @@ var pageHelper = (function(helper) {
     });
   };
   helper.verifyInputError = function(input, expectedError, callback) {
-    FuncUnit.wait(500, function() {
+    FuncUnit.wait(300, function() {
       pageHelper.inputText("input[name='" + input.inputName + "']", input.inputValue);
       S(expectedError.errorSelector).visible(function() {
         equal(S(expectedError.errorSelector).text().trim(), expectedError.errorMessage, "The error message is equal to " + expectedError.message);

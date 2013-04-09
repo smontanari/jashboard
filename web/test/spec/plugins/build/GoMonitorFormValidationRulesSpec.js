@@ -16,14 +16,15 @@ describe("GoMonitorFormValidationRules", function() {
   });
 
   _.each(['pipeline', 'stage', 'job'], function(field) {
-    var inputName = "go_" + field;
-    it("should validate the '" + inputName + "' field with the 'required' rule when monitor type is 'go'", function() {
+    it("should validate the '" + field + "' field with the 'required' rule when monitor type is 'go'", function() {
+      var inputName = "go" + jashboard.stringUtils.capitalise(field);
       scope.monitorConfigurationFormModel.build.type = 'go';
 
       expect(rules[inputName](scope)).toEqual("required_validation_result");
       expect(requiredRule).toHaveBeenCalledWith("test_" + field);
     });
     it("should not apply any rule to field '" + field + "' when monitor type is not 'jenkins'", function() {
+      var inputName = "go" + jashboard.stringUtils.capitalise(field);
       scope.monitorConfigurationFormModel.build.type = 'another_type';
 
       expect(rules[inputName](scope)).toBeUndefined();

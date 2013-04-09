@@ -2,25 +2,25 @@
   <div class="buildFormOptions" data-ng-form="buildMonitorForm" data-ng-controller="BuildMonitorFormController"
     data-jb-form-validation="{triggerOn: 'OpenMonitorDialog', validationRules: 'plugin.build.BuildMonitorFormValidationRules'}">
     <div class="form-horizontal">
-      <div class="control-group" data-ng-class="{'error': inputInError('serverName')}">
-        <label class="control-label" for="serverName">Hostname</label>
+      <div class="control-group" data-ng-class="{'error': inputInError('buildServerName')}">
+        <label class="control-label" for="buildServerName">Hostname</label>
         <div class="controls">
-          <input name="serverName" type="text" placeholder="ci hostname" class="input-large" 
-            data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="validateField('serverName')">
+          <input name="buildServerName" type="text" placeholder="ci hostname" class="input-large" 
+            data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="validateField('buildServerName')">
         </div>
         <div class="controls">
-          <div id="buildServerNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverName.$error.required">You must provide a CI server name.</div>
+          <div id="buildServerNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.buildServerName.$error.required">You must provide a CI server name.</div>
         </div>
       </div>
-      <div class="control-group" data-ng-class="{'error': inputInError('serverPort')}">
-        <label class="control-label" for="serverPort">Port</label>
+      <div class="control-group" data-ng-class="{'error': inputInError('buildServerPort')}">
+        <label class="control-label" for="buildServerPort">Port</label>
         <div class="controls">
-          <input name="serverPort" type="text" class="input-mini" 
-            data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="validateField('serverPort')">
+          <input name="buildServerPort" type="text" class="input-mini" 
+            data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="validateField('buildServerPort')">
         </div>
         <div class="controls">
-          <div id="buildServerPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.required">You must provide a CI server port.</div>
-          <div id="buildServerPortNumberError" class="help-inline" data-ng-show="buildMonitorForm.serverPort.$error.positiveInteger">You must enter a valid port number.</div>
+          <div id="buildServerPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.buildServerPort.$error.required">You must provide a CI server port.</div>
+          <div id="buildServerPortNumberError" class="help-inline" data-ng-show="buildMonitorForm.buildServerPort.$error.positiveInteger">You must enter a valid port number.</div>
         </div>
       </div>
     </div>

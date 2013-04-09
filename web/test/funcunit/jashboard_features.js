@@ -7,6 +7,12 @@ steal(
   "lib/underscore-min.js"
 ).then(function() {
   var feature_sets = {
+    misc_features: [
+      'tabs_display',
+      'no_tabs_display',
+      'ajax_loader_display',
+      'data_loading_error'
+    ],
     dashboard_features: [
       'dashboard_create',
       'dashboard_edit',
@@ -15,22 +21,27 @@ steal(
       'dashboard_actions_errors'
     ],
     monitor_features: [
-      'monitor_display',
-      'monitor_create_validation',
-      'monitor_positioning',
-      'monitor_resizing',
+      'monitor_edit',
+      'monitor_validation',
+      'monitor_delete',
       'monitor_runtime_refresh',
       'monitor_actions_errors',
-      'monitor_delete',
-      'monitor_edit'
+      'monitor_positioning',
+      'monitor_resizing'
     ],
     build_monitor_features: [
-      'build_monitor_create'
+      'build_monitor_display',
+      'build_monitor_create',
+      'build_monitor_edit',
+      'build_monitor_validation'
     ]
   };
   
-  var allFeatures = ['tabs_display', 'no_tabs_display', 'ajax_loader_display', 'data_loading_error'].concat(
-    feature_sets.dashboard_features, feature_sets.monitor_features, feature_sets.build_monitor_features
+  var allFeatures = [].concat(
+    feature_sets.misc_features,
+    feature_sets.dashboard_features,
+    feature_sets.monitor_features,
+    feature_sets.build_monitor_features
   );
 
   var getUrlParameter = function(paramName) {
@@ -57,6 +68,7 @@ steal(
   steal(
     "./features/support/page_helper.js",
     "./features/support/jashboard_feature_helper.js",
+    "./features/support/build_monitor_feature_helper.js",
     "./funcunit_helper.js"
   ).then(function() {
     steal.apply(window, _.map(selectFeatures(), featurePath));

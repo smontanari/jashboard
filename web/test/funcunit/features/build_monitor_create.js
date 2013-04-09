@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Build monitor create", "create_build_monitor", function() {
+funcunitHelper.testFeature("Create a new Build monitor", "create_build_monitor", function() {
   var inputBuildMonitorData = function(data) {
     var monitorTypeConfigurationInput = {
       jenkins: function(data) {

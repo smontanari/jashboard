@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Dashboard create", "dashboard_actions_scenario", function() {
+funcunitHelper.testFeature("Create a dashboard", "dashboard_actions_scenario", function() {
   test("should create a new dashboard and display the new tab", function() {
     jashboardFeatureHelper.openDashboardDialog();
     var name = "test new-dashboard";
@@ -17,7 +17,7 @@ funcunitHelper.testFeature("Dashboard create", "dashboard_actions_scenario", fun
 
     S("#cancelDashboard").visible().click();
 
-    FuncUnit.wait(1000, function() {
+    FuncUnit.wait(500, function() {
       jashboardFeatureHelper.openDashboardDialog();
       S("input[name='dashboardName']").visible().text("");
     });

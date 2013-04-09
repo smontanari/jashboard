@@ -30,5 +30,11 @@ var jashboardFeatureHelper = (function(helper) {
     S("#alertCancel").visible().click();
   };
 
+  helper.checkOverlayMessage = function(regexp, error) {
+    var overlayClass = error ? "alert.alert-error" : "info";
+    S(".overlay-msg." + overlayClass).visible("display overlay");
+    S(".overlay-msg").text(regexp);
+  };
+
   return helper;
 }(jashboardFeatureHelper || {}));

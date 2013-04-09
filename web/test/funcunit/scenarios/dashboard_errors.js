@@ -11,4 +11,8 @@ steal("test/funcunit/fixtures/fakeResponse_buildMonitorRuntime.js");
     returnCode: 500,
     delay: 1
   });
+  server.fakeResponse("PUT", /^\/ajax\/dashboard\/(\w+)$/, {
+    returnCode: 500,
+    delay: 1
+  });
 }());

@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Monitor display", "display_dashboards_data", function() {
+funcunitHelper.testFeature("Display build monitor information", "display_dashboards_data", function() {
   test("should load and display build monitor data", function() {
     S("#tab-dashboard_3").visible().click();
     S(".build-panel-runtime").invisible("No build monitors are visible");

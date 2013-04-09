@@ -53,7 +53,6 @@ describe("MonitorFormController", function() {
         expect(scope.formHelper).toEqual({test: "formHelper"});
       });
       it("should reset the input variables in the scope", function() {
-        // expect(scope.dashboard_id).toEqual("test_dashboard");
         expect(scope.baseMonitorData).toEqual({
           id: null,
           name: null,
@@ -157,133 +156,136 @@ describe("MonitorFormController", function() {
       });
     });
 
-    // describe("update mode", function() {
-    //   var monitor;
-    //   beforeEach(function() {
-    //     monitor = {
-    //       id: "test_monitor_id",
-    //       name: "test_name",
-    //       type: "test_type2",
-    //       refreshInterval: 123,
-    //       configuration: "test_configuration_data",
-    //       runtimeInfo: "test_runtime_info"
-    //     };
-    //     listener({}, {
-    //       mode: jashboard.inputOptions.updateMode,
-    //       parameters: {monitor: monitor}
-    //     });
-    //   });
-    //   it("should put a new formHelper in the scope", function() {
-    //     expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
-    //     expect(scope.formHelper).toEqual({test: "formHelper"});
-    //   });
-    //   it("should update the input variables in the scope", function() {
-    //     expect(scope.dashboard_id).toBeNull();
-    //     expect(scope.baseMonitorData).toEqual({
-    //       id: "test_monitor_id",
-    //       name: "test_name",
-    //       type: "test_type2",
-    //       refreshInterval: 123
-    //     });
-    //   });
-    //   it("should set the editMode variable as 'update' in the scope", function() {
-    //     expect(scope.editMode).toEqual(jashboard.inputOptions.updateMode);
-    //   });
+    describe("update mode", function() {
+      var monitor;
+      beforeEach(function() {
+        monitor = {
+          id: "test_monitor_id",
+          name: "test_name",
+          type: "test_type2",
+          refreshInterval: 123,
+          configuration: "test_configuration_model",
+          runtimeInfo: "test_runtime_info"
+        };
+        listener({}, {
+          mode: jashboard.inputOptions.updateMode,
+          parameters: {monitor: monitor}
+        });
+      });
 
-    //   describe("save action callback", function() {
-    //     var successHandler, errorHandler, adapter;
-    //     beforeEach(function() {
-    //       repository.updateMonitorConfiguration = jasmine.createSpy("repository.updateMonitorConfiguration()").andCallFake(function(monitor_id, monitorParameters, handlers) {
-    //         successHandler = handlers.success;
-    //         errorHandler = handlers.error;
-    //       });
-    //       adapter = {
-    //         parseMonitorConfigurationForm: sinon.stub(),
-    //         convertMonitorConfigurationToData: sinon.stub()
-    //       };
-    //       adapter.parseMonitorConfigurationForm.withArgs("testConfig2").returns("test_configuration_model");
-    //       adapter.convertMonitorConfigurationToData.withArgs("test_configuration_model").returns("test_new_configuration");
-    //       pluginManager.findMonitorAdapter = sinon.stub();
-    //       pluginManager.findMonitorAdapter.withArgs("test_type2").returns(adapter);
+      it("should set the editMode variable as 'update' in the scope", function() {
+        expect(scope.$editMode).toEqual(jashboard.inputOptions.updateMode);
+      });
+      it("should update the input variables in the scope", function() {
+        expect(scope.baseMonitorData).toEqual({
+          id: "test_monitor_id",
+          name: "test_name",
+          type: "test_type2",
+          refreshInterval: 123
+        });
+        expect(scope.monitorConfigurationFormModel.test_type2).toEqual("test_configuration_model");
+      });
+      it("should put a new formHelper in the scope", function() {
+        expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
+        expect(scope.formHelper).toEqual({test: "formHelper"});
+      });
 
-    //       scope.baseMonitorData = {
-    //         id: "test_monitor_id",
-    //         name: "test_new_name",
-    //         refreshInterval: "456",
-    //         type: "test_type2"
-    //       };
-    //       scope.monitorConfigurationFormModel = {
-    //         test_type1: "testConfig1",
-    //         test_type2: "testConfig2"
-    //       };
-    //     });
+      describe("save action callback", function() {
+        var successHandler, errorHandler, adapter;
+        beforeEach(function() {
+          repository.updateMonitorConfiguration = jasmine.createSpy("repository.updateMonitorConfiguration()").andCallFake(function(monitorModel, handlers) {
+            successHandler = handlers.success;
+            errorHandler = handlers.error;
+          });
+          adapter = {
+            parseMonitorConfigurationForm: sinon.stub(),
+            convertMonitorConfigurationToData: sinon.stub()
+          };
+          adapter.parseMonitorConfigurationForm.withArgs("testConfig2").returns("test_new_configuration");
+          pluginManager.findMonitorAdapter = sinon.stub();
+          pluginManager.findMonitorAdapter.withArgs("test_type2").returns(adapter);
+
+          scope.baseMonitorData = {
+            id: "test_monitor_id",
+            name: "test_new_name",
+            refreshInterval: "456",
+            type: "test_type2"
+          };
+          scope.monitorConfigurationFormModel = {
+            test_type1: "testConfig1",
+            test_type2: "testConfig2"
+          };
+        });
         
-    //     describe("Form data evaluation", function() {
-    //       it("should call the repository to update the monitor with parameters from the input form", function() {
-    //         saveMonitorCallback();
+        describe("Form data evaluation", function() {
+          it("should call the repository to update the monitor with parameters from the input form", function() {
+            saveMonitorCallback();
 
-    //         expect(repository.updateMonitorConfiguration).toHaveBeenCalledWith(
-    //           "test_monitor_id", 
-    //           {
-    //             name: "test_new_name",
-    //             refreshInterval: 456,
-    //             configuration: "test_new_configuration"
-    //           }, 
-    //           jasmine.any(Object)
-    //         );
-    //       });
-    //       it("should pass NaN for refreshInterval if not provided", function() {
-    //         scope.baseMonitorData = {
-    //           refreshInterval: "",
-    //           type: "test_type2"
-    //         };
-    //         saveMonitorCallback();
+            expect(repository.updateMonitorConfiguration).toHaveBeenCalledWith(
+              {
+                id: "test_monitor_id",
+                name: "test_new_name",
+                refreshInterval: 456,
+                type: "test_type2",
+                configuration: "test_new_configuration"
+              }, 
+              jasmine.any(Object)
+            );
+          });
+          it("should pass NaN for refreshInterval if not provided", function() {
+            scope.baseMonitorData = {
+              id: "test_monitor_id",
+              name: "test_new_name",
+              refreshInterval: "",
+              type: "test_type2"
+            };
+            saveMonitorCallback();
 
-    //         expect(repository.updateMonitorConfiguration.mostRecentCall.args[1].refreshInterval).toBeNaN();
-    //       });
-    //     });
+            expect(repository.updateMonitorConfiguration.mostRecentCall.args[0].refreshInterval).toBeNaN();
+          });
+        });
 
-    //     describe("Data model update", function() {
-    //       it("should update the monitor", function() {
-    //         saveMonitorCallback();
+        describe("Data model update", function() {
+          it("should update the monitor", function() {
+            saveMonitorCallback();
 
-    //         successHandler(null);
+            successHandler(null);
 
-    //         expect(monitor).toEqual({
-    //           id: "test_monitor_id",
-    //           name: "test_new_name",
-    //           type: "test_type2",
-    //           refreshInterval: 456,
-    //           configuration: "test_configuration_model",
-    //           runtimeInfo: "test_runtime_info"
-    //         });
-    //         expect(scope.$apply).toHaveBeenCalled();
-    //       });
-    //     });
+            expect(monitor).toEqual({
+              id: "test_monitor_id",
+              name: "test_new_name",
+              type: "test_type2",
+              refreshInterval: 456,
+              configuration: "test_new_configuration",
+              runtimeInfo: "test_runtime_info"
+            });
+            expect(scope.$apply).toHaveBeenCalled();
+          });
+        });
 
-    //     describe("Event handling", function() {
-    //       beforeEach(function() {
-    //         saveMonitorCallback();
-    //       });
-    //       it("should emit the 'MonitorSaveStart'", function() {
-    //         expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveStart");
-    //       });
-    //       it("should emit the 'MonitorSaveComplete'", function() {
-    //         successHandler(null);
+        describe("Event handling", function() {
+          beforeEach(function() {
+            saveMonitorCallback();
+          });
+          it("should emit the 'MonitorSaveStart'", function() {
+            expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveStart");
+          });
+          it("should emit the 'MonitorSaveComplete'", function() {
+            successHandler(null);
             
-    //         expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveComplete");
-    //       });
-    //       it("should emit the 'CloseMonitorDialog'", function() {
-    //         expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
-    //       });
-    //       it("should fire the 'AjaxError' event when failing to save the monitor", function() {
-    //         errorHandler();
+            expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveComplete");
+          });
+          it("should emit the 'CloseMonitorDialog'", function() {
+            expect(scope.$emit).toHaveBeenCalledWith("CloseMonitorDialog");
+          });
+          it("should fire the 'AjaxError' event when failing to save the monitor", function() {
+            errorHandler();
 
-    //         expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
-    //       });
-    //     });
-    //   });
-    // });
+            expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+          });
+        });
+      });
+    });
   });
 });
 

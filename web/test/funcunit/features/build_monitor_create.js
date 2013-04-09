@@ -28,6 +28,8 @@ funcunitHelper.testFeature("Create a new Build monitor", "create_build_monitor",
       monitorRefresh: "30",
       monitorType: "build"
     });
+    S("#configuration-next").visible().click();
+
     inputBuildMonitorData({
       configurationType: "jenkins",
       serverName: "jenkins-server",
@@ -60,6 +62,8 @@ funcunitHelper.testFeature("Create a new Build monitor", "create_build_monitor",
       monitorRefresh: "30",
       monitorType: "build"
     });
+    S("#configuration-next").visible().click();
+
     inputBuildMonitorData({
       configurationType: "go",
       serverName: "go-server",
@@ -94,6 +98,8 @@ funcunitHelper.testFeature("Create a new Build monitor", "create_build_monitor",
       monitorRefresh: "30",
       monitorType: "build"
     });
+    S("#configuration-next").visible().click();
+    
     verifySaveButtonDisabled();
 
     S("#buildServerNameRequiredError").invisible("should not display error");

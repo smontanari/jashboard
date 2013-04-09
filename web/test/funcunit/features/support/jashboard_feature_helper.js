@@ -5,6 +5,10 @@ var jashboardFeatureHelper = (function(helper) {
     S("#dashboard-form").visible("show new dashboard input dialog");
   };
 
+  helper.triggerMonitorAction = function(monitor_id, action) {
+    S(monitor_id + " .monitor-action.action-" + action).visible("display " + action + " action").click();
+  };
+
   helper.triggerDashboardAction = function(dashboard_id, action) {
     S(dashboard_id + " .dashboard-action.action-" + action).visible("display " + action + " action").click();
   };
@@ -17,9 +21,10 @@ var jashboardFeatureHelper = (function(helper) {
   helper.inputGenericMonitorData = function(data) {
     pageHelper.inputText("input[name='monitorName']", data.monitorName);
     pageHelper.inputText("input[name='monitorRefresh']", data.monitorRefresh);
-    S("select[name='monitorType']").visible().click();
-    S("select[name='monitorType'] option:contains('" + data.monitorType + "')").click();
-    S("#configuration-next").visible().click();
+    if (data.monitorType) {
+      S("select[name='monitorType']").visible().click();
+      S("select[name='monitorType'] option:contains('" + data.monitorType + "')").click();
+    }
   };
 
   helper.confirmAlert = function() {

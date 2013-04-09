@@ -157,13 +157,25 @@ describe("Repository", function() {
         httpService.putJSON = jasmine.createSpy("httpService.putJSON()").andReturn(
           new AjaxPromise("")
         );
-        modelMapper.mapMonitorConfigurationToData = jasmine.createSpy("modelMapper.mapMonitorConfigurationToData()").andCallFake(function(model) {
-          return {configuration: model};
+        var monitor = {
+          id: "test_id",
+          name: "test_name",
+          type: "test_type",
+          refreshInterval: 123,
+          configuration: "test.configuration"
+        };
+        modelMapper.mapMonitorConfigurationToData = jasmine.createSpy("modelMapper.mapMonitorConfigurationToData()").andCallFake(function(type, configuration) {
+          if (type === "test_type") return {configuration: configuration};
         });
-        repository.updateMonitorConfiguration("test_id", "test.configuration", {success: successHandler, error: errorHandler});
+        repository.updateMonitorConfiguration(monitor, {success: successHandler, error: errorHandler});
       });
       it("should use the http service to update the monitor configuration", function() {
-        expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/configuration", {configuration: "test.configuration"});
+        expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/configuration", {
+          name: "test_name",
+          refreshInterval: 123,
+          type: "test_type",
+          configuration: {configuration: "test.configuration"}
+        });
       });
       it("should invoke the ajax callback handlers", function() {
         expect(successHandler).toHaveBeenCalled();

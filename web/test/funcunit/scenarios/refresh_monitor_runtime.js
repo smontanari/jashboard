@@ -5,7 +5,7 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
   var errorResponse = {
     returnCode: 500,
     content: "something went very wrong",
-    delay: 2
+    delay: 1
   };
   var successResponse = {
     content: {
@@ -14,7 +14,7 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
       success: true,
       status: 1
     },
-    delay: 1
+    delay: 0.5
   };
 
   var requestCounts = {monitor_1: 0, monitor_3: 0};

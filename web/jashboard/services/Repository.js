@@ -75,9 +75,11 @@
         );
       };
 
-      this.updateMonitorConfiguration = function(monitor_id, configurationModel, handlers) {
+      this.updateMonitorConfiguration = function(monitorModel, handlers) {
+        var monitor = _.pick(monitorModel, "name", "refreshInterval", "type");
+        monitor.configuration = modelMapper.mapMonitorConfigurationToData(monitorModel.type, monitorModel.configuration);
         executeRequest(
-          http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/configuration", modelMapper.mapMonitorConfigurationToData(configurationModel)),
+          http.putJSON(AJAX_MONITOR + "/" + monitorModel.id + "/configuration", monitor),
           handlers
         );
       };

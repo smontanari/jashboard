@@ -1,11 +1,12 @@
 funcunitHelper.testFeature("Monitor create: initial form validation", "display_dashboards_data", function() {
-  test("Monitor form fields validation", function() {
+  test("should validate the monitor properties when creating a monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     pageHelper.verifyElementDisabled("#configuration-next", "the Next button should be disabled");
 
-    S("#monitorNameRequiredError").invisible("should not display error");
-    S("#monitorRefreshNumberError").invisible("should not display error");
-    S("#monitorRefreshPositiveNumberError").invisible("should not display error");
+    _.each(["#monitorNameRequiredError", "#monitorRefreshNumberError", "#monitorRefreshPositiveNumberError"], function (selector) {
+      S(selector).invisible("should not display error");  
+    });
+
     pageHelper.inputText("input[name='monitorName']", "test name");
     pageHelper.inputText("input[name='monitorRefresh']", "123");
     

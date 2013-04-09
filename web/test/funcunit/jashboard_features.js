@@ -21,7 +21,8 @@ steal(
       'monitor_resizing',
       'monitor_runtime_refresh',
       'monitor_actions_errors',
-      'monitor_delete'
+      'monitor_delete',
+      'monitor_edit'
     ],
     build_monitor_features: [
       'build_monitor_create'

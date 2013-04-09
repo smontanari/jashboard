@@ -17,3 +17,7 @@ $.fixture("PUT /ajax/dashboard/dashboard_1", function(ajaxOriginalOptions, ajaxO
   }
   throw "unexpected data in the POST request: " + ajaxOptions.data;
 });
+
+$.fixture("DELETE /ajax/dashboard/dashboard_2", function(ajaxOriginalOptions, ajaxOptions, headers) {
+  return [204, "success", {}, {} ];
+});

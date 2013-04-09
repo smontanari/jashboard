@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Error handling: monitor actions", "monitor_errors", function() {
+funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", function() {
   test("should display an error when failing to create a monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
@@ -6,16 +6,15 @@ funcunitHelper.testFeature("Error handling: monitor actions", "monitor_errors", 
       monitorRefresh: "30",
       monitorType: "ipsum"
     });
+    S("#configuration-next").visible().click();
+
     pageHelper.inputText("input[name='numberOfSentences']", "4");
 
     S("#configuration-save").visible().click();
 
-    S(".overlay-msg.info").visible("display overlay while saving dashboard");
-    S(".overlay-msg.info").text(/Saving monitor/);
+    jashboardFeatureHelper.checkOverlayMessage(/Saving monitor/);
 
-    S(".overlay-msg.alert.alert-error").visible("display error overlay");
-    S(".overlay-msg").text(/an error occurred/);
-
+    jashboardFeatureHelper.checkOverlayMessage(/an error occurred/, true);
   });
 
   test("should display a warning icon with a tolltip when failing to refresh runtime information", function() {
@@ -28,15 +27,13 @@ funcunitHelper.testFeature("Error handling: monitor actions", "monitor_errors", 
     });
   });
   
-  test("should display an error when failing to create a monitor", function() {
-    S("#monitor_3 .monitor-action.action-delete").visible().click();
+  test("should display an error when failing to delete a monitor", function() {
+    jashboardFeatureHelper.triggerMonitorAction("#monitor_3", "delete");
     
-    S("#alertConfirm").visible().click();
+    jashboardFeatureHelper.confirmAlert();
 
-    S(".overlay-msg.info").visible("display overlay while deleting dashboard");
-    S(".overlay-msg.info").text(/Deleting monitor/);
+    jashboardFeatureHelper.checkOverlayMessage(/Deleting monitor/);
 
-    S(".overlay-msg.alert.alert-error").visible("display error overlay");
-    S(".overlay-msg.alert.alert-error").text(/an error occurred/);
+    jashboardFeatureHelper.checkOverlayMessage(/an error occurred/, true);
   });  
 });

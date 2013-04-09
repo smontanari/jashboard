@@ -242,7 +242,52 @@ module Jashboard
         end
       end
     end
+
     context "Monitor update" do
+      describe("PUT /ajax/monitor/:monitor_id/configuration") do
+        before(:each) do
+          @monitor = Monitor.new
+          @monitor.id = "test-monitor-id"
+          @monitor.name = "test-monitor-name"
+          @monitor.refresh_interval = 123
+          @monitor.type = "test_type"
+          @monitor.configuration = "test_configuration"
+
+          @mock_monitor_adapter.should_receive(:get_configuration).
+            with("test_type", {"attr1" => "test_new_attr1", "attr2" => "test_new_attr2"}).
+            and_return("some_new_configuration")
+          @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return(@monitor)
+          @mock_repository.stub(:save_monitor)
+          @monitor_json = %(
+            {
+              "name": "test.new.monitor.name",
+              "refresh_interval": 987,
+              "type": "test_type",
+              "configuration": {
+                "attr1": "test_new_attr1",
+                "attr2": "test_new_attr2"
+              }
+            })
+        end
+
+        it("should return a successful response") do
+          put '/ajax/monitor/test-monitor-id/configuration', @monitor_json
+
+          last_response.status.should == 204
+          last_response.body.should be_empty
+        end
+        it("should update the monitor details") do
+          @mock_repository.should_receive(:save_monitor).with(@monitor)
+          
+          put '/ajax/monitor/test-monitor-id/configuration', @monitor_json
+
+          @monitor.name.should == "test.new.monitor.name"
+          @monitor.refresh_interval.should == 987
+          @monitor.type.should == "test_type"
+          @monitor.configuration.should == "some_new_configuration"
+        end
+      end
+
       describe("PUT /ajax/monitor/:monitor_id/position") do
         before(:each) do
           @monitor = Monitor.new

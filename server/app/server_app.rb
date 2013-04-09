@@ -28,9 +28,7 @@ module Jashboard
     end
 
     error do
-      # puts "*************"
       # puts env['sinatra.error']
-      # puts "*************"
       status 500
       env['sinatra.error'].to_s
     end
@@ -73,6 +71,14 @@ module Jashboard
       json(monitor)
     end
 
+    put '/ajax/monitor/:id/configuration' do
+      data = JSON.parse(request.body.read)
+      monitor = @repository.load_monitor(params[:id])
+      update_monitor(monitor, data)
+      @repository.save_monitor(monitor)
+      status 204
+    end
+
     put '/ajax/monitor/:id/position' do
       data = JSON.parse(request.body.read)
       monitor = @repository.load_monitor(params[:id])
@@ -108,6 +114,12 @@ module Jashboard
     end
 
     private
+
+    def update_monitor(monitor, monitor_json)
+      monitor.name = monitor_json['name']
+      monitor.refresh_interval = monitor_json['refresh_interval']
+      monitor.configuration = @monitor_adapter.get_configuration(monitor.type, monitor_json['configuration'])
+    end
 
     def create_monitor(monitor_json)
       new_monitor = Monitor.new.tap do |monitor|

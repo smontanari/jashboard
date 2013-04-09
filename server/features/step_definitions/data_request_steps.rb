@@ -6,19 +6,28 @@ When /^I request the creation of a dashboard with name "(.*)"$/ do |name|
   post '/ajax/dashboard', %({"name": "#{name}"})
 end
 
-When /^I request the creation of a monitor for dashboard "(.*)" with (.*), (\d+), of type (.*), position (\d+),(\d+), size (\d+)x(\d+), configured as (.*)$/ do |dashboard_id, name, refresh_interval, type, top, left, width, height, config|
+When /^I request the creation of a monitor for dashboard "(.*)" with (.*), (\d+), of type (.*), position (\d+),(\d+), size (\d+)x(\d+), configured as (.*)$/ do |dashboard_id, name, refresh_interval, type, top, left, width, height, configuration|
   request_body = %({
       "name": "#{name}",
       "refresh_interval": #{refresh_interval},
       "type": "#{type}", 
       "position": {"top": #{top}, "left": #{left}}, 
       "size": {"width": #{width}, "height": #{height}}, 
-      "configuration": #{eval(config).to_json}})
+      "configuration": #{eval(configuration).to_json}})
   post "/ajax/dashboard/#{dashboard_id}/monitor", request_body
 end
 
 When /^I request the runtime info for monitor (\w+)$/ do |monitor_id|
   get "/ajax/monitor/#{monitor_id}/runtime"
+end
+
+When /^I request to update the configuration of monitor (\w+) with values (.+), (\d+), (.+) and (.+)$/ do |monitor_id, name, refresh_interval, type, configuration|
+  request_body = %({
+      "name": "#{name}",
+      "refresh_interval": #{refresh_interval},
+      "type": "#{type}", 
+      "configuration": #{eval(configuration).to_json}})
+  put "/ajax/monitor/#{monitor_id}/configuration", request_body
 end
 
 When /^I request to update the position of monitor (\w+) with coordinates (\d+), (\d+)$/ do |monitor_id, top, left|

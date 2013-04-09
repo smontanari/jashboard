@@ -52,7 +52,7 @@ module Jashboard
         build)
 
       new_monitor.id.should_not be_nil
-      @db_helper.validate_monitor(new_monitor.id) do |monitor|
+      @db_helper.verify_monitor(new_monitor.id) do |monitor|
         monitor.type.should == 123
         monitor.name.should == "test new_name"
         monitor.refresh_interval.should == 456
@@ -79,7 +79,7 @@ module Jashboard
 
       subject.save_monitor(monitor)
 
-      @db_helper.validate_monitor("test-new_monitor-id") do |m|
+      @db_helper.verify_monitor("test-new_monitor-id") do |m|
         m.name.should == "test change name"
         m.refresh_interval.should == 123
         m.configuration.attr1.should == "test_changed_attr1"
@@ -151,7 +151,7 @@ module Jashboard
       )
 
       new_dashboard.id.should_not be_nil
-      @db_helper.validate_dashboard(new_dashboard.id) do |dashboard|
+      @db_helper.verify_dashboard(new_dashboard.id) do |dashboard|
         dashboard.name.should == "test dashboard-name"
         dashboard.monitor_ids.length.should == 2
         dashboard.monitor_ids[0].should == "test-mon-1"

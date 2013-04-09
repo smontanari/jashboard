@@ -10,7 +10,7 @@ module Jashboard
     end
 
     def method_missing(method, args, &block)
-      match = method.to_s.match(/(serialize|validate|find)_(monitor|dashboard)/)
+      match = method.to_s.match(/(serialize|verify|find)_(monitor|dashboard)/)
       super(method, args) if match.nil?
       self.send("#{match[1]}_obj".to_sym, "#{match[2]}", args, &block)
     end
@@ -23,7 +23,7 @@ module Jashboard
       end
     end
 
-    def validate_obj(base_path, id)
+    def verify_obj(base_path, id)
       find_obj(base_path, id).tap do |obj|
         yield(obj) if block_given?
       end

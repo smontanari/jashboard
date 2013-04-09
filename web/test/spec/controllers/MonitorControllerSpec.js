@@ -1,5 +1,5 @@
 describe("MonitorController", function() {
-  var delegate, rootScope, scope, repository, alertService, testMonitor;
+  var delegate, rootScope, scope, repository, alertService, testMonitor, timeoutService;
 
   beforeEach(function() {
     testMonitor = 
@@ -9,12 +9,87 @@ describe("MonitorController", function() {
       type: "test_type"
     };
     rootScope = jasmine.createSpyObj("rootScope", ['$broadcast']);
-    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$emit']);
+    scope = jasmine.createSpyObj("scope", ['$apply', '$on', '$emit', '$watch']);
     scope.dashboards = [
       {id: "dashboard1", monitors: [{id: "m1"}, testMonitor]},
       {id: "dashboard2", monitors: [{id: "m3"}]}
     ];
     repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize', 'loadMonitorRuntimeInfo']);
+  });
+
+  describe("when refreshInterval value changes", function() {
+    var refreshIntervalWatcher, scheduleFunction, successHandler;
+    beforeEach(function() {
+      scope.monitor = testMonitor;
+
+      scope.$watch = jasmine.createSpy("scope.$watch()").andCallFake(function(expr, listener) {
+        refreshIntervalWatcher = listener;
+      });
+      repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
+        .andCallFake(function(monitor_id, monitor_type, callbacks) {
+          successHandler = callbacks.success;
+        });
+    });
+
+    it("should watch the monitor.refreshInterval", function() {
+      new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
+      
+      expect(scope.$watch).toHaveBeenCalledWith("monitor.refreshInterval", jasmine.any(Function));
+    });
+
+    _.each([null, NaN, undefined], function(value) {
+      describe("when refreshInterval changes from " + value + " to a valid number", function() {
+        beforeEach(function() {
+          timeoutService = jasmine.createSpy("$timeout");
+          timeoutService.andCallFake(function(fn, delay) {
+            scheduleFunction = fn;
+          });
+          new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
+        });
+        it("should schedule a call to the repository to load the data", function() {
+          scope.monitor.refreshInterval = 123;
+          refreshIntervalWatcher(123, value);
+          successHandler();
+
+          scheduleFunction();
+
+          expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
+          expect(timeoutService).toHaveBeenCalledWith(jasmine.any(Function), 123000);
+          expect(repository.loadMonitorRuntimeInfo.calls.length).toEqual(2);
+        });
+      });
+      describe("when refreshInterval changes from a valid number to " + value, function() {
+        beforeEach(function() {
+          timeoutService = jasmine.createSpyObj("$timeout", ['cancel']);
+          new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
+        });
+        it("should not schedule a call to the repository to load the data", function() {
+          scope.monitor.refreshInterval = value;
+  
+          refreshIntervalWatcher(value, 123);
+  
+          expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+        });
+        it("should cancel the current monitor update scheduler", function() {
+          scope.monitor.runtimeUpdateScheduler = {id: "scheduler"};
+          scope.monitor.refreshInterval = value;
+
+          refreshIntervalWatcher(value, 123);
+          
+          expect(timeoutService.cancel).toHaveBeenCalledWith({id: "scheduler"});
+        });
+      });
+    });
+    describe("when refreshInterval value is the same", function() {
+      it("should not schedule a call to the repository to load the data", function() {
+        scope.monitor.refreshInterval = 345;
+
+        refreshIntervalWatcher(345, 345);
+
+        expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+      });
+    });
+    
   });
 
   describe("'MonitorPositionChanged' and 'MonitorSizeChanged' events handler", function() {
@@ -81,7 +156,7 @@ describe("MonitorController", function() {
   });
 
   describe("scope.removeMonitor()", function() {
-    var deleteHandlers, alertOptions, timeoutService;
+    var deleteHandlers, alertOptions;
     beforeEach(function() {
       alertService = {
         showAlert: jasmine.createSpy("alertService.showAlert()").andCallFake(function(options) {

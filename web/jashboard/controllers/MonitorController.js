@@ -9,6 +9,11 @@
           }, interval);
         }
       };
+      var cancelUpdateSchedule = function() {
+        if (_.isObject(scope.monitor.runtimeUpdateScheduler)) {
+          timeoutService.cancel(scope.monitor.runtimeUpdateScheduler);
+        }
+      };
       var updateMonitorRuntimeInfo = function(scope, scheduleNext) {
         var monitor = scope.monitor;
         monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
@@ -36,6 +41,17 @@
           }
         );        
       };
+
+      scope.$watch("monitor.refreshInterval", function(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          if (_.isFinite(newValue) && !_.isFinite(oldValue)) {
+            updateMonitorRuntimeInfo(scope, true);
+          } else if (_.isFinite(oldValue) && !_.isFinite(newValue)) {
+            cancelUpdateSchedule();
+          }
+        }
+      });
+
       scope.$on("MonitorPositionChanged", function(event, position) {
         var monitor = event.targetScope.monitor;
         monitor.position = position;
@@ -73,9 +89,7 @@
                 currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                 scope.$emit("MonitorDeleteComplete");
                 scope.$apply();
-                if (_.isObject(currentMonitor.runtimeUpdateScheduler)) {
-                  timeoutService.cancel(currentMonitor.runtimeUpdateScheduler);
-                }
+                cancelUpdateSchedule();
               },
               error: function() {
                 scope.$emit("AjaxError");

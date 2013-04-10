@@ -20,7 +20,7 @@ describe("FormValidationDirective", function() {
       validatorConstructor.withArgs({id: "test-form", input: {}}, scope).returns(validator);
       scope.testForm = {id: "test-form", input: {}};
       scope.$eval.andCallFake(function(value) {
-        if (value === "test-map") return {triggerOn: "test-event1", validationRules: "test.TestRules"};
+        if (value === "test-map") return {triggerOnEvent: "test-event1", validationRules: "test.TestRules"};
       });
 
       linkFunction(scope, "test-element", {jbFormValidation: "test-map", ngForm: "testForm"});
@@ -63,26 +63,37 @@ describe("FormValidationDirective", function() {
     });
   });
 
-  describe("triggerOn not defined", function() {
+  describe("triggerOnLoad", function() {
     beforeEach(function() {
       scope.$formValidator = validator;
+    });
+    _.each([{validationRules: "test.TestRules"}, {validationRules: "test.TestRules", triggerOnLoad: true}], function(attributes) {
+      it("should apply the validation rules to the validator when not defined or true", function() {
+        scope.$eval.andCallFake(function(value) {
+          if (value === "test-map") return attributes;
+        });
+        
+        linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
+
+        expect(validator.applyRules).toHaveBeenCalledWith({id: "test-rules"});
+      });
+    });
+    it("should not apply the validation rules to the validator when false", function() {
       scope.$eval.andCallFake(function(value) {
-        if (value === "test-map") return {validationRules: "test.TestRules"};
+        if (value === "test-map") return {validationRules: "test.TestRules", triggerOnLoad: false};
       });
       
       linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
-    });
 
-    it("should apply the validation rules to the validator", function() {
-      expect(validator.applyRules).toHaveBeenCalledWith({id: "test-rules"});
+      expect(validator.applyRules).not.toHaveBeenCalled();
     });
   });
 
-  describe("triggerOn event listener", function() {
+  describe("triggerOnEvent event listener", function() {
     beforeEach(function() {
       scope.$formValidator = validator;
       scope.$eval.andCallFake(function(value) {
-        if (value === "test-map") return {triggerOn: "test-event1", validationRules: "test.TestRules"};
+        if (value === "test-map") return {triggerOnEvent: "test-event1", validationRules: "test.TestRules"};
       });
       scope.$on.andCallFake(function(name, handler) {
         if (name === "test-event1") listener = handler;

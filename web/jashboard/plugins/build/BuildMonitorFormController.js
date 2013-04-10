@@ -15,9 +15,6 @@
             type: _.first(buildTypes)
           };
         }
-        // } else if (options.parameters.monitor.type === 'build') {
-        //   scope.monitorConfigurationFormModel.build = options.parameters.monitor.configuration;
-        // }
         scope.formHelper.registerMonitorTypeForm("build", scope.buildMonitorForm);
       });
     }

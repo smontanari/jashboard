@@ -24,11 +24,12 @@
             }
           };
         }
-        if (attributes.triggerOn) {
-          scope.$on(attributes.triggerOn, function(event) {
+        if (attributes.triggerOnEvent) {
+          scope.$on(attributes.triggerOnEvent, function(event) {
             scope.$formValidator.applyRules(validationRules);
           });
-        } else {
+        }
+        if (_.isUndefined(attributes.triggerOnLoad) || attributes.triggerOnLoad === true) {
           scope.$formValidator.applyRules(validationRules);
         }
       };

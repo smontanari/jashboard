@@ -37,7 +37,7 @@ describe("DashboardActionsHandler", function() {
     });
   });
 
-  describe("scope.dashboardAction(): delete", function() {
+  describe("scope.dashboardAction(): deleteDashboard", function() {
     var innerScope, currentDashboard, deleteSuccessCallback, deleteErrorCallback, alertOptions, scopeHelperSpy;
     beforeEach(function() {
       currentDashboard = {id: "test_dashboard_id"};
@@ -52,7 +52,7 @@ describe("DashboardActionsHandler", function() {
       });
       scopeHelperSpy = spyOn(jashboard.scopeContextHelper, "setDefaultActiveDashboard");
 
-      scope.dashboardAction.apply(innerScope, ['delete']);
+      scope.dashboardAction.apply(innerScope, ['deleteDashboard']);
     });
     it("should trigger an alert to confirm deletion", function() {
       expect(alertOptions.title).toEqual("Remove dashboard test-dashboard");

@@ -94,14 +94,14 @@
 
       this.deleteDashboard = function(dashboard_id, handlers) {
         executeRequest(
-          http.delete(AJAX_DASHBOARD + "/" + dashboard_id),
+          http.deleteResource(AJAX_DASHBOARD + "/" + dashboard_id),
           handlers
         );
       }
 
       this.deleteMonitor = function(dashboard_id, monitor_id, handlers) {
         executeRequest(
-          http.delete(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor/" + monitor_id),
+          http.deleteResource(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor/" + monitor_id),
           handlers
         );
       }

@@ -25,18 +25,18 @@
       this.postJSON = function(url, obj) {
         return ajaxRequest(url, _.defaults({
           type: 'POST',
-          data: JSON.stringify(obj),
+          data: JSON.stringify(obj)
         }, ajaxWriteDefaults));
       };
 
       this.putJSON = function(url, obj) {
         return ajaxRequest(url, _.defaults({
           type: 'PUT',
-          data: JSON.stringify(obj),
+          data: JSON.stringify(obj)
         }, ajaxWriteDefaults));
       };
 
-      this.delete = function(url) {
+      this.deleteResource = function(url) {
         return ajaxRequest(url, {
           type: 'DELETE'
         });

@@ -2,9 +2,9 @@
   jashboard = _.extend(module, {
     MonitorFormHelper: function(initialForm, monitorModel, saveCallback) {
       var monitorForms = {
-        default: initialForm
+        defaultForm: initialForm
       };
-      var currentForm = monitorForms.default;
+      var currentForm = monitorForms.defaultForm;
       this.actions = ["next"];
 
       this.showForm = function(value) {
@@ -18,7 +18,7 @@
 
       this.back = function() {
         this.actions = ["next"];
-        currentForm = monitorForms.default;
+        currentForm = monitorForms.defaultForm;
       };
 
       this.registerMonitorTypeForm = function(type, form) {

@@ -21,7 +21,7 @@ describe("MonitorFormHelper", function() {
     expect(formHelper.actions).toEqual(["next"]);
   })
   it("should show the default monitor form", function() {
-    expect(formHelper.showForm("default")).toEqual(true);
+    expect(formHelper.showForm("defaultForm")).toEqual(true);
   });
   it("should not show the monitor form for any other type", function() {
     expect(formHelper.showForm("test_type")).toEqual(false);
@@ -57,7 +57,7 @@ describe("MonitorFormHelper", function() {
       expect(formHelper.showForm("test_type")).toEqual(true);
     });
     it("should not show the form for any other type", function() {
-      expect(formHelper.showForm("default")).toEqual(false);
+      expect(formHelper.showForm("defaultForm")).toEqual(false);
       expect(formHelper.showForm("another_type")).toEqual(false);
     });
     it("should have two actions: 'back' and 'save'", function() {
@@ -70,7 +70,7 @@ describe("MonitorFormHelper", function() {
       formHelper.back();
     });
     it("should show the default monitor form", function() {
-      expect(formHelper.showForm("default")).toEqual(true);
+      expect(formHelper.showForm("defaultForm")).toEqual(true);
     });
     it("should not show the monitor form for any other type", function() {
       expect(formHelper.showForm("test_type")).toEqual(false);

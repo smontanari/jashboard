@@ -66,7 +66,7 @@ describe("HttpService", function() {
     });
   });
   it("should invoke jQuery.ajax to perform a DELETE request", function() {
-    var request = httpService.delete("/test/path/to/resource");
+    var request = httpService.deleteResource("/test/path/to/resource");
 
     expect(request).toEqual(mockRequest);
     expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");

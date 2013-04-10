@@ -34,14 +34,14 @@
       this.convertMonitorConfigurationToData = function(configurationModel) {
         return _.extend({
           hostname: configurationModel.hostname,
-          port: configurationModel.port,
+          port: configurationModel.port
         }, buildConfigurationConverter.toObject(extractBuildTypeProperties(configurationModel)));
       };
 
       this.parseMonitorConfigurationForm = function(formModel) {
         return _.extend({
           hostname: formModel.hostname,
-          port: parseInt(formModel.port, 10),
+          port: parseInt(formModel.port, 10)
         }, buildConfigurationFormParser.toObject(extractBuildTypeProperties(formModel)));
       };
 

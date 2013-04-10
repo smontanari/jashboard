@@ -15,7 +15,7 @@
               parameters: {dashboard: currentScope.dashboard}
             });
           },
-          delete: function(currentScope) {
+          deleteDashboard: function(currentScope) {
             alertService.showAlert({
               title: "Remove dashboard test-dashboard",
               message: "Deleting this dashboard will also remove all its monitors. Continue?",

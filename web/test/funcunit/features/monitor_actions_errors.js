@@ -17,7 +17,7 @@ funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", f
     jashboardFeatureHelper.checkOverlayMessage(/an error occurred/, true);
   });
 
-  test("should display a warning icon with a tolltip when failing to refresh runtime information", function() {
+  test("should display a warning icon with a tooltip when failing to refresh runtime information", function() {
     S("#monitor_1 .monitor-title .monitor-icon-ajax-loader").visible("the ajax loader is shown");
     S("#monitor_1 .monitor-title .monitor-icon-ajax-loader").invisible("the ajax loader is hidden");
     S("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible("the ajax error is shown");

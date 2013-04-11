@@ -4,4 +4,4 @@ testresults.xml
 .rvmrc
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*
-
+web/node_modules

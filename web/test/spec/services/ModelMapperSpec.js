@@ -56,7 +56,7 @@ describe("ModelMapper", function() {
     expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("test_type");
     expect(data).toEqual({
       name: "test_name",
-      refreshInterval: "test_interval",
+      refresh_interval: "test_interval",
       type: "test_type",
       configuration: {data: "test_configuration"},
       size: "test_size",

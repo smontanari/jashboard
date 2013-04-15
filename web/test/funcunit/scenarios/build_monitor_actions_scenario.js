@@ -18,7 +18,7 @@ $.fixture("POST /ajax/dashboard/dashboard_1/monitor", function(ajaxOriginalOptio
     }
   };
   var monitorConfigOk = data.name === "Test " + data.configuration.type + "-monitor" &&
-    data.refreshInterval === 30 &&
+    data.refresh_interval === 30 &&
     data.type === "build";
 
   var buildConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);

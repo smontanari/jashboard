@@ -14,7 +14,7 @@ describe("Repository", function() {
 
   beforeEach(function() {
     httpService = jasmine.createSpyObj("httpService", ['getJSON', 'postJSON', 'putJSON']);
-    modelMapper = jasmine.createSpyObj("ModelMapper", ['mapDataToDashboard', 'mapDataToMonitor', 'mapDataToMonitorRuntimeInfo', 'mapMonitorToData', 'mapMonitorConfigurationToData']);
+    modelMapper = jasmine.createSpyObj("ModelMapper", ['mapDataToDashboard', 'mapDataToMonitor', 'mapDataToMonitorRuntimeInfo', 'mapMonitorToData']);
     repository = new jashboard.Repository(httpService, modelMapper);
     successHandler = jasmine.createSpy("successHandler callback");
     errorHandler = jasmine.createSpy("errorHandler callback");
@@ -157,24 +157,26 @@ describe("Repository", function() {
         httpService.putJSON = jasmine.createSpy("httpService.putJSON()").andReturn(
           new AjaxPromise("")
         );
-        var monitor = {
-          id: "test_id",
-          name: "test_name",
-          type: "test_type",
-          refreshInterval: 123,
-          configuration: "test.configuration"
-        };
-        modelMapper.mapMonitorConfigurationToData = jasmine.createSpy("modelMapper.mapMonitorConfigurationToData()").andCallFake(function(type, configuration) {
-          if (type === "test_type") return {configuration: configuration};
+        var monitor = {id: "test_id"};
+        modelMapper.mapMonitorToData = jasmine.createSpy("modelMapper.mapMonitorToData()").andCallFake(function(model) {
+          if (model.id === "test_id") return {
+            id: "test_id",
+            name: "test_name",
+            type: "test_type",
+            refresh_interval: 123,
+            size: "test_size",
+            position: "test_position",
+            configuration: "test.configuration"
+          };
         });
         repository.updateMonitorConfiguration(monitor, {success: successHandler, error: errorHandler});
       });
       it("should use the http service to update the monitor configuration", function() {
         expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/configuration", {
           name: "test_name",
-          refreshInterval: 123,
+          refresh_interval: 123,
           type: "test_type",
-          configuration: {configuration: "test.configuration"}
+          configuration: "test.configuration"
         });
       });
       it("should invoke the ajax callback handlers", function() {

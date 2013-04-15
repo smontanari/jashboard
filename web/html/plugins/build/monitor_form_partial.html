@@ -41,13 +41,17 @@
           </div>
         </div>
         <div data-ng-switch-when="update">
-          <div class="control-group form-horizontal">
-            <label class="control-label">CI Server</label>
-            <div class="controls">
-              <span class="readonly-field">{{monitorConfigurationFormModel.build.type}}</span>
+          <div data-ng-switch="baseMonitorData.type">
+            <div data-ng-switch-when="build">
+              <div class="control-group form-horizontal">
+                <label class="control-label">CI Server</label>
+                <div class="controls">
+                  <span class="readonly-field">{{monitorConfigurationFormModel.build.type}}</span>
+                </div>
+              </div>
+              <div data-ng-include="'html/plugins/build/' + monitorConfigurationFormModel.build.type + '_monitor_form_partial.html'"></div>
             </div>
           </div>
-          <div data-ng-include="'html/plugins/build/' + monitorConfigurationFormModel.build.type + '_monitor_form_partial.html'"></div>
         </div>
       </div>
     </div>

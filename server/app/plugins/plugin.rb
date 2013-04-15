@@ -1,7 +1,7 @@
 module Jashboard
   module Plugin
     @adapters = {}
-    def is_monitor_adapter_for_type(type)
+    def is_monitor_plugin_for_type(type)
       Plugin.register_adapter(type, self)
     end
 

@@ -5,6 +5,7 @@ gem 'nokogiri'
 gem 'fsdb'
 gem 'uuidtools'
 gem 'ipsum'
+gem 'grit'
 
 group :test do
   gem 'rspec'

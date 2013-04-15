@@ -5,10 +5,6 @@ require 'plugins/ipsum/ipsum_plugin'
 module Jashboard
   module Plugin
     describe IpsumPlugin do
-      it("should register as monitor type handler for type 'ipsum'") do
-        Plugin.instance_variable_get(:@adapters)["ipsum"].should_not be_nil
-      end
-
       context("Runtime info: generating sentences") do
         before(:each) do
           class ::Fixnum

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'json_spec'
 require 'open-uri'
 require 'stringio'
 require 'plugins/build/adapters/jenkins_adapter'
@@ -26,7 +25,7 @@ module Jashboard
             URI.should_receive(:parse).with("http://test.host:1234/job/test-build/lastSuccessfulBuild/api/xml").and_return(@uri)
             URI.should_receive(:parse).with("http://test.host:1234/job/test-build/7/api/xml").and_return(@next_build_uri)
 
-            @configuration = ({"hostname" => "test.host", "port" => 1234, "type" => "jenkins", "build_id" => "test-build"}).to_struct
+            @configuration = {hostname: "test.host", port: 1234, type: "jenkins", build_id: "test-build"}.to_struct
           end
 
           it("should invoke the correct url to retrieve last build information") do

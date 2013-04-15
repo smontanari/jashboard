@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'nokogiri'
-require 'extensions/jashboard_extensions'
 require 'plugins/build/build_runtime_info'
 
 module Jashboard

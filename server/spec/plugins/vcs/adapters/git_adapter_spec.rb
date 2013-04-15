@@ -6,7 +6,7 @@ require 'plugins/vcs/adapters/git_adapter'
 
 module Jashboard
   module Plugin
-    module VCS
+    module Vcs
       describe GitAdapter do
         before(:each) do
           adapter_class = Class.new do

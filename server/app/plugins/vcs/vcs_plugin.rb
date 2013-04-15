@@ -3,7 +3,7 @@ require 'plugins/plugin'
 
 module Jashboard
   module Plugin
-    module VCS
+    module Vcs
       class VcsPlugin < MonitorTypeAdapter
         extend Plugin
         is_monitor_plugin_for_type 'vcs'

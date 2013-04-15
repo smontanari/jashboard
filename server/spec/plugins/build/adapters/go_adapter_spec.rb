@@ -6,7 +6,7 @@ require 'plugins/build/adapters/go_adapter'
 
 module Jashboard
   module Plugin
-    module CIServer
+    module Build
       describe GoAdapter do
         before(:each) do
           adapter_class = Class.new do

@@ -3,7 +3,7 @@ require 'plugins/vcs/vcs_plugin_config'
 
 module Jashboard
   module Plugin
-    module VCS
+    module Vcs
       describe VcsPlugin do
         it("should implement the configured adapters") do
           plugin = VcsPlugin.new

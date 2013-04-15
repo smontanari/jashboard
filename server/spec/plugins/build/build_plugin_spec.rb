@@ -1,11 +1,12 @@
-require 'spec_helper'
 require 'plugins/build/build_plugin'
 
 module Jashboard
   module Plugin
-    describe BuildPlugin do
-      it("should extend MonitorTypeAdapter") do
-        subject.class.ancestors.should include(Jashboard::MonitorTypeAdapter)
+    module Build
+      describe BuildPlugin do
+        it("should extend MonitorTypeAdapter") do
+          subject.class.ancestors.should include(Jashboard::MonitorTypeAdapter)
+        end
       end
     end
   end

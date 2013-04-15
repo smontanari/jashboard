@@ -4,7 +4,7 @@ require 'plugins/build/build_runtime_info'
 
 module Jashboard
   module Plugin
-    module CIServer
+    module Build
       module JenkinsAdapter
         def get_jenkins_runtime_info(configuration)
           @base_url = "http://#{configuration.hostname}:#{configuration.port}/job/#{configuration.build_id}"

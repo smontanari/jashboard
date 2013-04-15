@@ -5,7 +5,7 @@ require 'plugins/build/adapters/jenkins_adapter'
 
 module Jashboard
   module Plugin
-    module CIServer
+    module Build
       describe JenkinsAdapter do
         before(:each) do
           adapter_class = Class.new do

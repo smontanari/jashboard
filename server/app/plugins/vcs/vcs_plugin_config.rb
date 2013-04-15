@@ -1,3 +1,3 @@
 require 'plugins/vcs/adapters/git_adapter'
 
-include Jashboard::Plugin::VCS::GitAdapter
+include Jashboard::Plugin::Vcs::GitAdapter

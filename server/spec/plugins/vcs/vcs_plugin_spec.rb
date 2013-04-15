@@ -1,9 +1,8 @@
-require 'spec_helper'
 require 'plugins/vcs/vcs_plugin'
 
 module Jashboard
   module Plugin
-    module VCS
+    module Vcs
       describe VcsPlugin do
         it("should extend MonitorTypeAdapter") do
           subject.class.ancestors.should include(Jashboard::MonitorTypeAdapter)

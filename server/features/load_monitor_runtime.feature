@@ -19,12 +19,21 @@ Feature: Get monitor runtime data
 
   Scenario: Load ipsum monitor runtime returns corresponding runtime data
     Given the following monitors
-    | id        | name          | type  | refresh_interval | position | size    | configuration                                                                    |
+    | id        | name          | type  | refresh_interval | position | size    | configuration                           |
     | monitor_1 | Ipsum Monitor | ipsum | 10               | 100,200  | 230x120 | { no_sentences: 3, language: "english"} |
 
     When I request the runtime info for monitor monitor_1
 
     Then the app should return a json response matching '^\{"text"\:".+"\}$'
+
+  Scenario: Load vcs monitor runtime returns corresponding runtime data
+    Given the following monitors
+    | id        | name        | type | refresh_interval | position | size    | configuration                                                            |
+    | monitor_1 | Git Monitor | vcs  | 10               | 100,200  | 230x120 | { type: "git", working_directory: "../", branch: "test-git-do-not-delete", history_length: 3} |
+
+    When I request the runtime info for monitor monitor_1
+
+    Then the app should return the json response "fixture_vcs_monitor.json"
 
   Scenario: Load build monitor runtime returns error
     Given the following monitors

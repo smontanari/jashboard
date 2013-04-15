@@ -37,8 +37,8 @@ module Jashboard
           end
 
           it("should return a collection of git commit info objects") do
-            commit1 = stub_commit("test-commit_1", "test-commiter_1", "committer1@test.com", "2012-09-10 17:28:34 +1000", "test-message1")
-            commit2 = stub_commit("test-commit_2", "test-commiter_2", "committer2@test.com", "2012-09-13 11:56:19 +1000", "test-message2")
+            commit1 = stub_commit("test-commit_1", "test-committer_1", "committer1@test.com", "2012-09-10 17:28:34 +1000", "test-message1")
+            commit2 = stub_commit("test-commit_2", "test-committer_2", "committer2@test.com", "2012-09-13 11:56:19 +1000", "test-message2")
       
             @repo.stub(:commits => [commit1, commit2])
 
@@ -46,11 +46,13 @@ module Jashboard
             runtime_info.size.should == 2
             runtime_info[0].revision_id.should == "test-commit_1"
             runtime_info[0].date.should == "Mon Sep 10 17:28:34 2012 +1000"
-            runtime_info[0].author.should == "test-commiter_1 <committer1@test.com>"
+            runtime_info[0].author.should == "test-committer_1"
+            runtime_info[0].email.should == "committer1@test.com"
             runtime_info[0].message.should == "test-message1"
             runtime_info[1].revision_id.should == "test-commit_2"
             runtime_info[1].date.should == "Thu Sep 13 11:56:19 2012 +1000"
-            runtime_info[1].author.should == "test-commiter_2 <committer2@test.com>"
+            runtime_info[1].author.should == "test-committer_2"
+            runtime_info[1].email.should == "committer2@test.com"
             runtime_info[1].message.should == "test-message2"
           end
         end
@@ -62,8 +64,8 @@ module Jashboard
           end
           double.tap do |commit|
             commit.stub(:id => id)
-            commit.stub(:committer => committer)
-            commit.stub(:committed_date => Time.parse(date))
+            commit.stub(:author => committer)
+            commit.stub(:authored_date => Time.parse(date))
             commit.stub(:message => message)
           end
         end

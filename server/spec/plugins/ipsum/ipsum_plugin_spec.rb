@@ -4,18 +4,11 @@ require 'plugins/ipsum/ipsum_plugin'
 
 module Jashboard
   module Plugin
-    describe IpsumMonitorPlugin do
+    describe IpsumPlugin do
       it("should register as monitor type handler for type 'ipsum'") do
-        MonitorAdapter.class_variable_get('@@type_handlers')['ipsum'].should == IpsumMonitorPlugin
+        Plugin.instance_variable_get(:@adapters)["ipsum"].should_not be_nil
       end
 
-      it("should return the configuration from the type handler") do
-        input_configuration = {'no_sentences' => 10, 'language' => "english"}
-
-        configuration = subject.get_configuration(input_configuration)
-        configuration.no_sentences.should == 10
-        configuration.language.should == "english"
-      end
       context("Runtime info: generating sentences") do
         before(:each) do
           class ::Fixnum
@@ -33,11 +26,11 @@ module Jashboard
         end
 
         it("should return sentences in french") do
-          monitor_configuration = {no_sentences: 10, language: "french"}
+          monitor_configuration = Struct.new(:no_sentences, :language).new(10, "french")
           subject.get_runtime_info(monitor_configuration).should == {text: "10 sentences in :french"}
         end
         it("should return sentences in english") do
-          monitor_configuration = {no_sentences: 5, language: "english"}
+          monitor_configuration = Struct.new(:no_sentences, :language).new(5, "english")
           subject.get_runtime_info(monitor_configuration).should == {text: "5 sentences in :english"}
         end
       end

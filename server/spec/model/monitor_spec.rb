@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'json_spec'
 require 'model/monitor'
-require 'plugins/build/jenkins_plugin'
+# require 'plugins/build/jenkins_plugin'
 
 module Jashboard
   describe Monitor do

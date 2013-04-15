@@ -14,7 +14,7 @@ task :test, [:file_pattern] do |t, args|
 end
 
 Cucumber::Rake::Task.new do |t|
-  t.cucumber_opts = %w{--format pretty --tags ~@wip} 
+  t.cucumber_opts = %w{--format pretty --expand --tags ~@wip} 
 end
 
 desc "Clear all stored data in a target environment (default: DEV)"

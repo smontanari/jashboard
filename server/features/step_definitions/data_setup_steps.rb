@@ -12,9 +12,8 @@ Given /^the following monitors$/ do |test_monitor_data|
         with_refresh_interval(refresh_interval).
         with_position(Struct.new(:top, :left).new(position_match[1].to_i, position_match[2].to_i)).
         with_size(Struct.new(:width, :height).new(size_match[1].to_i, size_match[2].to_i)).
-        with_configuration(
-          Jashboard::MonitorConfigurationHelper.send("create_#{monitor_data[:type]}_monitor_configuration", configuration_hash)
-        ).build
+        with_configuration(configuration_hash.to_struct).
+        build
     )
   end
 end

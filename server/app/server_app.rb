@@ -2,8 +2,7 @@ require 'sinatra/base'
 require "sinatra/json"
 require 'json'
 require 'service/repository'
-require 'plugins/plugin_manager'
-require 'plugins/monitor_adapter'
+require 'plugins/plugin'
 require 'model/dashboard_view'
 
 module Jashboard
@@ -23,12 +22,13 @@ module Jashboard
     def initialize(*args)
       super(*args)
       @repository = FileRepository.new
-      @monitor_adapter = Plugin::MonitorAdapter.new
-      Plugin::PluginManager.load_plugins
+      @monitor_adapters = Plugin.load_plugins(File.join(File.dirname(__FILE__), 'plugins'))
     end
 
     error do
+      # puts "********"
       # puts env['sinatra.error']
+      # puts "********"
       status 500
       env['sinatra.error'].to_s
     end
@@ -45,7 +45,7 @@ module Jashboard
 
     get '/ajax/monitor/:id/runtime' do
       monitor = @repository.load_monitor(params[:id])
-      json(@monitor_adapter.get_runtime_info(monitor))
+      json(@monitor_adapters[monitor.type].get_runtime_info(monitor.configuration))
     end
 
     post '/ajax/dashboard' do
@@ -118,7 +118,7 @@ module Jashboard
     def update_monitor(monitor, monitor_json)
       monitor.name = monitor_json['name']
       monitor.refresh_interval = monitor_json['refresh_interval']
-      monitor.configuration = @monitor_adapter.get_configuration(monitor.type, monitor_json['configuration'])
+      monitor.configuration = monitor_json['configuration'].to_struct
     end
 
     def create_monitor(monitor_json)
@@ -126,7 +126,7 @@ module Jashboard
         monitor.name = monitor_json['name']
         monitor.refresh_interval = monitor_json['refresh_interval']
         monitor.type = monitor_json['type']
-        monitor.configuration = @monitor_adapter.get_configuration(monitor_json['type'], monitor_json['configuration'])
+        monitor.configuration = monitor_json['configuration'].to_struct
         monitor.position = get_monitor_position(monitor_json['position'])
         monitor.size = get_monitor_size(monitor_json['size'])
       end

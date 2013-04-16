@@ -1,7 +1,8 @@
 (function() {
   var plugins = [
     'ipsum',
-    'build'
+    'build',
+    'vcs'
   ];
   
   steal("jashboard/plugins/TypeAdapter.js")

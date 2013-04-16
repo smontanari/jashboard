@@ -15,6 +15,20 @@
           "port": 9080,
           "build_id": "zombie_build"
         }
+      },
+      {
+        "id": "monitor_5",
+        "name": "Jashboard Git repo",
+        "refresh_interval": 20000,
+        "type": "vcs",
+        "position": {"top": 60, "left": 300},
+        "size": {"width": 480, "height": 280},
+        "configuration": {
+          "type": "git",
+          "workingDirectory": "/path/to/repo",
+          "branch": "master",
+          "historyLength": 5
+        }
       }
     ]
   },
@@ -26,7 +40,7 @@
         "name": "Epic build",
         "refresh_interval": null,
         "type": "build",
-        "position": {"top": 0, "left": 0},
+        "position": {"top": 80, "left": 10},
         "size": {"width": 240, "height": 140},
         "configuration": {
           "type": "go",
@@ -42,7 +56,7 @@
         "name": "Random text",
         "refresh_interval": 15000,
         "type": "ipsum",
-        "position": {"top": 0, "left": 260},
+        "position": {"top": 20, "left": 400},
         "size": {"width": 280, "height": 150},
         "configuration": {
           "no_sentences": 3,

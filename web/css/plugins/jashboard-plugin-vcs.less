@@ -1,0 +1,35 @@
+.vcs-panel {
+  .gradient-bg(#000, #3f3f3f, #000);
+  .rounded-corners;
+}
+
+.git-info {
+  padding: 10px;
+  color: #e9e9e9;
+  .color-selection(#e9e9e9, #4c4c4c);
+  font-size: @base_font_size;
+  line-height: @base_line_height + 1;
+  white-space: nowrap;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+.git-commit {
+  color: #D6D633;
+}
+
+.git-author-date {
+  p {
+    * {
+      padding: 2px 5px 2px 0;
+    }
+    white-space: normal;
+    label {
+      font-weight: normal;
+    }
+  }
+}
+
+.git-comment {
+  white-space: normal;
+  margin: 10px 0 10px 30px;
+}

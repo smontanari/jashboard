@@ -33,6 +33,10 @@ $(function() {
   $(".monitor-panel").each(function(index, element) {
     resizeMonitorDetails(".monitor-details", element);
   });
+  $('#mon3 .vcs-panel').cycle({ 
+    fx: 'scrollLeft',
+    timeout:  5000
+  });
 });
 
 

@@ -1,0 +1,12 @@
+<div class="vcs-panel scrolling">
+  <div class="vcs-info-group">
+    <div class="git-info" data-ng-repeat="commit in monitor.runtimeInfo.commits">
+      <p class="git-commit">commit {{commit.revision_id}}</p>
+      <div class="git-author-date table-like">
+        <p><label>Author:</label><span>{{commit.author}} &lt;{{commit.email}}&gt;</span></p>
+        <p><label>Date:</label><span>{{commit.date}}</span></p>
+      </div>
+      <p class="git-comment">{{commit.message}}</p>
+    </div>
+  </div>
+</div>

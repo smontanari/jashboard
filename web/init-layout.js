@@ -16,6 +16,7 @@ var resizeMonitorDetails = function(childrenSel, parentSel) {
 
 $(function() {
   $(".monitor-panel").each(function() {
+    var self = this;
     $(this).draggable(
       { 
         containment: "parent",
@@ -27,13 +28,24 @@ $(function() {
       { 
         containment: "parent",
         autoHide: true,
-        alsoResize: $(".monitor-details", this)
+        alsoResize: $(".monitor-details", this),
+        start: function(event, ui) {
+          $(".vcs-panel", this).cycle("destroy");
+          $(".vcs-panel", this).attr("style", "");
+          $(".vcs-info-group", this).attr("style", "");
+        },
+        stop: function(event, ui) {
+          $(".vcs-panel", this).cycle({ 
+            fx: 'scrollLeft',
+            timeout:  5000
+          });
+        }
     });
   });
   $(".monitor-panel").each(function(index, element) {
     resizeMonitorDetails(".monitor-details", element);
   });
-  $('#mon3 .vcs-panel').cycle({ 
+  $(".vcs-panel").cycle({ 
     fx: 'scrollLeft',
     timeout:  5000
   });

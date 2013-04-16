@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require "sinatra/json"
 require 'json'
+require 'extensions/jashboard_extensions'
 require 'service/repository'
 require 'plugins/plugin'
 require 'model/dashboard_view'

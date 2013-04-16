@@ -1,0 +1,39 @@
+<div id="vcsMonitorInput" data-ng-show="formHelper.showForm('vcs')">
+<!--   <div class="form-horizontal" data-ng-form="vcsMonitorForm" data-ng-controller="IpsumMonitorFormController"
+    data-jb-form-validation="{triggerOnEvent: 'OpenMonitorDialog', validationRules: 'plugin.ipsum.IpsumMonitorFormValidationRules'}"> -->
+  <div class="configurationForm form-horizontal" data-ng-form="vcsMonitorForm">
+    <!-- <div class="control-group" data-ng-class="{'error': inputInError('numberOfSentences')}"> -->
+    <div class="control-group">
+      <label class="control-label" for="vcsWorkingDir">Working directory</label>
+      <div class="controls">
+        <input name="vcsWorkingDir" type="text" class="input-large"
+          data-ng-model="monitorConfigurationFormModel.vcs.workingDirectory">
+          <!-- data-ng-model="monitorConfigurationFormModel.vcs.workingDirectory" data-ng-change="validateField('numberOfSentences')"> -->
+      </div>
+<!--       <div class="controls">
+        <div id="numberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.required">You must provide a number of sentences.</div>
+      </div> -->
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="vcsBranch">Branch</label>
+      <div class="controls">
+        <input name="vcsBranch" type="text" class="input-medium"
+          data-ng-model="monitorConfigurationFormModel.vcs.branch">
+      </div>
+<!--       <div class="controls">
+        <div id="numberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.required">You must provide a number of sentences.</div>
+      </div> -->
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="vcsHistoryLength">Number of commits</label>
+      <div class="controls">
+        <input name="vcsHistoryLength" type="text" class="input-mini"
+          data-ng-model="monitorConfigurationFormModel.vcs.historyLength">
+      </div>
+<!--       <div class="controls">
+        <div id="numberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.required">You must provide a number of sentences.</div>
+        <div id="numberOfSentencesNumberError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.positiveInteger">You must enter a valid number.</div>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -6,7 +6,9 @@
           workingDirectory: configurationData.working_directory,
           branch: configurationData.branch,
           type: configurationData.type,
-          historyLength: configurationData.history_length
+          historyLength: configurationData.history_length,
+          pageSlideEffect: configurationData.page_slide_effect,
+          commitsPerPage: configurationData.commits_per_page
         };
       };
 
@@ -15,7 +17,9 @@
           working_directory: configurationModel.workingDirectory,
           type: configurationModel.type,
           branch: configurationModel.branch,
-          history_length: configurationModel.historyLength
+          history_length: configurationModel.historyLength,
+          page_slide_effect: configurationModel.pageSlideEffect,
+          commits_per_page: configurationModel.commitsPerPage
         };
       };
 
@@ -24,7 +28,9 @@
           workingDirectory: formModel.workingDirectory,
           branch: formModel.branch,
           type: formModel.type,
-          historyLength: parseInt(formModel.historyLength, 10)
+          historyLength: parseInt(formModel.historyLength, 10),
+          pageSlideEffect: formModel.pageSlideEffect,
+          commitsPerPage: parseInt(formModel.commitsPerPage, 10)
         };
       };
 

@@ -45,10 +45,6 @@ $(function() {
   $(".monitor-panel").each(function(index, element) {
     resizeMonitorDetails(".monitor-details", element);
   });
-  $(".vcs-panel").cycle({ 
-    fx: 'scrollLeft',
-    timeout:  5000
-  });
 });
 
 

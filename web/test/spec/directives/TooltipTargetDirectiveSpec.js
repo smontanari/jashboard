@@ -9,7 +9,7 @@ describe("TooltipTargetDirective", function() {
 
     linkFunction = jashboard.angular.tooltipTargetDirective(tooltipService);
 
-    linkFunction(scope, "test-element", {"jbTooltipTarget": "test_expr"})
+    linkFunction(scope, "test-element", {"jbTooltipTarget": "test_expr"});
   });
 
   it("should bind the element to the service", function() {

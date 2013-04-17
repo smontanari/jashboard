@@ -1,12 +1,36 @@
-<div class="vcs-panel scrolling">
-  <div class="vcs-info-group">
-    <div class="git-info" data-ng-repeat="commit in monitor.runtimeInfo.commits">
-      <p class="git-commit">commit {{commit.revision_id}}</p>
-      <div class="git-author-date table-like">
-        <p><label>Author:</label><span>{{commit.author}} &lt;{{commit.email}}&gt;</span></p>
-        <p><label>Date:</label><span>{{commit.date}}</span></p>
+<div data-ng-switch="monitor.configuration.pageSlideEffect">
+  <div class="vcs-panel scrolling" data-ng-switch-when="true"
+    data-jb-paging="{pageSize: monitor.configuration.commitsPerPage, items: monitor.runtimeInfo.commits}"
+    data-jb-slide-show="{start: 'startSlideShow'}" 
+    data-cycle-slides=".vcs-info-group"
+    data-cycle-fx="scrollHorz"
+    data-cycle-pause-on-hover="true"
+    data-cycle-timeout="5000"
+    data-cycle-log="false"
+    title="hovering the mouse here pauses the slide effect">
+    <div class="vcs-info-group" data-ng-repeat="page in pages" data-jb-notify-last="startSlideShow">
+      <div data-ng-repeat="commit in page.items">
+        <div class="git-info">
+          <p class="git-commit">commit {{commit.revision_id}}</p>
+          <div class="git-author-date table-like">
+            <p><label>Author:</label><span>{{commit.author}} &lt;{{commit.email}}&gt;</span></p>
+            <p><label>Date:</label><span>{{commit.date}}</span></p>
+          </div>
+          <p class="git-comment">{{commit.message}}</p>
+        </div>
       </div>
-      <p class="git-comment">{{commit.message}}</p>
+    </div>
+  </div>
+  <div class="vcs-panel scrolling" data-ng-switch-default>
+    <div class="vcs-info-group">
+      <div class="git-info" data-ng-repeat="commit in monitor.runtimeInfo.commits">
+        <p class="git-commit">commit {{commit.revision_id}}</p>
+        <div class="git-author-date table-like">
+          <p><label>Author:</label><span>{{commit.author}} &lt;{{commit.email}}&gt;</span></p>
+          <p><label>Date:</label><span>{{commit.date}}</span></p>
+        </div>
+        <p class="git-comment">{{commit.message}}</p>
+      </div>
     </div>
   </div>
 </div>

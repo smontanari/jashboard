@@ -24,8 +24,8 @@
         var container = $(element);
         var position = container.position();
         var height = container.height();
-        var totalOffset = (container.outerHeight() - height)/2 + position.top;
-        container.height(height - totalOffset);
+        var heightOffset = (container.outerHeight() - height)/2 + position.top;
+        container.height(height - heightOffset);
       };
     }
   });

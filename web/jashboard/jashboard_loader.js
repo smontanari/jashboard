@@ -32,7 +32,10 @@ steal('jashboard/jashboard.js')
       'DraggableDirective',
       'ResizableDirective',
       'MonitorDisplayDirective',
-      'FormValidationDirective'
+      'FormValidationDirective',
+      'PagingDirective',
+      'SlideShowDirective',
+      'NotifyLastDirective'
     ],
     model: [
       'Dashboard',

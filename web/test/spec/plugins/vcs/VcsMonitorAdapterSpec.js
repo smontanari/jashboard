@@ -7,19 +7,25 @@ describe("VcsMonitorAdapter", function() {
       type: "test_type",
       working_directory: "test_directory",
       branch: "test_branch",
-      history_length: 123
+      history_length: 123,
+      page_slide_effect: true,
+      commits_per_page: 4
     };
     configModel = {
       type: "test_type",
       workingDirectory: "test_directory",
       branch: "test_branch",
-      historyLength: 123
+      historyLength: 123,
+      pageSlideEffect: true,
+      commitsPerPage: 4
     };
     configForm = {
       type: "test_type",
       workingDirectory: "test_directory",
       branch: "test_branch",
-      historyLength: "123"
+      historyLength: "123",
+      pageSlideEffect: true,
+      commitsPerPage: "4"
     };
   });
 

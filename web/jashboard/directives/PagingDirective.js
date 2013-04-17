@@ -1,23 +1,26 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     pagingDirective: function () {
-      return function(scope, element, attrs) {
-        var attributes = scope.$eval(attrs['jbPaging']);
+      var definePages = function(items, pageSize) {
         var pages = [];
-        var numberOfPages = Math.floor(attributes.items.length/attributes.pageSize);
-        var numberOfItemsOnLastPage = attributes.items.length % attributes.pageSize;
+        var numberOfPages = Math.floor(items.length/pageSize);
+        var numberOfItemsOnLastPage = items.length % pageSize;
         for (var i = 0; i < numberOfPages; i++) {
           pages.push({
-            items: _.first(attributes.items, i * attributes.pageSize + attributes.pageSize)
+            items: _.first(items, i * pageSize + pageSize)
           });
         };
         if (numberOfItemsOnLastPage > 0) {
           pages.push({
-            items: _.last(attributes.items, numberOfItemsOnLastPage)
+            items: _.last(items, numberOfItemsOnLastPage)
           });
         }
-
-        scope.pages = pages;
+        return pages;
+      };
+      return function(scope, element, attrs) {
+        var attributes = scope.$eval(attrs['jbPaging']);
+        
+        scope.pages = definePages(attributes.items, attributes.pageSize);
       };
     }
   });

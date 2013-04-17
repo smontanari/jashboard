@@ -25,9 +25,11 @@
         "size": {"width": 480, "height": 280},
         "configuration": {
           "type": "git",
-          "workingDirectory": "/path/to/repo",
+          "working_directory": "/path/to/repo",
           "branch": "master",
-          "historyLength": 5
+          "history_length": 5,
+          "page_slide_effect": true,
+          "commits_per_page": 2
         }
       }
     ]

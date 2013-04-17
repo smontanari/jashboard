@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="css/jquery-ui/jquery-ui-1.10.1.custom.min.css" type="text/css">
 <link rel="stylesheet" href="css/jashboard.less" type="text/less">
   <script type='text/javascript' src='lib/jquery-1.9.1.js'></script>
-  <script type='text/javascript' src='lib/jquery.cycle.all.js'></script>
+  <script type='text/javascript' src='lib/jquery.cycle2.min.js'></script>
   <script type='text/javascript' src='lib/jquery-ui-1.10.1.custom.min.js'></script>
   <script type='text/javascript' src='lib/bootstrap.min.js'></script>
   <script type='text/javascript' src='lib/less-1.3.0.min.js'></script>
@@ -98,7 +98,10 @@
             </div>
             <div class="monitor-title" title="Test project git log">Test project git history</div>
             <div class="monitor-details">
-              <div class="vcs-panel scrolling">
+              <div class="vcs-panel scrolling cycle-slideshow"
+                data-cycle-slides=".vcs-info-group"
+                data-cycle-fx="scrollHorz"
+                data-cycle-timeout="5000">
                 <div class="vcs-info-group">
                   <div class="git-info">
                     <p class="git-commit">commit edf75e8dbd5ed015e61fd0e22c66910543609d18</p>

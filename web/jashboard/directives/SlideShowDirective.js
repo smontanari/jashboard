@@ -9,6 +9,12 @@
           $(element).cycle();
           event.stopPropagation();
         });
+
+        scope.$watch(attrs.jbSlideShowItems, function(newItems, oldItems) {
+          if (!angular.equals(newItems, oldItems)) {
+            $(element).cycle('destroy');
+          }
+        });
       };
     }
   });

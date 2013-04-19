@@ -71,24 +71,4 @@ describe("WidgetService", function() {
       expect($element.height).toHaveBeenCalledWith(60);
     });
   });
-
-  describe("makeSwitchButton()", function() {
-    var $element;
-    beforeEach(function() {
-      $element = testHelper.stubJQuery("test-selector");
-      $element.on = jasmine.createSpy("$.on()");
-      $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()");
-
-      service.makeSwitchButton("test-selector", "test_state", "test_callback");
-    });
-
-    it("should use $.bootstrapSwitch() to initialise the element", function() {
-      expect($element.bootstrapSwitch).toHaveBeenCalled();
-      expect($element.bootstrapSwitch.calls.length).toEqual(2);
-      expect($element.bootstrapSwitch.mostRecentCall.args).toEqual(['setState', "test_state"]);
-    });
-    it("should bind the callback to the 'change' event", function() {
-      expect($element.on).toHaveBeenCalledWith('change', "test_callback");
-    });
-  });
 });

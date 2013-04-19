@@ -1,41 +1,43 @@
 describe("PagingDirective", function() {
-  var linkFunction, scope, items;
+  var linkFunction, scope, watcherFn, paginationService;
 
   beforeEach(function() {
     scope = {
-      $eval: sinon.stub()
+      $eval: sinon.stub(),
+      $watch: jasmine.createSpy("scope.$watch").andCallFake(function(expr, callback) {
+        watcherFn = callback;
+      })
     };
+    paginationService = {
+      paginate: sinon.stub()
+    };
+    scope.$eval.withArgs("test_expr_items").returns("items");
+    scope.$eval.withArgs("test_expr_page_size").returns("page_size");
+    paginationService.paginate.withArgs("items", "page_size").returns("test_pages");
 
-    linkFunction = jashboard.angular.pagingDirective();
+    linkFunction = jashboard.angular.pagingDirective(paginationService);
+    linkFunction(scope, "test-element", {jbPaging: "test_expr_items", jbPageSize: "test_expr_page_size"});
   });
-
-  it("should define one page with all the items ", function() {
-    items = [
-      "item1",
-      "item2",
-      "item3",
-    ];
-    scope.$eval.withArgs("test_expr").returns({pageSize: 3, items: items});
-    
-    linkFunction(scope, "test-element", {"jbPaging": "test_expr"});
-
-    expect(scope.pages).toEqual([{items: items}]);
+  
+  it("should define the pages in the scope", function() {
+    expect(scope.pages).toEqual("test_pages");
   });
-  it("should split the items bewtween two pages ", function() {
-    items = [
-      "item1",
-      "item2",
-      "item3",
-      "item4",
-      "item5"
-    ];
-    scope.$eval.withArgs("test_expr").returns({pageSize: 3, items: items});
-    
-    linkFunction(scope, "test-element", {"jbPaging": "test_expr"});
+  it("should watch the expression representing the items", function() {
+    expect(scope.$watch).toHaveBeenCalledWith("test_expr_items", jasmine.any(Function));
+  });
+  it("should not change the pages in the scope if the items are equal", function() {
+    angular.equals = sinon.stub().withArgs("new_items", "old_items").returns(true);
 
-    expect(scope.pages).toEqual([
-      {items: ["item1", "item2", "item3"]},
-      {items: ["item4", "item5"]}
-    ]);
+    watcherFn("new_items", "old_items");
+
+    expect(scope.pages).toEqual("test_pages");
+  });
+  it("should change the pages in the scope if the items are different", function() {
+    angular.equals = sinon.stub().withArgs("new_items", "old_items").returns(false);
+    paginationService.paginate.withArgs("new_items", "page_size").returns("test_new_pages");
+    
+    watcherFn("new_items", "old_items");
+
+    expect(scope.pages).toEqual("test_new_pages");
   });
 });

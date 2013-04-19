@@ -13,6 +13,7 @@ steal('jashboard/jashboard.js')
       'WidgetService',
       'HttpService',
       'TooltipService',
+      'PaginationService',
       'Repository',
       'ModelMapper',
       'IntersectionDetector',
@@ -21,6 +22,9 @@ steal('jashboard/jashboard.js')
       'PluginManager',
       'DashboardActionsHandler',
       'MenuActionsHandler'
+    ],
+    widgets: [
+      "SwitchButton"
     ],
     directives: [
       'EventDirectiveDefinition',
@@ -76,11 +80,9 @@ steal('jashboard/jashboard.js')
     return steal.apply(null, files);
   }
 
-  steal(loadPackage("services"))
-  .then(loadPackage("directives"))
-  .then(loadPackage("model"))
-  .then(loadPackage("validation"))
-  .then(loadPackage("controllers"))
+  _.reduce(_.keys(jashboard.packages), function(loader, packageName) {
+    return loader.then(loadPackage(packageName));
+  }, steal())
   .then(loadResources)
   .then('jashboard/plugins.js');
 });

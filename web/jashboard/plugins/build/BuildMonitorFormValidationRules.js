@@ -1,6 +1,6 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
-    BuildMonitorFormValidationRules: function(scope) {
+    BuildMonitorFormValidationRules: function() {
       var serverPortRule = new jashboard.ValidationRulesBuilder()
         .withRule(jashboard.commonValidationRules.required)
         .withRule(jashboard.commonValidationRules.positiveInteger)

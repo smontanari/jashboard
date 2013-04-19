@@ -35,6 +35,15 @@
           return s.slice(0, 1).toUpperCase() + s.slice(1);
         }
       }
+    },
+    angularUtils: {
+      safeApply: function(scope, expr) {
+        var phase = scope.$root.$$phase;
+        if(phase === '$apply' || phase === '$digest')
+          scope.$eval(expr);
+        else
+          scope.$apply(expr);
+      }
     }
   });
 }(jashboard || {}));

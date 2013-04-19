@@ -13,7 +13,7 @@ describe("MonitorFormValidationRules", function() {
     rulesBuilder.withRule.returns(fakeRulesBuilder);
 
     scope = {
-      baseMonitorData: {
+      monitorFormModel: {
         name: "test_name",
         refreshInterval: "test_monitor_refresh"
       }

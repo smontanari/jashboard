@@ -7,7 +7,7 @@
           branch: configurationData.branch,
           type: configurationData.type,
           historyLength: configurationData.history_length,
-          pageSlideEffect: configurationData.page_slide_effect,
+          slideShowEffect: configurationData.slide_show_effect,
           commitsPerPage: configurationData.commits_per_page
         };
       };
@@ -18,7 +18,7 @@
           type: configurationModel.type,
           branch: configurationModel.branch,
           history_length: configurationModel.historyLength,
-          page_slide_effect: configurationModel.pageSlideEffect,
+          slide_show_effect: configurationModel.slideShowEffect,
           commits_per_page: configurationModel.commitsPerPage
         };
       };
@@ -29,7 +29,7 @@
           branch: formModel.branch,
           type: formModel.type,
           historyLength: parseInt(formModel.historyLength, 10),
-          pageSlideEffect: formModel.pageSlideEffect,
+          slideShowEffect: formModel.slideShowEffect,
           commitsPerPage: parseInt(formModel.commitsPerPage, 10)
         };
       };

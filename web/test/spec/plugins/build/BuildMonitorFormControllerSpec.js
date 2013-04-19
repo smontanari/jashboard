@@ -10,9 +10,6 @@ describe("BuildMonitorFormController", function() {
     scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
        listener = handler;
     });
-    scope.monitorConfigurationFormModel = {
-      build: {type: "test some type"}
-    };
 
     controller = new jashboard.plugin.build.BuildMonitorFormController(scope);
   });
@@ -27,6 +24,9 @@ describe("BuildMonitorFormController", function() {
   describe("scope.setCiServerType()", function() {
     beforeEach(function() {
       scope.$formValidator = jasmine.createSpyObj("$formValidator", ['validate']);
+      scope.monitorConfigurationFormModel = {
+        build: {type: "test some type"}
+      };
 
       scope.setCiServerType("test_type");
     });
@@ -42,10 +42,7 @@ describe("BuildMonitorFormController", function() {
     beforeEach(function() {
       scope.formHelper = jasmine.createSpyObj("formHelper", ['registerMonitorTypeForm']);
       scope.buildMonitorForm = "buildMonitorForm";
-      scope.monitorConfigurationFormModel = {
-        test_type: "test other type",
-        build: "test_build"
-      };
+      scope.monitorConfigurationFormModel = {};
     });
 
     it("should register the buildMonitorForm to the formHelper", function() {

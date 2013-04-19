@@ -39,4 +39,26 @@ describe("Jashboard utility functions", function() {
       expect(result).toEqual("TestString");
     });
   });
+
+  describe("angularUtils", function() {
+    var scope;
+    beforeEach(function() {
+      scope = jasmine.createSpyObj("scope", ['$eval', '$apply']);
+      scope.$root = {};
+    });
+
+    _.each(['$apply', '$digest'], function(phase) {
+      it("should invoke $eval during a " + phase + " phase", function() {
+        scope.$root.$$phase = phase;
+        jashboard.angularUtils.safeApply(scope, "test_expression");
+
+        expect(scope.$eval).toHaveBeenCalledWith("test_expression");
+      });
+    });
+    it("should invoke $apply when not in $digest or $apply phase", function() {
+      jashboard.angularUtils.safeApply(scope, "test_expression");
+
+      expect(scope.$apply).toHaveBeenCalledWith("test_expression");
+    });
+  });
 });

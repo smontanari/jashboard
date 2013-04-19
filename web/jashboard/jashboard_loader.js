@@ -35,7 +35,8 @@ steal('jashboard/jashboard.js')
       'FormValidationDirective',
       'PagingDirective',
       'SlideShowDirective',
-      'NotifyLastDirective'
+      'NotifyLastDirective',
+      'SwitchButtonDirective'
     ],
     model: [
       'Dashboard',

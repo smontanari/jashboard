@@ -15,7 +15,7 @@
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">
             <input type="text" name="monitorName" class="input-large" placeholder="monitor name" 
-              data-ng-model="baseMonitorData.name" data-ng-change="validateField('monitorName')">
+              data-ng-model="monitorFormModel.name" data-ng-change="validateField('monitorName')">
           </div>
           <div class="controls">
             <div id="monitorNameRequiredError" class="help-inline" data-ng-show="baseMonitorForm.monitorName.$error.required">You must provide a monitor name.</div>
@@ -24,11 +24,10 @@
         <div class="control-group" data-ng-class="{'error': inputInError('monitorRefresh')}">
           <label class="control-label" for="monitorRefresh">Refresh interval</label>
           <div class="controls">
-            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="baseMonitorData.refreshInterval" 
+            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorFormModel.refreshInterval" 
               data-ng-change="validateField('monitorRefresh')"> seconds
           </div>
           <div class="controls">
-            <div/>
             <div id="monitorRefreshNumberError" class="help-inline" data-ng-show="baseMonitorForm.monitorRefresh.$error.number">You must enter a valid number.</div>
             <div id="monitorRefreshPositiveNumberError" class="help-inline" data-ng-show="baseMonitorForm.monitorRefresh.$error.positiveNumber">You must enter a positive number.</div>
           </div>
@@ -38,12 +37,12 @@
           <div data-ng-switch="$editMode">
             <div class="controls" data-ng-switch-when="create">
               <select name="monitorType" class="input-medium" 
-                data-ng-model="baseMonitorData.type" 
+                data-ng-model="monitorFormModel.type" 
                 data-ng-options="t for t in availableMonitorTypes">
               </select>
             </div>
             <div class="controls" data-ng-switch-when="update">
-              <span class="readonly-field">{{baseMonitorData.type}}</span>
+              <span class="readonly-field">{{monitorFormModel.type}}</span>
             </div>
           </div>
         </div>

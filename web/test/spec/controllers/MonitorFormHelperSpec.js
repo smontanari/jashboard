@@ -1,18 +1,16 @@
 describe("MonitorFormHelper", function() {
-  var formHelper, monitorForm, monitor, saveCallback;
+  var formHelper, monitorForm, currentForm, monitorModel, saveCallback;
 
   beforeEach(function() {
-    monitorForm = {
-      $dirty: false,
-      isValid: false
-    };
+    monitorForm = {};
+    currentForm = {};
 
-    monitor = {
+    monitorModel = {
       type: undefined
     };
     saveCallback = jasmine.createSpy();
 
-    formHelper = new jashboard.MonitorFormHelper(monitorForm, monitor, saveCallback);
+    formHelper = new jashboard.MonitorFormHelper(monitorForm, monitorModel, saveCallback);
     formHelper.registerMonitorTypeForm("test_type", {});
     formHelper.registerMonitorTypeForm("another_type", {});
   });
@@ -29,28 +27,40 @@ describe("MonitorFormHelper", function() {
   });
 
   describe("isActionEnabled()", function() {
-    it("should return true on the 'back' action", function() {
+    it("should always enable the 'back' action", function() {
       expect(formHelper.isActionEnabled("back")).toBeTruthy();
     });
-    it("should use the default form for validation on the 'next' action", function() {
+    it("should disable the 'next' action if the default form is not valid", function() {
+      monitorForm.isValid = false;
+
       expect(formHelper.isActionEnabled("next")).toBeFalsy();
     });
-    it("should use the current monitor type form for validation on the 'save' action", function() {
-      var form = {
-        $dirty: true,
-        isValid: true
-      };
-      monitor.type = "test_type";
-      formHelper.registerMonitorTypeForm("test_type", form);
+    it("should enable the 'next' action if the default form is valid", function() {
+      monitorForm.isValid = true;
+
+      expect(formHelper.isActionEnabled("next")).toBeTruthy();
+    });
+    it("should enable the 'save' action if the current monitor type form is valid", function() {
+      monitorModel.type = "test_type";
+      formHelper.registerMonitorTypeForm("test_type", currentForm);
+      currentForm.isValid = true;
       formHelper.next();
 
       expect(formHelper.isActionEnabled("save")).toBeTruthy();
+    });
+    it("should disable the 'save' action if the current monitor type form is not valid", function() {
+      monitorModel.type = "test_type";
+      formHelper.registerMonitorTypeForm("test_type", currentForm);
+      currentForm.isValid = false;
+      formHelper.next();
+
+      expect(formHelper.isActionEnabled("save")).toBeFalsy();
     });
   });
 
   describe("Action: next", function() {
     beforeEach(function() {
-      monitor.type = "test_type";
+      monitorModel.type = "test_type";
       formHelper.next();
     });
     it("should show the form for monitor 'test_type'", function() {

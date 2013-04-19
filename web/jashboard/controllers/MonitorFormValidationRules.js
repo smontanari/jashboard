@@ -6,8 +6,8 @@
         .withRule(jashboard.commonValidationRules.positiveNumber)
         .build();
       
-      this.monitorName = function(scope) { return jashboard.commonValidationRules.required(scope.baseMonitorData.name); };
-      this.monitorRefresh = function(scope) { return monitorRefreshRule(scope.baseMonitorData.refreshInterval); };;
+      this.monitorName = function(scope) { return jashboard.commonValidationRules.required(scope.monitorFormModel.name); };
+      this.monitorRefresh = function(scope) { return monitorRefreshRule(scope.monitorFormModel.refreshInterval); };;
     }
   });
 }(jashboard || {}));

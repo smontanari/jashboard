@@ -8,7 +8,7 @@ funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", f
     });
     S("#configuration-next").visible().click();
 
-    pageHelper.inputText("input[name='numberOfSentences']", "4");
+    pageHelper.inputText("input[name='ipsumNumberOfSentences']", "4");
 
     S("#configuration-save").visible().click();
 

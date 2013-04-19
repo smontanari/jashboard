@@ -1,15 +1,15 @@
 <div id="ipsumMonitorInput" data-ng-show="formHelper.showForm('ipsum')">
   <div class="configurationForm form-horizontal" data-ng-form="ipsumMonitorForm" data-ng-controller="IpsumMonitorFormController"
     data-jb-form-validation="{triggerOnEvent: 'OpenMonitorDialog', validationRules: 'plugin.ipsum.IpsumMonitorFormValidationRules'}">
-    <div class="control-group" data-ng-class="{'error': inputInError('numberOfSentences')}">
+    <div class="control-group" data-ng-class="{'error': inputInError('ipsumNumberOfSentences')}">
       <label class="control-label" for="numberOfSentences">Number of sentences</label>
       <div class="controls">
-        <input name="numberOfSentences" type="text" class="input-mini"
-          data-ng-model="monitorConfigurationFormModel.ipsum.numberOfSentences" data-ng-change="validateField('numberOfSentences')">
+        <input name="ipsumNumberOfSentences" type="text" class="input-mini"
+          data-ng-model="monitorConfigurationFormModel.ipsum.numberOfSentences" data-ng-change="validateField('ipsumNumberOfSentences')">
       </div>
       <div class="controls">
-        <div id="numberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.required">You must provide a number of sentences.</div>
-        <div id="numberOfSentencesNumberError" class="help-inline" data-ng-show="ipsumMonitorForm.numberOfSentences.$error.positiveInteger">You must enter a valid number.</div>
+        <div id="ipsumNumberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.ipsumNumberOfSentences.$error.required">You must provide a number of sentences.</div>
+        <div id="ipsumNumberOfSentencesNumberError" class="help-inline" data-ng-show="ipsumMonitorForm.ipsumNumberOfSentences.$error.positiveInteger">You must enter a valid number.</div>
       </div>
     </div>
     <div class="control-group">

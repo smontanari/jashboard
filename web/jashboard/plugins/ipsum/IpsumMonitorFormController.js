@@ -1,13 +1,13 @@
 (function(module) {
   jashboard.plugin.ipsum = _.extend(module, {
     IpsumMonitorFormController: function(scope) {
-      var languages = ['english', 'french', 'latin'];
-      scope.availableLanguages = languages;
+      scope.availableLanguages = ['english', 'french', 'latin'];
 
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
           scope.monitorConfigurationFormModel.ipsum = {
-            language: _.first(languages)
+            language: _.first(scope.availableLanguages),
+            numberOfSentences: 1
           };
         }
         scope.formHelper.registerMonitorTypeForm("ipsum", scope.ipsumMonitorForm);

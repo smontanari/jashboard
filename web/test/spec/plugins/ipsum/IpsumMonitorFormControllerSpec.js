@@ -20,10 +20,7 @@ describe("IpsumMonitorFormController", function() {
 
   describe("'OpenMonitorDialog' event listener", function() {
     beforeEach(function() {
-      scope.monitorConfigurationFormModel = {
-        test_type: "test",
-        ipsum: "test_ipsum"
-      };
+      scope.monitorConfigurationFormModel = {};
       scope.ipsumMonitorForm = "ipsumMonitorForm";
       scope.formHelper = jasmine.createSpyObj("formHelper", ['registerMonitorTypeForm']);
     });
@@ -38,7 +35,10 @@ describe("IpsumMonitorFormController", function() {
         mode: jashboard.inputOptions.createMode,
       });
 
-      expect(scope.monitorConfigurationFormModel.ipsum).toEqual({language: "english"});
+      expect(scope.monitorConfigurationFormModel.ipsum).toEqual({
+        language: "english",
+        numberOfSentences: 1
+      });
     });
   });
 });

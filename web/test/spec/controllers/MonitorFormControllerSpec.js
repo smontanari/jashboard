@@ -36,7 +36,7 @@ describe("MonitorFormController", function() {
         return {test: "formHelper"};
       });
       scope.baseMonitorForm = "baseMonitorForm";
-      scope.baseMonitorData = {test: "test"};
+      scope.monitorFormModel = {test: "test"};
     });
 
     describe("create mode", function() {
@@ -49,11 +49,11 @@ describe("MonitorFormController", function() {
         });
       });
       it("should put a new formHelper in the scope", function() {
-        expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
+        expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.monitorFormModel, jasmine.any(Function));
         expect(scope.formHelper).toEqual({test: "formHelper"});
       });
       it("should reset the input variables in the scope", function() {
-        expect(scope.baseMonitorData).toEqual({
+        expect(scope.monitorFormModel).toEqual({
           id: null,
           name: null,
           refreshInterval: null,
@@ -66,7 +66,7 @@ describe("MonitorFormController", function() {
       describe("save action callback", function() {
         var successHandler, errorHandler, adapter;
         beforeEach(function() {
-          scope.baseMonitorData = {
+          scope.monitorFormModel = {
             name: "test.name",
             refreshInterval: "123",
             type: "test_type2"
@@ -110,7 +110,7 @@ describe("MonitorFormController", function() {
             );
           });
           it("should pass NaN for refreshInterval if not provided", function() {
-            scope.baseMonitorData = {
+            scope.monitorFormModel = {
               name: "test.name",
               refreshInterval: "",
               type: "test_type2"
@@ -177,7 +177,7 @@ describe("MonitorFormController", function() {
         expect(scope.$editMode).toEqual(jashboard.inputOptions.updateMode);
       });
       it("should update the input variables in the scope", function() {
-        expect(scope.baseMonitorData).toEqual({
+        expect(scope.monitorFormModel).toEqual({
           id: "test_monitor_id",
           name: "test_name",
           type: "test_type2",
@@ -186,7 +186,7 @@ describe("MonitorFormController", function() {
         expect(scope.monitorConfigurationFormModel.test_type2).toEqual("test_configuration_model");
       });
       it("should put a new formHelper in the scope", function() {
-        expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.baseMonitorData, jasmine.any(Function));
+        expect(jashboard.MonitorFormHelper).toHaveBeenCalledWith(scope.baseMonitorForm, scope.monitorFormModel, jasmine.any(Function));
         expect(scope.formHelper).toEqual({test: "formHelper"});
       });
 
@@ -205,7 +205,7 @@ describe("MonitorFormController", function() {
           pluginManager.findMonitorAdapter = sinon.stub();
           pluginManager.findMonitorAdapter.withArgs("test_type2").returns(adapter);
 
-          scope.baseMonitorData = {
+          scope.monitorFormModel = {
             id: "test_monitor_id",
             name: "test_new_name",
             refreshInterval: "456",
@@ -233,7 +233,7 @@ describe("MonitorFormController", function() {
             );
           });
           it("should pass NaN for refreshInterval if not provided", function() {
-            scope.baseMonitorData = {
+            scope.monitorFormModel = {
               id: "test_monitor_id",
               name: "test_new_name",
               refreshInterval: "",

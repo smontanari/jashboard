@@ -7,7 +7,7 @@ describe("WidgetService", function() {
     service = new jashboard.WidgetService();
   });
 
-  describe("Drag function", function() {
+  describe("makeDraggable()", function() {
     beforeEach(function() {
       $stub.draggable = jasmine.createSpy("$.draggable()");
     });
@@ -31,7 +31,7 @@ describe("WidgetService", function() {
     });
   });
 
-  describe("Resize function", function() {
+  describe("makeResizable()", function() {
     beforeEach(function() {
       $stub.resizable = jasmine.createSpy("$.resizable()");
     });
@@ -56,7 +56,7 @@ describe("WidgetService", function() {
     });
   });
 
-  describe("resetContainerHeight", function() {
+  describe("resetContainerHeight()", function() {
     var $element;
     beforeEach(function() {
       $element = testHelper.stubJQuery("test-selector");
@@ -69,6 +69,26 @@ describe("WidgetService", function() {
       service.resetContainerHeight("test-selector");
 
       expect($element.height).toHaveBeenCalledWith(60);
+    });
+  });
+
+  describe("makeSwitchButton()", function() {
+    var $element;
+    beforeEach(function() {
+      $element = testHelper.stubJQuery("test-selector");
+      $element.on = jasmine.createSpy("$.on()");
+      $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()");
+
+      service.makeSwitchButton("test-selector", "test_state", "test_callback");
+    });
+
+    it("should use $.bootstrapSwitch() to initialise the element", function() {
+      expect($element.bootstrapSwitch).toHaveBeenCalled();
+      expect($element.bootstrapSwitch.calls.length).toEqual(2);
+      expect($element.bootstrapSwitch.mostRecentCall.args).toEqual(['setState', "test_state"]);
+    });
+    it("should bind the callback to the 'change' event", function() {
+      expect($element.on).toHaveBeenCalledWith('change', "test_callback");
     });
   });
 });

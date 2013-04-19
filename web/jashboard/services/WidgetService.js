@@ -27,6 +27,13 @@
         var heightOffset = (container.outerHeight() - height)/2 + position.top;
         container.height(height - heightOffset);
       };
+
+      this.makeSwitchButton = function(selector, initialValue, onChangeFn) {
+        var element = $(selector);
+        element.bootstrapSwitch();
+        element.bootstrapSwitch('setState', initialValue);
+        element.on('change', onChangeFn);
+      };
     }
   });
   jashboard.services.service('WidgetService', [jashboard.WidgetService]).run(function() {

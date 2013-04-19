@@ -17,16 +17,16 @@
         scope.$emit("CloseMonitorDialog");
       };
       var parseMonitorForm = function() {
-        var monitorAdapter = pluginManager.findMonitorAdapter(scope.baseMonitorData.type);
+        var monitorAdapter = pluginManager.findMonitorAdapter(scope.monitorFormModel.type);
         return  {
-          name: scope.baseMonitorData.name,
-          refreshInterval: parseInt(scope.baseMonitorData.refreshInterval, 10),
-          type: scope.baseMonitorData.type,
-          configuration: monitorAdapter.parseMonitorConfigurationForm(scope.monitorConfigurationFormModel[scope.baseMonitorData.type])
+          name: scope.monitorFormModel.name,
+          refreshInterval: parseInt(scope.monitorFormModel.refreshInterval, 10),
+          type: scope.monitorFormModel.type,
+          configuration: monitorAdapter.parseMonitorConfigurationForm(scope.monitorConfigurationFormModel[scope.monitorFormModel.type])
         };
       };
       var createMonitor = function(dashboard) {
-        var monitorType = scope.baseMonitorData.type;
+        var monitorType = scope.monitorFormModel.type;
         var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
         var monitorModel = parseMonitorForm();
         var monitorParameters = _.extend(monitorModel, {
@@ -52,20 +52,20 @@
 
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
-          scope.baseMonitorData = {
+          scope.monitorFormModel = {
             id: null,
             name: null,
             refreshInterval: null,
             type: _.first(scope.availableMonitorTypes)
           };
-          scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.baseMonitorData, function() {
+          scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.monitorFormModel, function() {
             createMonitor(options.parameters.dashboard);
           });
         } else if (options.mode === jashboard.inputOptions.updateMode) {
           var monitor = options.parameters.monitor;
-          scope.baseMonitorData = _.pick(monitor, "id", "name", "refreshInterval", "type");
-          scope.monitorConfigurationFormModel[monitor.type] = monitor.configuration;
-          scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.baseMonitorData, function() {
+          scope.monitorFormModel = _.pick(monitor, "id", "name", "refreshInterval", "type");
+          scope.monitorConfigurationFormModel[monitor.type] = _.clone(monitor.configuration);
+          scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.monitorFormModel, function() {
             updateMonitor(options.parameters.monitor);
           });
         }

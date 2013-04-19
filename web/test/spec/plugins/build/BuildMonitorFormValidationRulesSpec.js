@@ -16,14 +16,23 @@ describe("BuildMonitorFormValidationRules", function() {
       hostname: "test_hostname",
       port: "test_port",
     }}};
+
+    rules = new jashboard.plugin.build.BuildMonitorFormValidationRules();
   });
 
   afterEach(function() {
     rulesBuilderConstructor.restore();
   });
 
+  it("should not validate the fields if the monitorConfigurationFormModel of type 'build' is not defined", function() {
+    scope.monitorConfigurationFormModel.build = undefined;
+
+    _.each(['buildServerName', 'buildServerPort'], function(field) {
+      expect(rules[field](scope)).toBeUndefined();
+    });
+  });
+
   it("should validate the 'buildServerName' field with the 'required' rule", function() {
-    var rules = new jashboard.plugin.build.BuildMonitorFormValidationRules();
     var requiredRule = spyOn(jashboard.commonValidationRules, "required");
     requiredRule.andReturn("required_validation_result");
 

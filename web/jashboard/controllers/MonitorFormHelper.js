@@ -29,7 +29,7 @@
         if (action === 'back') {
           return true;
         }
-        return currentForm.$dirty && currentForm.isValid;
+        return currentForm.isValid;
       };
 
       this.save = saveCallback;

@@ -15,7 +15,6 @@ steal('jashboard/jashboard.js')
       'TooltipService',
       'PaginationService',
       'Repository',
-      'ModelMapper',
       'IntersectionDetector',
       'MonitorPositioningStrategy',
       'MonitorLayoutManager',

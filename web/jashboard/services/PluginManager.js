@@ -6,10 +6,8 @@
       this.addMonitorAdapter = function(typeIdentifier, adapterConstructor) {
         var validateAdapter = function(adapter) {
           var requiredMethods = [
-            "convertDataToMonitorConfiguration",
             "parseMonitorConfigurationForm",
             "convertDataToRuntimeInfo",
-            "convertMonitorConfigurationToData",
             "defaultSize"
           ];
           _.each(requiredMethods, function(method) {

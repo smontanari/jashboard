@@ -17,9 +17,7 @@ describe("Monitor", function() {
       expect(monitor.name).toEqual("test_name");
       expect(monitor.refreshInterval).toEqual(123);
       expect(monitor.type).toEqual("test_type");
-    });
-    it("should create a monitor with empty configuration", function() {
-      expect(monitor.configuration).toEqual({});
+      expect(monitor.configuration).toEqual({testConfiguration: "test"});
     });
     it("should create a monitor with empty runtime info", function() {
       expect(monitor.runtimeInfo).toEqual({});

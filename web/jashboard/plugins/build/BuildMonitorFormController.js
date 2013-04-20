@@ -1,7 +1,7 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorFormController: function(scope) {
-      var buildTypes = jashboard.plugin.build.buildDataConverter.getAllRegisteredTypes();
+      var buildTypes = jashboard.plugin.build.buildConfigurationFormParser.getAllRegisteredTypes();
       scope.availableCiServerTypes = buildTypes;
       
       scope.setCiServerType = function(type) {

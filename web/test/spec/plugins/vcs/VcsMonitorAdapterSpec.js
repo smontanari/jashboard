@@ -3,14 +3,6 @@ describe("VcsMonitorAdapter", function() {
 
   beforeEach(function() {
     plugin = new jashboard.plugin.vcs.VcsMonitorAdapter();
-    configData = {
-      type: "test_type",
-      workingDirectory: "test_directory",
-      branch: "test_branch",
-      historyLength: 123,
-      slideShowEffect: true,
-      commitsPerPage: 4
-    };
     configModel = {
       type: "test_type",
       workingDirectory: "test_directory",
@@ -29,18 +21,6 @@ describe("VcsMonitorAdapter", function() {
     };
   });
 
-  it("should convert the data to the configuration model", function() {
-    var configuration = plugin.convertDataToMonitorConfiguration(configData);
-
-    expect(configuration).toEqual(configModel);
-  });
-
-  it("should convert the configuration to data", function() {
-    var data = plugin.convertMonitorConfigurationToData(configModel);
-
-    expect(data).toEqual(configData);
-  });
-
   it("should parse a configuration form", function() {
     var model = plugin.parseMonitorConfigurationForm(configForm);
 
@@ -55,7 +35,7 @@ describe("VcsMonitorAdapter", function() {
 
   it("should convert the runtime vcs data", function() {
     var runtime_data = [{
-      revision_id: "test_revision",
+      revisionId: "test_revision",
       date: "test_date",
       author: "test_author",
       email: "test_email",

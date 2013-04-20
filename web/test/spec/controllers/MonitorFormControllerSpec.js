@@ -198,8 +198,7 @@ describe("MonitorFormController", function() {
             errorHandler = handlers.error;
           });
           adapter = {
-            parseMonitorConfigurationForm: sinon.stub(),
-            convertMonitorConfigurationToData: sinon.stub()
+            parseMonitorConfigurationForm: sinon.stub()
           };
           adapter.parseMonitorConfigurationForm.withArgs("testConfig2").returns("test_new_configuration");
           pluginManager.findMonitorAdapter = sinon.stub();

@@ -9,20 +9,6 @@ describe("IpsumMonitorAdapter", function() {
     expect(jashboard.plugin.pluginManager.findMonitorAdapter('ipsum')).toBeDefined();
   });
   
-  it("should convert the ipsum monitor data", function() {
-    var configuration = adapter.convertDataToMonitorConfiguration({numberOfSentences: 10, language: "english"});
-
-    expect(configuration.numberOfSentences).toEqual(10);
-    expect(configuration.language).toEqual("english");
-  });
-
-  it("should convert the ipsum monitor configuration", function() {
-    var configuration = adapter.convertMonitorConfigurationToData({numberOfSentences: 10, language: "english"});
-
-    expect(configuration.numberOfSentences).toEqual(10);
-    expect(configuration.language).toEqual("english");
-  });
-
   it("should parse the ipsum monitor configuration form", function() {
     var configuration = adapter.parseMonitorConfigurationForm({numberOfSentences: "10", language: "english"});
 

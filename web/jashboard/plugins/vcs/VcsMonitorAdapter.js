@@ -1,10 +1,6 @@
 (function(module) {
   jashboard.plugin.vcs = _.extend(module, {
     VcsMonitorAdapter: function() {
-      this.convertDataToMonitorConfiguration = _.identity;
-
-      this.convertMonitorConfigurationToData = _.identity;;
-
       this.parseMonitorConfigurationForm = function(formModel) {
         return {
           workingDirectory: formModel.workingDirectory,

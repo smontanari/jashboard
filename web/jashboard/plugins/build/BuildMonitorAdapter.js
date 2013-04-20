@@ -1,8 +1,6 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorAdapter: function() {
-      var buildDataConverter = new jashboard.plugin.TypeAdapter();
-      var buildConfigurationConverter = new jashboard.plugin.TypeAdapter();
       var buildConfigurationFormParser = new jashboard.plugin.TypeAdapter();
 
       var getBuildStatus = function(status) {
@@ -22,20 +20,6 @@
 
       var extractBuildTypeProperties = function(object) {
         return _.omit(object, "hostname", "port")
-      };
-
-      this.convertDataToMonitorConfiguration = function(configurationData) {
-        return _.extend({
-          hostname: configurationData.hostname,
-          port: configurationData.port
-        }, buildDataConverter.toObject(extractBuildTypeProperties(configurationData)));
-      };
-
-      this.convertMonitorConfigurationToData = function(configurationModel) {
-        return _.extend({
-          hostname: configurationModel.hostname,
-          port: configurationModel.port
-        }, buildConfigurationConverter.toObject(extractBuildTypeProperties(configurationModel)));
       };
 
       this.parseMonitorConfigurationForm = function(formModel) {
@@ -60,8 +44,6 @@
       };
 
       this.init = function() {
-        jashboard.plugin.build.buildDataConverter = buildDataConverter;
-        jashboard.plugin.build.buildConfigurationConverter = buildConfigurationConverter;
         jashboard.plugin.build.buildConfigurationFormParser = buildConfigurationFormParser;
       };
     }

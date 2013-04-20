@@ -7,12 +7,6 @@ describe("BuildMonitorAdapter", function() {
     };
     spyOn(jashboard.plugin, "TypeAdapter").andReturn(mockTypeAdapter);
     plugin = new jashboard.plugin.build.BuildMonitorAdapter();
-    configData = {
-      type: "test_type",
-      hostname: "test.host.name",
-      port: 123,
-      dataParameter: "test_data_param"
-    };
     configModel = {
       type: "test_type",
       hostname: "test.host.name",
@@ -29,32 +23,6 @@ describe("BuildMonitorAdapter", function() {
 
   it("should add itself to the plugin manager", function() {
     expect(jashboard.plugin.pluginManager.findMonitorAdapter('build')).toBeDefined();
-  });
-
-  it("should invoke a build data converter", function() {
-    mockTypeAdapter.toObject.withArgs({type: "test_type", dataParameter: "test_data_param"}).returns({type: "test_type", modelParameter: "test_model_param"});
-    
-    var configuration = plugin.convertDataToMonitorConfiguration(configData);
-
-    expect(configuration).toEqual(configModel);
-  });
-
-  it("should create a buildDataConverter at initialisation", function() {
-    plugin.init();
-    expect(jashboard.plugin.build.buildDataConverter).toBeDefined();
-  });
-
-  it("should invoke a build configuration converter", function() {
-    mockTypeAdapter.toObject.withArgs({type: "test_type", modelParameter: "test_model_param"}).returns({type: "test_type", dataParameter: "test_data_param"});
-    
-    var data = plugin.convertMonitorConfigurationToData(configModel);
-
-    expect(data).toEqual(configData);
-  });
-
-  it("should create a buildConfigurationConverter at initialisation", function() {
-    plugin.init();
-    expect(jashboard.plugin.build.buildConfigurationConverter).toBeDefined();
   });
 
   it("should invoke a build configuration form parser", function() {

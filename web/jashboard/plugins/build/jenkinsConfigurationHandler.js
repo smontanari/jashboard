@@ -1,5 +1,3 @@
 (function() {
-  _.each(['buildDataConverter', 'buildConfigurationConverter', 'buildConfigurationFormParser'], function(adapter) {
-    jashboard.plugin.build[adapter].registerTypeHandler("jenkins", _.identity);
-  });
+  jashboard.plugin.build.buildConfigurationFormParser.registerTypeHandler("jenkins", _.identity);
 }());

@@ -5,7 +5,7 @@
       _.each(["id", "type", "name", "refreshInterval", "position", "size"], function(property) {
         self[property] = monitorData[property];
       });
-      this.configuration = {};
+      this.configuration = monitorData.configuration || {};
       this.runtimeInfo = {};
 
       this.cssLayout = function() {

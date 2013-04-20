@@ -1,6 +1,6 @@
 (function(module) {
   jashboard = _.extend(module, {
-    Repository: function(http, modelMapper) {
+    Repository: function(http, pluginManager) {
       var AJAX_DASHBOARD = "/ajax/dashboard";
       var AJAX_MONITOR = "/ajax/monitor";
       var parseError = function(request) {
@@ -36,7 +36,13 @@
           http.getJSON("/ajax/dashboards"),
           handlers,
           function(data) {
-            return _.map(data, modelMapper.mapDataToDashboard);
+            return _.map(data, function(dashboardData) {
+              return _.tap(new jashboard.model.Dashboard(dashboardData), function(dashboard) {
+                _.each(dashboardData.monitors, function(monitorData) {
+                  dashboard.monitors.push(new jashboard.model.Monitor(monitorData));
+                });
+              });
+            });
           });
       };
       
@@ -45,7 +51,8 @@
           http.getJSON(AJAX_MONITOR + "/" + monitor_id + "/runtime"), 
           handlers,
           function(data) {
-            return modelMapper.mapDataToMonitorRuntimeInfo(monitorType, data);
+            var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
+            return monitorAdapter.convertDataToRuntimeInfo(data);
           });
       };
 
@@ -54,8 +61,9 @@
           http.postJSON(AJAX_DASHBOARD, dashboardProperties),
           handlers,
           function(data) {
-            return modelMapper.mapDataToDashboard(data);
-          });
+            return new jashboard.model.Dashboard(data);
+          }
+        );
       };
 
       this.updateDashboard = function(dashboardProperties, handlers) {
@@ -65,20 +73,20 @@
         );
       };
 
-      this.createMonitor = function(dashboard_id, monitorModel, handlers) {
+      this.createMonitor = function(dashboard_id, monitor, handlers) {
         executeRequest(
-          http.postJSON(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor", modelMapper.mapMonitorToData(monitorModel)),
+          http.postJSON(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor", monitor),
           handlers,
           function(data) {
-            return modelMapper.mapDataToMonitor(data);
+            return new jashboard.model.Monitor(data);
           }
         );
       };
 
-      this.updateMonitorConfiguration = function(monitorModel, handlers) {
-        var monitorData = _.pick(modelMapper.mapMonitorToData(monitorModel), "name", "refreshInterval", "type", "configuration");
+      this.updateMonitorConfiguration = function(monitor, handlers) {
+        var monitorData = _.pick(monitor, "name", "refreshInterval", "type", "configuration");
         executeRequest(
-          http.putJSON(AJAX_MONITOR + "/" + monitorModel.id + "/configuration", monitorData),
+          http.putJSON(AJAX_MONITOR + "/" + monitor.id + "/configuration", monitorData),
           handlers
         );
       };
@@ -106,7 +114,7 @@
       }
     }
   });
-  jashboard.services.service('Repository', ['HttpService', 'ModelMapper', jashboard.Repository]).run(function() {
+  jashboard.services.service('Repository', ['HttpService', 'PluginManager', jashboard.Repository]).run(function() {
     steal.dev.log("Repository initialized");
   });
 }(jashboard || {}));

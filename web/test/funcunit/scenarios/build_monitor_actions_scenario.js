@@ -6,7 +6,7 @@ $.fixture("POST /ajax/dashboard/dashboard_1/monitor", function(ajaxOriginalOptio
       type: "jenkins",
       hostname: "jenkins-server",
       port: 1234,
-      build_id: "jenkins-build-123"
+      buildId: "jenkins-build-123"
     },
     go: {
       type: "go",
@@ -18,7 +18,7 @@ $.fixture("POST /ajax/dashboard/dashboard_1/monitor", function(ajaxOriginalOptio
     }
   };
   var monitorConfigOk = data.name === "Test " + data.configuration.type + "-monitor" &&
-    data.refresh_interval === 30 &&
+    data.refreshInterval === 30 &&
     data.type === "build";
 
   var buildConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
@@ -41,7 +41,7 @@ $.fixture("PUT /ajax/monitor/{id}/configuration", function(ajaxOriginalOptions, 
       type: "jenkins",
       hostname: "zombie-test.host.com",
       port: 5678,
-      build_id: "new_build"
+      buildId: "new_build"
     },
     go: {
       type: "go",

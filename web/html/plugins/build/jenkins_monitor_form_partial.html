@@ -1,9 +1,9 @@
 <div class="form-horizontal" data-jb-form-validation="{triggerOnEvent: 'OpenMonitorDialog', validationRules: 'plugin.build.JenkinsMonitorFormValidationRules'}">
   <div class="control-group" data-ng-class="{'error': inputInError('jenkinsBuildId')}">
-    <label class="control-label" for="jenkinsBuildId">build_id</label>
+    <label class="control-label" for="jenkinsBuildId">build id</label>
     <div class="controls">
       <input name="jenkinsBuildId" type="text" placeholder="build id" class="input-medium" 
-        data-ng-model="monitorConfigurationFormModel.build.build_id" data-ng-change="validateField('jenkinsBuildId')">
+        data-ng-model="monitorConfigurationFormModel.build.buildId" data-ng-change="validateField('jenkinsBuildId')">
     </div>
     <div class="controls">
       <div id="jenkinsBuildIdRequiredError" class="help-inline" data-ng-show="buildMonitorForm.jenkinsBuildId.$error.required">You must provide a Jenkins build id.</div>

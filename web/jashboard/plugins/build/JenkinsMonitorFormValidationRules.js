@@ -3,7 +3,7 @@
     JenkinsMonitorFormValidationRules: function() {
       this.jenkinsBuildId = function(scope) {
         if (scope.monitorConfigurationFormModel.build.type === "jenkins") {
-          return jashboard.commonValidationRules.required(scope.monitorConfigurationFormModel.build.build_id);
+          return jashboard.commonValidationRules.required(scope.monitorConfigurationFormModel.build.buildId);
         }
       };
     }

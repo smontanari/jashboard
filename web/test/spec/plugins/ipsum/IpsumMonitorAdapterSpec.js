@@ -10,16 +10,16 @@ describe("IpsumMonitorAdapter", function() {
   });
   
   it("should convert the ipsum monitor data", function() {
-    var configuration = adapter.convertDataToMonitorConfiguration({no_sentences: 10, language: "english"});
+    var configuration = adapter.convertDataToMonitorConfiguration({numberOfSentences: 10, language: "english"});
 
     expect(configuration.numberOfSentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
 
   it("should convert the ipsum monitor configuration", function() {
-    var configuration = adapter.convertMonitorConfigurationToData({numberOfSentences: "10", language: "english"});
+    var configuration = adapter.convertMonitorConfigurationToData({numberOfSentences: 10, language: "english"});
 
-    expect(configuration.no_sentences).toEqual(10);
+    expect(configuration.numberOfSentences).toEqual(10);
     expect(configuration.language).toEqual("english");
   });
 

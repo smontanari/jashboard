@@ -46,7 +46,8 @@ module Jashboard
 
     get '/ajax/monitor/:id/runtime' do
       monitor = @repository.load_monitor(params[:id])
-      json(@monitor_adapters[monitor.type].get_runtime_info(monitor.configuration))
+      runtime_data = @monitor_adapters[monitor.type].get_runtime_info(monitor.configuration)
+      json(convert_case(runtime_data))
     end
 
     post '/ajax/dashboard' do
@@ -118,16 +119,16 @@ module Jashboard
 
     def update_monitor(monitor, monitor_json)
       monitor.name = monitor_json['name']
-      monitor.refresh_interval = monitor_json['refresh_interval']
-      monitor.configuration = monitor_json['configuration'].to_struct
+      monitor.refresh_interval = monitor_json['refreshInterval']
+      monitor.configuration = monitor_json['configuration'].to_struct_with_snake_keys
     end
 
     def create_monitor(monitor_json)
       new_monitor = Monitor.new.tap do |monitor|
         monitor.name = monitor_json['name']
-        monitor.refresh_interval = monitor_json['refresh_interval']
+        monitor.refresh_interval = monitor_json['refreshInterval']
         monitor.type = monitor_json['type']
-        monitor.configuration = monitor_json['configuration'].to_struct
+        monitor.configuration = monitor_json['configuration'].to_struct_with_snake_keys
         monitor.position = get_monitor_position(monitor_json['position'])
         monitor.size = get_monitor_size(monitor_json['size'])
       end
@@ -146,6 +147,13 @@ module Jashboard
       dashboard = @repository.load_dashboard(dashboard_id)
       dashboard.monitor_ids << monitor.id.to_s
       @repository.save_dashboard(dashboard)
+    end
+
+    def convert_case(data)
+      if data.is_a?(Array)
+        return data.map {|obj| obj.to_map_with_camel_case_keys}
+      end 
+      data.to_map_with_camel_case_keys
     end
   end
 end

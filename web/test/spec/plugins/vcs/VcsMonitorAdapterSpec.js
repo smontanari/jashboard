@@ -5,11 +5,11 @@ describe("VcsMonitorAdapter", function() {
     plugin = new jashboard.plugin.vcs.VcsMonitorAdapter();
     configData = {
       type: "test_type",
-      working_directory: "test_directory",
+      workingDirectory: "test_directory",
       branch: "test_branch",
-      history_length: 123,
-      slide_show_effect: true,
-      commits_per_page: 4
+      historyLength: 123,
+      slideShowEffect: true,
+      commitsPerPage: 4
     };
     configModel = {
       type: "test_type",

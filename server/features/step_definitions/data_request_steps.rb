@@ -9,7 +9,7 @@ end
 When /^I request the creation of a monitor for dashboard "(.*)" with (.*), (\d+), of type (.*), position (\d+),(\d+), size (\d+)x(\d+), configured as (.*)$/ do |dashboard_id, name, refresh_interval, type, top, left, width, height, configuration|
   request_body = %({
       "name": "#{name}",
-      "refresh_interval": #{refresh_interval},
+      "refreshInterval": #{refresh_interval},
       "type": "#{type}", 
       "position": {"top": #{top}, "left": #{left}}, 
       "size": {"width": #{width}, "height": #{height}}, 
@@ -24,7 +24,7 @@ end
 When /^I request to update the configuration of monitor (\w+) with values (.+), (\d+), (.+) and (.+)$/ do |monitor_id, name, refresh_interval, type, configuration|
   request_body = %({
       "name": "#{name}",
-      "refresh_interval": #{refresh_interval},
+      "refreshInterval": #{refresh_interval},
       "type": "#{type}", 
       "configuration": #{eval(configuration).to_json}})
   put "/ajax/monitor/#{monitor_id}/configuration", request_body

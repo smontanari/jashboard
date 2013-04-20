@@ -59,13 +59,14 @@ module Jashboard
       describe("GET /ajax/monitor/:id/runtime") do
         it("should load monitor from the repository and return the runtime info from the service") do
           @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return(@mock_monitor)
-          @mock_monitor_adapter.should_receive(:get_runtime_info).with("test_configuration").and_return({id: "test-monitor-runtime"})
+          @mock_monitor_adapter.should_receive(:get_runtime_info).with("test_configuration").
+            and_return(Struct.new(:some_attr).new("test-monitor-runtime"))
 
           get '/ajax/monitor/test-monitor-id/runtime'
 
           last_response.should be_ok
           last_response.content_type.should include('application/json')
-          last_response.body.should be_json_eql %({"id":"test-monitor-runtime"})
+          last_response.body.should be_json_eql %({"someAttr":"test-monitor-runtime"})
         end
       end
     end
@@ -180,13 +181,13 @@ module Jashboard
           @monitor_json = %(
             {
               "name": "test.monitor.name",
-              "refresh_interval": 345,
+              "refreshInterval": 345,
               "type": "test_type",
               "position": {"top": 10, "left": 20},
               "size": {"width": 100, "height": 200},
               "configuration": {
-                "attr1": "test_attr1",
-                "attr2": 123
+                "attrOne": "test_attr1",
+                "attrTwo": 123
               }
             })
         end
@@ -206,8 +207,8 @@ module Jashboard
           @actual_monitor.position.left.should == 20
           @actual_monitor.size.width.should == 100
           @actual_monitor.size.height.should == 200
-          @actual_monitor.configuration.attr1.should == "test_attr1"
-          @actual_monitor.configuration.attr2.should == 123
+          @actual_monitor.configuration.attr_one.should == "test_attr1"
+          @actual_monitor.configuration.attr_two.should == 123
         end
 
         it("should persist the dashboard with the added monitor") do
@@ -260,11 +261,11 @@ module Jashboard
           @monitor_json = %(
             {
               "name": "test.new.monitor.name",
-              "refresh_interval": 321,
+              "refreshInterval": 321,
               "type": "test_type",
               "configuration": {
-                "attr1": "test_new_attr1",
-                "attr2": 654
+                "attrOne": "test_new_attr1",
+                "attrTwo": 654
               }
             })
         end
@@ -283,8 +284,8 @@ module Jashboard
           @monitor.name.should == "test.new.monitor.name"
           @monitor.refresh_interval.should == 321
           @monitor.type.should == "test_type"
-          @monitor.configuration.attr1 == "test_new_attr1"
-          @monitor.configuration.attr2 == 654
+          @monitor.configuration.attr_one == "test_new_attr1"
+          @monitor.configuration.attr_two == 654
         end
       end
 

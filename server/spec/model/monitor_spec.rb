@@ -13,20 +13,20 @@ module Jashboard
         with_refresh_interval(9876).
         with_position(Struct.new(:top, :left).new(123, 456)).
         with_size(Struct.new(:width, :height).new(432, 789)).
-        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", "test_attr2")).
-        with_runtime_info(Struct.new(:attr3, :attr4).new("test_attr3", "test_attr4")).
+        with_configuration(Struct.new(:attr_one, :attr_two).new("test_attr1", "test_attr2")).
+        with_runtime_info(Struct.new(:attr_three, :attr_four).new("test_attr3", "test_attr4")).
         build
 
       expected_json = %({
         "id": "test.id",
         "name": "test.name",
         "type": 123,
-        "refresh_interval": 9876,
+        "refreshInterval": 9876,
         "position": {"top": 123, "left": 456},
         "size": {"width": 432, "height": 789},
         "configuration": {
-          "attr1": "test_attr1",
-          "attr2": "test_attr2"
+          "attrOne": "test_attr1",
+          "attrTwo": "test_attr2"
         }
       })
 
@@ -38,18 +38,18 @@ module Jashboard
         with_name("test.name").
         with_type(123).
         with_refresh_interval(9876).
-        with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", "test_attr2")).
-        with_runtime_info(Struct.new(:attr3, :attr4).new("test_attr3", "test_attr4")).
+        with_configuration(Struct.new(:attr_one, :attr_two).new("test_attr1", "test_attr2")).
+        with_runtime_info(Struct.new(:attr_three, :attr_four).new("test_attr3", "test_attr4")).
         build
 
       expected_json = %({
         "id": "test.id",
         "name": "test.name",
         "type": 123,
-        "refresh_interval": 9876,
+        "refreshInterval": 9876,
         "configuration": {
-          "attr1": "test_attr1",
-          "attr2": "test_attr2"
+          "attrOne": "test_attr1",
+          "attrTwo": "test_attr2"
         }
       })
 

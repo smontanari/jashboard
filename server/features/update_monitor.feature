@@ -34,7 +34,7 @@ Feature: Update monitor details
   Scenario Outline: Update monitor size
     Given the following monitors
     | id        | name      | type  | refresh_interval | position | size    | configuration                                                                    |
-    | monitor_1 | Some text | ipsum | 10               | 100,200  | 230x120 | { no_sentences: 1, language: "english" } |
+    | monitor_1 | Some text | ipsum | 10               | 100,200  | 230x120 | { number_of_sentences: 1, language: "english" } |
 
     When I request to update the size of monitor <monitor_id> with dimensions <width>, <height>
 

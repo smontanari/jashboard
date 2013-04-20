@@ -8,7 +8,7 @@
         {
           id: "monitor_1",
           name: "Epic build",
-          refresh_interval: 5000,
+          refreshInterval: 5000,
           type: "build",
           position: {top: 0, left: 0},
           size: {width: 240, height: 140},
@@ -24,7 +24,7 @@
         {
           id: "monitor_2",
           name: "Forum build",
-          refresh_interval: 10000,
+          refreshInterval: 10000,
           type: "build",
           position: {top: 0, left: 260},
           size: {width: 240, height: 140},
@@ -32,7 +32,7 @@
             type: "jenkins",
             hostname: "cibuild.host.com",
             port: 8080,
-            build_id: "forum_trunk"
+            buildId: "forum_trunk"
           }
         }
       ],
@@ -42,7 +42,7 @@
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
     content: {
-      last_build_time: "23-08-2012 14:32:23",
+      lastBuildTime: "23-08-2012 14:32:23",
       duration: 752,
       success: true,
       status: 1
@@ -52,7 +52,7 @@
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {
     content: {
-      last_build_time: "25-08-2012 15:56:45",
+      lastBuildTime: "25-08-2012 15:56:45",
       duration: 126,
       success: false,
       status: 0

@@ -1,7 +1,7 @@
 var buildMonitorFeatureHelper = (function(helper) {
   var monitorTypeConfigurationInput = {
     jenkins: function(data) {
-      pageHelper.inputText("input[name='jenkinsBuildId']", data.build_id);
+      pageHelper.inputText("input[name='jenkinsBuildId']", data.buildId);
     },
     go: function(data) {
       pageHelper.inputText("input[name='goPipeline']", data.pipeline);

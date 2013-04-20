@@ -7,8 +7,8 @@ module Jashboard
         id: @id,
         name: @name,
         type: @type,
-        refresh_interval: @refresh_interval,
-        configuration: @configuration
+        refreshInterval: @refresh_interval,
+        configuration: @configuration.to_map_with_camel_case_keys
       }
       map[:position] = @position unless @position.nil?
       map[:size] = @size unless @size.nil?

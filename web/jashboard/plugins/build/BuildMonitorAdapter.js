@@ -47,7 +47,7 @@
 
       this.convertDataToRuntimeInfo = function(runtimeInfo_data) {
         return {
-          lastBuildTime: jashboard.variableProcessor.validateData(runtimeInfo_data.last_build_time, "n/a"),
+          lastBuildTime: jashboard.variableProcessor.validateData(runtimeInfo_data.lastBuildTime, "n/a"),
           lastBuildDuration: jashboard.variableProcessor.validateData(runtimeInfo_data.duration, "n/a", jashboard.timeConverter.secondsToTime),
           lastBuildSuccess: jashboard.variableProcessor.validateData(runtimeInfo_data.success, "n/a"),
           lastBuildResult: jashboard.variableProcessor.validateData(runtimeInfo_data.success, "n/a", getBuildResult),

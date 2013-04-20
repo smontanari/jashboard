@@ -9,7 +9,7 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
   };
   var successResponse = {
     content: {
-      last_build_time: "23-08-2012 14:32:23",
+      lastBuildTime: "23-08-2012 14:32:23",
       duration: 752,
       success: true,
       status: 1

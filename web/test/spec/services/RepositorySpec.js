@@ -163,7 +163,7 @@ describe("Repository", function() {
             id: "test_id",
             name: "test_name",
             type: "test_type",
-            refresh_interval: 123,
+            refreshInterval: 123,
             size: "test_size",
             position: "test_position",
             configuration: "test.configuration"
@@ -174,7 +174,7 @@ describe("Repository", function() {
       it("should use the http service to update the monitor configuration", function() {
         expect(httpService.putJSON).toHaveBeenCalledWith("/ajax/monitor/test_id/configuration", {
           name: "test_name",
-          refresh_interval: 123,
+          refreshInterval: 123,
           type: "test_type",
           configuration: "test.configuration"
         });

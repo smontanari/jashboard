@@ -21,8 +21,7 @@
 
       this.mapMonitorToData = function(monitor) {
         var monitorAdapter = pluginManager.findMonitorAdapter(monitor.type);
-        return _.tap(_.pick(monitor, "name", "type", "size", "position"), function(data) {
-          data.refresh_interval = monitor.refreshInterval;
+        return _.tap(_.pick(monitor, "name", "refreshInterval", "type", "size", "position"), function(data) {
           data.configuration = monitorAdapter.convertMonitorConfigurationToData(monitor.configuration)
         });
       };

@@ -12,7 +12,7 @@ funcunitHelper.testFeature("Create a new Build monitor", "build_monitor_actions_
       configurationType: "jenkins",
       buildServerName: "jenkins-server",
       buildServerPort: "1234",
-      build_id: "jenkins-build-123"
+      buildId: "jenkins-build-123"
     });
 
     S("#configuration-save").visible().click();

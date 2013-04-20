@@ -13,7 +13,7 @@ Feature: Create a new monitor
     Examples:
     | name          | refresh_interval | type  | position | size   | config                                                                                   |
     | build monitor | 10               | build | 10,20    | 50x100 | {type: "jenkins", hostname: "zombie-dev.host.com", port: 9080, build_id: "zombie_build"} |
-    | ipsum monitor | 10               | ipsum | 20,30    | 140x90 | {no_sentences: 10, language: "english"}                                                  |
+    | ipsum monitor | 10               | ipsum | 20,30    | 140x90 | {number_of_sentences: 10, language: "english"}                                                  |
 
   Scenario Outline: Create Monitor links the monitor to the corresponding dashboard
     Given the following monitors

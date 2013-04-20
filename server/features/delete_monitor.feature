@@ -8,7 +8,7 @@ Feature: Delete monitor
     | id        | name              | type  | refresh_interval | position | size    | configuration                                                                                                                     |
     | monitor_1 | Zombie-Dash build | build | 10               | 10,30    | 100x200 | { type: "jenkins", hostname: "zombie-dev.host.com", port: 9080, build_id: "zombie_build" }                                        |
     | monitor_2 | Epic build        | build | 15               | 45,80    | 80x240  | { type: "go", hostname: "epic-ci.test.com", port: 81, pipeline: "epic main", stage: "epic build", job: "unit-integration tests" } |
-    | monitor_3 | Random text       | ipsum | 30               | 270,300  | 140x230 | { no_sentences: 3, language: "english"}                                                                                           |
+    | monitor_3 | Random text       | ipsum | 30               | 270,300  | 140x230 | { number_of_sentences: 3, language: "english"}                                                                                           |
 
     And a dashboard with id "dashboard_1" and name "dashboard" and monitors "monitor_1,monitor_2,monitor_3"
 

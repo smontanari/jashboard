@@ -32,7 +32,7 @@ Then /^the app should return a response containing a new monitor with name (.*),
   response = JSON.parse(last_response.body)
   response['id'].should_not be_empty
   response['name'].should == name
-  response['refresh_interval'].should == refresh_interval.to_i
+  response['refreshInterval'].should == refresh_interval.to_i
   response['type'].should == type
 end
 
@@ -44,7 +44,7 @@ Then /^the app should return a response containing a dashboard with id "(.*?)", 
   actual_monitors.size.should == expected_monitors.rows.size
   expected_monitors.hashes.each_with_index do |monitor, index|
     actual_monitors[index]['name'].should == monitor[:name]
-    actual_monitors[index]['refresh_interval'].should == monitor[:refresh_interval].to_i
+    actual_monitors[index]['refreshInterval'].should == monitor[:refresh_interval].to_i
     actual_monitors[index]['type'].should == monitor[:type]
   end
 end

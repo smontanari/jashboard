@@ -9,7 +9,7 @@
           {
             id: "monitor_1",
             name: "Epic build",
-            refresh_interval: 15,
+            refreshInterval: 15,
             position: {top: 10, left: 60},
             size: {width: 240, height: 140},
             type: "build",
@@ -25,7 +25,7 @@
           {
             id: "monitor_3",
             name: "Forum build",
-            refresh_interval: 2,
+            refreshInterval: 2,
             position: {top: 10, left: 320},
             size: {width: 240, height: 140},
             type: "build",
@@ -33,7 +33,7 @@
               type: "jenkins",
               hostname: "cibuild.host.com",
               port: 8080,
-              build_id: "forum_trunk"
+              buildId: "forum_trunk"
             }
           }
         ]

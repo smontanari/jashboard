@@ -1,27 +1,9 @@
 (function(module) {
   jashboard.plugin.vcs = _.extend(module, {
     VcsMonitorAdapter: function() {
-      this.convertDataToMonitorConfiguration = function(configurationData) {
-        return {
-          workingDirectory: configurationData.working_directory,
-          branch: configurationData.branch,
-          type: configurationData.type,
-          historyLength: configurationData.history_length,
-          slideShowEffect: configurationData.slide_show_effect,
-          commitsPerPage: configurationData.commits_per_page
-        };
-      };
+      this.convertDataToMonitorConfiguration = _.identity;
 
-      this.convertMonitorConfigurationToData = function(configurationModel) {
-        return {
-          working_directory: configurationModel.workingDirectory,
-          type: configurationModel.type,
-          branch: configurationModel.branch,
-          history_length: configurationModel.historyLength,
-          slide_show_effect: configurationModel.slideShowEffect,
-          commits_per_page: configurationModel.commitsPerPage
-        };
-      };
+      this.convertMonitorConfigurationToData = _.identity;;
 
       this.parseMonitorConfigurationForm = function(formModel) {
         return {

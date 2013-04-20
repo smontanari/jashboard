@@ -5,7 +5,7 @@
       {
         "id": "monitor_1",
         "name": "Zombie-Dash build",
-        "refresh_interval": 10000,
+        "refreshInterval": 10000,
         "type": "build",
         "position": {"top": 0, "left": 0},
         "size": {"width": 240, "height": 140},
@@ -13,23 +13,23 @@
           "type": "jenkins",
           "hostname": "zombie-dev.host.com",
           "port": 9080,
-          "build_id": "zombie_build"
+          "buildId": "zombie_build"
         }
       },
       {
         "id": "monitor_5",
         "name": "Jashboard Git repo",
-        "refresh_interval": 20000,
+        "refreshInterval": 20000,
         "type": "vcs",
         "position": {"top": 60, "left": 300},
         "size": {"width": 480, "height": 280},
         "configuration": {
           "type": "git",
-          "working_directory": "/path/to/repo",
+          "workingDirectory": "/path/to/repo",
           "branch": "master",
-          "history_length": 5,
-          "slide_show_effect": true,
-          "commits_per_page": 2
+          "historyLength": 5,
+          "slideShowEffect": true,
+          "commitsPerPage": 2
         }
       }
     ]
@@ -40,7 +40,7 @@
       {
         "id": "monitor_2",
         "name": "Epic build",
-        "refresh_interval": null,
+        "refreshInterval": null,
         "type": "build",
         "position": {"top": 80, "left": 10},
         "size": {"width": 240, "height": 140},
@@ -56,12 +56,12 @@
       {
         "id": "monitor_3",
         "name": "Random text",
-        "refresh_interval": 15000,
+        "refreshInterval": 15000,
         "type": "ipsum",
         "position": {"top": 20, "left": 400},
         "size": {"width": 280, "height": 150},
         "configuration": {
-          "no_sentences": 3,
+          "numberOfSentences": 3,
           "language": "english"
         }
       }

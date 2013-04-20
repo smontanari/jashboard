@@ -11,7 +11,7 @@
               type: "jenkins",
               hostname: configuration.hostname,
               port: configuration.port,
-              build_id: configuration.build_id
+              buildId: configuration.buildId
             };
           },
           go: function() {
@@ -38,7 +38,7 @@
       content: {
         id: "monitor_" + monitorCounter,
         name: data.name,
-        refresh_interval: data.refreshInterval,
+        refreshInterval: data.refreshInterval,
         type: data.type,
         position: data.position,
         size: data.size,
@@ -58,7 +58,7 @@
     var runtimeContentGenerator = {
       build: function() {
         return {
-          last_build_time: generateDate(),
+          lastBuildTime: generateDate(),
           duration: jashboard.test.randomInt(1000),
           success: jashboard.test.randomBoolean(),
           status: jashboard.test.randomInt(2)

@@ -3,14 +3,13 @@ describe("Monitor", function() {
 
   describe("Initialisation", function() {
     beforeEach(function() {
-      monitor = new jashboard.model.Monitor(
-        {
-          id: "test_id",
-          name: "test_name",
-          type: "test_type",
-          refresh_interval: 123,
-          configuration: {testConfiguration: "test"}
-        });
+      monitor = new jashboard.model.Monitor({
+        id: "test_id",
+        name: "test_name",
+        type: "test_type",
+        refreshInterval: 123,
+        configuration: {testConfiguration: "test"}
+      });
     });
     
     it("should create a monitor with initial data", function() {
@@ -33,7 +32,7 @@ describe("Monitor", function() {
         id: "test_id",
         name: "test_name",
         type: "test_type",
-        refresh_interval: 123,
+        refreshInterval: 123,
         configuration: {testConfiguration: "test"}
       };
     });

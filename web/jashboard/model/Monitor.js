@@ -1,6 +1,13 @@
 (function(module) {
   jashboard.model = _.extend(module, {
     Monitor: function(monitorData) {
+      var self = this;
+      _.each(["id", "type", "name", "refreshInterval", "position", "size"], function(property) {
+        self[property] = monitorData[property];
+      });
+      this.configuration = {};
+      this.runtimeInfo = {};
+
       this.cssLayout = function() {
         var css = {};
         if (_.isObject(this.position)) {
@@ -11,15 +18,6 @@
         }
         return css;
       };
-
-      this.id = monitorData.id;
-      this.type = monitorData.type;
-      this.name = monitorData.name;
-      this.refreshInterval = monitorData.refresh_interval;
-      this.position = monitorData.position;
-      this.size = monitorData.size;
-      this.configuration = {};
-      this.runtimeInfo = {};
     }
   });
 }(jashboard.model || {}));

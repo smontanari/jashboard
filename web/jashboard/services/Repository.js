@@ -76,7 +76,7 @@
       };
 
       this.updateMonitorConfiguration = function(monitorModel, handlers) {
-        var monitorData = _.pick(modelMapper.mapMonitorToData(monitorModel), "name", "refresh_interval", "type", "configuration");
+        var monitorData = _.pick(modelMapper.mapMonitorToData(monitorModel), "name", "refreshInterval", "type", "configuration");
         executeRequest(
           http.putJSON(AJAX_MONITOR + "/" + monitorModel.id + "/configuration", monitorData),
           handlers

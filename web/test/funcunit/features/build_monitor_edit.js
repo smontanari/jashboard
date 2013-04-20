@@ -12,7 +12,7 @@ funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions_scenar
       buildServerName: "zombie-test.host.com",
       buildServerPort: "5678",
       configurationType: "jenkins",
-      build_id: "new_build"
+      buildId: "new_build"
     });
 
     S("#configuration-save").visible().click();

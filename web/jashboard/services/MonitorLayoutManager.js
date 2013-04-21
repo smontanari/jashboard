@@ -19,7 +19,7 @@
 
       var noOverlapWithMonitors = function(location, monitors) {
         return !_.some(monitors, function(monitor) {
-          return intersectionDetector.intersect(location, {position: monitor.position, size: sizeWithMargin(monitor.size)});
+          return intersectionDetector.intersect(location, {position: monitor.position, size: sizeWithMargin(monitor.size)})
         });
       };
 
@@ -32,10 +32,11 @@
           return defaultPosition;
         }        
         for (var i = 0; i < monitors.length; i++) {
+          var otherMonitors = _.without(monitors, monitors[i]);
           var location = {position: monitors[i].position, size: sizeWithMargin(monitors[i].size)};
           var positions = positioningStrategy.neighbourPositions(location, monitorSize);
-          var availablePosition = _.find(positions, function(position) {
-            return noOverlapWithMonitors({ position: position, size: monitorSize }, monitors);
+          var availablePosition = _.find(positions, function(candidatePosition) {
+            return noOverlapWithMonitors({ position: candidatePosition, size: monitorSize }, otherMonitors);
           });
           if (_.isObject(availablePosition)) {
             return availablePosition;

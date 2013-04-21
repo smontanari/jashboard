@@ -2,10 +2,16 @@
   jashboard = _.extend(module, {
     IntersectionDetector: function() {
       var intersectsWith = function(rectangle) {
-        var horizontalIntersection = rectangle.position.left <= (this.position.left) &&
-          this.position.left < (rectangle.position.left + rectangle.size.width);
-        var verticalIntersection = rectangle.position.top <= (this.position.top) &&
-          this.position.top < (rectangle.position.top + rectangle.size.height);
+        var horizontalIntersection = 
+          (rectangle.position.left <= (this.position.left) &&
+          (rectangle.position.left + rectangle.size.width) > this.position.left) ||
+          (this.position.left <= rectangle.position.left && 
+          (this.position.left + this.size.width) > rectangle.position.left);
+        var verticalIntersection = 
+          (rectangle.position.top <= (this.position.top) &&
+          (rectangle.position.top + rectangle.size.height) > this.position.top) ||
+          (this.position.top <= rectangle.position.top &&
+          (this.position.top + this.size.height) > rectangle.position.top);
 
         return horizontalIntersection && verticalIntersection;
       }

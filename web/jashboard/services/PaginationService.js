@@ -5,10 +5,11 @@
         var pages = [];
         var numberOfPages = Math.floor(items.length/pageSize);
         var numberOfItemsOnLastPage = items.length % pageSize;
-        for (var i = 0; i < numberOfPages; i++) {
+        for (var i = 0, remainingItems = items; i < numberOfPages; i++) {
           pages.push({
-            items: _.first(items, i * pageSize + pageSize)
+            items: _.first(remainingItems, pageSize)
           });
+          remainingItems = _.rest(remainingItems, pageSize);
         };
         if (numberOfItemsOnLastPage > 0) {
           pages.push({

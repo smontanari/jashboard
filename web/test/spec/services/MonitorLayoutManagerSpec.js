@@ -21,9 +21,9 @@ describe("MonitorLayoutManager", function() {
     detectorConstructor.returns(intersectionDetector);
 
     defaultLocation = {position: {top: 0, left: 0}, size: newMonitorSize};
-    m1 = {position: {top: 200, left: 20}, size: {width: 30, height: 40}};
-    m2 = {position: {top: 230, left: 40}, size: {width: 10, height: 30}};
-    m3 = {position: {top: 350, left: 80}, size: {width: 70, height: 80}};
+    m1 = {id:"m1", position: {top: 200, left: 20}, size: {width: 30, height: 40}};
+    m2 = {id:"m2", position: {top: 230, left: 40}, size: {width: 10, height: 30}};
+    m3 = {id:"m3", position: {top: 350, left: 80}, size: {width: 70, height: 80}};
     dashboard = { monitors: [m2, m1, m3]};
     position1 = {top: 1, left: 1};
     position2 = {top: 2, left: 2};
@@ -94,9 +94,23 @@ describe("MonitorLayoutManager", function() {
       var position = layoutManager.nextAvailableMonitorPosition(dashboard, newMonitorSize);
 
       expect(position).toEqual(position2);
-      expect(intersectionDetector.intersect).not.sinonStubToHaveBeenCalledWith(location3, m1);
+      expect(intersectionDetector.intersect).not.sinonStubToHaveBeenCalledWith(location3, m1Location);
       expect(positioningStrategy.neighbourPositions).not.sinonStubToHaveBeenCalledWith(m2Location);
       expect(positioningStrategy.neighbourPositions).not.sinonStubToHaveBeenCalledWith(m3Location);
+    });
+
+    it("should skip the current monitor when detecting intersection with other monitors", function() {
+      positioningStrategy.neighbourPositions.withArgs(m1Location, newMonitorSize).returns([]);
+      positioningStrategy.neighbourPositions.withArgs(m2Location, newMonitorSize).returns([position1, position2, position3]);
+      intersectionDetector.intersect.withArgs(location1).returns(true);
+      intersectionDetector.intersect.withArgs(location2).returns(true);
+      intersectionDetector.intersect.withArgs(location3, m1).returns(true);
+      intersectionDetector.intersect.withArgs(location3, m3).returns(false);
+
+      var position = layoutManager.nextAvailableMonitorPosition(dashboard, newMonitorSize);
+
+      expect(position).toEqual(position3);
+      expect(intersectionDetector.intersect).not.sinonStubToHaveBeenCalledWith(location3, m2Location);
     });
 
     it("should move on to the next monitor to find available neighbour positions", function() {

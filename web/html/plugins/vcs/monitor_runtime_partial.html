@@ -13,7 +13,7 @@
     <div class="vcs-info-group" data-ng-repeat="page in pages" data-jb-notify-last="startSlideShow">
       <div data-ng-repeat="commit in page.items">
         <div class="git-info">
-          <p class="git-commit">commit {{commit.revision_id}}</p>
+          <p class="git-commit">commit {{commit.revisionId}}</p>
           <div class="git-author-date table-like">
             <p><label>Author:</label><span>{{commit.author}} &lt;{{commit.email}}&gt;</span></p>
             <p><label>Date:</label><span>{{commit.date}}</span></p>
@@ -26,7 +26,7 @@
   <div class="vcs-panel scrolling" data-ng-switch-default>
     <div class="vcs-info-group">
       <div class="git-info" data-ng-repeat="commit in monitor.runtimeInfo.commits">
-        <p class="git-commit">commit {{commit.revision_id}}</p>
+        <p class="git-commit">commit {{commit.revisionId}}</p>
         <div class="git-author-date table-like">
           <p><label>Author:</label><span>{{commit.author}} &lt;{{commit.email}}&gt;</span></p>
           <p><label>Date:</label><span>{{commit.date}}</span></p>

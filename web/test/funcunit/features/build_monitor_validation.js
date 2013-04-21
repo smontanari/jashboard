@@ -13,8 +13,8 @@ funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions_sc
     S("#buildServerNameRequiredError").invisible("should not display error");
     S("#buildServerPortRequiredError").invisible("should not display error");
     S("#buildServerPortNumberError").invisible("should not display error");
-    pageHelper.inputText("input[name='buildServerName']", "test name");
-    pageHelper.inputText("input[name='buildServerPort']", "123");
+    pageHelper.inputText("buildServerName", "test name");
+    pageHelper.inputText("buildServerPort", "123");
     S("#ciServerType-go-tab").visible().click();
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("go");
     S("#ciServerType-jenkins-tab").visible().click();

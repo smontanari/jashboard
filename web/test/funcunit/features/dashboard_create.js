@@ -2,7 +2,7 @@ funcunitHelper.testFeature("Create a dashboard", "dashboard_actions_scenario", f
   test("should create a new dashboard and display the new tab", function() {
     jashboardFeatureHelper.openDashboardDialog();
     var name = "test new-dashboard";
-    pageHelper.inputText("input[name='dashboardName']", name);
+    pageHelper.inputText("dashboardName", name);
 
     S("#saveDashboard").visible().click();
 
@@ -13,13 +13,13 @@ funcunitHelper.testFeature("Create a dashboard", "dashboard_actions_scenario", f
 
   test("should reset the input fields on opening", function() {
     jashboardFeatureHelper.openDashboardDialog();
-    pageHelper.inputText("input[name='dashboardName']", "some text");
+    pageHelper.inputText("dashboardName", "some text");
 
     S("#cancelDashboard").visible().click();
 
     FuncUnit.wait(500, function() {
       jashboardFeatureHelper.openDashboardDialog();
-      S("input[name='dashboardName']").visible().text("");
+      pageHelper.verifyInputValue("dashboardName", "", "should be blank");
     });
   });
 });

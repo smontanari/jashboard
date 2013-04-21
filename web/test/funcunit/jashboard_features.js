@@ -34,6 +34,12 @@ steal(
       'build_monitor_create',
       'build_monitor_edit',
       'build_monitor_validation'
+    ],
+    vcs_monitor_features: [
+      // 'vcs_monitor_display',
+      'vcs_monitor_create'
+      // 'vcs_monitor_edit',
+      // 'vcs_monitor_validation'
     ]
   };
   
@@ -41,7 +47,8 @@ steal(
     feature_sets.misc_features,
     feature_sets.dashboard_features,
     feature_sets.monitor_features,
-    feature_sets.build_monitor_features
+    feature_sets.build_monitor_features,
+    feature_sets.vcs_monitor_features
   );
 
   var getUrlParameter = function(paramName) {
@@ -69,6 +76,7 @@ steal(
     "./features/support/page_helper.js",
     "./features/support/jashboard_feature_helper.js",
     "./features/support/build_monitor_feature_helper.js",
+    "./features/support/vcs_monitor_feature_helper.js",
     "./funcunit_helper.js"
   ).then(function() {
     steal.apply(window, _.map(selectFeatures(), featurePath));

@@ -1,9 +1,17 @@
 var pageHelper = (function(helper) {
-  helper.inputText = function(selector, text) {
+  helper.inputText = function(inputName, text) {
+    var selector = "input[name='" + inputName + "']";
     S(selector).visible().focus().type("");
     S(selector).visible().focus().type(text, function() {
       S(selector).trigger('input');
     });
+  };
+
+  helper.toggleInput = function(inputName, value) {
+    var isChecked = S("input[name='" + inputName + "']").attr("checked") === "checked";
+    if (value !== isChecked) {
+      S("input[name='" + inputName + "']").click();
+    }
   };
 
   helper.mouseDrag = function(options) {
@@ -19,6 +27,10 @@ var pageHelper = (function(helper) {
       S(options.handleSelector).mouseover();
       S(options.handleSelector).drag({to: options.offset, duration: options.duration});
     });
+  };
+
+  helper.verifyInputValue = function(inputName, value, errorMessage) {
+    S("input[name='" + inputName + "']").visible().val(value, errorMessage);
   };
 
   helper.verifyElementEnabled = function(selector, message) {
@@ -61,7 +73,7 @@ var pageHelper = (function(helper) {
   };
   helper.verifyInputError = function(input, expectedError, callback) {
     FuncUnit.wait(300, function() {
-      pageHelper.inputText("input[name='" + input.inputName + "']", input.inputValue);
+      pageHelper.inputText(input.inputName, input.inputValue);
       S(expectedError.errorSelector).visible(function() {
         equal(S(expectedError.errorSelector).text().trim(), expectedError.errorMessage, "The error message is equal to " + expectedError.message);
       }, "should display error");

@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Create a new Build monitor", "build_monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions_scenario", function() {
   test("should create a new jenkins build monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
@@ -17,11 +17,11 @@ funcunitHelper.testFeature("Create a new Build monitor", "build_monitor_actions_
 
     S("#configuration-save").visible().click();
 
-    S("#dashboard_1 .monitor-panel").size(2, function() {
-      S("#monitor_4").visible();
+    S("#dashboard_1 .monitor-panel").size(3, function() {
+      S("#monitor_101").visible();
 
       FuncUnit.wait(500, function() {
-        pageHelper.verifyElementContent("#monitor_4",
+        pageHelper.verifyElementContent("#monitor_101",
           {
             '.monitor-title': "Test jenkins-monitor",
             '.build-time': "28-03-2013 15:10:50",
@@ -54,10 +54,10 @@ funcunitHelper.testFeature("Create a new Build monitor", "build_monitor_actions_
     S("#configuration-save").visible().click();
 
     S("#dashboard_1 .monitor-panel").size(2, function() {
-      S("#monitor_4").visible();
+      S("#monitor_101").visible();
 
       FuncUnit.wait(500, function() {
-        pageHelper.verifyElementContent("#monitor_4",
+        pageHelper.verifyElementContent("#monitor_101",
           {
             '.monitor-title': "Test go-monitor",
             '.build-time': "28-03-2013 15:10:50",

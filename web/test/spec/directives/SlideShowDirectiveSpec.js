@@ -49,4 +49,9 @@ describe("SlideShowDirective", function() {
 
     expect($stub.cycle).not.toHaveBeenCalled();
   });
+  it("should not stop the slide show if the items are undefined", function() {
+    watcherFn(undefined, "old_items");
+
+    expect($stub.cycle).not.toHaveBeenCalled();
+  });
 });

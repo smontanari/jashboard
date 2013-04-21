@@ -6,7 +6,7 @@ funcunitHelper.testFeature("Edit an existing dashboard", "dashboard_actions_scen
 
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_1", "edit");
     var name = "dashboard_new_name";
-    pageHelper.inputText("input[name='dashboardName']", name);
+    pageHelper.inputText("dashboardName", name);
 
     S("#saveDashboard").visible().click();
 

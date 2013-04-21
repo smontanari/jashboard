@@ -1,8 +1,8 @@
 funcunitHelper.testFeature("Edit a monitor", "monitor_actions_scenario", function() {
   test("should update the monitor basic properties", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
-    S("input[name='monitorName']").visible().val("Zombie-Dash build", "display the existing name");
-    S("input[name='monitorRefresh']").visible().val("10000", "display the existing interval");
+    pageHelper.verifyInputValue("monitorName", "Zombie-Dash build", "display the existing name");
+    pageHelper.verifyInputValue("monitorRefresh", "10000", "display the existing interval");
 
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "New Zombie build",
@@ -22,7 +22,7 @@ funcunitHelper.testFeature("Edit a monitor", "monitor_actions_scenario", functio
     });
 
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
-    S("input[name='monitorName']").visible().val("New Zombie build", "display the modified name");
-    S("input[name='monitorRefresh']").visible().val("20000", "display the modified interval");
+    pageHelper.verifyInputValue("monitorName", "New Zombie build", "display the modified name");
+    pageHelper.verifyInputValue("monitorRefresh", "20000", "display the modified interval");
   });
 });

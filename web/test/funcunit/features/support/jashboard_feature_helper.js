@@ -19,8 +19,8 @@ var jashboardFeatureHelper = (function(helper) {
   };
 
   helper.inputGenericMonitorData = function(data) {
-    pageHelper.inputText("input[name='monitorName']", data.monitorName);
-    pageHelper.inputText("input[name='monitorRefresh']", data.monitorRefresh);
+    pageHelper.inputText("monitorName", data.monitorName);
+    pageHelper.inputText("monitorRefresh", data.monitorRefresh);
     if (data.monitorType) {
       S("select[name='monitorType']").visible().click();
       S("select[name='monitorType'] option:contains('" + data.monitorType + "')").click();

@@ -7,8 +7,8 @@ funcunitHelper.testFeature("Monitor validation", "display_dashboards_data", func
       S(selector).invisible("should not display error");  
     });
 
-    pageHelper.inputText("input[name='monitorName']", "test name");
-    pageHelper.inputText("input[name='monitorRefresh']", "123");
+    pageHelper.inputText("monitorName", "test name");
+    pageHelper.inputText("monitorRefresh", "123");
     
     pageHelper.verifyInputError(
       {inputName: "monitorName", inputValue: ""},
@@ -17,7 +17,7 @@ funcunitHelper.testFeature("Monitor validation", "display_dashboards_data", func
         pageHelper.verifyElementDisabled("#configuration-next", "the Next button should be disabled");  
       }
     );
-    pageHelper.inputText("input[name='monitorName']", "test name");
+    pageHelper.inputText("monitorName", "test name");
     pageHelper.verifyInputError(
       {inputName: "monitorRefresh", inputValue: "abc"},
       {errorSelector: "#monitorRefreshNumberError", errorMessage: "You must enter a valid number."},
@@ -25,7 +25,7 @@ funcunitHelper.testFeature("Monitor validation", "display_dashboards_data", func
         pageHelper.verifyElementDisabled("#configuration-next", "the Next button should be disabled");  
       }
     );
-    pageHelper.inputText("input[name='monitorRefresh']", "");
+    pageHelper.inputText("monitorRefresh", "");
     pageHelper.verifyInputError(
       {inputName: "monitorRefresh", inputValue: "-98"},
       {errorSelector: "#monitorRefreshPositiveNumberError", errorMessage: "You must enter a positive number."},
@@ -49,7 +49,7 @@ funcunitHelper.testFeature("Monitor validation", "display_dashboards_data", func
         pageHelper.verifyElementDisabled("#configuration-next", "the Next button should be disabled");
       }
     );
-    pageHelper.inputText("input[name='monitorName']", "test name");
+    pageHelper.inputText("monitorName", "test name");
 
     pageHelper.verifyInputError(
       {inputName: "monitorRefresh", inputValue: "abc"},

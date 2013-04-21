@@ -1,17 +1,17 @@
 var buildMonitorFeatureHelper = (function(helper) {
   var monitorTypeConfigurationInput = {
     jenkins: function(data) {
-      pageHelper.inputText("input[name='jenkinsBuildId']", data.buildId);
+      pageHelper.inputText("jenkinsBuildId", data.buildId);
     },
     go: function(data) {
-      pageHelper.inputText("input[name='goPipeline']", data.pipeline);
-      pageHelper.inputText("input[name='goStage']", data.stage);
-      pageHelper.inputText("input[name='goJob']", data.job);
+      pageHelper.inputText("goPipeline", data.pipeline);
+      pageHelper.inputText("goStage", data.stage);
+      pageHelper.inputText("goJob", data.job);
     }
   };
   helper.inputBuildMonitorData = function(newMonitor, data) {
-    pageHelper.inputText("input[name='buildServerName']", data.buildServerName);
-    pageHelper.inputText("input[name='buildServerPort']", data.buildServerPort);
+    pageHelper.inputText("buildServerName", data.buildServerName);
+    pageHelper.inputText("buildServerPort", data.buildServerPort);
     if (newMonitor) {
       S("#ciServerType-" + data.configurationType + "-tab").visible().click();
     }
@@ -24,7 +24,7 @@ var buildMonitorFeatureHelper = (function(helper) {
     };
     var verifyCIServerConfigErrors = {
       jenkins: function() {
-        pageHelper.inputText("input[name='jenkinsBuildId']", "test_build_id");
+        pageHelper.inputText("jenkinsBuildId", "test_build_id");
         pageHelper.verifyInputError(
           {inputName: "jenkinsBuildId", inputValue: ""},
           {errorSelector: "#jenkinsBuildIdRequiredError", errorMessage: "You must provide a Jenkins build id."},
@@ -32,19 +32,19 @@ var buildMonitorFeatureHelper = (function(helper) {
         );
       },
       go: function() {
-        pageHelper.inputText("input[name='goPipeline']", "test_pipeline");
+        pageHelper.inputText("goPipeline", "test_pipeline");
         pageHelper.verifyInputError(
           {inputName: "goPipeline", inputValue: ""},
           {errorSelector: "#goPipelineRequiredError", errorMessage: "You must provide a Go pipeline."},
           verifySaveButtonDisabled
         );
-        pageHelper.inputText("input[name='goStage']", "test_stage");
+        pageHelper.inputText("goStage", "test_stage");
         pageHelper.verifyInputError(
           {inputName: "goStage", inputValue: ""},
           {errorSelector: "#goStageRequiredError", errorMessage: "You must provide a Go stage."},
           verifySaveButtonDisabled
         );
-        pageHelper.inputText("input[name='goJob']", "test_job");
+        pageHelper.inputText("goJob", "test_job");
         pageHelper.verifyInputError(
           {inputName: "goJob", inputValue: ""},
           {errorSelector: "#goJobRequiredError", errorMessage: "You must provide a Go job."},
@@ -58,7 +58,7 @@ var buildMonitorFeatureHelper = (function(helper) {
       {errorSelector: "#buildServerNameRequiredError", errorMessage: "You must provide a CI server name."},
       verifySaveButtonDisabled
     );
-    pageHelper.inputText("input[name='buildServerName']", "test name");
+    pageHelper.inputText("buildServerName", "test name");
     pageHelper.verifyInputError(
       {inputName: "buildServerPort", inputValue: ""},
       {errorSelector: "#buildServerPortRequiredError", errorMessage: "You must provide a CI server port."},

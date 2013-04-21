@@ -16,7 +16,7 @@ funcunitHelper.testFeature("Dashboard validation", "dashboard_actions_scenario",
     pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
     S(errorMessageSelector).invisible("should not display error");
     
-    pageHelper.inputText("input[name='dashboardName']", "test name");
+    pageHelper.inputText("dashboardName", "test name");
     pageHelper.verifyElementEnabled(saveButton, "the Save button should be enabled");
 
     verifyDashboardNameError();

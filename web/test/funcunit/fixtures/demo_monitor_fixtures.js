@@ -29,11 +29,14 @@
       },
       ipsum: function(configuration) {
         return configuration;
+      },
+      vcs: function(configuration) {
+        return configuration;
       }
     };
     var data = JSON.parse(request.requestBody);
     monitorCounter++;
-    storedMonitors.push({id: "monitor_" + monitorCounter, type: data.type});
+    storedMonitors.push({id: "monitor_" + monitorCounter, type: data.type, configuration: data.configuration});
     return {
       content: {
         id: "monitor_" + monitorCounter,
@@ -42,7 +45,8 @@
         type: data.type,
         position: data.position,
         size: data.size,
-        configuration: monitorConfigurationFixtures[data.type](data.configuration)
+        // configuration: monitorConfigurationFixtures[data.type](data.configuration)
+        configuration: data.configuration
       },
       delay: jashboard.test.randomInt(3)
     };
@@ -53,7 +57,7 @@
       var oneMonth = 30 * 24 * 3600000;
       var date = new Date();
       date.setTime(date.getTime() - jashboard.test.randomInt(oneMonth));
-      return jashboard.test.dateFormat(date);
+      return jashboard.test.dateFormatBuild(date);
     };
     var runtimeContentGenerator = {
       build: function() {
@@ -68,13 +72,27 @@
         return {
           text: "some very random generated text\nwith some very random generated words"
         };
+      },
+      vcs: function(monitor) {
+        var historyLength = monitor.configuration.historyLength;
+        var commits = [];
+        for (var i = 0; i < historyLength; i++) {
+          commits.push({
+            revisionId: jashboard.test.randomInt(1000) + "aa1dd5cd1b2315e75c26e6c53169148054948",
+            author: "Test Author Name",
+            email: "test.email@test.com",
+            date: moment(generateDate()).format("ddd MMM DD hh:mm:ss YYYY ZZ"),
+            message: "It took me a while to figure out how to flick this stupid panel"
+          });
+        };
+        return commits;
       }
     };
-    var monitorType = _.find(storedMonitors, function(monitor) {
-      return monitor_id === monitor.id;
-    }).type;
+    var monitor = _.find(storedMonitors, function(m) {
+      return monitor_id === m.id;
+    });
     return {
-      content: runtimeContentGenerator[monitorType](),
+      content: runtimeContentGenerator[monitor.type](monitor),
       delay: jashboard.test.randomInt(3)
     };
   });

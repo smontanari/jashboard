@@ -17,7 +17,7 @@
         }
       },
       {
-        "id": "monitor_5",
+        "id": "monitor_4",
         "name": "Jashboard Git repo",
         "refreshInterval": 20000,
         "type": "vcs",

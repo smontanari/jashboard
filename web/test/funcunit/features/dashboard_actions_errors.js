@@ -2,7 +2,7 @@ funcunitHelper.testFeature("Dashboard actions error handling", "dashboard_errors
   test("should display an error overlay when failing to create a dashboard", function() {
     FuncUnit.wait(1000, function() {
       jashboardFeatureHelper.openDashboardDialog();
-      pageHelper.inputText("input[name='dashboardName']", "test new-dashboard");
+      pageHelper.inputText("dashboardName", "test new-dashboard");
     });
 
     S("#saveDashboard").visible().click();
@@ -15,7 +15,7 @@ funcunitHelper.testFeature("Dashboard actions error handling", "dashboard_errors
   test("should display an error overlay when failing to modify a dashboard", function() {
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_1", "edit");
 
-    pageHelper.inputText("input[name='dashboardName']", "another dashboard");
+    pageHelper.inputText("dashboardName", "another dashboard");
 
     S("#saveDashboard").visible().click();
 

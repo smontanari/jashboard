@@ -27,7 +27,7 @@ $.fixture("POST /ajax/dashboard/dashboard_1/monitor", function(ajaxOriginalOptio
     return [
       201, 
       "success",
-      jashboard.test.monitorJsonResponseFixture("monitor_4", data),
+      _.extend(data, {id: "monitor_101"}),
       {} 
     ];
   }

@@ -36,7 +36,6 @@ steal('jashboard/jashboard.js')
       'ResizableDirective',
       'MonitorDisplayDirective',
       'FormValidationDirective',
-      'PagingDirective',
       'SlideShowDirective',
       'NotifyLastDirective',
       'SwitchButtonDirective'

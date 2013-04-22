@@ -43,7 +43,6 @@
       };
 
       scope.$watch("monitor.configuration", function(newValue, oldValue) {
-        console.log(_.isEqual(newValue, oldValue));
         if (newValue) {
           cancelUpdateSchedule();
           updateMonitorRuntimeInfo(true);

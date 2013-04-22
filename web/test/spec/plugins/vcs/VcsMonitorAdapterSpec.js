@@ -30,7 +30,7 @@ describe("VcsMonitorAdapter", function() {
   it("should return a default size for the vcs monitor", function() {
     var size = plugin.defaultSize();
 
-    expect(size).toEqual({width: 500, height: 150});
+    expect(size).toEqual({width: 520, height: 170});
   });
 
   it("should convert the runtime vcs data", function() {

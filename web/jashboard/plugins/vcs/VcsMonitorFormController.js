@@ -5,7 +5,7 @@
 
       scope.toggleSlideShowEffect = function() {
         if (!scope.monitorConfigurationFormModel.vcs.slideShowEffect) {
-          scope.monitorConfigurationFormModel.vcs.commitsPerPage = undefined;
+          scope.monitorConfigurationFormModel.vcs.commitsPerPage = null;
         }
       };
 

@@ -17,7 +17,7 @@
       };
 
       this.defaultSize = function() {
-        return {width: 500, height: 150};
+        return {width: 520, height: 170};
       };
     }
   });

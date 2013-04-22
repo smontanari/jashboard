@@ -4,16 +4,26 @@
       return function(scope, element, attrs) {
         var attributes = scope.$eval(attrs.jbSlideShow);
         var startEvent = attributes.start;
+        var slideShowStarted = false;
+
+        var stopSlideShow = function() {
+          if (slideShowStarted) {
+            $(element).cycle('stop');
+            $(element).cycle('destroy');
+            slideShowStarted = false;
+          }
+        };
+        var startSlideShow = function() {
+          _.defer(function() {
+            $(element).cycle();
+            slideShowStarted = true;
+          });
+        };
 
         scope.$on(startEvent, function(event) {
-          $(element).cycle();
+          stopSlideShow();
+          startSlideShow();
           event.stopPropagation();
-        });
-
-        scope.$watch(attrs.jbSlideShowItems, function(newItems, oldItems) {
-          if (newItems && !angular.equals(newItems, oldItems)) {
-            $(element).cycle('destroy');
-          }
         });
       };
     }

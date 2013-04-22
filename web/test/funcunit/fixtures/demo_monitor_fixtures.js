@@ -3,37 +3,6 @@
   var monitorCounter = 0;
   var storedMonitors = [];
   server.fakeResponse("POST", /^\/ajax\/dashboard\/(\w+)\/monitor$/, function(request, dashboard_id) {
-    var monitorConfigurationFixtures = {
-      build: function(configuration) {
-        var buildConfigurationFixtures = {
-          jenkins: function() {
-            return {
-              type: "jenkins",
-              hostname: configuration.hostname,
-              port: configuration.port,
-              buildId: configuration.buildId
-            };
-          },
-          go: function() {
-            return {
-              type: "go",
-              hostname: configuration.hostname,
-              port: configuration.port,
-              pipeline: configuration.pipeline,              
-              stage: configuration.stage,              
-              job: configuration.job              
-            };
-          }
-        };
-        return buildConfigurationFixtures[configuration.type]();
-      },
-      ipsum: function(configuration) {
-        return configuration;
-      },
-      vcs: function(configuration) {
-        return configuration;
-      }
-    };
     var data = JSON.parse(request.requestBody);
     monitorCounter++;
     storedMonitors.push({id: "monitor_" + monitorCounter, type: data.type, configuration: data.configuration});
@@ -45,7 +14,6 @@
         type: data.type,
         position: data.position,
         size: data.size,
-        // configuration: monitorConfigurationFixtures[data.type](data.configuration)
         configuration: data.configuration
       },
       delay: jashboard.test.randomInt(3)
@@ -100,6 +68,10 @@
   server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/configuration$/, function(request, monitor_id) {
     steal.dev.log("monitor[" + monitor_id + "] configuration changed to ");
     steal.dev.log(request.requestBody);
+    var monitor = _.find(storedMonitors, function(m) {
+      return monitor_id === m.id;
+    });
+    monitor.configuration = JSON.parse(request.requestBody).configuration;
     return {returnCode: 204};
   });
   server.fakeResponse("PUT", /^\/ajax\/monitor\/(\w+)\/position$/, function(request, monitor_id) {

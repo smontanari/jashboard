@@ -2,14 +2,21 @@
   jashboard.angular = _.extend(module, {
     pagingDirective: function(paginationService) {
       return function(scope, element, attrs) {
-        var pageSize = scope.$eval(attrs.jbPageSize);
-        var items = scope.$eval(attrs.jbPaging);
-        if (items) {
-          scope.pages = paginationService.paginate(items, pageSize);
-        }        
+        var resetPages = function(items, pageSize) {
+          if (items) {
+            scope.pages = paginationService.paginate(items, pageSize);
+          }        
+        }
+        resetPages(scope.$eval(attrs.jbPaging), scope.$eval(attrs.jbPageSize));
+
         scope.$watch(attrs.jbPaging, function(newItems, oldItems) {
-          if (newItems && !angular.equals(newItems, oldItems)) {
-            scope.pages = paginationService.paginate(newItems, pageSize);
+          if (newItems) {
+            resetPages(newItems, scope.$eval(attrs.jbPageSize));
+          }
+        });
+        scope.$watch(attrs.jbPageSize, function(newPageSize, oldPageSize) {
+          if (newPageSize) {
+            resetPages(scope.$eval(attrs.jbPaging), newPageSize);
           }
         });
       };

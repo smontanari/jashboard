@@ -19,14 +19,14 @@ describe("VcsMonitorFormController", function() {
   });
 
   describe("scope.toggleSlideShowEffect()", function() {
-    it("should reset the commitsPerPage value if the slideShowEffect is disabled", function() {
+    it("should nullify the commitsPerPage value if the slideShowEffect is disabled", function() {
       scope.monitorConfigurationFormModel = { vcs: {
         slideShowEffect: false,
         commitsPerPage: 123
       }};
       scope.toggleSlideShowEffect();
 
-      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toBeUndefined();
+      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toBeNull();
     });
     it("should not reset the commitsPerPage value if the slideShowEffect is enabled", function() {
       scope.monitorConfigurationFormModel = { vcs: {

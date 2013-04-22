@@ -3,13 +3,12 @@
     data-jb-paging="monitor.runtimeInfo.commits"
     data-jb-page-size="monitor.configuration.commitsPerPage"
     data-jb-slide-show="{start: 'startSlideShow'}"
-    data-jb-slide-show-items="monitor.runtimeInfo.commits"
+    data-jb-slide-show-items="monitor.configuration.commitsPerPage"
     data-cycle-slides=".vcs-info-group"
     data-cycle-fx="scrollHorz"
     data-cycle-pause-on-hover="true"
     data-cycle-timeout="5000"
-    data-cycle-log="false"
-    title="hovering the mouse here pauses the slide effect">
+    data-cycle-log="false">
     <div class="vcs-info-group" data-ng-repeat="page in pages" data-jb-notify-last="startSlideShow">
       <div data-ng-repeat="commit in page.items">
         <div class="git-info">

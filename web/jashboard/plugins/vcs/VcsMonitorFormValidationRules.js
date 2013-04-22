@@ -18,7 +18,7 @@
       };
       this.vcsPageSize = function(scope) {
         if (scope.monitorConfigurationFormModel.vcs) {
-          if (scope.monitorConfigurationFormModel.vcs.slideShowEffect) {
+          if (scope.monitorConfigurationFormModel.vcs.pagination) {
             return requiredPositiveIntegerRule(scope.monitorConfigurationFormModel.vcs.commitsPerPage);
           }
         }

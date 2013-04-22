@@ -28,7 +28,7 @@
           "workingDirectory": "/path/to/repo",
           "branch": "master",
           "historyLength": 5,
-          "slideShowEffect": true,
+          "pagination": true,
           "commitsPerPage": 2
         }
       }

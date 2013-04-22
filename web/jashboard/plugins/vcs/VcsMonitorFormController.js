@@ -4,7 +4,7 @@
       scope.availableVcsTypes = ["git"];
 
       scope.toggleSlideShowEffect = function() {
-        if (!scope.monitorConfigurationFormModel.vcs.slideShowEffect) {
+        if (!scope.monitorConfigurationFormModel.vcs.pagination) {
           scope.monitorConfigurationFormModel.vcs.commitsPerPage = null;
         }
       };
@@ -14,7 +14,7 @@
           scope.monitorConfigurationFormModel.vcs = {
             type: _.first(scope.availableVcsTypes),
             historyLength: 1,
-            slideShowEffect: false
+            pagination: false
           };
         }
         scope.formHelper.registerMonitorTypeForm("vcs", scope.vcsMonitorForm);

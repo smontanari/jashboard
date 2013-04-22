@@ -50,7 +50,7 @@ describe("VcsMonitorFormValidationRules", function() {
     expect(rules.vcsHistoryLength(scope)).toEqual("test_validation_result");
   });
   it("should validate the 'vcsPageSize' field with the 'required' and 'positiveInteger' rule when the vcsPageSlideShow field is true", function() {
-    scope.monitorConfigurationFormModel.vcs.slideShowEffect = true,
+    scope.monitorConfigurationFormModel.vcs.pagination = true,
     scope.monitorConfigurationFormModel.vcs.commitsPerPage = "test_page_size";
 
     _.each(['required', 'positiveInteger'], function(rule) {
@@ -65,7 +65,7 @@ describe("VcsMonitorFormValidationRules", function() {
   it("should not validate the 'vcsPageSize' field when the vcsPageSlideShow field is false, null or undefined", function() {
     scope.monitorConfigurationFormModel.vcs.commitsPerPage = "test_page_size";
     _.each([false, null, undefined], function (value) {
-      scope.monitorConfigurationFormModel.vcs.slideShowEffect = value;
+      scope.monitorConfigurationFormModel.vcs.pagination = value;
       
       expect(rules.vcsPageSize(scope)).toBeUndefined();
     });

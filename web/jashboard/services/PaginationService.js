@@ -2,6 +2,9 @@
   jashboard = _.extend(module, {
     PaginationService: function() {
       this.paginate = function(items, pageSize) {
+        if (_.isUndefined(pageSize) || _.isNull(pageSize) || _.isNaN(pageSize) || pageSize === 0) {
+          pageSize = items.length;
+        }
         var pages = [];
         var numberOfPages = Math.floor(items.length/pageSize);
         var numberOfItemsOnLastPage = items.length % pageSize;

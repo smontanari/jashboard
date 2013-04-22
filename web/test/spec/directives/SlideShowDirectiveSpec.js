@@ -84,12 +84,6 @@ describe("SlideShowDirective", function() {
         expect(event.stopPropagation).toHaveBeenCalled();
       });
     });
-    it("should stop the slide show before restarting it if it was already started", function() {
-      triggerStartSlideShowAndRunTest(function() {
-        eventListener(event);
-        expect($stub.cycle).toHaveBeenCalledWith("destroy");
-      });
-    });
   });
 
   describe("items watcher functionality", function() {

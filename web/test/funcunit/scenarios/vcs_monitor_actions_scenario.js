@@ -7,7 +7,7 @@ steal("test/funcunit/scenarios/display_dashboards_data.js");
       workingDirectory: "/test/path/to/repo",
       branch: "test-branch",
       historyLength: 10,
-      slideShowEffect: true,
+      pagination: true,
       commitsPerPage: 2
     }
   };

@@ -32,12 +32,12 @@
       <label class="control-label" for="vcsPageSlideShow">Pagination</label>
       <div class="controls">
         <div class="switch switch-small" data-on="info" data-jb-switch-button="{activateOn: 'OpenMonitorDialog'}" 
-          data-ng-model="monitorConfigurationFormModel.vcs.slideShowEffect"
+          data-ng-model="monitorConfigurationFormModel.vcs.pagination"
           data-jb-switch-button-toggle="toggleSlideShowEffect();validateField()"
           data-jb-switch-button-id="vcsPageSlideShow"/>
       </div>
     </div>
-    <div class="control-group" data-ng-show="monitorConfigurationFormModel.vcs.slideShowEffect" data-ng-class="{'error': inputInError('vcsPageSize')}">
+    <div class="control-group" data-ng-show="monitorConfigurationFormModel.vcs.pagination" data-ng-class="{'error': inputInError('vcsPageSize')}">
       <label class="control-label" for="vcsPageSize">Page size</label>
       <div class="controls">
         <input name="vcsPageSize" type="text" class="input-mini" 

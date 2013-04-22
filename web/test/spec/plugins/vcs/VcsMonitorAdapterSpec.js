@@ -8,7 +8,7 @@ describe("VcsMonitorAdapter", function() {
       workingDirectory: "test_directory",
       branch: "test_branch",
       historyLength: 123,
-      slideShowEffect: true,
+      pagination: true,
       commitsPerPage: 4
     };
     configForm = {
@@ -16,7 +16,7 @@ describe("VcsMonitorAdapter", function() {
       workingDirectory: "test_directory",
       branch: "test_branch",
       historyLength: "123",
-      slideShowEffect: true,
+      pagination: true,
       commitsPerPage: "4"
     };
   });

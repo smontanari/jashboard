@@ -7,7 +7,7 @@
           branch: formModel.branch,
           type: formModel.type,
           historyLength: parseInt(formModel.historyLength, 10),
-          slideShowEffect: formModel.slideShowEffect,
+          pagination: formModel.pagination,
           commitsPerPage: parseInt(formModel.commitsPerPage, 10)
         };
       };

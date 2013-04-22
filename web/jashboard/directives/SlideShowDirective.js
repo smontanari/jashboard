@@ -10,7 +10,6 @@
           if (items) {
             stopSlideShow();
             scope.slides = paginationService.paginate(items, itemsPerSlide);
-            console.log(scope.slides);
           }        
         };
 
@@ -28,8 +27,9 @@
         };
 
         scope.$on(startEvent, function(event) {
-          stopSlideShow();
-          startSlideShow();
+          if (scope.slides && scope.slides.length > 1) {
+            startSlideShow();
+          }
           event.stopPropagation();
         });
         scope.$watch(attrs.jbSlideShowItems, function(newItems, oldItems) {

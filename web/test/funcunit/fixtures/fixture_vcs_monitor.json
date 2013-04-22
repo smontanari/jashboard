@@ -3,21 +3,21 @@
     "revisionId": "c64f8dab453722264d7fec949b400026cb0473e3",
     "author": "Silvio Montanari",
     "email": "montanari.silvio@gmail.com",
-    "date": "Tue Apr 16 06:44:33 2013 +1000",
+    "date": "2013-04-16 06:44:33 +1000",
     "message": "renaming modules"
   },
   {
     "revisionId": "54734c13b3cb7a842503e803cd27699d241991a4",
     "author": "Silvio Montanari",
     "email": "montanari.silvio@gmail.com",
-    "date": "Mon Apr 15 23:59:48 2013 +1000",
+    "date": "2013-04-15 23:59:48 +1000",
     "message": "adding git plugin, server side"
   },
   {
     "revisionId": "f72fca608640ce7e65e8ab14d04c3b05784519bc",
     "author": "Silvio Montanari",
     "email": "montanari.silvio@gmail.com",
-    "date": "Mon Apr 15 13:59:39 2013 +1000",
+    "date": "2013-04-15 13:59:39 +1000",
     "message": "refactoring plugin management"
   }
 ]

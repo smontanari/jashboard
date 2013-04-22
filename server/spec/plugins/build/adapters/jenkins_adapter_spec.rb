@@ -31,8 +31,7 @@ module Jashboard
           it("should invoke the correct url to retrieve last build information") do
             runtime_info = @adapter.get_jenkins_runtime_info(@configuration)
 
-            expected_time = Time.parse("05-11-2012 09:35:08 +1100").strftime("%d-%m-%Y %H:%M:%S")
-            runtime_info.last_build_time.should == expected_time
+            runtime_info.last_build_time.should == "2012-11-05 09:35:08 +1100"
             runtime_info.duration.should == 25
             runtime_info.success.should == true
           end

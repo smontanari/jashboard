@@ -13,7 +13,11 @@
       };
 
       this.convertDataToRuntimeInfo = function(runtime_data) {
-        return {commits: runtime_data};
+        return {commits: _.map(runtime_data, function(data) {
+          return _.tap(_.pick(data, "revisionId", "author", "email", "message"), function(commit) {
+            commit.date = moment(data.date).format("ddd MMM DD HH:mm:ss YYYY ZZ");
+          });
+        })};
       };
 
       this.defaultSize = function() {

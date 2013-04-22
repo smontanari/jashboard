@@ -6,7 +6,7 @@ funcunitHelper.testFeature("Display build monitor information", "display_dashboa
     pageHelper.verifyElementContent("#monitor_2",
       {
         '.monitor-title': "Epic build",
-        '.build-time': "28-08-2012 11:25:10",
+        '.build-time': "28-08-2012 10:25:10",
         '.build-duration': "09:56",
         '.build-result': "failure",
         '.build-status': "building"

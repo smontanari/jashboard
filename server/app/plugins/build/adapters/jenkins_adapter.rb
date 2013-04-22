@@ -18,7 +18,7 @@ module Jashboard
           seconds = @doc.at_css("timestamp").
                     text.
                     to_i / 1000
-          Time.at(seconds).strftime("%d-%m-%Y %H:%M:%S")
+          Time.at(seconds).strftime("%Y-%m-%d %H:%M:%S %z")
         end
 
         def get_duration

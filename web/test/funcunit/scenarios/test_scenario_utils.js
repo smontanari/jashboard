@@ -7,10 +7,6 @@
     },
     randomBoolean: function() {
       return this.randomInt(1) == 1;
-    },
-    dateFormatBuild: function(date) {
-      return date.getFullYear() + "-" + pad10(date.getMonth()) + "-" + pad10(date.getDate()) + " " +
-             pad10(date.getHours()) + ":" + pad10(date.getMinutes()) + ":" + pad10(date.getSeconds())      
     }
   });
 }(jashboard.test || {}));

@@ -11,7 +11,7 @@ module Jashboard
           repo.commits(branch, configuration.history_length).map do |commit|
             VcsRuntimeInfo.new(
               commit.id,
-              commit.authored_date.strftime("%a %b %d %H:%M:%S %Y %z"),
+              commit.authored_date,
               commit.author.name,
               commit.author.email,
               commit.message

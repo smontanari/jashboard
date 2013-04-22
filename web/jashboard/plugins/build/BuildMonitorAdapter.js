@@ -18,6 +18,10 @@
         return result ? "success" : "failure";
       };
 
+      var getBuildDate = function(date) {
+        return moment(date).format("DD-MM-YYYY HH:mm:ss");
+      };
+
       var extractBuildTypeProperties = function(object) {
         return _.omit(object, "hostname", "port")
       };
@@ -31,7 +35,7 @@
 
       this.convertDataToRuntimeInfo = function(runtimeInfo_data) {
         return {
-          lastBuildTime: jashboard.variableProcessor.validateData(runtimeInfo_data.lastBuildTime, "n/a"),
+          lastBuildTime: jashboard.variableProcessor.validateData(runtimeInfo_data.lastBuildTime, "n/a", getBuildDate),
           lastBuildDuration: jashboard.variableProcessor.validateData(runtimeInfo_data.duration, "n/a", jashboard.timeConverter.secondsToTime),
           lastBuildSuccess: jashboard.variableProcessor.validateData(runtimeInfo_data.success, "n/a"),
           lastBuildResult: jashboard.variableProcessor.validateData(runtimeInfo_data.success, "n/a", getBuildResult),

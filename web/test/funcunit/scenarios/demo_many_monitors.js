@@ -18,7 +18,7 @@
       id: "monitor_" + i,
       response: {
         content: {
-          lastBuildTime: "23-08-2012 14:32:23",
+          lastBuildTime: "2012-08-23 14:32:23 +1000",
           duration: jashboard.test.randomInt(300),
           success: jashboard.test.randomBoolean(),
           status: jashboard.test.randomInt(2)

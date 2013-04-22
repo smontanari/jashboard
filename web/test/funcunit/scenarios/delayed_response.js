@@ -42,7 +42,7 @@
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_1/runtime", {
     content: {
-      lastBuildTime: "23-08-2012 14:32:23",
+      lastBuildTime: "2012-08-23 14:32:23 +1000",
       duration: 752,
       success: true,
       status: 1
@@ -52,7 +52,7 @@
 
   server.fakeResponse("GET", "/ajax/monitor/monitor_2/runtime", {
     content: {
-      lastBuildTime: "25-08-2012 15:56:45",
+      lastBuildTime: "2012-08-25 15:56:45 +1000",
       duration: 126,
       success: false,
       status: 0

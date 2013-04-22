@@ -36,7 +36,7 @@ describe("VcsMonitorAdapter", function() {
   it("should convert the runtime vcs data", function() {
     var runtime_data = [{
       revisionId: "test_revision",
-      date: "test_date",
+      date: "2013-04-15 23:59:48 +1000",
       author: "test_author",
       email: "test_email",
       message: "test_message"
@@ -44,7 +44,15 @@ describe("VcsMonitorAdapter", function() {
 
     var runtimeInfo = plugin.convertDataToRuntimeInfo(runtime_data);
 
-    expect(runtimeInfo).toEqual({commits: runtime_data});
+    expect(runtimeInfo).toEqual({commits: [
+      {
+        revisionId: "test_revision",
+        date: "Mon Apr 15 23:59:48 2013 +1000",
+        author: "test_author",
+        email: "test_email",
+        message: "test_message"
+      }
+    ]});
   });
 });
 

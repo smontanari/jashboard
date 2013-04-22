@@ -53,7 +53,7 @@ describe("BuildMonitorAdapter", function() {
       });
     };
     _.each([
-            { property: "lastBuildTime", expectedValue: "test.buildTime", data: {lastBuildTime: "test.buildTime"}},
+            { property: "lastBuildTime", expectedValue: "28-08-2012 21:25:10", data: {lastBuildTime: "2012-08-28 21:25:10 +1000"}},
             { testCase: "when runtime info is not available", property: "lastBuildTime", expectedValue: "n/a", data: {}},
             { property: "lastBuildDuration", expectedValue: "02:02", data: {duration: 122}},
             { testCase: "when runtime info is not available" , property: "lastBuildDuration", expectedValue: "n/a", data: {}},

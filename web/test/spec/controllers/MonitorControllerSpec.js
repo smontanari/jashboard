@@ -17,81 +17,6 @@ describe("MonitorController", function() {
     repository = jasmine.createSpyObj("repository", ['updateMonitorPosition', 'updateMonitorSize', 'loadMonitorRuntimeInfo']);
   });
 
-  describe("when refreshInterval value changes", function() {
-    var refreshIntervalWatcher, scheduleFunction, successHandler;
-    beforeEach(function() {
-      scope.monitor = testMonitor;
-
-      scope.$watch = jasmine.createSpy("scope.$watch()").andCallFake(function(expr, listener) {
-        refreshIntervalWatcher = listener;
-      });
-      repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
-        .andCallFake(function(monitor_id, monitor_type, callbacks) {
-          successHandler = callbacks.success;
-        });
-    });
-
-    it("should watch the monitor.refreshInterval", function() {
-      new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
-      
-      expect(scope.$watch).toHaveBeenCalledWith("monitor.refreshInterval", jasmine.any(Function));
-    });
-
-    _.each([null, NaN, undefined], function(value) {
-      describe("when refreshInterval changes from " + value + " to a valid number", function() {
-        beforeEach(function() {
-          timeoutService = jasmine.createSpy("$timeout");
-          timeoutService.andCallFake(function(fn, delay) {
-            scheduleFunction = fn;
-          });
-          new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
-        });
-        it("should schedule a call to the repository to load the data", function() {
-          scope.monitor.refreshInterval = 123;
-          refreshIntervalWatcher(123, value);
-          successHandler();
-
-          scheduleFunction();
-
-          expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
-          expect(timeoutService).toHaveBeenCalledWith(jasmine.any(Function), 123000);
-          expect(repository.loadMonitorRuntimeInfo.calls.length).toEqual(2);
-        });
-      });
-      describe("when refreshInterval changes from a valid number to " + value, function() {
-        beforeEach(function() {
-          timeoutService = jasmine.createSpyObj("$timeout", ['cancel']);
-          new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
-        });
-        it("should not schedule a call to the repository to load the data", function() {
-          scope.monitor.refreshInterval = value;
-  
-          refreshIntervalWatcher(value, 123);
-  
-          expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
-        });
-        it("should cancel the current monitor update scheduler", function() {
-          scope.monitor.runtimeUpdateScheduler = {id: "scheduler"};
-          scope.monitor.refreshInterval = value;
-
-          refreshIntervalWatcher(value, 123);
-          
-          expect(timeoutService.cancel).toHaveBeenCalledWith({id: "scheduler"});
-        });
-      });
-    });
-    describe("when refreshInterval value is the same", function() {
-      it("should not schedule a call to the repository to load the data", function() {
-        scope.monitor.refreshInterval = 345;
-
-        refreshIntervalWatcher(345, 345);
-
-        expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
-      });
-    });
-    
-  });
-
   describe("'MonitorPositionChanged' and 'MonitorSizeChanged' events handler", function() {
     var positionChangedEventObject, sizeChangedEventObject;
     beforeEach(function() {
@@ -219,93 +144,89 @@ describe("MonitorController", function() {
     });
   });
 
-  describe("scope.loadRuntimeInfo()", function() {
+  describe("Configuration change", function() {
+    var configurationWatcher, timeoutService, scheduler;
     beforeEach(function() {
+      scope.$watch = jasmine.createSpy("scope.$watch()").andCallFake(function(expr, listener) {
+        if (expr === "monitor.configuration") configurationWatcher = listener;
+      });
+      timeoutService = jasmine.createSpyObj("$timeout", ['cancel']);
+      scheduler = {id: "scheduler"};
       scope.monitor = {
         id: "test_id",
-        type: "test_type"          
-      }
-      new jashboard.MonitorController(rootScope, scope, repository);
-    });
-    it ("should not start loading the data if the monitor loading status is completed", function() {
-      scope.monitor.loadingStatus = jashboard.model.loadingStatus.completed;
-      
-      scope.loadRuntimeInfo();
+        type: "test_type"
+      };
 
-      expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+      new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
     });
-    it ("should not start the data load if the monitor loading status is waiting", function() {
-      scope.monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
-      
-      scope.loadRuntimeInfo();
-
-      expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+    it ("should watch monitor.configuration", function() {
+      expect(scope.$watch).toHaveBeenCalledWith("monitor.configuration", jasmine.any(Function));
     });
-    it("should start the data load if the monitor loading status is undefined", function() {
-      scope.loadRuntimeInfo();
+    it("should start the data loading when the configuration changes", function() {
+      configurationWatcher({});
 
       expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
     });
-  });
-  describe("runtime data refresh scheduling", function() {
-    var timeoutService, scheduleFunction, handlers, scheduler;
-    var testSetup = function() {
-      scope.monitor = {
-        id: "test_id",
-        type: "test_type",
-        refreshInterval: 10
-      }
-      scheduler = {id: "scheduler"};
-      timeoutService = jasmine.createSpy("$timeout");
-      timeoutService.andCallFake(function(fn, delay, invokeApply) {
-        scheduleFunction = fn;
-        return scheduler;
-      });
+    it("should cancel a previously defined refresh scheduler", function() {
+      scope.monitor.runtimeUpdateScheduler = scheduler;
 
-      repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
-        .andCallFake(function(id, type, callbacks) {
-          handlers = callbacks;
+      configurationWatcher({});
+
+      expect(timeoutService.cancel).toHaveBeenCalledWith({id: "scheduler"});
+    });
+    it("should not start the data loading if the configuration has not been defined", function() {
+      configurationWatcher(null);
+
+      expect(repository.loadMonitorRuntimeInfo).not.toHaveBeenCalled();
+    });
+
+    describe("runtime data refresh scheduling", function() {
+      var scheduleFunction, handlers;
+  
+      beforeEach(function() {
+        scope.monitor.refreshInterval = 10;
+        timeoutService = jasmine.createSpy("$timeout");
+        timeoutService.andCallFake(function(fn, delay, invokeApply) {
+          scheduleFunction = fn;
+          return scheduler;
         });
 
-      new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
-    };
+        repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
+          .andCallFake(function(id, type, callbacks) {
+            handlers = callbacks;
+          });
 
-    _.each(['success', 'error'], function(action) {
-      beforeEach(function() {
-        testSetup();
-        scope.loadRuntimeInfo();
+        new jashboard.MonitorController(rootScope, scope, repository, alertService, timeoutService);
+        configurationWatcher({});
       });
-      it("should save the scheduler into the monitor when data load is " + action, function() {
-        handlers[action]();
+      _.each(['success', 'error'], function(action) {
+        it("should save the scheduler into the monitor when data load is " + action, function() {
+          handlers[action]();
 
-        expect(scope.monitor.runtimeUpdateScheduler).toEqual(scheduler);
-      });
-      it("should schedule the data load after the given interval", function() {
-        handlers[action]();
+          expect(scope.monitor.runtimeUpdateScheduler).toEqual(scheduler);
+        });
+        it("should schedule the data load after the given interval", function() {
+          handlers[action]();
 
-        expect(timeoutService).toHaveBeenCalledWith(jasmine.any(Function), 10000);
-      });
-      it("should schedule the call to the repository to load the data", function() {
-        handlers[action]();
+          expect(timeoutService).toHaveBeenCalledWith(jasmine.any(Function), 10000);
+        });
+        it("should schedule the call to the repository to load the data", function() {
+          handlers[action]();
 
-        scheduleFunction();
+          scheduleFunction();
 
-        expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
-        expect(repository.loadMonitorRuntimeInfo.calls.length).toEqual(2);
-      });
-      it("should not schedule a data load if the refresh interval is 0", function() {
-        scope.monitor.refreshInterval = 0;
-        
-        handlers[action]();
+          expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
+          expect(repository.loadMonitorRuntimeInfo.calls.length).toEqual(2);
+        });
+        _.each([0, NaN, null], function(value) {
+          it("should not schedule a data load if the refresh interval is " + value, function() {
+            scope.monitor.refreshInterval = value;
+            
+            handlers[action]();
 
-        expect(timeoutService).not.toHaveBeenCalled();
-      });
-      it("should not schedule a data load if the refresh interval is not a finite number", function() {
-        scope.monitor.refreshInterval = NaN;
-
-        handlers[action]();
-
-        expect(timeoutService).not.toHaveBeenCalled();
+            expect(timeoutService).not.toHaveBeenCalled();
+          });
+        });
       });
     });
   });

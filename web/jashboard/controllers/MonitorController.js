@@ -1,11 +1,11 @@
 (function(module) {
   jashboard = _.extend(module, {
     MonitorController: function(rootScope, scope, repository, alertService, timeoutService) {
-      var scheduleNextUpdate = function scheduleNextUpdate(scope) {
+      var scheduleNextUpdate = function scheduleNextUpdate() {
         if (_.isFinite(scope.monitor.refreshInterval) && scope.monitor.refreshInterval > 0) {
           var interval = scope.monitor.refreshInterval * 1000;
           scope.monitor.runtimeUpdateScheduler = timeoutService(function() {
-            updateMonitorRuntimeInfo(scope, true);
+            updateMonitorRuntimeInfo(true);
           }, interval);
         }
       };
@@ -14,7 +14,7 @@
           timeoutService.cancel(scope.monitor.runtimeUpdateScheduler);
         }
       };
-      var updateMonitorRuntimeInfo = function(scope, scheduleNext) {
+      var updateMonitorRuntimeInfo = function(scheduleNext) {
         var monitor = scope.monitor;
         monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
         repository.loadMonitorRuntimeInfo(
@@ -26,7 +26,7 @@
               monitor.loadingStatus = jashboard.model.loadingStatus.completed;
               scope.$apply();
               if (scheduleNext) {
-                scheduleNextUpdate(scope);
+                scheduleNextUpdate();
               }
             },
             error: function(status, statusMessage, errorDetails) {
@@ -35,20 +35,18 @@
                     " [" + errorDetails + "]";
               scope.$apply();
               if (scheduleNext) {
-                scheduleNextUpdate(scope);
+                scheduleNextUpdate();
               }
             }
           }
         );        
       };
 
-      scope.$watch("monitor.refreshInterval", function(newValue, oldValue) {
-        if (newValue !== oldValue) {
-          if (_.isFinite(newValue) && !_.isFinite(oldValue)) {
-            updateMonitorRuntimeInfo(scope, true);
-          } else if (_.isFinite(oldValue) && !_.isFinite(newValue)) {
-            cancelUpdateSchedule();
-          }
+      scope.$watch("monitor.configuration", function(newValue, oldValue) {
+        console.log(_.isEqual(newValue, oldValue));
+        if (newValue) {
+          cancelUpdateSchedule();
+          updateMonitorRuntimeInfo(true);
         }
       });
 
@@ -99,14 +97,8 @@
         });
       };
 
-      scope.loadRuntimeInfo = function() {
-        if (_.isUndefined(scope.monitor.loadingStatus)) {
-          updateMonitorRuntimeInfo(scope, true);
-        }
-      };
-
       scope.refreshRuntimeInfo = function() {
-        updateMonitorRuntimeInfo(this, false);
+        updateMonitorRuntimeInfo(false);
       };
     }
   });

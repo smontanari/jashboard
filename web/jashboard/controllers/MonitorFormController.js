@@ -26,8 +26,7 @@
         };
       };
       var createMonitor = function(dashboard) {
-        var monitorType = scope.monitorFormModel.type;
-        var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
+        var monitorAdapter = pluginManager.findMonitorAdapter(scope.monitorFormModel.type);
         var monitorModel = parseMonitorForm();
         var monitorParameters = _.extend(monitorModel, {
           size: monitorAdapter.defaultSize(),

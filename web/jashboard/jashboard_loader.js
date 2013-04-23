@@ -12,7 +12,6 @@ steal('jashboard/jashboard.js')
       'DialogService',
       'WidgetService',
       'HttpService',
-      'TooltipService',
       'PaginationService',
       'Repository',
       'IntersectionDetector',
@@ -23,7 +22,8 @@ steal('jashboard/jashboard.js')
       'MenuActionsHandler'
     ],
     widgets: [
-      "SwitchButton"
+      "SwitchButton",
+      "Tooltip",
     ],
     directives: [
       'EventDirectiveDefinition',
@@ -31,7 +31,6 @@ steal('jashboard/jashboard.js')
       'OverlayDirective',
       'AlertBoxDirective',
       'TooltipDirective',
-      'TooltipTargetDirective',
       'DraggableDirective',
       'ResizableDirective',
       'MonitorDisplayDirective',

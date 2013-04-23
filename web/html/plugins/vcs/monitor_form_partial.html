@@ -1,6 +1,12 @@
 <div id="vcsMonitorInput" data-ng-show="formHelper.showForm('vcs')">
   <div class="form-horizontal" data-ng-form="vcsMonitorForm" data-ng-controller="VcsMonitorFormController"
     data-jb-form-validation="{triggerOnEvent: 'OpenMonitorDialog', validationRules: 'plugin.vcs.VcsMonitorFormValidationRules'}">
+    <div class="control-group">
+      <label class="control-label">VCS type</label>
+      <div class="controls">
+        <span class="readonly-field">{{monitorConfigurationFormModel.vcs.type}}</span>
+      </div>
+    </div>
     <div class="control-group" data-ng-class="{'error': inputInError('vcsWorkingDir')}">
       <label class="control-label" for="vcsWorkingDir">Working directory</label>
       <div class="controls">

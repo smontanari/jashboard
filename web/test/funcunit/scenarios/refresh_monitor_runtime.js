@@ -2,11 +2,6 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
 (function() {
   var server = jashboard.test.getFakeServer();
 
-  var errorResponse = {
-    returnCode: 500,
-    content: "something went very wrong",
-    delay: 1
-  };
   var successResponse = {
     content: {
       lastBuildTime: "2012-08-23 14:32:23 +1000",
@@ -23,7 +18,11 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
     if (requestCounts[monitor_id] % 2 == 0) {
       return successResponse;
     } else {
-      return errorResponse;
+      return {
+        returnCode: 500,
+        content: "something went very wrong for monitor " + monitor_id,
+        delay: 1
+      };
     }
   });
 }());

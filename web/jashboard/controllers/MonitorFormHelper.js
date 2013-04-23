@@ -5,6 +5,7 @@
         defaultForm: initialForm
       };
       var currentForm = monitorForms.defaultForm;
+      var currentSubmitAction = 'next';
       this.actions = ["next"];
 
       this.showForm = function(value) {
@@ -13,11 +14,13 @@
 
       this.next = function() {
         this.actions = ["back", "save"];
+        currentSubmitAction = 'save';
         currentForm = monitorForms[monitorModel.type];
       };
 
       this.back = function() {
         this.actions = ["next"];
+        currentSubmitAction = 'next';
         currentForm = monitorForms.defaultForm;
       };
 
@@ -30,6 +33,12 @@
           return true;
         }
         return currentForm.isValid;
+      };
+
+      this.submitAction = function() {
+        if (this.isActionEnabled(currentSubmitAction)) {
+          this[currentSubmitAction]();
+        }
       };
 
       this.save = saveCallback;

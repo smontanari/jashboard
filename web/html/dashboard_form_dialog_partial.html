@@ -1,6 +1,7 @@
 <div id="dashboard-form" data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}" class="modal hide fade" role="dialog" aria-hidden="true">
   <div data-ng-form="dashboardForm" class="form-horizontal" data-ng-controller="DashboardFormController" 
-    data-jb-form-validation="{triggerOnEvent: 'OpenDashboardDialog', triggerOnLoad: false, validationRules: 'DashboardFormValidationRules'}">
+    data-jb-form-validation="{triggerOnEvent: 'OpenDashboardDialog', triggerOnLoad: false, validationRules: 'DashboardFormValidationRules'}"
+    data-ui-keypress="{13: 'saveDashboard()'}">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <div data-ng-switch="$editMode">
@@ -21,7 +22,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" id="saveDashboard" data-ng-disabled="dashboardForm.$pristine || !dashboardForm.isValid" class="btn btn-primary" data-ng-click="saveDashboard()">Save</button>
+      <button id="saveDashboard" data-ng-disabled="!isSubmitEnabled()" class="btn btn-primary" data-ng-click="saveDashboard()">Save</button>
       <button id="cancelDashboard" class="btn" data-dismiss="modal">Cancel</button>
     </div>
   </div>

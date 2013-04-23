@@ -2,6 +2,7 @@ steal(
   { src: "css/bootstrap.min.css", packaged: false },
   { src: "css/bootstrapSwitch.css", packaged: false },
   { src: "css/jquery-ui/jquery-ui-1.10.1.custom.min.css", packaged: false },
+  { src: "css/angular-ui.min.css", packaged: false },
   { src: "jquery", packaged: false }
 ).then(
   { src: "lib/underscore-min.js", packaged: false },
@@ -12,6 +13,8 @@ steal(
   { src: "lib/jquery.cycle2.min.js", packaged: false },
   { src: "lib/moment.min.js", packaged: false },
   { src: "lib/angular.min.js", packaged: false })
+.then(
+  { src: "lib/angular-ui.min.js", packaged: false })
 .then("steal/less")
 .then("css/jashboard.less")
 .then("jashboard/jashboard_loader.js")

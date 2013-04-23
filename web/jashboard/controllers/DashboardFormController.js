@@ -17,16 +17,24 @@
         scope.$emit("CloseDashboardDialog");
       };
       var createDashboard = function() {
-        invokeRepository("createDashboard", [{name: scope.dashboardFormModel.name}], function(dashboard) {
-          scope.dashboards.push(dashboard);
-          scope.context.activeDashboardId = dashboard.id;
-        });
+        if (scope.isSubmitEnabled()) {
+          invokeRepository("createDashboard", [{name: scope.dashboardFormModel.name}], function(dashboard) {
+            scope.dashboards.push(dashboard);
+            scope.context.activeDashboardId = dashboard.id;
+          });
+        }
       };
       var updateDashboard = function() {
-        invokeRepository("updateDashboard", [scope.dashboardFormModel], function() {
-          var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.dashboardFormModel.id});
-          dashboard.name = scope.dashboardFormModel.name;
-        });
+        if (scope.isSubmitEnabled()) {
+          invokeRepository("updateDashboard", [scope.dashboardFormModel], function() {
+            var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.dashboardFormModel.id});
+            dashboard.name = scope.dashboardFormModel.name;
+          });
+        }
+      };
+
+      scope.isSubmitEnabled = function() {
+        return scope.dashboardForm.isValid;
       };
 
       scope.$on("OpenDashboardDialog", function(event, options) {

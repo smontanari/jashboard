@@ -26,9 +26,11 @@
         initFields(createMode, rules);
         validateForm();
       };
-      this.validate = function(inputName) {
-        if (_.isString(inputName)) {
-          form[inputName].$error = validationRules[inputName](scope) || {};
+      this.validate = function(inputNames) {
+        if (_.isArray(inputNames)) {
+          _.each(inputNames, function(inputName) {
+            form[inputName].$error = validationRules[inputName](scope) || {};
+          });
         }
         validateForm();
       };

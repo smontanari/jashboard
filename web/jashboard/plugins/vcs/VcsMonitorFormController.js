@@ -5,7 +5,8 @@
 
       scope.toggleSlideShowEffect = function() {
         if (!scope.monitorConfigurationFormModel.vcs.pagination) {
-          scope.monitorConfigurationFormModel.vcs.commitsPerPage = null;
+          scope.monitorConfigurationFormModel.vcs.commitsPerPage = 1;
+          scope.monitorConfigurationFormModel.vcs.interval = 5000;
         }
       };
 
@@ -16,7 +17,8 @@
             historyLength: 1,
             branch: null,
             pagination: false,
-            commitsPerPage: null
+            commitsPerPage: 1,
+            interval: 5000
           };
         }
         scope.formHelper.registerMonitorTypeForm("vcs", scope.vcsMonitorForm);

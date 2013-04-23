@@ -23,6 +23,13 @@
           }
         }
       };
+      this.vcsPageInterval = function(scope) {
+        if (scope.monitorConfigurationFormModel.vcs) {
+          if (scope.monitorConfigurationFormModel.vcs.pagination) {
+            return requiredPositiveIntegerRule(scope.monitorConfigurationFormModel.vcs.interval);
+          }
+        }
+      };
     }
   });
 }(jashboard.plugin.vcs || {}));

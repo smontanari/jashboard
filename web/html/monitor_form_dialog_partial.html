@@ -15,7 +15,7 @@
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">
             <input type="text" name="monitorName" class="input-large" placeholder="monitor name" 
-              data-ng-model="monitorFormModel.name" data-ng-change="validateField('monitorName')">
+              data-ng-model="monitorFormModel.name" data-ng-change="validateFields('monitorName')">
           </div>
           <div class="controls">
             <div id="monitorNameRequiredError" class="help-inline" data-ng-show="baseMonitorForm.monitorName.$error.required">You must provide a monitor name.</div>
@@ -25,7 +25,7 @@
           <label class="control-label" for="monitorRefresh">Refresh interval</label>
           <div class="controls">
             <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorFormModel.refreshInterval" 
-              data-ng-change="validateField('monitorRefresh')"> seconds
+              data-ng-change="validateFields('monitorRefresh')"> seconds
           </div>
           <div class="controls">
             <div id="monitorRefreshNumberError" class="help-inline" data-ng-show="baseMonitorForm.monitorRefresh.$error.number">You must enter a valid number.</div>

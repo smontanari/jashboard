@@ -58,21 +58,13 @@ describe("MonitorDisplayDirective", function() {
         expect(cancelListener).toHaveBeenCalled();
       });
       it("should recalculate the size of the element at a later point in time", function() {
-        var called = false;
-        widgetService.resetContainerHeight.andCallFake(function(element) {
-          called = true;
-        });
-        runs(function() {
-          eventHandler({}, "test_dashboard_id");
-        });
-
-        waitsFor(function() {
-          return called;
-        }, "call to widgetService", 200);
-
-        runs(function() {
-          expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element");
-        });      
+        testHelper.asyncTestRun([
+          {
+            before: function() { eventHandler({}, "test_dashboard_id"); },
+            waitFor: function() { return widgetService.resetContainerHeight.calls.length === 1; },
+            after: function() { expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element"); }
+          }
+        ]);
       });
     });
   });

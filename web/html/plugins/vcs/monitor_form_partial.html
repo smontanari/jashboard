@@ -11,7 +11,7 @@
       <label class="control-label" for="vcsWorkingDir">Working directory</label>
       <div class="controls">
         <input name="vcsWorkingDir" type="text" class="input-large" placeholder="working directory"
-          data-ng-model="monitorConfigurationFormModel.vcs.workingDirectory" data-ng-change="validateField('vcsWorkingDir')">
+          data-ng-model="monitorConfigurationFormModel.vcs.workingDirectory" data-ng-change="validateFields('vcsWorkingDir')">
       </div>
       <div class="controls">
         <div id="vcsWorkingDirRequiredError" class="help-inline" data-ng-show="vcsMonitorForm.vcsWorkingDir.$error.required">You must provide a {{monitorConfigurationFormModel.vcs.type}} working directory.</div>
@@ -27,7 +27,7 @@
       <label class="control-label" for="vcsHistoryLength">Number of commits</label>
       <div class="controls">
         <input id="vcsHistoryLength" name="vcsHistoryLength" type="text" class="input-mini" 
-          data-ng-model="monitorConfigurationFormModel.vcs.historyLength" data-ng-change="validateField('vcsHistoryLength')">
+          data-ng-model="monitorConfigurationFormModel.vcs.historyLength" data-ng-change="validateFields('vcsHistoryLength')">
       </div>
       <div class="controls">
         <div id="vcsHistoryLengthRequiredError" class="help-inline" data-ng-show="vcsMonitorForm.vcsHistoryLength.$error.required">You must provide a number of commits.</div>
@@ -39,20 +39,34 @@
       <div class="controls">
         <div class="switch switch-small" data-on="info" data-jb-switch-button="{activateOn: 'OpenMonitorDialog'}" 
           data-ng-model="monitorConfigurationFormModel.vcs.pagination"
-          data-jb-switch-button-toggle="toggleSlideShowEffect();validateField()"
+          data-jb-switch-button-toggle="toggleSlideShowEffect();validateFields('vcsPageSize', 'vcsPageInterval')"
           data-jb-switch-button-id="vcsPageSlideShow"/>
       </div>
     </div>
-    <div class="control-group" data-ng-show="monitorConfigurationFormModel.vcs.pagination" data-ng-class="{'error': inputInError('vcsPageSize')}">
-      <label class="control-label" for="vcsPageSize">Page size</label>
-      <div class="controls">
-        <input name="vcsPageSize" type="text" class="input-mini" 
-          data-ng-model="monitorConfigurationFormModel.vcs.commitsPerPage"
-          data-ng-change="validateField('vcsPageSize')">
+    <div data-ng-show="monitorConfigurationFormModel.vcs.pagination">
+      <div class="control-group" data-ng-class="{'error': inputInError('vcsPageSize')}">
+        <label class="control-label" for="vcsPageSize">Page size</label>
+        <div class="controls">
+          <input name="vcsPageSize" type="text" class="input-mini" 
+            data-ng-model="monitorConfigurationFormModel.vcs.commitsPerPage"
+            data-ng-change="validateFields('vcsPageSize')">
+        </div>
+        <div class="controls">
+          <div id="vcsPageSizeNumberError" class="help-inline" data-ng-show="vcsMonitorForm.vcsPageSize.$error.required">You must provide a page size.</div>
+          <div id="vcsPageSizePositiveNumberError" class="help-inline" data-ng-show="vcsMonitorForm.vcsPageSize.$error.positiveInteger">You must enter a positive number.</div>
+        </div>
       </div>
-      <div class="controls">
-        <div id="vcsPageSizeNumberError" class="help-inline" data-ng-show="vcsMonitorForm.vcsPageSize.$error.required">You must provide a page size.</div>
-        <div id="vcsPageSizePositiveNumberError" class="help-inline" data-ng-show="vcsMonitorForm.vcsPageSize.$error.positiveInteger">You must enter a positive number.</div>
+      <div class="control-group" data-ng-class="{'error': inputInError('vcsPageInterval')}">
+        <label class="control-label" for="vcsPageInterval">Page interval</label>
+        <div class="controls">
+          <input name="vcsPageInterval" type="text" class="input-mini" 
+            data-ng-model="monitorConfigurationFormModel.vcs.interval"
+            data-ng-change="validateFields('vcsPageInterval')"> seconds
+        </div>
+        <div class="controls">
+          <div id="vcsPageIntervalNumberError" class="help-inline" data-ng-show="vcsMonitorForm.vcsPageInterval.$error.required">You must provide a page interval.</div>
+          <div id="vcsPageIntervalPositiveNumberError" class="help-inline" data-ng-show="vcsMonitorForm.vcsPageInterval.$error.positiveInteger">You must enter a positive number.</div>
+        </div>
       </div>
     </div>
   </div>

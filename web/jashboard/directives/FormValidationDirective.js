@@ -15,8 +15,8 @@
           var form = scope[attrs.ngForm];
           scope.$formValidator = new jashboard.FormValidator(form, scope);
 
-          scope.validateField = function(inputName) {
-            scope.$formValidator.validate(inputName);
+          scope.validateFields = function() {
+            scope.$formValidator.validate(_.toArray(arguments));
           };
           scope.inputInError = function(inputName) {
             if (_.isObject(form[inputName])) {

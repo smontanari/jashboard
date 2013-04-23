@@ -32,10 +32,10 @@ describe("FormValidationDirective", function() {
     it("should set the validator in the scope", function() {
       expect(scope.$formValidator).toEqual(validator);
     });
-    it("should use the validator to validate the input field", function() {
-      scope.validateField("test-input");
+    it("should use the validator to validate the input fields", function() {
+      scope.validateFields("test-input1", "test-input2");
 
-      expect(validator.validate).toHaveBeenCalledWith("test-input");
+      expect(validator.validate).toHaveBeenCalledWith(["test-input1", "test-input2"]);
     });
 
     describe("scope.inputInError()", function() {

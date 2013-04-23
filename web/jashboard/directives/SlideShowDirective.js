@@ -12,7 +12,6 @@
             scope.slides = paginationService.paginate(items, itemsPerSlide);
           }        
         };
-
         var stopSlideShow = function() {
           if (slideShowStarted) {
             $(element).cycle('destroy');
@@ -20,10 +19,13 @@
           }
         };
         var startSlideShow = function() {
-          _.defer(function() {
-            $(element).cycle();
-            slideShowStarted = true;
-          });
+          var interval = scope.$eval(attrs.jbSlideShowInterval);
+          if (!slideShowStarted) {
+            _.defer(function() {
+              $(element).cycle({timeout: interval});
+              slideShowStarted = true;
+            });
+          }
         };
 
         scope.$on(startEvent, function(event) {
@@ -40,6 +42,12 @@
         scope.$watch(attrs.jbSlideShowItemsPerSlide, function(newPageSize, oldPageSize) {
           if (newPageSize) {
             resetSlides(scope.$eval(attrs.jbSlideShowItems), newPageSize);
+          }
+        });
+        scope.$watch(attrs.jbSlideShowInterval, function(newInterval, oldInterval) {
+          if (newInterval) {
+            stopSlideShow();
+            startSlideShow();
           }
         });
 

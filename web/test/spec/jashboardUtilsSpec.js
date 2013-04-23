@@ -38,6 +38,16 @@ describe("Jashboard utility functions", function() {
 
       expect(result).toEqual("TestString");
     });
+    it("should return a truncated string with ellipsis", function() {
+      var result = jashboard.stringUtils.ellipsis("test string longer than whatever", 23);
+
+      expect(result).toEqual("test string longer than...");
+    });
+    it("should return the entire string with no ellipsis", function() {
+      var result = jashboard.stringUtils.ellipsis("test string short", 20);
+
+      expect(result).toEqual("test string short");
+    });
   });
 
   describe("angularUtils", function() {

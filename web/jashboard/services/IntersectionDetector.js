@@ -20,7 +20,7 @@
       };
     }
   });
-  jashboard.services.service('IntersectionDetector', [jashboard.IntersectionDetector]).run(function() {
-    steal.dev.log("IntersectionDetector initialized");
+  jashboard.services.service('IntersectionDetector', [jashboard.IntersectionDetector]).run(function($log) {
+    $log.info("IntersectionDetector initialized");
   });
 }(jashboard || {}));

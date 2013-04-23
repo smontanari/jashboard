@@ -49,6 +49,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbSlideShow", ["PaginationService", jashboard.angular.slideShowDirective]).run(function() {
-  steal.dev.log("slideShowDirective initialized");
+jashboard.application.directive("jbSlideShow", ["PaginationService", jashboard.angular.slideShowDirective]).run(function($log) {
+  $log.info("slideShowDirective initialized");
 });

@@ -9,7 +9,7 @@
       };
     }
   });
-  jashboard.services.service('DialogService', [jashboard.DialogService]).run(function() {
-    steal.dev.log("DialogService initialized");
+  jashboard.services.service('DialogService', [jashboard.DialogService]).run(function($log) {
+    $log.info("DialogService initialized");
   });
 }(jashboard || {}));

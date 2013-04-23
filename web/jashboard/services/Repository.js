@@ -114,7 +114,7 @@
       }
     }
   });
-  jashboard.services.service('Repository', ['HttpService', 'PluginManager', jashboard.Repository]).run(function() {
-    steal.dev.log("Repository initialized");
+  jashboard.services.service('Repository', ['HttpService', 'PluginManager', jashboard.Repository]).run(function($log) {
+    $log.info("Repository initialized");
   });
 }(jashboard || {}));

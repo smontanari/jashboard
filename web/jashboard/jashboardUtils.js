@@ -34,6 +34,12 @@
         if (_.isString(s) && !_.isEmpty(s)) {
           return s.slice(0, 1).toUpperCase() + s.slice(1);
         }
+      },
+      ellipsis: function(s, cutoff) {
+        if (_.isUndefined(cutoff) || s.length <= cutoff) {
+          return s;
+        }
+        return s.substring(0, cutoff) + "...";
       }
     },
     angularUtils: {

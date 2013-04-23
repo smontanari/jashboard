@@ -59,7 +59,9 @@ describe("VcsMonitorFormController", function() {
       expect(scope.monitorConfigurationFormModel.vcs).toEqual({
         type: "git",
         historyLength: 1,
-        pagination: false
+        branch: null,
+        pagination: false,
+        commitsPerPage: null
       });
     });
   });

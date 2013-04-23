@@ -22,7 +22,7 @@
       };
     }
   });
-  jashboard.services.service('AlertService', [jashboard.AlertService]).run(function() {
-    steal.dev.log("AlertService initialized");
+  jashboard.services.service('AlertService', [jashboard.AlertService]).run(function($log) {
+    $log.info("AlertService initialized");
   });
 }(jashboard || {}));

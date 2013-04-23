@@ -27,7 +27,7 @@
       };
     }
   });
-  jashboard.services.service('OverlayService', [jashboard.OverlayService]).run(function() {
-    steal.dev.log("OverlayService initialized");
+  jashboard.services.service('OverlayService', [jashboard.OverlayService]).run(function($log) {
+    $log.info("OverlayService initialized");
   });
 }(jashboard || {}));

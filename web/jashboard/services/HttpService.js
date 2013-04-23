@@ -43,7 +43,7 @@
       };
     }
   });
-  jashboard.services.service('HttpService', ['$log', jashboard.HttpService]).run(function() {
-    steal.dev.log("HttpService initialized");
+  jashboard.services.service('HttpService', ['$log', jashboard.HttpService]).run(function($log) {
+    $log.info("HttpService initialized");
   });
 }(jashboard || {}));

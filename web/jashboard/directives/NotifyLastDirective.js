@@ -11,6 +11,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbNotifyLast", [jashboard.angular.notifyLastDirective]).run(function() {
-  steal.dev.log("notifyLastDirective initialized");
+jashboard.application.directive("jbNotifyLast", [jashboard.angular.notifyLastDirective]).run(function($log) {
+  $log.info("notifyLastDirective initialized");
 });

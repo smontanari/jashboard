@@ -20,7 +20,7 @@
     }
   });
   jashboard.application.controller("BuildMonitorFormController", ['$scope', jashboard.plugin.build.BuildMonitorFormController])
-    .run(function() {
-      steal.dev.log("BuildMonitorFormController initialized");
+    .run(function($log) {
+      $log.info("BuildMonitorFormController initialized");
   });
 }(jashboard.plugin.build || {}));

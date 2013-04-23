@@ -7,7 +7,8 @@ module Jashboard
       module GitAdapter
         def get_git_runtime_info(configuration)
           repo = Grit::Repo.new(configuration.working_directory)
-          branch = configuration.branch || 'master'
+          branch = 'master'
+          branch = configuration.branch unless configuration.branch.nil? || configuration.branch.empty?
           repo.commits(branch, configuration.history_length).map do |commit|
             VcsRuntimeInfo.new(
               commit.id,

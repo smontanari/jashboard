@@ -1,7 +1,8 @@
 .DS_Store
 selenium.log
 testresults.xml
-.rvmrc
+.ruby-version
+.ruby-gemset
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*
 web/node_modules

@@ -41,7 +41,7 @@
       });
     }
   });
-  jashboard.application.controller("DashboardFormController", ['$scope', 'Repository', jashboard.DashboardFormController]).run(function() {
-    steal.dev.log("DashboardFormController initialized");
+  jashboard.application.controller("DashboardFormController", ['$scope', 'Repository', jashboard.DashboardFormController]).run(function($log) {
+    $log.info("DashboardFormController initialized");
   });
 }(jashboard || {}));

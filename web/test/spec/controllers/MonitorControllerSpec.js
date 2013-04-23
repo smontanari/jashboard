@@ -272,7 +272,7 @@ describe("MonitorController", function() {
 
     describe("on failure", function() {
       beforeEach(function () {
-        handlers.error("test_status", "test_message", "test_error");
+        handlers.error("test_status", "test_message", "test error longer than the max number of characters");
       });
       it("should not change the runtime data", function() {
         expect(testMonitor.runtimeInfo).toEqual("test_initial_runtime");
@@ -281,7 +281,7 @@ describe("MonitorController", function() {
         expect(scope.monitor.loadingStatus).toEqual(jashboard.model.loadingStatus.error);
       });
       it("should set the error message into the scope", function() {
-        expect(scope.errorMessage).toEqual("Error refreshing runtime information - test_message [test_error]");
+        expect(scope.errorMessage).toEqual("Error refreshing runtime information - test_message [test error longer than the max...]");
         expect(scope.$apply).toHaveBeenCalled();
       });
       it("should not schedule the data load after the given interval", function() {

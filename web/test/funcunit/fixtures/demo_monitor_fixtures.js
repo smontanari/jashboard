@@ -6,6 +6,8 @@
     var data = JSON.parse(request.requestBody);
     monitorCounter++;
     storedMonitors.push({id: "monitor_" + monitorCounter, type: data.type, configuration: data.configuration});
+    steal.dev.log("created monitor");
+    steal.dev.log(data);
     return {
       content: {
         id: "monitor_" + monitorCounter,

@@ -14,7 +14,9 @@
           scope.monitorConfigurationFormModel.vcs = {
             type: _.first(scope.availableVcsTypes),
             historyLength: 1,
-            pagination: false
+            branch: null,
+            pagination: false,
+            commitsPerPage: null
           };
         }
         scope.formHelper.registerMonitorTypeForm("vcs", scope.vcsMonitorForm);
@@ -22,7 +24,7 @@
     }
   });
   jashboard.application.controller("VcsMonitorFormController", ['$scope', jashboard.plugin.vcs.VcsMonitorFormController])
-    .run(function() {
-      steal.dev.log("VcsMonitorFormController initialized");
+    .run(function($log) {
+      $log.info("VcsMonitorFormController initialized");
   });
 }(jashboard.plugin.vcs || {}));

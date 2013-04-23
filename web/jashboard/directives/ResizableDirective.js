@@ -25,6 +25,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbResizable", ['WidgetService', jashboard.angular.resizableDirective]).run(function() {
-  steal.dev.log("resizableDirective initialized");
+jashboard.application.directive("jbResizable", ['WidgetService', jashboard.angular.resizableDirective]).run(function($log) {
+  $log.info("resizableDirective initialized");
 });

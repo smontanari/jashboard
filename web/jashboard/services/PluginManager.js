@@ -25,7 +25,7 @@
         if (_.isFunction(adapter.init)) {
           adapter.init();
         }
-        steal.dev.log("Added MonitorAdapter for [" + typeIdentifier + "]");
+        console.log("Added MonitorAdapter for [" + typeIdentifier + "]");
       };
 
       this.getAllMonitorTypes = function() {
@@ -49,8 +49,8 @@
   });
   jashboard.services.factory('PluginManager', function() {
     return jashboard.plugin.pluginManager;
-  }).run(function() {
-    steal.dev.log("PluginManager initialized");
+  }).run(function($log) {
+    $log.info("PluginManager initialized");
   });
 }(jashboard.plugin ||{}));
 

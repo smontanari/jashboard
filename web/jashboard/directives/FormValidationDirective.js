@@ -1,26 +1,26 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     formValidationDirective: function () {
-      var createValidationRules = function(rulesName) {
+      var createValidationRules = function(rulesName, scope) {
         var rulesFn = _.reduce(rulesName.split("."), function(module, name) {
           return module[name];
         }, jashboard);
         var RulesDefinition = rulesFn.bind();
-        return new RulesDefinition();
+        return new RulesDefinition(scope);
       };
       return function(scope, element, attrs) {
         var attributes = scope.$eval(attrs.jbFormValidation);
-        var validationRules = createValidationRules(attributes.validationRules);
+        var validationRules = createValidationRules(attributes.validationRules, scope);
         if (attrs.ngForm) {
           var form = scope[attrs.ngForm];
           scope.$formValidator = new jashboard.FormValidator(form, scope);
 
-          scope.validateField = function(inputName) {
-            scope.$formValidator.validate(inputName);
+          scope.validateFields = function() {
+            scope.$formValidator.validate(_.toArray(arguments));
           };
           scope.inputInError = function(inputName) {
             if (_.isObject(form[inputName])) {
-              return form[inputName].$dirty && !_.isEmpty(form[inputName].$error);
+              return !_.isEmpty(form[inputName].$error);
             }
           };
         }
@@ -29,7 +29,7 @@
             scope.$formValidator.applyRules(validationRules);
           });
         }
-        if (_.isUndefined(attributes.triggerOnLoad) || attributes.triggerOnLoad === true) {
+        if (attributes.triggerOnLoad !== false) {
           scope.$formValidator.applyRules(validationRules);
         }
       };
@@ -37,6 +37,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbFormValidation", [jashboard.angular.formValidationDirective]).run(function() {
-  steal.dev.log("formValidationDirective initialized");
+jashboard.application.directive("jbFormValidation", [jashboard.angular.formValidationDirective]).run(function($log) {
+  $log.info("formValidationDirective initialized");
 });

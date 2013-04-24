@@ -13,7 +13,7 @@
       };
     }
   });
-  jashboard.services.service('MenuActionsHandler', [jashboard.MenuActionsHandler]).run(function() {
-    steal.dev.log("MenuActionsHandler initialized");
+  jashboard.services.service('MenuActionsHandler', [jashboard.MenuActionsHandler]).run(function($log) {
+    $log.info("MenuActionsHandler initialized");
   });
 }(jashboard || {}));

@@ -38,6 +38,16 @@ describe("Jashboard utility functions", function() {
 
       expect(result).toEqual("TestString");
     });
+    it("should return a truncated string with ellipsis", function() {
+      var result = jashboard.stringUtils.ellipsis("test string longer than whatever", 23);
+
+      expect(result).toEqual("test string longer than...");
+    });
+    it("should return the entire string with no ellipsis", function() {
+      var result = jashboard.stringUtils.ellipsis("test string short", 20);
+
+      expect(result).toEqual("test string short");
+    });
   });
 
   describe("angularUtils", function() {
@@ -59,6 +69,33 @@ describe("Jashboard utility functions", function() {
       jashboard.angularUtils.safeApply(scope, "test_expression");
 
       expect(scope.$apply).toHaveBeenCalledWith("test_expression");
+    });
+  });
+
+  describe("functionUtils", function() {
+    var testFunction;
+    beforeEach(function() {
+      testFunction = jasmine.createSpy();
+    });
+    it("should execute the function if the condition is true", function() {
+      jashboard.functionUtils.verify(true).then(testFunction);
+
+      expect(testFunction).toHaveBeenCalled();
+    });
+    it("should not execute the function if the condition is false", function() {
+      jashboard.functionUtils.verify(false).then(testFunction);
+
+      expect(testFunction).not.toHaveBeenCalled();
+    });
+    it("should defer the condition check and execute a function if the condition is true", function() {
+      jashboard.functionUtils.deferOnCondition(function() {return true;}, testFunction)();
+
+      expect(testFunction).toHaveBeenCalled();
+    });
+    it("should defer the condition check and not execute a function if the condition is false", function() {
+      jashboard.functionUtils.deferOnCondition(function() {return false;}, testFunction)();
+
+      expect(testFunction).not.toHaveBeenCalled();
     });
   });
 });

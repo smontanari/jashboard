@@ -31,8 +31,10 @@
             },
             error: function(status, statusMessage, errorDetails) {
               monitor.loadingStatus = jashboard.model.loadingStatus.error;
-              scope.errorMessage = "Error refreshing runtime information - " +  statusMessage + 
-                    " [" + errorDetails + "]";
+              scope.errorMessage = "Error refreshing runtime information - " +  statusMessage;
+              if (_.isString(errorDetails)) {
+                scope.errorMessage += " [" + jashboard.stringUtils.ellipsis(errorDetails, 30) + "]";
+              } 
               scope.$apply();
               if (scheduleNext) {
                 scheduleNextUpdate();
@@ -107,7 +109,7 @@
     'Repository',
     'AlertService',
     '$timeout',
-    jashboard.MonitorController]).run(function() {
-    steal.dev.log("MonitorController initialized");
+    jashboard.MonitorController]).run(function($log) {
+    $log.info("MonitorController initialized");
   });
 }(jashboard || {}));

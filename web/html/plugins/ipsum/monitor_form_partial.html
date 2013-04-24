@@ -5,7 +5,7 @@
       <label class="control-label" for="numberOfSentences">Number of sentences</label>
       <div class="controls">
         <input name="ipsumNumberOfSentences" type="text" class="input-mini"
-          data-ng-model="monitorConfigurationFormModel.ipsum.numberOfSentences" data-ng-change="validateField('ipsumNumberOfSentences')">
+          data-ng-model="monitorConfigurationFormModel.ipsum.numberOfSentences" data-ng-change="validateFields('ipsumNumberOfSentences')">
       </div>
       <div class="controls">
         <div id="ipsumNumberOfSentencesRequiredError" class="help-inline" data-ng-show="ipsumMonitorForm.ipsumNumberOfSentences.$error.required">You must provide a number of sentences.</div>

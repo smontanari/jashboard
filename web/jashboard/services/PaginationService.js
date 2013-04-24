@@ -23,7 +23,7 @@
       };
     }
   });
-  jashboard.services.service('PaginationService', [jashboard.PaginationService]).run(function() {
-    steal.dev.log("PaginationService initialized");
+  jashboard.services.service('PaginationService', [jashboard.PaginationService]).run(function($log) {
+    $log.info("PaginationService initialized");
   });
 }(jashboard || {}));

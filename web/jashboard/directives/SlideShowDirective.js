@@ -12,7 +12,6 @@
             scope.slides = paginationService.paginate(items, itemsPerSlide);
           }        
         };
-
         var stopSlideShow = function() {
           if (slideShowStarted) {
             $(element).cycle('destroy');
@@ -20,10 +19,13 @@
           }
         };
         var startSlideShow = function() {
-          _.defer(function() {
-            $(element).cycle();
-            slideShowStarted = true;
-          });
+          var interval = scope.$eval(attrs.jbSlideShowInterval);
+          if (!slideShowStarted) {
+            _.defer(function() {
+              $(element).cycle({timeout: interval});
+              slideShowStarted = true;
+            });
+          }
         };
 
         scope.$on(startEvent, function(event) {
@@ -42,6 +44,12 @@
             resetSlides(scope.$eval(attrs.jbSlideShowItems), newPageSize);
           }
         });
+        scope.$watch(attrs.jbSlideShowInterval, function(newInterval, oldInterval) {
+          if (newInterval) {
+            stopSlideShow();
+            startSlideShow();
+          }
+        });
 
         resetSlides(scope.$eval(attrs.jbSlideShowItems), scope.$eval(attrs.jbSlideShowItemsPerSlide));
       };
@@ -49,6 +57,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbSlideShow", ["PaginationService", jashboard.angular.slideShowDirective]).run(function() {
-  steal.dev.log("slideShowDirective initialized");
+jashboard.application.directive("jbSlideShow", ["PaginationService", jashboard.angular.slideShowDirective]).run(function($log) {
+  $log.info("slideShowDirective initialized");
 });

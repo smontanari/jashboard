@@ -16,16 +16,18 @@
         repository[repositoryFn].apply(null, parameters);
         scope.$emit("CloseDashboardDialog");
       };
+      var formIsValid = function() {
+        return scope.dashboardForm.isValid;
+      };
+
       var createDashboard = function() {
-        if (scope.isSubmitEnabled()) {
-          invokeRepository("createDashboard", [{name: scope.dashboardFormModel.name}], function(dashboard) {
-            scope.dashboards.push(dashboard);
-            scope.context.activeDashboardId = dashboard.id;
-          });
-        }
+        invokeRepository("createDashboard", [{name: scope.dashboardFormModel.name}], function(dashboard) {
+          scope.dashboards.push(dashboard);
+          scope.context.activeDashboardId = dashboard.id;
+        });
       };
       var updateDashboard = function() {
-        if (scope.isSubmitEnabled()) {
+        if (scope.dashboardForm.isValid) {
           invokeRepository("updateDashboard", [scope.dashboardFormModel], function() {
             var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.dashboardFormModel.id});
             dashboard.name = scope.dashboardFormModel.name;
@@ -33,23 +35,19 @@
         }
       };
 
-      scope.isSubmitEnabled = function() {
-        return scope.dashboardForm.isValid;
-      };
-
       scope.$on("OpenDashboardDialog", function(event, options) {
         if (options.mode === jashboard.inputOptions.createMode) {
           scope.dashboardFormModel = {};
-          scope.saveDashboard = createDashboard;
+          scope.saveDashboard = jashboard.functionUtils.deferOnCondition(formIsValid, createDashboard);
         } else if (options.mode === jashboard.inputOptions.updateMode) {
           scope.dashboardFormModel = _.pick(options.parameters.dashboard, "id", "name");
-          scope.saveDashboard = updateDashboard;
+          scope.saveDashboard = jashboard.functionUtils.deferOnCondition(formIsValid, updateDashboard);
         }
         scope.$editMode = options.mode;
       });
     }
   });
-  jashboard.application.controller("DashboardFormController", ['$scope', 'Repository', jashboard.DashboardFormController]).run(function() {
-    steal.dev.log("DashboardFormController initialized");
+  jashboard.application.controller("DashboardFormController", ['$scope', 'Repository', jashboard.DashboardFormController]).run(function($log) {
+    $log.info("DashboardFormController initialized");
   });
 }(jashboard || {}));

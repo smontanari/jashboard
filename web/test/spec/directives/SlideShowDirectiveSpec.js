@@ -1,24 +1,6 @@
 describe("SlideShowDirective", function() {
-  var linkFunction, scope, $stub, eventListener, 
-      event, itemsWatcherFn, itemsPerSlideWatcherFn,
-      paginationService;
-
-  var triggerStartSlideShowAndRunTest = function(testFn) {
-    var called = false;
-    $stub.cycle.andCallFake(function() {
-      called = true;
-    });
-
-    runs(function() {
-      eventListener(event);
-    });
-
-    waitsFor(function() {
-      return called;
-    }, "call to $.cycle()", 200);
-
-    runs(testFn);
-  };
+  var linkFunction, scope, $stub, eventListener, event,
+      itemsWatcherFn, itemsPerSlideWatcherFn, intervalWatcherFn, paginationService;
 
   beforeEach(function() {
     event = jasmine.createSpyObj("event", ['stopPropagation']);
@@ -32,12 +14,14 @@ describe("SlideShowDirective", function() {
       $watch: jasmine.createSpy("scope.$watch").andCallFake(function(expr, callback) {
         if (expr === "test_expr_items") itemsWatcherFn = callback;
         if (expr === "test_expr_items_per_slide") itemsPerSlideWatcherFn = callback;
+        if (expr === "test_expr_interval") intervalWatcherFn = callback;
       })
     };
 
     scope.$eval.withArgs("test_expr").returns({start: 'test_event'});
     scope.$eval.withArgs("test_expr_items").returns("items");
     scope.$eval.withArgs("test_expr_items_per_slide").returns("page_size");
+    scope.$eval.withArgs("test_expr_interval").returns("page_interval");
 
     paginationService = {
       paginate: sinon.stub()
@@ -51,7 +35,8 @@ describe("SlideShowDirective", function() {
     linkFunction(scope, "test-element", {
       jbSlideShow: "test_expr",
       jbSlideShowItems: "test_expr_items",
-      jbSlideShowItemsPerSlide: "test_expr_items_per_slide"
+      jbSlideShowItemsPerSlide: "test_expr_items_per_slide",
+      jbSlideShowInterval: "test_expr_interval"
     });
 
     expect(scope.slides).toEqual("test_slides");
@@ -60,7 +45,8 @@ describe("SlideShowDirective", function() {
     linkFunction(scope, "test-element", {
       jbSlideShow: "test_expr",
       jbSlideShowItems: "undefined_items",
-      jbSlideShowItemsPerSlide: "test_expr_items_per_slide"
+      jbSlideShowItemsPerSlide: "test_expr_items_per_slide",
+      jbSlideShowInterval: "test_expr_interval"
     });
 
     expect(scope.slides).toBeUndefined();
@@ -72,17 +58,24 @@ describe("SlideShowDirective", function() {
       linkFunction(scope, "test-element", {
         jbSlideShow: "test_expr",
         jbSlideShowItems: "test_expr_items",
-        jbSlideShowItemsPerSlide: "test_expr_items_per_slide"
+        jbSlideShowItemsPerSlide: "test_expr_items_per_slide",
+        jbSlideShowInterval: "test_expr_interval"
       });
     });  
     it("should listen to the start event", function() {
       expect(scope.$on).toHaveBeenCalledWith("test_event", jasmine.any(Function));
     });
     it("should defer the start of the slide show when receiving the start event", function() {
-      triggerStartSlideShowAndRunTest(function() {
-        expect($stub.cycle).toHaveBeenCalled();
-        expect(event.stopPropagation).toHaveBeenCalled();
-      });
+      testHelper.asyncTestRun([
+        {
+          before: function() { eventListener(event); },
+          waitFor: function() { return $stub.cycle.calls.length === 1; },
+          after: function() {
+            expect($stub.cycle).toHaveBeenCalledWith({timeout: "page_interval"});
+            expect(event.stopPropagation).toHaveBeenCalled();
+          }
+        }
+      ]);
     });
   });
 
@@ -110,11 +103,16 @@ describe("SlideShowDirective", function() {
       expect(scope.slides).toEqual("test_new_slides");
     });
     it("should stop the slideshow if already started before changing the slides", function() {
-      triggerStartSlideShowAndRunTest(function() {
-        itemsWatcherFn("new_items");
-        
-        expect($stub.cycle).toHaveBeenCalledWith("destroy");
-      });
+      testHelper.asyncTestRun([
+        {
+          before: function() { eventListener(event); },
+          waitFor: function() { return $stub.cycle.calls.length === 1; },
+          after: function() {
+            itemsWatcherFn("new_items");
+            expect($stub.cycle).toHaveBeenCalledWith("destroy");
+          }
+        }
+      ]);
     });
   });
 
@@ -135,17 +133,61 @@ describe("SlideShowDirective", function() {
 
       expect(scope.slides).toEqual("test_slides");
     });
-    it("should change the slides in the scope if the itemsPerSlides number is defined", function() {
+    it("should stop the slideshow and change the slides in the scope if the itemsPerSlides number is defined", function() {
+      testHelper.asyncTestRun([
+        {
+          before: function() { eventListener(event); },
+          waitFor: function() { return $stub.cycle.calls.length === 1; },
+          after: function() {
+            itemsPerSlideWatcherFn("new_page_size");
+            expect($stub.cycle).toHaveBeenCalledWith("destroy");
+            expect(scope.slides).toEqual("test_new_slides");
+          }
+        }
+      ]);
       itemsPerSlideWatcherFn("new_page_size");
 
       expect(scope.slides).toEqual("test_new_slides");
     });
-    it("should stop the slideshow if already started before changing the slides", function() {
-      triggerStartSlideShowAndRunTest(function() {
-        itemsPerSlideWatcherFn("new_page_size");
-        
-        expect($stub.cycle).toHaveBeenCalledWith("destroy");
+  });
+
+  describe("interval watcher functionality", function() {
+    beforeEach(function() {
+      linkFunction(scope, "test-element", {
+        jbSlideShow: "test_expr",
+        jbSlideShowItems: "test_expr_items",
+        jbSlideShowItemsPerSlide: "test_expr_items_per_slide",
+        jbSlideShowInterval: "test_expr_interval"
       });
+    });
+    it("should watch the expression representing the items per slide", function() {
+      expect(scope.$watch).toHaveBeenCalledWith("test_expr_interval", jasmine.any(Function));
+    });
+    it("should not restart the slideshow if the interval number is not defined", function() {
+      intervalWatcherFn(undefined);
+
+      expect($stub.cycle).not.toHaveBeenCalled();
+    });
+    it("should restart the slideshow if the interval number is defined", function() {
+      var runs = [
+        {
+          before: function() { eventListener(event); },
+          waitFor: function() { return $stub.cycle.calls.length === 1; },
+          after: function() {}
+        },
+        {
+          before: function() {
+            scope.$eval.withArgs("test_expr_interval").returns("new_page_interval");
+            intervalWatcherFn("new_page_interval");
+          },
+          waitFor: function() { return $stub.cycle.calls.length === 3; },
+          after: function() {
+            expect($stub.cycle).toHaveBeenCalledWith("destroy");
+            expect($stub.cycle).toHaveBeenCalledWith({timeout: "new_page_interval"});
+          }
+        }
+      ];
+      testHelper.asyncTestRun(runs);
     });
   });
 });

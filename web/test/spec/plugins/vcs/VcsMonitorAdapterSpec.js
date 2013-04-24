@@ -9,7 +9,8 @@ describe("VcsMonitorAdapter", function() {
       branch: "test_branch",
       historyLength: 123,
       pagination: true,
-      commitsPerPage: 4
+      commitsPerPage: 4,
+      interval: 345
     };
     configForm = {
       type: "test_type",
@@ -17,7 +18,8 @@ describe("VcsMonitorAdapter", function() {
       branch: "test_branch",
       historyLength: "123",
       pagination: true,
-      commitsPerPage: "4"
+      commitsPerPage: "4",
+      interval: "345"
     };
   });
 

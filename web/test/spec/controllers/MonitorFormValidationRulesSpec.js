@@ -27,9 +27,9 @@ describe("MonitorFormValidationRules", function() {
   it("should validate the 'monitorName' field with the 'required' rule", function() {
     var requiredRule = spyOn(jashboard.commonValidationRules, "required");
     requiredRule.andReturn("test_validation_result");
-    rules = new jashboard.MonitorFormValidationRules();
+    rules = new jashboard.MonitorFormValidationRules(scope);
 
-    expect(rules.monitorName(scope)).toEqual("test_validation_result");
+    expect(rules.monitorName()).toEqual("test_validation_result");
     expect(requiredRule).toHaveBeenCalledWith("test_name");
   });
 
@@ -40,8 +40,8 @@ describe("MonitorFormValidationRules", function() {
     
     validationFn.withArgs("test_monitor_refresh").returns("test_validation_result");
 
-    rules = new jashboard.MonitorFormValidationRules();
+    rules = new jashboard.MonitorFormValidationRules(scope);
 
-    expect(rules.monitorRefresh(scope)).toEqual("test_validation_result");
+    expect(rules.monitorRefresh()).toEqual("test_validation_result");
   });
 });

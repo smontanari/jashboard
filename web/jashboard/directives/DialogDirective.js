@@ -15,6 +15,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbDialog", ['DialogService', jashboard.angular.dialogDirective]).run(function() {
-  steal.dev.log("dialogDirective initialized");
+jashboard.application.directive("jbDialog", ['DialogService', jashboard.angular.dialogDirective]).run(function($log) {
+  $log.info("dialogDirective initialized");
 });

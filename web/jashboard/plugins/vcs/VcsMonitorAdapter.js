@@ -8,7 +8,8 @@
           type: formModel.type,
           historyLength: parseInt(formModel.historyLength, 10),
           pagination: formModel.pagination,
-          commitsPerPage: parseInt(formModel.commitsPerPage, 10)
+          commitsPerPage: parseInt(formModel.commitsPerPage, 10),
+          interval: parseInt(formModel.interval, 10)
         };
       };
 

@@ -20,11 +20,19 @@ module Jashboard
             @repo = double
             @repo.stub(:commits => [])
             Grit::Repo.should_receive(:new).with("test-basedir").and_return(@repo)
-            @configuration = {working_directory: "test-basedir", history_length: 123, branch: nil, type: "git"}.to_struct
+            
           end
 
           it("should retrieve the given number of commits from the 'master' branch if none is specified") do
             @repo.should_receive(:commits).with('master', 123)
+            @configuration = {working_directory: "test-basedir", history_length: 123, branch: nil, type: "git"}.to_struct
+
+            runtime_info = @adapter.get_git_runtime_info(@configuration)
+          end
+
+          it("should retrieve the given number of commits from the 'master' branch if an empty string is specified") do
+            @repo.should_receive(:commits).with('master', 123)
+            @configuration = {working_directory: "test-basedir", history_length: 123, branch: "", type: "git"}.to_struct
 
             runtime_info = @adapter.get_git_runtime_info(@configuration)
           end
@@ -37,6 +45,7 @@ module Jashboard
           end
 
           it("should return a collection of git commit info objects") do
+            @configuration = {working_directory: "test-basedir", history_length: 123, branch: nil, type: "git"}.to_struct
             commit1 = stub_commit("test-commit_1", "test-committer_1", "committer1@test.com", "2012-09-10 17:28:34 +1000", "test-message1")
             commit2 = stub_commit("test-commit_2", "test-committer_2", "committer2@test.com", "2012-09-13 11:56:19 +1000", "test-message2")
       

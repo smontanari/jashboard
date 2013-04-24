@@ -6,7 +6,7 @@
         <label class="control-label" for="buildServerName">Hostname</label>
         <div class="controls">
           <input name="buildServerName" type="text" placeholder="ci hostname" class="input-large" 
-            data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="validateField('buildServerName')">
+            data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="validateFields('buildServerName')">
         </div>
         <div class="controls">
           <div id="buildServerNameRequiredError" class="help-inline" data-ng-show="buildMonitorForm.buildServerName.$error.required">You must provide a CI server name.</div>
@@ -16,7 +16,7 @@
         <label class="control-label" for="buildServerPort">Port</label>
         <div class="controls">
           <input name="buildServerPort" type="text" class="input-mini" 
-            data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="validateField('buildServerPort')">
+            data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="validateFields('buildServerPort')">
         </div>
         <div class="controls">
           <div id="buildServerPortRequiredError" class="help-inline" data-ng-show="buildMonitorForm.buildServerPort.$error.required">You must provide a CI server port.</div>

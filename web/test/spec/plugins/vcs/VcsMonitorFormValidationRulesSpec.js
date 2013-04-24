@@ -21,7 +21,7 @@ describe("VcsMonitorFormValidationRules", function() {
       historyLength: "test_length"
     }}};
 
-    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules();
+    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules(scope);
   });
 
   afterEach(function() {
@@ -32,11 +32,11 @@ describe("VcsMonitorFormValidationRules", function() {
     scope.monitorConfigurationFormModel.vcs = undefined;
 
     _.each(['vcsWorkingDir', 'vcsHistoryLength'], function(field) {
-      expect(rules[field](scope)).toBeUndefined();
+      expect(rules[field]()).toBeUndefined();
     });
   });
   it("should validate the 'vcsWorkingDir' field with the 'required' rule", function() {
-    expect(rules.vcsWorkingDir(scope)).toEqual("required_validation_result");
+    expect(rules.vcsWorkingDir()).toEqual("required_validation_result");
     expect(requiredRule).toHaveBeenCalledWith("test_directory");
   });
   it("should validate the 'vcsHistoryLength' field with the 'required' and 'positiveInteger' rule", function() {
@@ -45,29 +45,34 @@ describe("VcsMonitorFormValidationRules", function() {
     });
     validationFn.withArgs("test_length").returns("test_validation_result");
     
-    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules();
+    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules(scope);
 
-    expect(rules.vcsHistoryLength(scope)).toEqual("test_validation_result");
+    expect(rules.vcsHistoryLength()).toEqual("test_validation_result");
   });
-  it("should validate the 'vcsPageSize' field with the 'required' and 'positiveInteger' rule when the vcsPageSlideShow field is true", function() {
+  it("should validate the 'vcsPageSize' and 'vcsPageInterval' fields with the 'required' and 'positiveInteger' rule when the pagination is true", function() {
     scope.monitorConfigurationFormModel.vcs.pagination = true,
     scope.monitorConfigurationFormModel.vcs.commitsPerPage = "test_page_size";
+    scope.monitorConfigurationFormModel.vcs.interval = "test_page_interval";
 
     _.each(['required', 'positiveInteger'], function(rule) {
       rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
     });
     validationFn.withArgs("test_page_size").returns("test_validation_result");
+    validationFn.withArgs("test_page_interval").returns("test_validation_result");
     
-    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules();
+    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules(scope);
 
-    expect(rules.vcsPageSize(scope)).toEqual("test_validation_result");
+    expect(rules.vcsPageSize()).toEqual("test_validation_result");
+    expect(rules.vcsPageInterval()).toEqual("test_validation_result");
   });
-  it("should not validate the 'vcsPageSize' field when the vcsPageSlideShow field is false, null or undefined", function() {
+  it("should not validate the 'vcsPageSize' and 'vcsPageInterval' fields when the pagination is false, null or undefined", function() {
     scope.monitorConfigurationFormModel.vcs.commitsPerPage = "test_page_size";
+    rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules(scope);
+
     _.each([false, null, undefined], function (value) {
       scope.monitorConfigurationFormModel.vcs.pagination = value;
       
-      expect(rules.vcsPageSize(scope)).toBeUndefined();
+      expect(rules.vcsPageSize()).toBeUndefined();
     });
   });
 });

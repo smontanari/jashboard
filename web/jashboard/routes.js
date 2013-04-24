@@ -12,7 +12,7 @@
     }
   });
 
-  jashboard.application.config(jashboard.defineRoutes).run(function() {
-    steal.dev.log("Routes definition completed");
+  jashboard.application.config(jashboard.defineRoutes).run(function($log) {
+    $log.info("Routes definition completed");
   });;
 }(jashboard || {}));

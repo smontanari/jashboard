@@ -35,12 +35,6 @@
         return currentForm.isValid;
       };
 
-      this.submitAction = function() {
-        if (this.isActionEnabled(currentSubmitAction)) {
-          this[currentSubmitAction]();
-        }
-      };
-
       this.save = saveCallback;
     }
   });

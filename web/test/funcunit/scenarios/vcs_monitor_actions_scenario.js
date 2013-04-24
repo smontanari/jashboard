@@ -8,7 +8,8 @@ steal("test/funcunit/scenarios/display_dashboards_data.js");
       branch: "test-branch",
       historyLength: 10,
       pagination: false,
-      commitsPerPage: null
+      commitsPerPage: 1,
+      interval: 5000
     }
   };
   $.fixture("POST /ajax/dashboard/dashboard_2/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {

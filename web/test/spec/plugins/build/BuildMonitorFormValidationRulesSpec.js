@@ -17,7 +17,7 @@ describe("BuildMonitorFormValidationRules", function() {
       port: "test_port",
     }}};
 
-    rules = new jashboard.plugin.build.BuildMonitorFormValidationRules();
+    rules = new jashboard.plugin.build.BuildMonitorFormValidationRules(scope);
   });
 
   afterEach(function() {
@@ -28,7 +28,7 @@ describe("BuildMonitorFormValidationRules", function() {
     scope.monitorConfigurationFormModel.build = undefined;
 
     _.each(['buildServerName', 'buildServerPort'], function(field) {
-      expect(rules[field](scope)).toBeUndefined();
+      expect(rules[field]()).toBeUndefined();
     });
   });
 
@@ -36,7 +36,7 @@ describe("BuildMonitorFormValidationRules", function() {
     var requiredRule = spyOn(jashboard.commonValidationRules, "required");
     requiredRule.andReturn("required_validation_result");
 
-    expect(rules.buildServerName(scope)).toEqual("required_validation_result");
+    expect(rules.buildServerName()).toEqual("required_validation_result");
     expect(requiredRule).toHaveBeenCalledWith("test_hostname");
   });
 
@@ -45,9 +45,8 @@ describe("BuildMonitorFormValidationRules", function() {
       rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
     });
     validationFn.withArgs("test_port").returns("test_validation_result");
+    rules = new jashboard.plugin.build.BuildMonitorFormValidationRules(scope);
 
-    rules = new jashboard.plugin.build.BuildMonitorFormValidationRules();
-
-    expect(rules.buildServerPort(scope)).toEqual("test_validation_result");
+    expect(rules.buildServerPort()).toEqual("test_validation_result");
   });
 });

@@ -19,23 +19,27 @@ describe("VcsMonitorFormController", function() {
   });
 
   describe("scope.toggleSlideShowEffect()", function() {
-    it("should nullify the commitsPerPage value if the pagination is disabled", function() {
+    it("should reset the commitsPerPage and interval values if the pagination is disabled", function() {
       scope.monitorConfigurationFormModel = { vcs: {
         pagination: false,
-        commitsPerPage: 123
+        commitsPerPage: 123,
+        interval: 345
       }};
       scope.toggleSlideShowEffect();
 
-      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toBeNull();
+      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(1);
+      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(5000);
     });
     it("should not reset the commitsPerPage value if the pagination is enabled", function() {
       scope.monitorConfigurationFormModel = { vcs: {
         pagination: true,
-        commitsPerPage: 123
+        commitsPerPage: 123,
+        interval: 1000
       }};
       scope.toggleSlideShowEffect();
 
       expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(123);
+      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(1000);
     });
   });
 
@@ -59,7 +63,10 @@ describe("VcsMonitorFormController", function() {
       expect(scope.monitorConfigurationFormModel.vcs).toEqual({
         type: "git",
         historyLength: 1,
-        pagination: false
+        branch: null,
+        pagination: false,
+        commitsPerPage: 1,
+        interval: 5000
       });
     });
   });

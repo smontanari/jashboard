@@ -34,6 +34,12 @@
         if (_.isString(s) && !_.isEmpty(s)) {
           return s.slice(0, 1).toUpperCase() + s.slice(1);
         }
+      },
+      ellipsis: function(s, cutoff) {
+        if (_.isUndefined(cutoff) || s.length <= cutoff) {
+          return s;
+        }
+        return s.substring(0, cutoff) + "...";
       }
     },
     angularUtils: {
@@ -43,6 +49,23 @@
           scope.$eval(expr);
         else
           scope.$apply(expr);
+      }
+    },
+    functionUtils: {
+      verify: function(testCondition) {
+        return {
+          then: function(fn) {
+            if (testCondition) {
+              fn();
+            }
+          }
+        };
+      },
+      deferOnCondition: function(testFn, fn) {
+        var self = this;
+        return function() {
+          self.verify(testFn()).then(fn);
+        }
       }
     }
   });

@@ -29,7 +29,8 @@
           "branch": "master",
           "historyLength": 5,
           "pagination": true,
-          "commitsPerPage": 2
+          "commitsPerPage": 2,
+          "interval": 5000
         }
       }
     ]

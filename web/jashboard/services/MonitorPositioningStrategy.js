@@ -43,7 +43,7 @@
       };
     }
   });
-  jashboard.services.service('MonitorPositioningStrategy', [jashboard.MonitorPositioningStrategy]).run(function() {
-    steal.dev.log("MonitorPositioningStrategy initialized");
+  jashboard.services.service('MonitorPositioningStrategy', [jashboard.MonitorPositioningStrategy]).run(function($log) {
+    $log.info("MonitorPositioningStrategy initialized");
   });
 }(jashboard || {}));

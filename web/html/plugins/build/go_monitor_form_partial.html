@@ -3,7 +3,7 @@
     <label class="control-label" for="goPipeline">Pipeline</label>
     <div class="controls">
       <input name="goPipeline" class="input-medium" type="text" placeholder="pipeline name" 
-        data-ng-model="monitorConfigurationFormModel.build.pipeline" data-ng-change="validateField('goPipeline')">
+        data-ng-model="monitorConfigurationFormModel.build.pipeline" data-ng-change="validateFields('goPipeline')">
     </div>
     <div class="controls">
       <div id="goPipelineRequiredError" class="help-inline" data-ng-show="buildMonitorForm.goPipeline.$error.required">You must provide a Go pipeline.</div>
@@ -13,7 +13,7 @@
     <label class="control-label" for="goStage">Stage</label>
     <div class="controls">
       <input name="goStage" type="text" placeholder="stage name" class="input-small" 
-        data-ng-model="monitorConfigurationFormModel.build.stage" data-ng-change="validateField('goStage')">
+        data-ng-model="monitorConfigurationFormModel.build.stage" data-ng-change="validateFields('goStage')">
     </div>
     <div class="controls">
       <div id="goStageRequiredError" class="help-inline" data-ng-show="buildMonitorForm.goStage.$error.required">You must provide a Go stage.</div>
@@ -23,7 +23,7 @@
     <label class="control-label" for="goJob">Job</label>
     <div class="controls">
       <input name="goJob" type="text" placeholder="job name" class="input-medium" 
-        data-ng-model="monitorConfigurationFormModel.build.job" data-ng-change="validateField('goJob')">
+        data-ng-model="monitorConfigurationFormModel.build.job" data-ng-change="validateFields('goJob')">
     </div>
     <div class="controls">
       <div id="goJobRequiredError" class="help-inline" data-ng-show="buildMonitorForm.goJob.$error.required">You must provide a Go job.</div>

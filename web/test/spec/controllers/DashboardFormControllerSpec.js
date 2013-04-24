@@ -6,6 +6,7 @@ describe("DashboardFormController", function() {
     scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
       if (eventName === "OpenDashboardDialog") eventListener = handler;
     });
+    scope.dashboardForm = {};
     repository = {};
 
     controller = new jashboard.DashboardFormController(scope, repository);
@@ -37,39 +38,57 @@ describe("DashboardFormController", function() {
           });
 
           scope.dashboardFormModel = {name: "test.name"};
-          scope.saveDashboard();
         });
 
-        it("should emit the 'DashboardSaveStart'", function() {
-          expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveStart");
-        });
-        it("should emit the 'CloseDashboardDialog'", function() {
-          expect(scope.$emit).toHaveBeenCalledWith("CloseDashboardDialog");
-        });
-        it("should call the repository to create a dashboard", function() {
-          expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Object));
-        });
-        it("should add the dashboard to the scope", function() {
-          successHandler({id: "test.dashboard"});
+        describe("when the form is not valid", function() {
+          beforeEach(function() {
+            scope.dashboardForm = {isValid: false};
+            scope.saveDashboard();
+          });
 
-          expect(scope.dashboards.length).toEqual(2);
-          expect(scope.dashboards).toContain({id: "test.dashboard"});
-          expect(scope.$apply).toHaveBeenCalled();
+          it("should not perform any action", function() {
+            expect(scope.$emit).not.toHaveBeenCalled();
+            expect(repository.createDashboard).not.toHaveBeenCalled();
+          })
         });
-        it("should set the current active dashboard", function() {
-          successHandler({id: "test_dashboard"});
-          
-          expect(scope.context.activeDashboardId).toEqual("test_dashboard");
-        });
-        it("should emit the 'DashboardSaveComplete' if successful", function() {
-          successHandler({id: "test_dashboard"});
-          
-          expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveComplete");
-        });
-        it("should fire the 'AjaxError' event when failing to save the dashboard", function() {
-          errorHandler();
 
-          expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+        describe("when the form is valid", function() {
+          beforeEach(function() {
+            scope.dashboardForm = {isValid: true};
+            scope.saveDashboard();
+          });
+
+          it("should emit the 'DashboardSaveStart'", function() {
+            expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveStart");
+          });
+          it("should emit the 'CloseDashboardDialog'", function() {
+            expect(scope.$emit).toHaveBeenCalledWith("CloseDashboardDialog");
+          });
+          it("should call the repository to create a dashboard", function() {
+            expect(repository.createDashboard).toHaveBeenCalledWith({name: "test.name"}, jasmine.any(Object));
+          });
+          it("should add the dashboard to the scope", function() {
+            successHandler({id: "test.dashboard"});
+
+            expect(scope.dashboards.length).toEqual(2);
+            expect(scope.dashboards).toContain({id: "test.dashboard"});
+            expect(scope.$apply).toHaveBeenCalled();
+          });
+          it("should set the current active dashboard", function() {
+            successHandler({id: "test_dashboard"});
+            
+            expect(scope.context.activeDashboardId).toEqual("test_dashboard");
+          });
+          it("should emit the 'DashboardSaveComplete' if successful", function() {
+            successHandler({id: "test_dashboard"});
+            
+            expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveComplete");
+          });
+          it("should fire the 'AjaxError' event when failing to save the dashboard", function() {
+            errorHandler();
+
+            expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+          });
         });
       });
     });
@@ -103,33 +122,51 @@ describe("DashboardFormController", function() {
           });
 
           scope.dashboardFormModel = {id:"test.id", name: "test.another_name"};
-          scope.saveDashboard();
         });
 
-        it("should emit the 'DashboardSaveStart'", function() {
-          expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveStart");
-        });
-        it("should emit the 'CloseDashboardDialog'", function() {
-          expect(scope.$emit).toHaveBeenCalledWith("CloseDashboardDialog");
-        });
-        it("should call the repository to update a dashboard", function() {
-          expect(repository.updateDashboard).toHaveBeenCalledWith({id:"test.id", name: "test.another_name"}, jasmine.any(Object));
-        });
-        it("should update the dashboard name if successful", function() {
-          successHandler();
+        describe("when the form is not valid", function() {
+          beforeEach(function() {
+            scope.dashboardForm = {isValid: false};
+            scope.saveDashboard();
+          });
 
-          expect(scope.dashboards[1]).toEqual({id:"test.id", name: "test.another_name"});
-          expect(scope.$apply).toHaveBeenCalled();
+          it("should not perform any action", function() {
+            expect(scope.$emit).not.toHaveBeenCalled();
+            expect(repository.updateDashboard).not.toHaveBeenCalled();
+          })
         });
-        it("should emit the 'DashboardSaveComplete' if successful", function() {
-          successHandler({id: "test_dashboard"});
-          
-          expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveComplete");
-        });
-        it("should fire the 'AjaxError' event when failing to save the dashboard", function() {
-          errorHandler();
 
-          expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+        describe("when the form is valid", function() {
+          beforeEach(function() {
+            scope.dashboardForm = {isValid: true};
+            scope.saveDashboard();
+          });
+
+          it("should emit the 'DashboardSaveStart'", function() {
+            expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveStart");
+          });
+          it("should emit the 'CloseDashboardDialog'", function() {
+            expect(scope.$emit).toHaveBeenCalledWith("CloseDashboardDialog");
+          });
+          it("should call the repository to update a dashboard", function() {
+            expect(repository.updateDashboard).toHaveBeenCalledWith({id:"test.id", name: "test.another_name"}, jasmine.any(Object));
+          });
+          it("should update the dashboard name if successful", function() {
+            successHandler();
+
+            expect(scope.dashboards[1]).toEqual({id:"test.id", name: "test.another_name"});
+            expect(scope.$apply).toHaveBeenCalled();
+          });
+          it("should emit the 'DashboardSaveComplete' if successful", function() {
+            successHandler({id: "test_dashboard"});
+            
+            expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveComplete");
+          });
+          it("should fire the 'AjaxError' event when failing to save the dashboard", function() {
+            errorHandler();
+
+            expect(scope.$emit).toHaveBeenCalledWith("AjaxError");
+          });
         });
       });
     });

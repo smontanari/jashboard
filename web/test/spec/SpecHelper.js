@@ -28,6 +28,15 @@ var testHelper = {
     });
     $ = jQuery = jQueryStub;
     return jQueryStub;
+  },
+  asyncTestRun: function(testRuns) {
+    _.each(testRuns, function(testRun) {
+      runs(testRun.before);
+
+      waitsFor(testRun.waitFor, "waitFor condition", 200);
+
+      runs(testRun.after);
+    });
   }
 };
 

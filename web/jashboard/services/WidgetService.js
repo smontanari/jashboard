@@ -29,7 +29,7 @@
       };
     }
   });
-  jashboard.services.service('WidgetService', [jashboard.WidgetService]).run(function() {
-    steal.dev.log("WidgetService initialized");
+  jashboard.services.service('WidgetService', [jashboard.WidgetService]).run(function($log) {
+    $log.info("WidgetService initialized");
   });
 }(jashboard || {}));

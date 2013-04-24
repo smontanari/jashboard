@@ -22,6 +22,6 @@
   });
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbDraggable", ['WidgetService', jashboard.angular.draggableDirective]).run(function() {
-  steal.dev.log("draggableDirective initialized");
+jashboard.application.directive("jbDraggable", ['WidgetService', jashboard.angular.draggableDirective]).run(function($log) {
+  $log.info("draggableDirective initialized");
 });

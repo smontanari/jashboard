@@ -1,8 +1,8 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
-    GoMonitorFormValidationRules: function() {
+    GoMonitorFormValidationRules: function(scope) {
       var requiredRuleFor = function(property) {
-        return function(scope) {
+        return function() {
           if (scope.monitorConfigurationFormModel.build.type === "go") {
             return jashboard.commonValidationRules.required(scope.monitorConfigurationFormModel.build[property]);
           }

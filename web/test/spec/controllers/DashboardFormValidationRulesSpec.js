@@ -4,9 +4,9 @@ describe("DashboardFormValidationRules", function() {
     requiredRule.andReturn("test-result");
     var scope = {dashboardFormModel: {name: "test-name"}};
     
-    var rules = new jashboard.DashboardFormValidationRules();
+    var rules = new jashboard.DashboardFormValidationRules(scope);
 
-    expect(rules.dashboardName(scope)).toEqual("test-result");
+    expect(rules.dashboardName()).toEqual("test-result");
     expect(requiredRule).toHaveBeenCalledWith("test-name");
   });
 });

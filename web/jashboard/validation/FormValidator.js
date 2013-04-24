@@ -1,35 +1,25 @@
 (function(module) {
   jashboard = _.extend(module, {
-    FormValidator: function(form, scope) {
+    FormValidator: function(form) {
       var validationRules = {};
 
       var validateForm = function() {
         form.isValid = _.all(_.keys(validationRules), function(inputName) {
-          return _.isEmpty(validationRules[inputName](scope));
+          return _.isEmpty(validationRules[inputName]());
         });
       };
-      var initForm = function(isNewForm) {
-        form.$pristine = isNewForm;
-        form.$dirty = !isNewForm;
-      };
-      var initFields = function(isNewForm, rules) {
-        _.each(_.keys(rules), function(inputName) {
-          form[inputName].$pristine = isNewForm;
-          form[inputName].$dirty = !isNewForm;
-          form[inputName].$error = {};
-        });
-      };
+
       this.applyRules = function(rules) {
         validationRules = _.extend(validationRules, rules);
-        var createMode = scope.$editMode === jashboard.inputOptions.createMode;
-        initForm(createMode);
-        initFields(createMode, rules);
+        _.each(_.keys(rules), function(inputName) {
+          form[inputName].$error = {};
+        });
         validateForm();
       };
       this.validate = function(inputNames) {
         if (_.isArray(inputNames)) {
           _.each(inputNames, function(inputName) {
-            form[inputName].$error = validationRules[inputName](scope) || {};
+            form[inputName].$error = validationRules[inputName]() || {};
           });
         }
         validateForm();

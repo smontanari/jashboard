@@ -20,14 +20,14 @@ describe("GoMonitorFormValidationRules", function() {
       var inputName = "go" + jashboard.stringUtils.capitalise(field);
       scope.monitorConfigurationFormModel.build.type = 'go';
 
-      expect(rules[inputName](scope)).toEqual("required_validation_result");
+      expect(rules[inputName]()).toEqual("required_validation_result");
       expect(requiredRule).toHaveBeenCalledWith("test_" + field);
     });
     it("should not apply any rule to field '" + field + "' when monitor type is not 'jenkins'", function() {
       var inputName = "go" + jashboard.stringUtils.capitalise(field);
       scope.monitorConfigurationFormModel.build.type = 'another_type';
 
-      expect(rules[inputName](scope)).toBeUndefined();
+      expect(rules[inputName]()).toBeUndefined();
     });
   });
 });

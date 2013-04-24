@@ -22,9 +22,9 @@ describe("IpsumMonitorFormValidationRules", function() {
   it("should not validate the fields if the monitorConfigurationFormModel of type 'ipsum' is not defined", function() {
     scope.monitorConfigurationFormModel.ipsum = undefined;
     
-    rules = new jashboard.plugin.ipsum.IpsumMonitorFormValidationRules();
+    rules = new jashboard.plugin.ipsum.IpsumMonitorFormValidationRules(scope);
     
-    expect(rules.ipsumNumberOfSentences(scope)).toBeUndefined();
+    expect(rules.ipsumNumberOfSentences()).toBeUndefined();
   });
 
   it("should validate the 'numberOfSentences' field with the 'required' and 'positiveInteger' rule", function() {
@@ -33,8 +33,8 @@ describe("IpsumMonitorFormValidationRules", function() {
     });
     validationFn.withArgs("test_number").returns("test_validation_result");
 
-    rules = new jashboard.plugin.ipsum.IpsumMonitorFormValidationRules();
+    rules = new jashboard.plugin.ipsum.IpsumMonitorFormValidationRules(scope);
 
-    expect(rules.ipsumNumberOfSentences(scope)).toEqual("test_validation_result");
+    expect(rules.ipsumNumberOfSentences()).toEqual("test_validation_result");
   });
 });

@@ -1,17 +1,27 @@
 describe("FormValidationDirective", function() {
-  var scope, listener, validatorConstructor, validator, linkFunction;
+  var scope, listener, validatorConstructor, validator, linkFunction, rulesFn;
 
   beforeEach(function() {
     jashboard.test = {
-      TestRules: function() {
+      TestRules: function(s) {
         this.id = "test-rules";
       }
     };
+    rulesFn = spyOn(jashboard.test, "TestRules").andCallThrough();
     scope = jasmine.createSpyObj("scope", ['$on', '$eval']);
 
     validator = jasmine.createSpyObj("FormValidator", ['validate', 'applyRules', 'prepareFormForUpdate']);
 
     linkFunction = jashboard.angular.formValidationDirective();
+  });
+
+  it("should instantiate the validation rules", function() {
+    scope.$formValidator = validator;
+    scope.$eval.andCallFake(function(value) {
+      if (value === "test-map") return {validationRules: "test.TestRules"};
+    });
+    linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
+    expect(rulesFn).toHaveBeenCalledWith(scope);
   });
 
   describe("when combined with the ngForm directive", function() {
@@ -42,20 +52,12 @@ describe("FormValidationDirective", function() {
       it("should return undefined if the form has not been yet initialised", function() {
         expect(scope.inputInError('test-input')).toBeUndefined();
       });
-      it("should return input in error if dirty and with an error", function() {
-        scope.testForm.input.$dirty = true;
+      it("should return input in error if with an error", function() {
         scope.testForm.input.$error = {test: "error"};
 
         expect(scope.inputInError('input')).toBeTruthy();
       });
-      it("should return input not in error if not dirty", function() {
-        scope.testForm.input.$dirty = false;
-        scope.testForm.input.$error = {test: "error"};
-
-        expect(scope.inputInError('input')).toBeFalsy();
-      });
       it("should return input not in error if with no errors", function() {
-        scope.testForm.input.$dirty = true;
         scope.testForm.input.$error = {};
 
         expect(scope.inputInError('input')).toBeFalsy();

@@ -27,12 +27,10 @@
         });
       };
       var updateDashboard = function() {
-        if (scope.dashboardForm.isValid) {
-          invokeRepository("updateDashboard", [scope.dashboardFormModel], function() {
-            var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.dashboardFormModel.id});
-            dashboard.name = scope.dashboardFormModel.name;
-          });
-        }
+        invokeRepository("updateDashboard", [scope.dashboardFormModel], function() {
+          var dashboard = _.find(scope.dashboards, function(d) {return d.id === scope.dashboardFormModel.id});
+          dashboard.name = scope.dashboardFormModel.name;
+        });
       };
 
       scope.$on("OpenDashboardDialog", function(event, options) {

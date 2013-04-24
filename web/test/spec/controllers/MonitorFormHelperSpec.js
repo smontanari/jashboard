@@ -98,4 +98,37 @@ describe("MonitorFormHelper", function() {
       expect(saveCallback).toHaveBeenCalled();
     });
   });
+
+  describe("submitAction()", function() {
+    it("should not execute the submit action if the form is not valid", function() {
+      monitorForm.isValid = false;
+      formHelper.submitAction();
+
+      expect(formHelper.actions).toEqual(["next"]);
+    });
+    it("should execute the submit action 'next' if the form is valid", function() {
+      monitorForm.isValid = true;
+      formHelper.submitAction();
+
+      expect(formHelper.actions).toEqual(["back", "save"]);
+    });
+    it("should not invoke the save callback if the form is not valid", function() {
+      monitorModel.type = "test_type";
+      formHelper.registerMonitorTypeForm("test_type", currentForm);
+      currentForm.isValid = false;
+      formHelper.next();
+      formHelper.submitAction();
+
+      expect(saveCallback).not.toHaveBeenCalled();
+    });
+    it("should invoke the save callback if the form is valid", function() {
+      monitorModel.type = "test_type";
+      formHelper.registerMonitorTypeForm("test_type", currentForm);
+      currentForm.isValid = true;
+      formHelper.next();
+      formHelper.submitAction();
+
+      expect(saveCallback).toHaveBeenCalled();
+    });
+  });
 });

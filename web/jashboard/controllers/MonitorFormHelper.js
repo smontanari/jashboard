@@ -19,9 +19,9 @@
       };
 
       this.back = function() {
-        this.actions = ["next"];
-        currentSubmitAction = 'next';
         currentForm = monitorForms.defaultForm;
+        currentSubmitAction = 'next';
+        this.actions = ["next"];
       };
 
       this.registerMonitorTypeForm = function(type, form) {
@@ -33,6 +33,10 @@
           return true;
         }
         return currentForm.isValid;
+      };
+
+      this.submitAction = function() {
+        jashboard.functionUtils.verify(currentForm.isValid).then(this[currentSubmitAction].bind(this));
       };
 
       this.save = saveCallback;

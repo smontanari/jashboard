@@ -57,7 +57,7 @@ describe("VcsMonitorFormController", function() {
     });
     it("should reset the form model in the scope", function() {
       eventListener({}, {
-        mode: jashboard.inputOptions.createMode,
+        mode: jashboard.model.inputOptions.createMode,
       });
 
       expect(scope.monitorConfigurationFormModel.vcs).toEqual({

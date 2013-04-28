@@ -43,7 +43,8 @@ steal('jashboard/jashboard.js')
       'Dashboard',
       'Monitor',
       'loadingStatus',
-      'inputOptions'
+      'inputOptions',
+      'TypeAdapter'
     ],
     validation: [
       'FormValidator',
@@ -75,11 +76,19 @@ steal('jashboard/jashboard.js')
       return "jashboard/" + file + ".js";
     });
     return steal.apply(null, files);
-  }
+  };
+  var loadPlugins = function() {
+    _.each(jashboard.plugins, function(pluginName) {
+      steal(
+        "jashboard/plugins/" + pluginName + "/" + pluginName + "_plugin.js"
+      );  
+    });
+  };
 
   _.reduce(_.keys(jashboard.packages), function(loader, packageName) {
     return loader.then(loadPackage(packageName));
   }, steal())
   .then(loadResources)
-  .then('jashboard/plugins.js');
+  .then('jashboard/plugins.js')
+  .then(loadPlugins);
 });

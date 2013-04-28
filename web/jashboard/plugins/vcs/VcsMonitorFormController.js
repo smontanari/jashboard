@@ -11,7 +11,7 @@
       };
 
       scope.$on("OpenMonitorDialog", function(event, options) {
-        if (options.mode === jashboard.inputOptions.createMode) {
+        if (options.mode === jashboard.model.inputOptions.createMode) {
           scope.monitorConfigurationFormModel.vcs = {
             type: _.first(scope.availableVcsTypes),
             historyLength: 1,

@@ -5,13 +5,13 @@
         var dashboardActions = {
           newMonitor: function(currentScope) {
             applicationScope.$broadcast("OpenMonitorDialog", {
-              mode: jashboard.inputOptions.createMode,
+              mode: jashboard.model.inputOptions.createMode,
               parameters: {dashboard: currentScope.dashboard}
             });
           },
           editDashboard: function(currentScope) {
             applicationScope.$broadcast("OpenDashboardDialog", {
-              mode: jashboard.inputOptions.updateMode,
+              mode: jashboard.model.inputOptions.updateMode,
               parameters: {dashboard: currentScope.dashboard}
             });
           },

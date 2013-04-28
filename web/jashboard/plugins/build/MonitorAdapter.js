@@ -1,7 +1,7 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
-    BuildMonitorAdapter: function() {
-      var buildConfigurationFormParser = new jashboard.plugin.TypeAdapter();
+    MonitorAdapter: function() {
+      var buildConfigurationFormParser = new jashboard.model.TypeAdapter();
 
       var getBuildStatus = function(status) {
         switch(status) {
@@ -53,5 +53,5 @@
     }
   });
 
-  jashboard.plugin.pluginManager.addMonitorAdapter("build", jashboard.plugin.build.BuildMonitorAdapter);
+  jashboard.plugin.pluginManager.addMonitorAdapter("build", jashboard.plugin.build.MonitorAdapter);
 }(jashboard.plugin.build || {}));

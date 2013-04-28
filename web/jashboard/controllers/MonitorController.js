@@ -67,7 +67,7 @@
 
       scope.editMonitor = function() {
         rootScope.$broadcast("OpenMonitorDialog", {
-          mode: jashboard.inputOptions.updateMode,
+          mode: jashboard.model.inputOptions.updateMode,
           parameters: {
             monitor: scope.monitor
           }

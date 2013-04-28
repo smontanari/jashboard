@@ -1,6 +1,6 @@
 (function(module) {
   jashboard.plugin.vcs = _.extend(module, {
-    VcsMonitorAdapter: function() {
+    MonitorAdapter: function() {
       this.parseMonitorConfigurationForm = function(formModel) {
         return {
           workingDirectory: formModel.workingDirectory,
@@ -27,5 +27,5 @@
     }
   });
 
-  jashboard.plugin.pluginManager.addMonitorAdapter("vcs", jashboard.plugin.vcs.VcsMonitorAdapter);
+  jashboard.plugin.pluginManager.addMonitorAdapter("vcs", jashboard.plugin.vcs.MonitorAdapter);
 }(jashboard.plugin.vcs || {}));

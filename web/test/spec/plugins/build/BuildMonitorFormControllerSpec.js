@@ -51,7 +51,7 @@ describe("BuildMonitorFormController", function() {
     });
     it("should reset the configuration value in the scope when called in create mode", function() {
       listener({}, {
-        mode: jashboard.inputOptions.createMode,
+        mode: jashboard.model.inputOptions.createMode,
       });
       expect(scope.monitorConfigurationFormModel.build).toEqual({type: "test_build_type1"});
     });

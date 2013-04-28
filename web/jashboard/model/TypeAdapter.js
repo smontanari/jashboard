@@ -1,5 +1,5 @@
 (function(module) {
-  jashboard.plugin = _.extend(module, {
+  jashboard.model = _.extend(module, {
     TypeAdapter: function() {
       var typeHandlers = {};
       
@@ -22,5 +22,5 @@
       };
     }
   });
-}(jashboard.plugin || {}));
+}(jashboard.model || {}));
 

@@ -1,12 +1,12 @@
-describe("BuildMonitorAdapter", function() {
+describe("Build MonitorAdapter", function() {
   var plugin, mockTypeAdapter, configData, configForm, configModel;
 
   beforeEach(function() {
     mockTypeAdapter = {
       toObject: sinon.stub()
     };
-    spyOn(jashboard.plugin, "TypeAdapter").andReturn(mockTypeAdapter);
-    plugin = new jashboard.plugin.build.BuildMonitorAdapter();
+    spyOn(jashboard.model, "TypeAdapter").andReturn(mockTypeAdapter);
+    plugin = new jashboard.plugin.build.MonitorAdapter();
     configModel = {
       type: "test_type",
       hostname: "test.host.name",

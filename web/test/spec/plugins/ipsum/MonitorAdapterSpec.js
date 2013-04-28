@@ -1,8 +1,8 @@
-describe("IpsumMonitorAdapter", function() {
+describe("Ipsum MonitorAdapter", function() {
   var adapter;
 
   beforeEach(function() {
-    adapter = new jashboard.plugin.ipsum.IpsumMonitorAdapter();
+    adapter = new jashboard.plugin.ipsum.MonitorAdapter();
   });
 
   it("should add itself to the plugin manager", function() {

@@ -10,7 +10,7 @@
       }
 
       scope.$on("OpenMonitorDialog", function(event, options) {
-        if (options.mode === jashboard.inputOptions.createMode) {
+        if (options.mode === jashboard.model.inputOptions.createMode) {
           scope.monitorConfigurationFormModel.build = {
             type: _.first(buildTypes)
           };

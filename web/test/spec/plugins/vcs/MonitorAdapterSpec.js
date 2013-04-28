@@ -1,8 +1,8 @@
-describe("VcsMonitorAdapter", function() {
+describe("Vcs MonitorAdapter", function() {
   var plugin, configData, configForm, configModel;
 
   beforeEach(function() {
-    plugin = new jashboard.plugin.vcs.VcsMonitorAdapter();
+    plugin = new jashboard.plugin.vcs.MonitorAdapter();
     configModel = {
       type: "test_type",
       workingDirectory: "test_directory",

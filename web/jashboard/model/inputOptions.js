@@ -1,8 +1,8 @@
 (function(module) {
-  jashboard = _.extend(module, {
+  jashboard.model = _.extend(module, {
     inputOptions: {
       createMode: "create",
       updateMode: "update"
     }
   });
-}(jashboard || {}));
+}(jashboard.model || {}));

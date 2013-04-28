@@ -7,7 +7,7 @@
   });
 
   steal(
-    'jashboard/plugins/build/BuildMonitorAdapter.js',
+    'jashboard/plugins/build/MonitorAdapter.js',
     'jashboard/plugins/build/BuildMonitorFormValidationRules.js',
     'jashboard/plugins/build/JenkinsMonitorFormValidationRules.js',
     'jashboard/plugins/build/GoMonitorFormValidationRules.js',

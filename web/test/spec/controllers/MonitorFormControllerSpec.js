@@ -44,7 +44,7 @@ describe("MonitorFormController", function() {
       beforeEach(function() {
         dashboard = {id: "test_dashboard", monitors: [{id: "m2"}]};
         listener({}, {
-          mode: jashboard.inputOptions.createMode,
+          mode: jashboard.model.inputOptions.createMode,
           parameters: {dashboard: dashboard}
         });
       });
@@ -61,7 +61,7 @@ describe("MonitorFormController", function() {
         });
       });
       it("should set the editMode variable as 'create' in the scope", function() {
-        expect(scope.$editMode).toEqual(jashboard.inputOptions.createMode);
+        expect(scope.$editMode).toEqual(jashboard.model.inputOptions.createMode);
       });
       describe("save action callback", function() {
         var successHandler, errorHandler, adapter;
@@ -168,13 +168,13 @@ describe("MonitorFormController", function() {
           runtimeInfo: "test_runtime_info"
         };
         listener({}, {
-          mode: jashboard.inputOptions.updateMode,
+          mode: jashboard.model.inputOptions.updateMode,
           parameters: {monitor: monitor}
         });
       });
 
       it("should set the editMode variable as 'update' in the scope", function() {
-        expect(scope.$editMode).toEqual(jashboard.inputOptions.updateMode);
+        expect(scope.$editMode).toEqual(jashboard.model.inputOptions.updateMode);
       });
       it("should update the input variables in the scope", function() {
         expect(scope.monitorFormModel).toEqual({

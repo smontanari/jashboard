@@ -1,6 +1,6 @@
 (function(module) {
   jashboard.plugin.ipsum = _.extend(module, {
-    IpsumMonitorAdapter: function() {
+    MonitorAdapter: function() {
       this.parseMonitorConfigurationForm = function(configurationForm) {
         return {
           numberOfSentences: parseInt(configurationForm.numberOfSentences, 10),
@@ -16,5 +16,5 @@
     }
   });
 
-  jashboard.plugin.pluginManager.addMonitorAdapter("ipsum", jashboard.plugin.ipsum.IpsumMonitorAdapter);
+  jashboard.plugin.pluginManager.addMonitorAdapter("ipsum", jashboard.plugin.ipsum.MonitorAdapter);
 }(jashboard.plugin.ipsum || {}));

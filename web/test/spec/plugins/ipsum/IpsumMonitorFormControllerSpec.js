@@ -32,7 +32,7 @@ describe("IpsumMonitorFormController", function() {
     });
     it("should reset the variables in the scope", function() {
       eventListener({}, {
-        mode: jashboard.inputOptions.createMode,
+        mode: jashboard.model.inputOptions.createMode,
       });
 
       expect(scope.monitorConfigurationFormModel.ipsum).toEqual({

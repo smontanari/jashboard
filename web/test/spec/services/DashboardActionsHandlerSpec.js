@@ -18,7 +18,7 @@ describe("DashboardActionsHandler", function() {
       scope.dashboardAction.apply(innerScope, ['newMonitor']);
       
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", {
-        mode: jashboard.inputOptions.createMode,
+        mode: jashboard.model.inputOptions.createMode,
         parameters: {dashboard: "test-dashboard"}
       });
     });
@@ -31,7 +31,7 @@ describe("DashboardActionsHandler", function() {
       scope.dashboardAction.apply(innerScope, ['editDashboard']);
       
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog", {
-        mode: jashboard.inputOptions.updateMode,
+        mode: jashboard.model.inputOptions.updateMode,
         parameters: {dashboard: {id: "test_dashboard_id"}}
       });
     });

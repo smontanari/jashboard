@@ -50,7 +50,7 @@
       scope.monitorConfigurationFormModel = {};
 
       scope.$on("OpenMonitorDialog", function(event, options) {
-        if (options.mode === jashboard.inputOptions.createMode) {
+        if (options.mode === jashboard.model.inputOptions.createMode) {
           scope.monitorFormModel = {
             id: null,
             name: null,
@@ -60,7 +60,7 @@
           scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.monitorFormModel, function() {
             createMonitor(options.parameters.dashboard);
           });
-        } else if (options.mode === jashboard.inputOptions.updateMode) {
+        } else if (options.mode === jashboard.model.inputOptions.updateMode) {
           var monitor = options.parameters.monitor;
           scope.monitorFormModel = _.pick(monitor, "id", "name", "refreshInterval", "type");
           scope.monitorConfigurationFormModel[monitor.type] = _.clone(monitor.configuration);

@@ -16,14 +16,14 @@ describe("DashboardFormController", function() {
     beforeEach(function() {
       scope.dashboardFormModel = {id: "test", name: "test_name"};
 
-      eventListener({}, {mode: jashboard.inputOptions.createMode});
+      eventListener({}, {mode: jashboard.model.inputOptions.createMode});
     });
 
     it("should reset the dashboardFormModel variable in the scope", function() {
       expect(scope.dashboardFormModel).toEqual({});
     });
     it("should set the $editMode variable in the scope", function() {
-      expect(scope.$editMode).toEqual(jashboard.inputOptions.createMode);
+      expect(scope.$editMode).toEqual(jashboard.model.inputOptions.createMode);
     });
 
     describe("saveDashboard()", function() {
@@ -99,7 +99,7 @@ describe("DashboardFormController", function() {
       scope.dashboardFormModel = {};
 
       eventListener({}, {
-        mode: jashboard.inputOptions.updateMode,
+        mode: jashboard.model.inputOptions.updateMode,
         parameters: {dashboard: {id: "test_dashboard_id", name: "test_dashboard_name", monitors: []}
       }});
     });
@@ -108,7 +108,7 @@ describe("DashboardFormController", function() {
       expect(scope.dashboardFormModel).toEqual({id: "test_dashboard_id", name: "test_dashboard_name"});
     });
     it("should set the $editMode variable in the scope", function() {
-      expect(scope.$editMode).toEqual(jashboard.inputOptions.updateMode);
+      expect(scope.$editMode).toEqual(jashboard.model.inputOptions.updateMode);
     });
 
     describe("saveDashboard()", function() {

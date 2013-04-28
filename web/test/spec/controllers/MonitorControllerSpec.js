@@ -72,7 +72,7 @@ describe("MonitorController", function() {
     });
     it("should broadcast the 'OpenMonitorDialog' event from the root scope with the given parameters", function() {
       expect(rootScope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", {
-        mode: jashboard.inputOptions.updateMode,
+        mode: jashboard.model.inputOptions.updateMode,
         parameters: {
           monitor: "test_monitor"
         }

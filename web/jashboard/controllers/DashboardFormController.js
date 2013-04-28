@@ -34,10 +34,10 @@
       };
 
       scope.$on("OpenDashboardDialog", function(event, options) {
-        if (options.mode === jashboard.inputOptions.createMode) {
+        if (options.mode === jashboard.model.inputOptions.createMode) {
           scope.dashboardFormModel = {};
           scope.saveDashboard = jashboard.functionUtils.deferOnCondition(formIsValid, createDashboard);
-        } else if (options.mode === jashboard.inputOptions.updateMode) {
+        } else if (options.mode === jashboard.model.inputOptions.updateMode) {
           scope.dashboardFormModel = _.pick(options.parameters.dashboard, "id", "name");
           scope.saveDashboard = jashboard.functionUtils.deferOnCondition(formIsValid, updateDashboard);
         }

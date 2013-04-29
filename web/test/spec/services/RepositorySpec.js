@@ -54,19 +54,18 @@ describe("Repository", function() {
       httpService.getJSON = jasmine.createSpy("httpService.getJSON")
         .andReturn(new AjaxPromise("test_monitor_data")
       );
-      pluginManager.findMonitorAdapter = jasmine.createSpy("pluginManager.findMonitorAdapter()").andCallFake(function(type) {
-        return {
+      pluginManager.monitorAdapters = {
+        'test_type': {
           convertDataToRuntimeInfo: function(runtimeData) {
             return {runtimeInfo: runtimeData};
-          },
-        };
-      });
+          }
+        }
+      };
     });
     it("should invoke the http service to load and return the monitor runtime information", function() {
       repository.loadMonitorRuntimeInfo("test.monitor.id", "test_type", {success: successHandler});
 
       expect(httpService.getJSON).toHaveBeenCalledWith("/ajax/monitor/test.monitor.id/runtime");
-      expect(pluginManager.findMonitorAdapter).toHaveBeenCalledWith("test_type");
       expect(successHandler).toHaveBeenCalledWith({runtimeInfo: "test_monitor_data"});
     });
     it("should invoke the error handler if the request fails", function() {

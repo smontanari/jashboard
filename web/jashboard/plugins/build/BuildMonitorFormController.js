@@ -1,8 +1,7 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorFormController: function(scope) {
-      var buildTypes = jashboard.plugin.build.buildConfigurationFormParser.getAllRegisteredTypes();
-      scope.availableCiServerTypes = buildTypes;
+      scope.availableCiServerTypes = jashboard.plugin.build.buildTypes;
       
       scope.setCiServerType = function(type) {
         scope.monitorConfigurationFormModel.build.type = type;
@@ -12,7 +11,7 @@
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.model.inputOptions.createMode) {
           scope.monitorConfigurationFormModel.build = {
-            type: _.first(buildTypes)
+            type: _.first(jashboard.plugin.build.buildTypes)
           };
         }
         scope.formHelper.registerMonitorTypeForm("build", scope.buildMonitorForm);

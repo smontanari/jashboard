@@ -43,8 +43,7 @@ steal('jashboard/jashboard.js')
       'Dashboard',
       'Monitor',
       'loadingStatus',
-      'inputOptions',
-      'TypeAdapter'
+      'inputOptions'
     ],
     validation: [
       'FormValidator',

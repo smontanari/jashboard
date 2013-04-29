@@ -51,8 +51,7 @@
           http.getJSON(AJAX_MONITOR + "/" + monitor_id + "/runtime"), 
           handlers,
           function(data) {
-            var monitorAdapter = pluginManager.findMonitorAdapter(monitorType);
-            return monitorAdapter.convertDataToRuntimeInfo(data);
+            return pluginManager.monitorAdapters[monitorType].convertDataToRuntimeInfo(data);
           });
       };
 

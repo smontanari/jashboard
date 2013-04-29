@@ -15,6 +15,4 @@
       }
     }
   });
-
-  jashboard.plugin.pluginManager.addMonitorAdapter("ipsum", jashboard.plugin.ipsum.MonitorAdapter);
 }(jashboard.plugin.ipsum || {}));

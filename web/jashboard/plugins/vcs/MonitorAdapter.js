@@ -26,6 +26,4 @@
       };
     }
   });
-
-  jashboard.plugin.pluginManager.addMonitorAdapter("vcs", jashboard.plugin.vcs.MonitorAdapter);
 }(jashboard.plugin.vcs || {}));

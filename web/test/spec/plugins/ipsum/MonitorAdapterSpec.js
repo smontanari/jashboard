@@ -5,10 +5,6 @@ describe("Ipsum MonitorAdapter", function() {
     adapter = new jashboard.plugin.ipsum.MonitorAdapter();
   });
 
-  it("should add itself to the plugin manager", function() {
-    expect(jashboard.plugin.pluginManager.findMonitorAdapter('ipsum')).toBeDefined();
-  });
-  
   it("should parse the ipsum monitor configuration form", function() {
     var configuration = adapter.parseMonitorConfigurationForm({numberOfSentences: "10", language: "english"});
 

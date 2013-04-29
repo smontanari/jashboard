@@ -1,7 +1,7 @@
 (function(module) {
   jashboard.plugin.build = _.extend(module, {
     MonitorAdapter: function() {
-      var buildConfigurationFormParser = new jashboard.model.TypeAdapter();
+      var buildConfigurationFormParser = {};
 
       var getBuildStatus = function(status) {
         switch(status) {
@@ -30,7 +30,7 @@
         return _.extend({
           hostname: formModel.hostname,
           port: parseInt(formModel.port, 10)
-        }, buildConfigurationFormParser.toObject(extractBuildTypeProperties(formModel)));
+        }, buildConfigurationFormParser[formModel.type](extractBuildTypeProperties(formModel)));
       };
 
       this.convertDataToRuntimeInfo = function(runtimeInfo_data) {
@@ -47,11 +47,11 @@
         return {width: 240, height: 140};
       };
 
-      this.init = function() {
-        jashboard.plugin.build.buildConfigurationFormParser = buildConfigurationFormParser;
-      };
+      // this.init = function() {
+      _.each(jashboard.plugin.build.buildTypes, function(type) {
+        buildConfigurationFormParser[type] = jashboard.plugin.build[type].parseFormConfiguration;
+      });
+      // };
     }
   });
-
-  jashboard.plugin.pluginManager.addMonitorAdapter("build", jashboard.plugin.build.MonitorAdapter);
 }(jashboard.plugin.build || {}));

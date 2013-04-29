@@ -1,41 +1,38 @@
 describe("Build MonitorAdapter", function() {
-  var plugin, mockTypeAdapter, configData, configForm, configModel;
+  var plugin;
 
   beforeEach(function() {
-    mockTypeAdapter = {
-      toObject: sinon.stub()
-    };
-    spyOn(jashboard.model, "TypeAdapter").andReturn(mockTypeAdapter);
+    jashboard.plugin.build.buildTypes = ['buildType1', 'buildType2'];
+    _.each(['buildType1', 'buildType2'], function(type) {
+      jashboard.plugin.build[type] = {parseFormConfiguration: jasmine.createSpy(type + "ConfigurationParser").andReturn(
+        {
+          type: type,
+          hostname: "test.host.name",
+          port: 123,
+          modelParameter: "test_model_param"
+        }
+      )};
+    });
+
     plugin = new jashboard.plugin.build.MonitorAdapter();
-    configModel = {
-      type: "test_type",
-      hostname: "test.host.name",
-      port: 123,
-      modelParameter: "test_model_param"
-    };
-    configForm = {
-      type: "test_type",
-      hostname: "test.host.name",
-      port: "123",
-      formParameter: "test_form_param"
-    };
   });
 
-  it("should add itself to the plugin manager", function() {
-    expect(jashboard.plugin.pluginManager.findMonitorAdapter('build')).toBeDefined();
-  });
+  _.each(['buildType1', 'buildType2'], function(type) {
+    it("should invoke the build configuration form parser of the corresponding type", function() {
+      var model = plugin.parseMonitorConfigurationForm({
+        type: type,
+        hostname: "test.host.name",
+        port: "123",
+        formParameter: "test_form_param"
+      });
 
-  it("should invoke a build configuration form parser", function() {
-    mockTypeAdapter.toObject.withArgs({type: "test_type", formParameter: "test_form_param"}).returns({type: "test_type", modelParameter: "test_model_param"});
-
-    var model = plugin.parseMonitorConfigurationForm(configForm);
-
-    expect(model).toEqual(configModel);
-  });
-
-  it("should create a configuration form parser at initialisation", function() {
-    plugin.init();
-    expect(jashboard.plugin.build.buildConfigurationFormParser).toBeDefined();
+      expect(model).toEqual({
+        type: type,
+        hostname: "test.host.name",
+        port: 123,
+        modelParameter: "test_model_param"
+      });
+    });
   });
 
   it("should return a default size for the build monitor", function() {

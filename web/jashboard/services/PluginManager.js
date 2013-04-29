@@ -1,56 +1,47 @@
 (function(module) {
   jashboard = _.extend(module, {
-    PluginManager: function() {
-      var monitorTypeAdapters = {};
+    PluginManager: function(logger) {
+      var self = this;
+      var instantiateAdapter = function(typeIdentifier) {
+        var requiredMethods = [
+          "parseMonitorConfigurationForm",
+          "convertDataToRuntimeInfo",
+          "defaultSize"
+        ];
 
-      this.addMonitorAdapter = function(typeIdentifier, adapterConstructor) {
-        var validateAdapter = function(adapter) {
-          var requiredMethods = [
-            "parseMonitorConfigurationForm",
-            "convertDataToRuntimeInfo",
-            "defaultSize"
-          ];
-          _.each(requiredMethods, function(method) {
-            if(!_.contains(_.functions(adapter), method)) {
-              throw "Adapter for [" + typeIdentifier + "] does not implement a " + method + " method";
-            };
-          });
-        };
-        if(!_.isUndefined(monitorTypeAdapters[typeIdentifier])) {
-          throw "Adapter for [" + typeIdentifier + "] already exists";      
+        if (_.isUndefined(jashboard.plugin[typeIdentifier])) {
+          throw "namespace [jashboard.plugins." + typeIdentifier + "] not defined";
         }
-        var adapter = new adapterConstructor.prototype.constructor();
-        validateAdapter(adapter);
-        monitorTypeAdapters[typeIdentifier] = adapter;
-        if (_.isFunction(adapter.init)) {
-          adapter.init();
+        if (!_.isFunction(jashboard.plugin[typeIdentifier].MonitorAdapter)) {
+          throw "Function [jashboard.plugins." + typeIdentifier + ".MonitorAdapter] not defined";
         }
-        console.log("Added MonitorAdapter for [" + typeIdentifier + "]");
-      };
-
-      this.getAllMonitorTypes = function() {
-        return _.keys(monitorTypeAdapters);
-      };
-
-      this.findMonitorAdapter = function(typeIdentifier) {
-        var adapter = monitorTypeAdapters[typeIdentifier];
-        if (_.isUndefined(adapter)) {
-          throw "Adapter for monitor type [" + typeIdentifier + "] not found";
-        }
+        var adapter = new jashboard.plugin[typeIdentifier].MonitorAdapter();
+        _.each(requiredMethods, function(method) {
+          if(!_.contains(_.functions(adapter), method)) {
+            throw "Adapter for [" + typeIdentifier + "] does not implement a " + method + " method";
+          };
+        });
         return adapter;
       };
+      var registerMonitorAdapter = function(typeIdentifier) {
+        if (_.isObject(self.monitorAdapters[typeIdentifier])) {
+          logger.warn("MonitorAdapter for type [" + typeIdentifier + "] already defined");
+        } else {
+          try {
+            self.monitorAdapters[typeIdentifier] = instantiateAdapter(typeIdentifier);
+            logger.info("Registered MonitorAdapter for type [" + typeIdentifier + "]");
+          } catch (error) {
+            logger.warn(error);
+          }
+        }
+      };
+
+      this.monitorAdapters = {};
+      _.each(jashboard.plugins, registerMonitorAdapter);
     }
   });
-}(jashboard ||{}));
-
-(function(module) {
-  jashboard.plugin = _.extend(module, {
-    pluginManager: new jashboard.PluginManager()
-  });
-  jashboard.services.factory('PluginManager', function() {
-    return jashboard.plugin.pluginManager;
-  }).run(function($log) {
+  jashboard.services.service("PluginManager", ['$log', jashboard.PluginManager]).run(function($log) {
     $log.info("PluginManager initialized");
   });
-}(jashboard.plugin ||{}));
+}(jashboard ||{}));
 

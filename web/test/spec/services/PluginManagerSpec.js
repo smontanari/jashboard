@@ -1,77 +1,105 @@
 describe("PluginManager", function() {
-  var monitorPlugin, mockAdapter;
-  var TestAdapter = function() {return mockAdapter;};
+  var testValidAdapter1, testValidAdapter2, pluginManager, logger;
   var adapterMethods = [
     'convertDataToRuntimeInfo',
     'parseMonitorConfigurationForm',
-    'defaultSize',
-    'init'
+    'defaultSize'
   ];
 
   beforeEach(function() {
-    pluginManager = new jashboard.PluginManager();
+    logger = jasmine.createSpyObj("$log", ['info', 'warn'])
+    testValidAdapter1 = jasmine.createSpyObj("TestValidAdapter", adapterMethods);
+    testValidAdapter2 = jasmine.createSpyObj("TestValidAdapter", adapterMethods);
+    jashboard.plugins = ['validType1', 'validType2', 'invalidType'];
+    jashboard.plugin = _.extend(jashboard.plugin, {
+      validType1: {
+        MonitorAdapter: function() {return testValidAdapter1;}
+      },
+      validType2: {
+        MonitorAdapter: function() {return testValidAdapter2;}
+      }
+    });
   });
 
-  it("should register and return a monitor plugin", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", adapterMethods);
+  it("should return a list of registered valid monitor adapters excluding undefined types", function() {
+    pluginManager = new jashboard.PluginManager(logger);
 
-    pluginManager.addMonitorAdapter("test", TestAdapter);
-    plugin = pluginManager.findMonitorAdapter("test");
-
-    expect(plugin).toEqual(mockAdapter);
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2
+    });
   });
-  it("should initialise the plugin if the init method is provided", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", adapterMethods);
+  it("should return a list of registered valid monitor types excluding undefined type adapters", function() {
+    jashboard.plugin.invalidType = {};
+    pluginManager = new jashboard.PluginManager(logger);
 
-    pluginManager.addMonitorAdapter("test", TestAdapter);
-
-    expect(mockAdapter.init).toHaveBeenCalled();
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2
+    });
   });
-  it("should return a list of the monitor types", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", adapterMethods);
-    pluginManager.addMonitorAdapter("test_type1", TestAdapter);
-    pluginManager.addMonitorAdapter("test_type2", TestAdapter);
-
-    expect(pluginManager.getAllMonitorTypes()).toEqual(['test_type1', 'test_type2']);
-  });
-  it("should throw an error if the plugin is not defined", function() {
-    var f = function() {
-      pluginManager.findMonitorAdapter("test", TestAdapter);
+  it("should return a list of registered valid monitor types excluding type adapters not implementing 'convertDataToRuntimeInfo'", function() {
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['parseMonitorConfigurationForm', 'defaultSize']);
+    jashboard.plugin.invalidType = {
+      MonitorAdapter: function() {return testInvalidAdapter;}
     };
 
-    expect(f).toThrow("Adapter for monitor type [test] not found");
+    pluginManager = new jashboard.PluginManager(logger);
+
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2
+    });
   });
-  it("should throw an error if the plugin already exists", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", adapterMethods);
-    pluginManager.addMonitorAdapter("test", TestAdapter);
-    var f = function() {
-      pluginManager.addMonitorAdapter("test", TestAdapter);
+  it("should return a list of registered valid monitor types excluding type adapters not implementing 'parseMonitorConfigurationForm'", function() {
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'defaultSize']);
+    jashboard.plugin.invalidType = {
+      MonitorAdapter: function() {return testInvalidAdapter;}
     };
 
-    expect(f).toThrow("Adapter for [test] already exists");
+    pluginManager = new jashboard.PluginManager(logger);
+
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2
+    });
   });
-  it("should throw an error if the plugin does not implement a convertDataToRuntimeInfo method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['defaultSize', 'parseMonitorConfigurationForm']);
-    var f = function() {
-      pluginManager.addMonitorAdapter("test", TestAdapter);
+  it("should return a list of registered valid monitor types excluding type adapters not implementing 'defaultSize'", function() {
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'parseMonitorConfigurationForm']);
+    jashboard.plugin.invalidType = {
+      MonitorAdapter: function() {return testInvalidAdapter;}
     };
 
-    expect(f).toThrow("Adapter for [test] does not implement a convertDataToRuntimeInfo method");
-  });
-  it("should throw an error if the plugin does not implement a defaultSize method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToRuntimeInfo', 'parseMonitorConfigurationForm']);
-    var f = function() {
-      pluginManager.addMonitorAdapter("test", TestAdapter);
-    };
+    pluginManager = new jashboard.PluginManager(logger);
 
-    expect(f).toThrow("Adapter for [test] does not implement a defaultSize method");
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2
+    });
   });
-  it("should throw an error if the plugin does not implement a parseMonitorConfigurationForm method", function() {
-    mockAdapter = jasmine.createSpyObj("TestAdapter", ['convertDataToRuntimeInfo', 'defaultSize']);
-    var f = function() {
-      pluginManager.addMonitorAdapter("test", TestAdapter);
-    };
+  it("should return a list of registered valid monitor types excluding type adapters already defined", function() {
+    var counter = 0;
+    var testValidAdapter3a = jasmine.createSpyObj("TestValidAdapterA", adapterMethods);
+    var testValidAdapter3b = jasmine.createSpyObj("TestValidAdapterB", adapterMethods);
+    jashboard.plugins = ['validType1', 'validType2', 'validType3', 'validType3'];
+    jashboard.plugin = _.extend(jashboard.plugin, {
+      validType3: {
+        MonitorAdapter: function() {
+          counter++;
+          if (counter === 1) {
+            return testValidAdapter3a;
+          }
+          return testValidAdapter3b;
+        }
+      },
+    });
+    
+    pluginManager = new jashboard.PluginManager(logger);
 
-    expect(f).toThrow("Adapter for [test] does not implement a parseMonitorConfigurationForm method");
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2,
+      validType3: testValidAdapter3a,
+    });
   });
 });

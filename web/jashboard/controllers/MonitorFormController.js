@@ -17,7 +17,7 @@
         scope.$emit("CloseMonitorDialog");
       };
       var parseMonitorForm = function() {
-        var monitorAdapter = pluginManager.findMonitorAdapter(scope.monitorFormModel.type);
+        var monitorAdapter = pluginManager.monitorAdapters[scope.monitorFormModel.type];
         return  {
           name: scope.monitorFormModel.name,
           refreshInterval: parseInt(scope.monitorFormModel.refreshInterval, 10),
@@ -26,7 +26,7 @@
         };
       };
       var createMonitor = function(dashboard) {
-        var monitorAdapter = pluginManager.findMonitorAdapter(scope.monitorFormModel.type);
+        var monitorAdapter = pluginManager.monitorAdapters[scope.monitorFormModel.type];
         var monitorModel = parseMonitorForm();
         var monitorParameters = _.extend(monitorModel, {
           size: monitorAdapter.defaultSize(),
@@ -46,7 +46,7 @@
         });
       };
 
-      scope.availableMonitorTypes = pluginManager.getAllMonitorTypes();
+      scope.availableMonitorTypes = _.keys(pluginManager.monitorAdapters);
       scope.monitorConfigurationFormModel = {};
 
       scope.$on("OpenMonitorDialog", function(event, options) {

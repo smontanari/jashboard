@@ -2,8 +2,7 @@ describe("MonitorFormController", function() {
   var scope, controller, listener, formHelper, repository, pluginManager, monitorLayoutManager;
   beforeEach(function() {
     pluginManager = {
-      getAllMonitorTypes: jasmine.createSpy("pluginManager.getAllMonitorTypes()")
-        .andReturn(['test_type1', 'test_type2'])
+      monitorAdapters: {'test_type1': {}, 'test_type2': {}}
     };    
     scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
     
@@ -86,8 +85,8 @@ describe("MonitorFormController", function() {
           };
           adapter.parseMonitorConfigurationForm.withArgs("testConfig2").returns("test_configuration_model");
           adapter.defaultSize.returns({width: 678, height: 654});
-          pluginManager.findMonitorAdapter = sinon.stub();
-          pluginManager.findMonitorAdapter.withArgs("test_type2").returns(adapter);
+          pluginManager.monitorAdapters = {'test_type2': adapter};
+
           monitorLayoutManager.nextAvailableMonitorPosition.withArgs({id: "test_dashboard", monitors: [{id: "m2"}]}, {width: 678, height: 654})
               .returns({top: 123, left: 456});
         });
@@ -201,8 +200,8 @@ describe("MonitorFormController", function() {
             parseMonitorConfigurationForm: sinon.stub()
           };
           adapter.parseMonitorConfigurationForm.withArgs("testConfig2").returns("test_new_configuration");
-          pluginManager.findMonitorAdapter = sinon.stub();
-          pluginManager.findMonitorAdapter.withArgs("test_type2").returns(adapter);
+          pluginManager.monitorAdapters = {'test_type2': adapter};
+
 
           scope.monitorFormModel = {
             id: "test_monitor_id",

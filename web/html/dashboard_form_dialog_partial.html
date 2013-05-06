@@ -1,4 +1,5 @@
-<div id="dashboard-form" data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}" class="modal hide fade" role="dialog" aria-hidden="true">
+<div id="dashboard-form" class="modal hide fade" role="dialog" aria-hidden="true"
+  data-jb-dialog="{show: 'OpenDashboardDialog', hide: 'CloseDashboardDialog'}">
   <div data-ng-form="dashboardForm" class="form-horizontal" data-ng-controller="DashboardFormController" 
     data-jb-form-validation="{triggerOnEvent: 'OpenDashboardDialog', triggerOnLoad: false, validationRules: 'DashboardFormValidationRules'}"
     data-ui-keypress="{13: 'saveDashboard()'}">
@@ -13,8 +14,8 @@
       <div class="control-group" data-ng-class="{'error': inputInError('dashboardName')}">
         <label class="control-label" for="dashboardName">Name</label>
         <div class="controls">
-          <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" 
-          data-ng-model="dashboardFormModel.name" data-ng-change="validateFields('dashboardName')">
+          <input type="text" name="dashboardName" class="input-xlarge" placeholder="dashboard name" data-ng-model="dashboardFormModel.name"
+            data-ng-change="validateFields('dashboardName')" data-jb-focus="{triggerOnEvent: 'DialogVisible'}">
         </div>
         <div class="controls">
           <div id="dashboardNameRequiredError" class="help-inline" data-ng-show="dashboardForm.dashboardName.$error.required">You must provide a dashboard name.</div>

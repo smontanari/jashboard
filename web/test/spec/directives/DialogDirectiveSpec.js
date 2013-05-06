@@ -1,26 +1,40 @@
 describe("DialogDirective", function() {
-  var dialogService, actions, scope;
+  var dialogService, actions, scope, linkFunction, onVisibleCallback;
 
   beforeEach(function() {
-    scope = {id: "test_scope"};
+    scope = {
+      $broadcast: jasmine.createSpy("scope.$broadcast()"),
+      $eval: sinon.stub()
+    };
+    scope.$eval.withArgs("test-map").returns("test-events");
     dialogService = jasmine.createSpyObj("DialogService", ["showModal", "hideModal"]);
-    spyOn(jashboard.angular, "EventDirectiveDefinition")
-      .andCallFake(function(attributeName, factory) {
-        actions = factory(scope, "test-element");
-      });
+    dialogService.showModal.andCallFake(function(element, callback) {
+      onVisibleCallback = callback;
+    });
+    jashboard.angularUtils.mapEventActions = jasmine.createSpy("jashboard.angular.mapEventActions()").andCallFake(function(scope, eventsMap, actionsMap) {
+      actions = actionsMap;
+    });
 
-    jashboard.angular.dialogDirective(dialogService);
+    linkFunction = jashboard.angular.dialogDirective(dialogService);
+
+    linkFunction(scope, "test-element", {jbDialog: "test-map", jbDialogNotifyWhenVisible: ""});
   });
 
-  it("should pass the correct attribute name", function() {
-    expect(jashboard.angular.EventDirectiveDefinition).toHaveBeenCalledWith("jbDialog", jasmine.any(Function));
+  it("should map the events to the actions", function() {
+    expect(jashboard.angularUtils.mapEventActions).toHaveBeenCalledWith(scope, "test-events", jasmine.any(Object));
   });
   it("The 'show' action should invoke the dialogService", function() {
     actions.show();
-    expect(dialogService.showModal).toHaveBeenCalledWith("test-element");
+    expect(dialogService.showModal).toHaveBeenCalledWith("test-element", jasmine.any(Function));
   });
   it("The 'hide' action should invoke the dialogService", function() {
     actions.hide();
     expect(dialogService.hideModal).toHaveBeenCalledWith("test-element");
+  });
+  it("should broadcast the 'DialogVisible' event", function() {
+    actions.show();
+    if (onVisibleCallback) onVisibleCallback();
+
+    expect(scope.$broadcast).toHaveBeenCalledWith("DialogVisible");
   });
 });

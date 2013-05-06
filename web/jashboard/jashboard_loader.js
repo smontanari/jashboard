@@ -26,7 +26,6 @@ steal('jashboard/jashboard.js')
       "Tooltip",
     ],
     directives: [
-      'EventDirectiveDefinition',
       'DialogDirective', 
       'OverlayDirective',
       'AlertBoxDirective',
@@ -37,7 +36,8 @@ steal('jashboard/jashboard.js')
       'FormValidationDirective',
       'SlideShowDirective',
       'NotifyLastDirective',
-      'SwitchButtonDirective'
+      'SwitchButtonDirective',
+      'FocusDirective'
     ],
     model: [
       'Dashboard',

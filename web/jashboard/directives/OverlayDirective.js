@@ -1,8 +1,9 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     overlayDirective: function (overlayService) {
-      return new jashboard.angular.EventDirectiveDefinition("jbOverlay", function(scope, element, attrs) {
-        return {
+      return function(scope, element, attrs) {
+        var eventsMap = scope.$eval(attrs.jbOverlay);
+        var actionsMap = {
           show: function() {
             overlayService.show(element, scope.$eval(attrs['jbOverlayOptions']));
           },
@@ -10,7 +11,9 @@
             overlayService.hide();
           }
         };
-      });
+
+        jashboard.angularUtils.mapEventActions(scope, eventsMap, actionsMap);
+      };
     }
   });
 }(jashboard.angular || {}));

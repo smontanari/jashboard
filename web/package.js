@@ -3,7 +3,8 @@ var UglifyJS = require("uglify-js");
 var Walk = require("walk");
 
 var fileNameExclusions = ['loader.js', 'jashboard_loader.js'];
-var fileMaskExclusions = /^\..*|.+_plugin\.js$/; // exclude '.DS_Store' and any other junk
+// exclude '.DS_Store' and any other junk, plus the *_plugin.js files that use steal to load the other plugin files
+var fileMaskExclusions = /^\..*|.+_plugin\.js$/;
 var files = [];
 var walker  = Walk.walk('./jashboard', { followLinks: false });
 

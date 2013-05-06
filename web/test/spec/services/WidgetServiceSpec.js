@@ -71,4 +71,18 @@ describe("WidgetService", function() {
       expect($element.height).toHaveBeenCalledWith(60);
     });
   });
+
+  describe("setFocus()", function() {
+    var $element;
+    beforeEach(function() {
+      $element = testHelper.stubJQuery("test-selector");
+      $element.focus = jasmine.createSpy("$.focus()");
+    });
+
+    it("should trigger the focus event on the element", function() {
+      service.setFocus("test-selector");
+
+      expect($element.focus).toHaveBeenCalled();
+    });
+  });
 });

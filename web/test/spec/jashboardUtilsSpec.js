@@ -52,23 +52,61 @@ describe("Jashboard utility functions", function() {
 
   describe("angularUtils", function() {
     var scope;
-    beforeEach(function() {
-      scope = jasmine.createSpyObj("scope", ['$eval', '$apply']);
-      scope.$root = {};
-    });
+    describe("safeApply()", function() {
+      beforeEach(function() {
+        scope = jasmine.createSpyObj("scope", ['$eval', '$apply']);
+        scope.$root = {};
+      });
 
-    _.each(['$apply', '$digest'], function(phase) {
-      it("should invoke $eval during a " + phase + " phase", function() {
-        scope.$root.$$phase = phase;
+      _.each(['$apply', '$digest'], function(phase) {
+        it("should invoke $eval during a " + phase + " phase", function() {
+          scope.$root.$$phase = phase;
+          jashboard.angularUtils.safeApply(scope, "test_expression");
+
+          expect(scope.$eval).toHaveBeenCalledWith("test_expression");
+        });
+      });
+      it("should invoke $apply when not in $digest or $apply phase", function() {
         jashboard.angularUtils.safeApply(scope, "test_expression");
 
-        expect(scope.$eval).toHaveBeenCalledWith("test_expression");
+        expect(scope.$apply).toHaveBeenCalledWith("test_expression");
       });
     });
-    it("should invoke $apply when not in $digest or $apply phase", function() {
-      jashboard.angularUtils.safeApply(scope, "test_expression");
 
-      expect(scope.$apply).toHaveBeenCalledWith("test_expression");
+    describe("mapEventActions()", function() {
+      var actionCallback1, actionCallback2;
+      beforeEach(function() {
+        actionCallback1 = jasmine.createSpy("actionCallback1()");
+        actionCallback2 = jasmine.createSpy("actionCallback2()");
+        var eventsMap = {testAction1: "testEvent1", testAction2: "testEvent2,testEvent3"};
+        var actionsMap = {
+          testAction1: function() {
+            actionCallback1();
+          },
+          testAction2: function() {
+            actionCallback2();
+          }
+        };
+
+        scope = {
+          $on: jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
+            callback({});
+          })
+        };
+
+        jashboard.angularUtils.mapEventActions(scope, eventsMap, actionsMap);
+      });
+
+      it("should register the events listeners", function() {
+        expect(scope.$on).toHaveBeenCalledWith("testEvent1", jasmine.any(Function));
+        expect(scope.$on).toHaveBeenCalledWith("testEvent2", jasmine.any(Function));
+        expect(scope.$on).toHaveBeenCalledWith("testEvent3", jasmine.any(Function));
+      });
+      it("should invoke the actions", function() {
+        expect(actionCallback1).toHaveBeenCalled();
+        expect(actionCallback2).toHaveBeenCalled();
+        expect(actionCallback2.calls.length).toEqual(2);
+      });
     });
   });
 

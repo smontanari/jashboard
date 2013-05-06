@@ -1,16 +1,23 @@
 (function(module) {
   jashboard.angular = _.extend(module, {
     dialogDirective: function (dialogService) {
-      return new jashboard.angular.EventDirectiveDefinition("jbDialog", function(scope, element) {
-        return {
+      return function(scope, element, attrs) {
+        var notifyWhenVisible = function() {
+          scope.$broadcast("DialogVisible");
+        };
+
+        var eventsMap = scope.$eval(attrs.jbDialog);
+        var actionsMap = {
           show: function() {
-            dialogService.showModal(element);
+            dialogService.showModal(element, notifyWhenVisible);
           },
           hide: function() {
             dialogService.hideModal(element);
           }
         };
-      });
+        
+        jashboard.angularUtils.mapEventActions(scope, eventsMap, actionsMap);
+      };
     }
   });
 }(jashboard.angular || {}));

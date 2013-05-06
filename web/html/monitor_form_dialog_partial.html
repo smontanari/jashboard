@@ -16,7 +16,8 @@
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">
             <input type="text" name="monitorName" class="input-large" placeholder="monitor name" 
-              data-ng-model="monitorFormModel.name" data-ng-change="validateFields('monitorName')">
+              data-ng-model="monitorFormModel.name" data-ng-change="validateFields('monitorName')"
+              data-jb-focus="{triggerOnEvent: 'DialogVisible'}">
           </div>
           <div class="controls">
             <div id="monitorNameRequiredError" class="help-inline" data-ng-show="baseMonitorForm.monitorName.$error.required">You must provide a monitor name.</div>

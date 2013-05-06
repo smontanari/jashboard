@@ -19,13 +19,15 @@
 
         element.resizable(_.extend(defaultOptions, options));
       };
-
-      this.resetContainerHeight = function(element) {
-        var container = $(element);
+      this.resetContainerHeight = function(selector) {
+        var container = $(selector);
         var position = container.position();
         var height = container.height();
         var heightOffset = (container.outerHeight() - height)/2 + position.top;
         container.height(height - heightOffset);
+      };
+      this.setFocus = function(selector) {
+        $(selector).focus();
       };
     }
   });

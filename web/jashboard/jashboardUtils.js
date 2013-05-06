@@ -49,6 +49,14 @@
           scope.$eval(expr);
         else
           scope.$apply(expr);
+      },
+      mapEventActions: function(scope, eventsMap, actionsMap) {
+        _.each(_.keys(eventsMap), function(actionName) {
+          var events = eventsMap[actionName].split(',');
+          _.each(events, function(eventName) {
+            scope.$on(eventName, actionsMap[actionName]);
+          });
+        });
       }
     },
     functionUtils: {

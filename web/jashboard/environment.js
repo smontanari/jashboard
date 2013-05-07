@@ -61,8 +61,7 @@ var jashboard = (function(module) {
       },
       {
         resourceName: "jquery",
-        resourceSet: ["jquery"]
-        // resourceSet: ["lib/jquery-1.9.1.js"]
+        resourceSet: ["lib/jquery-1.9.1.min.js"]
       },
       {
         resourceName: "lib",

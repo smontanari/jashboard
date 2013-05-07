@@ -1,4 +1,4 @@
-steal('jashboard/jashboard.js')
+steal('jashboard/modules.js')
 .then(function() {
   jashboard.resources = [
     'jashboardUtils',

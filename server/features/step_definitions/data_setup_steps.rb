@@ -39,7 +39,8 @@ end
 
 Given /^a jenkins build server at port (\d+) running the following builds$/ do |port, builds|
   builds.hashes.each do |build_data|
-    @fake_server.add_handler("/job/#{build_data[:build_id]}/", build_data[:response_fixture])
+    @fake_server.add_handler("/job/#{build_data[:build_id]}/api/xml", build_data[:project_response_fixture])
+    @fake_server.add_handler("/job/#{build_data[:build_id]}/lastCompletedBuild/api/xml", build_data[:build_response_fixture])
   end
   @fake_server.start
 end

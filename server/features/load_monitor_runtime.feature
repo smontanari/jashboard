@@ -6,8 +6,8 @@ Feature: Get monitor runtime data
   @use_stub_server
   Scenario: Load build monitor runtime returns corresponding runtime data
     Given a jenkins build server at port 8000 running the following builds
-    | build_id      | response_fixture                   |
-    | zombie_build  | jenkins-lastbuild-success-response |
+    | build_id      | build_response_fixture             | project_response_fixture          |
+    | zombie_build  | jenkins-lastbuild-success-response | jenkins-project-building-response |
 
     And the following monitors
     | id        | name              | type  | refresh_interval | position | size    | configuration                                                                    |
@@ -29,7 +29,7 @@ Feature: Get monitor runtime data
   Scenario: Load vcs monitor runtime returns corresponding runtime data
     Given the following monitors
     | id        | name        | type | refresh_interval | position | size    | configuration                                                            |
-    | monitor_1 | Git Monitor | vcs  | 10               | 100,200  | 230x120 | { type: "git", working_directory: "../", branch: "test-git-do-not-delete", history_length: 3} |
+    | monitor_1 | Git Monitor | vcs  | 10               | 100,200  | 230x120 | { type: "git", working_directory: "../", branch: "functest-git-do-not-delete", history_length: 3} |
 
     When I request the runtime info for monitor monitor_1
 

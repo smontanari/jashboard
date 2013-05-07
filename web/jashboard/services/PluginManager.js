@@ -5,6 +5,7 @@
       var instantiateAdapter = function(typeIdentifier) {
         var requiredMethods = [
           "parseMonitorConfigurationForm",
+          "convertMonitorConfigurationToFormModel",
           "convertDataToRuntimeInfo",
           "defaultSize"
         ];

@@ -62,8 +62,9 @@
           });
         } else if (options.mode === jashboard.model.inputOptions.updateMode) {
           var monitor = options.parameters.monitor;
+          var monitorAdapter = pluginManager.monitorAdapters[monitor.type];
           scope.monitorFormModel = _.pick(monitor, "id", "name", "refreshInterval", "type");
-          scope.monitorConfigurationFormModel[monitor.type] = _.clone(monitor.configuration);
+          scope.monitorConfigurationFormModel[monitor.type] = monitorAdapter.convertMonitorConfigurationToFormModel(monitor.configuration);
           scope.formHelper = new jashboard.MonitorFormHelper(scope.baseMonitorForm, scope.monitorFormModel, function() {
             updateMonitor(options.parameters.monitor);
           });

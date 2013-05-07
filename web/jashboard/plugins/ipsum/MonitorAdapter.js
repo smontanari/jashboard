@@ -8,6 +8,7 @@
         };
       };
 
+      this.convertMonitorConfigurationToFormModel = _.clone;
       this.convertDataToRuntimeInfo = _.clone;
 
       this.defaultSize = function() {

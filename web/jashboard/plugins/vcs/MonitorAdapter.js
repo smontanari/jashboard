@@ -9,7 +9,19 @@
           historyLength: parseInt(formModel.historyLength, 10),
           pagination: formModel.pagination,
           commitsPerPage: parseInt(formModel.commitsPerPage, 10),
-          interval: parseInt(formModel.interval, 10)
+          interval: parseInt(formModel.interval, 10) * 1000
+        };
+      };
+
+      this.convertMonitorConfigurationToFormModel = function(configuration) {
+        return {
+          workingDirectory: configuration.workingDirectory,
+          branch: configuration.branch,
+          type: configuration.type,
+          historyLength: configuration.historyLength,
+          pagination: configuration.pagination,
+          commitsPerPage: configuration.commitsPerPage,
+          interval: Math.floor(configuration.interval/1000)
         };
       };
 

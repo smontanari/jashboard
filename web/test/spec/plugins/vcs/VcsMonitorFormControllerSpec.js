@@ -28,7 +28,7 @@ describe("VcsMonitorFormController", function() {
       scope.toggleSlideShowEffect();
 
       expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(1);
-      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(5000);
+      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(5);
     });
     it("should not reset the commitsPerPage value if the pagination is enabled", function() {
       scope.monitorConfigurationFormModel = { vcs: {
@@ -66,7 +66,7 @@ describe("VcsMonitorFormController", function() {
         branch: null,
         pagination: false,
         commitsPerPage: 1,
-        interval: 5000
+        interval: 5
       });
     });
   });

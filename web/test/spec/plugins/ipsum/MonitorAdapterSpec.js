@@ -12,6 +12,13 @@ describe("Ipsum MonitorAdapter", function() {
     expect(configuration.language).toEqual("english");
   });
 
+  it("should convert the configuration to the form model", function() {
+    var configuration = {numberOfSentences: 10, language: "english"};
+    var configurationModel = adapter.convertMonitorConfigurationToFormModel(configuration);
+
+    expect(configurationModel).toEqual(configuration);
+  });
+
   it("should convert data to the runtime information", function() {
     var runtimeInfo = adapter.convertDataToRuntimeInfo({text: "some text"});
 

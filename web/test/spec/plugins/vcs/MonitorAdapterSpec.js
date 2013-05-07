@@ -10,7 +10,7 @@ describe("Vcs MonitorAdapter", function() {
       historyLength: 123,
       pagination: true,
       commitsPerPage: 4,
-      interval: 345
+      interval: 3000
     };
     configForm = {
       type: "test_type",
@@ -19,7 +19,7 @@ describe("Vcs MonitorAdapter", function() {
       historyLength: "123",
       pagination: true,
       commitsPerPage: "4",
-      interval: "345"
+      interval: "3"
     };
   });
 
@@ -27,6 +27,20 @@ describe("Vcs MonitorAdapter", function() {
     var model = plugin.parseMonitorConfigurationForm(configForm);
 
     expect(model).toEqual(configModel);
+  });
+
+  it("should convert the configuration to the form model", function() {
+    var configurationModel = plugin.convertMonitorConfigurationToFormModel(configModel);
+
+    expect(configurationModel).toEqual({
+      type: "test_type",
+      workingDirectory: "test_directory",
+      branch: "test_branch",
+      historyLength: 123,
+      pagination: true,
+      commitsPerPage: 4,
+      interval: 3
+    });
   });
 
   it("should return a default size for the vcs monitor", function() {

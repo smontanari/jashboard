@@ -4,14 +4,20 @@ describe("Build MonitorAdapter", function() {
   beforeEach(function() {
     jashboard.plugin.build.buildTypes = ['buildType1', 'buildType2'];
     _.each(['buildType1', 'buildType2'], function(type) {
-      jashboard.plugin.build[type] = {parseFormConfiguration: jasmine.createSpy(type + "ConfigurationParser").andReturn(
+      jashboard.plugin.build[type] = {
+        parseFormConfiguration: jasmine.createSpy(type + "ConfigurationParser").andReturn(
         {
           type: type,
-          hostname: "test.host.name",
-          port: 123,
           modelParameter: "test_model_param"
         }
-      )};
+      ),
+      convertMonitorConfigurationToFormModel: jasmine.createSpy(type + "ConfigurationConverter").andReturn(
+        {
+          type: type,
+          formParameter: "test_form_param"
+        }
+      )
+      };
     });
 
     plugin = new jashboard.plugin.build.MonitorAdapter();
@@ -31,6 +37,21 @@ describe("Build MonitorAdapter", function() {
         hostname: "test.host.name",
         port: 123,
         modelParameter: "test_model_param"
+      });
+    });
+    it("should invoke the build configuration form converter of the corresponding type", function() {
+      var model = plugin.convertMonitorConfigurationToFormModel({
+        type: type,
+        hostname: "test.host.name",
+        port: 123,
+        modelParameter: "test_model_param"
+      });
+
+      expect(model).toEqual({
+        type: type,
+        hostname: "test.host.name",
+        port: 123,
+        formParameter: "test_form_param"
       });
     });
   });

@@ -3,6 +3,7 @@ describe("PluginManager", function() {
   var adapterMethods = [
     'convertDataToRuntimeInfo',
     'parseMonitorConfigurationForm',
+    'convertMonitorConfigurationToFormModel',
     'defaultSize'
   ];
 
@@ -39,7 +40,7 @@ describe("PluginManager", function() {
     });
   });
   it("should return a list of registered valid monitor types excluding type adapters not implementing 'convertDataToRuntimeInfo'", function() {
-    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['parseMonitorConfigurationForm', 'defaultSize']);
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['parseMonitorConfigurationForm', 'convertMonitorConfigurationToFormModel', 'defaultSize']);
     jashboard.plugin.invalidType = {
       MonitorAdapter: function() {return testInvalidAdapter;}
     };
@@ -52,7 +53,20 @@ describe("PluginManager", function() {
     });
   });
   it("should return a list of registered valid monitor types excluding type adapters not implementing 'parseMonitorConfigurationForm'", function() {
-    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'defaultSize']);
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'convertMonitorConfigurationToFormModel', 'defaultSize']);
+    jashboard.plugin.invalidType = {
+      MonitorAdapter: function() {return testInvalidAdapter;}
+    };
+
+    pluginManager = new jashboard.PluginManager(logger);
+
+    expect(pluginManager.monitorAdapters).toEqual({
+      validType1: testValidAdapter1,
+      validType2: testValidAdapter2
+    });
+  });
+  it("should return a list of registered valid monitor types excluding type adapters not implementing 'convertMonitorConfigurationToFormModel'", function() {
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'parseMonitorConfigurationForm', 'defaultSize']);
     jashboard.plugin.invalidType = {
       MonitorAdapter: function() {return testInvalidAdapter;}
     };
@@ -65,7 +79,7 @@ describe("PluginManager", function() {
     });
   });
   it("should return a list of registered valid monitor types excluding type adapters not implementing 'defaultSize'", function() {
-    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'parseMonitorConfigurationForm']);
+    var testInvalidAdapter = jasmine.createSpyObj("TestInvalidAdapter", ['convertDataToRuntimeInfo', 'parseMonitorConfigurationForm', 'convertMonitorConfigurationToFormModel']);
     jashboard.plugin.invalidType = {
       MonitorAdapter: function() {return testInvalidAdapter;}
     };

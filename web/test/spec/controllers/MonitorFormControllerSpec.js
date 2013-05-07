@@ -62,6 +62,7 @@ describe("MonitorFormController", function() {
       it("should set the editMode variable as 'create' in the scope", function() {
         expect(scope.$editMode).toEqual(jashboard.model.inputOptions.createMode);
       });
+
       describe("save action callback", function() {
         var successHandler, errorHandler, adapter;
         beforeEach(function() {
@@ -156,16 +157,23 @@ describe("MonitorFormController", function() {
     });
 
     describe("update mode", function() {
-      var monitor;
+      var monitor, adapter;
       beforeEach(function() {
         monitor = {
           id: "test_monitor_id",
           name: "test_name",
           type: "test_type2",
           refreshInterval: 123,
-          configuration: "test_configuration_model",
+          configuration: "test_configuration",
           runtimeInfo: "test_runtime_info"
         };
+        adapter = {
+          parseMonitorConfigurationForm: sinon.stub(),
+          convertMonitorConfigurationToFormModel: sinon.stub()
+        };
+        adapter.convertMonitorConfigurationToFormModel.withArgs("test_configuration").returns("test_configuration_model");
+        pluginManager.monitorAdapters = {'test_type2': adapter};
+
         listener({}, {
           mode: jashboard.model.inputOptions.updateMode,
           parameters: {monitor: monitor}
@@ -190,18 +198,13 @@ describe("MonitorFormController", function() {
       });
 
       describe("save action callback", function() {
-        var successHandler, errorHandler, adapter;
+        var successHandler, errorHandler;
         beforeEach(function() {
           repository.updateMonitorConfiguration = jasmine.createSpy("repository.updateMonitorConfiguration()").andCallFake(function(monitorModel, handlers) {
             successHandler = handlers.success;
             errorHandler = handlers.error;
           });
-          adapter = {
-            parseMonitorConfigurationForm: sinon.stub()
-          };
           adapter.parseMonitorConfigurationForm.withArgs("testConfig2").returns("test_new_configuration");
-          pluginManager.monitorAdapters = {'test_type2': adapter};
-
 
           scope.monitorFormModel = {
             id: "test_monitor_id",

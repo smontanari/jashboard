@@ -8,7 +8,7 @@ module Jashboard
       module JenkinsAdapter
         def get_jenkins_runtime_info(configuration)
           @base_url = "http://#{configuration.hostname}:#{configuration.port}/job/#{configuration.build_id}"
-          @doc = Nokogiri::XML(open("#{@base_url}/lastSuccessfulBuild/api/xml"))
+          @doc = Nokogiri::XML(open("#{@base_url}/lastCompletedBuild/api/xml"))
           BuildRuntimeInfo.new(get_time, get_duration, get_result, get_current_status)
         end
 
@@ -32,13 +32,12 @@ module Jashboard
         end
 
         def get_current_status
-          last_build_number = @doc.at_css("number").text.to_i
+          completed_build_number = @doc.at_css("number").text.to_i
           status = nil
           begin
-            open("#{@base_url}/#{last_build_number + 1}/api/xml")
-            status = 1
-          rescue OpenURI::HTTPError => error
-            status = 0 if error.message.start_with? "404"
+            doc = Nokogiri::XML(open("#{@base_url}/api/xml"))
+            last_build_number = doc.at_css("lastBuild > number").text.to_i
+            status = completed_build_number == last_build_number ? 0 : 1
           rescue
           end
           status

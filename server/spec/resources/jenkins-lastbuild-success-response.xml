@@ -8,13 +8,13 @@
   <building>false</building>
   <duration>25454</duration>
   <estimatedDuration>25703</estimatedDuration>
-  <fullDisplayName>build1 #6</fullDisplayName>
+  <fullDisplayName>test-build #3</fullDisplayName>
   <id>2012-11-05_09-35-08</id>
   <keepLog>false</keepLog>
-  <number>6</number>
+  <number>3</number>
   <result>SUCCESS</result>
   <timestamp>1352068508021</timestamp>
-  <url>http://localhost:8080/job/test-build/6/</url>
+  <url>http://localhost:8080/job/test-build/3/</url>
   <builtOn/>
   <changeSet/>
 </freeStyleBuild>

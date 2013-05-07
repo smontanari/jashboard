@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-rackup -p 8080
+rackup -p 8001
 

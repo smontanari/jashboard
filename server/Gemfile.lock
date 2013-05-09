@@ -28,6 +28,7 @@ GEM
       ipsum-core (>= 2.0.0)
     ipsum-latin (1.1.0)
       ipsum-core (>= 2.0.0)
+    json (1.7.7)
     json_spec (1.1.1)
       multi_json (~> 1.0)
       rspec (~> 2.0)
@@ -70,6 +71,7 @@ DEPENDENCIES
   fsdb
   grit
   ipsum
+  json (~> 1.7.7)
   json_spec
   nokogiri
   rspec

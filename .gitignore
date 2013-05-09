@@ -6,3 +6,6 @@ testresults.xml
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*
 web/node_modules
+deploy/rvm-init.sh
+deploy/jashboard_app
+

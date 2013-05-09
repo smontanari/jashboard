@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'sinatra/base'
 require "sinatra/json"
 require 'json'
@@ -18,6 +21,9 @@ module Jashboard
     end
     configure :test do
       set :raise_errors, false
+    end
+    configure :production do |conf|
+      set :public_folder, File.join(File.dirname(__FILE__), 'web')
     end
 
     def initialize(*args)

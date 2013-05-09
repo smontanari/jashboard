@@ -83,10 +83,6 @@ var jashboard = (function(module) {
       {
         resourceName: "mainFile",
         resourceSet: ["lib/jashboard.min.js"]
-      },
-      {
-        resourceName: "testScenarios",
-        resourceSet: ["test/funcunit/test_scenario_loader.js"]
       }
     ]
   };

@@ -19,14 +19,14 @@ ipsum         | random generator of sentences (inspired by the *ipsum* gem). Thi
 
 ## Installation
 ### Prerequisites
-You will only need Ruby installed on your machine. I've only tested the app with Ruby 1.9.3, but I suppose you could try 2.0.0 and possibly nothing will break (I'm planning to switch to 2.0 at some point though).
+You will only need Ruby installed on your machine. I've only tested the app with Ruby 1.9.3, but I suppose you could try 2.0.0 and possibly nothing will break (I'm planning to switch to Ruby 2 at some point though).
 
 ### Production instance
 
     $ cd deploy
     $ rake install
 
-This will generate a directory **deploy/jashboard_app** which will contain the full webapp with only production files, css and javascript minified, environment variables set. You can then copy that folder anywhere you like or just leave it there.
+This will generate a directory **deploy/jashboard_app** which will contain the full webapp with only production files, css and javascript minified, environment variables set to production etc. You can then copy that folder anywhere you like or just leave it there.
 
 From within the application folder run the following script:
 
@@ -45,7 +45,7 @@ Now you can fire up your favourite browser (and I mean browser, not IE) and load
 	http://<hostname>:8001/index.html
 
 ### Development instance
-This is more for development purposes, that is you want to modify the code, the web styles, add a new monitor plugin, etc.
+This is more for test/development purposes, that is you want to modify the code, the web styles, add a new monitor plugin, etc. and then test your changes
 
 	$ cd server
 	$ bundle install
@@ -53,7 +53,7 @@ This is more for development purposes, that is you want to modify the code, the 
 
 This will start the application in *development* mode (more details about customising your Jashboard are given below).
 
-Note that nothing stops you from running the application in *development* mode and using it for real.
+Note that nothing stops you from running the application in *development* mode and using it as a production instance.
 
 
 ## Usage
@@ -68,5 +68,5 @@ Working on this section...
 
 # Copyright
 
-Copyright (c) 2013 Silvio Montanari. See LICENSE for details.
+Copyright &copy; 2013 Silvio Montanari. See LICENSE for details.
 

@@ -1,6 +1,6 @@
 # Jashboard
 
-This is a web application that allows the user to set up dashboards that contains a variety of monitors that dynamically fetch and report information.
+This is a web application that allows the user to set up dashboards to contain a variety of monitors that dynamically fetch and report any sort of information.
 
 Jashboard works as a **single page web application**, where the client side is fully written in Javascript (AngularJS) and the server side is a simple Sinatra (Ruby) instance.
 
@@ -63,8 +63,46 @@ The application is pretty straightforward to use.
 * Add a new monitor to your dashboard using the *"Add monitor"* button. 
 * Once the monitor is in the dashboard you can modify its layout (i.e. size and position), as well as change its configuration settings.
 
+## Demo it
+You can try out the application without starting the server and just by running the javascript client it in your browser.
+You only have to open the `web/index.html` file directly in your browser passing a particular parameter in the url, as in:
+
+    file:///<path-to-the-repo>/web/index.html?test_scenario=demo
+    
+This way the application runs only on the browser, with simulated ajax responses from the server, and you can create/delete dashboards, monitors and get a glance of what the actual functionality would be like.
+
+In order for this to work your browser needs to have permission to load files from the local file system. This should be fine for **Firefox** and **Safari**, but it might not work in Chrome. In that case you can try and start **Chrome** with a couple of special flags, like this:
+    
+    chrome --args --allow-file-access-from-files --incognito
+
 # Developing your own monitor type
-Working on this section...
+This is just a brief guide. More details will be put in the wiki (when I have the time).
+
+Adding a new monitor type involves adding both a client side plugin and a server side plugin.
+You can look at the existing monitor plugins that I've written to get an idea of what needs to be done, but basically the steps to follow are:
+
+* Define a plugin type name. This may seem trivial, but the monitor type name is actually crucial for the application to work correctly. 
+   
+   Choose possibly a short name, with only alphanumeric characters, because it will be used both by javascript (client) and ruby (server) to dynamically invoke your plugin code. 
+
+* Client side: 
+    * **javascript**: this is where you write the logic to interpret the monitor runtime information and configuration
+        1. Create a folder with name equal to your plugin type name under web/jashboard/plugins i.e. `web/jashboard/plugins/<type_name>`. This folder will contain your custom code.
+        2. Add a `MonitorAdapter.js` file which will define your very Monitor type adapter function.
+        3. Add a `<type_name>_plugin.js` file which will load your MonitorAdapter.js plus any other file necessary to run your plugin.
+        4. Add your plugin type name in the array of plugins defined in `web/jashboard/plugins.js`.
+    * **html**: this is how you render the monitor runtime information and configuration form
+        1. Create a folder with name equal to your plugin type name under web/html/plugins i.e. `web/html/plugins/<type_name>`.
+        2. Add a monitor_runtime_partial.html file which will be used to display the monitor runtime information.
+        3. Add a monitor_form_partial.html file which will be used to display the monitor configuration form.
+    * **styles**[optional]: this is how you add custom styles for your view/html elements
+        1. Add a less file under web/css/plugins i.e. `web/css/plugins/jashboard-plugin-<type_name>.less`.
+        2. Add @import statement to the base less file `web/css/jashboard.less` to load your specific less file i.e. `@import url('plugins/jashboard-plugin-<type_name>.less');`.
+* Server side:
+    1. Create a folder with name equal to your plugin type name under server/app/plugins i.e. `server/app/plugins/<type_name>`.
+    2. Add your own ruby plugin class, extending `Jashboard::Plugin` and implementing a `get_runtime_info` method which will contain the logic necessary to fetch and return the monitor data.
+    
+The **Ipsum** monitor plugin is a very simple example that you can look at as a starting point for adding a new monitor plugin. Have fun!
 
 # Copyright
 

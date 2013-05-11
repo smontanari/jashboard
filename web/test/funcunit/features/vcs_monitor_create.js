@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Create a new vcs monitor", "vcs_monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Create a new vcs monitor", "vcs_monitor_actions", function() {
   test("should create a new git monitor", function() {
     S("#tab-dashboard_2").visible().click();
     jashboardFeatureHelper.openMonitorDialog("dashboard_2");

@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Delete a monitor", "monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Delete a monitor", "monitor_actions", function() {
   test("should delete the monitor", function() {
     S("#tab-dashboard_2").visible().click();
     jashboardFeatureHelper.triggerMonitorAction("#monitor_2", "delete");

@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Dashboard validation", "dashboard_actions_scenario", function() {
+funcunitHelper.testFeature("Dashboard validation", "dashboard_actions", function() {
   var saveButton = "#saveDashboard";
   var errorMessageSelector = "#dashboardNameRequiredError";
   var verifyDashboardNameError = function() {

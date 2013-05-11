@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions", function() {
   test("should update the jenkins monitor properties", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
 

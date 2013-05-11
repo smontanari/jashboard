@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions", function() {
   test("should create a new jenkins build monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({

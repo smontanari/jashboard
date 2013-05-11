@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Create a dashboard", "dashboard_actions_scenario", function() {
+funcunitHelper.testFeature("Create a dashboard", "dashboard_actions", function() {
   test("should create a new dashboard and display the new tab", function() {
     jashboardFeatureHelper.openDashboardDialog();
     var name = "test new-dashboard";

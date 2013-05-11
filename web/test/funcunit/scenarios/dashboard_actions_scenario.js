@@ -1,4 +1,4 @@
-steal("test/funcunit/scenarios/display_dashboards_data.js");
+steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
 
 $.fixture("POST /ajax/dashboard", function(ajaxOriginalOptions, ajaxOptions, headers) {
   var data = JSON.parse(ajaxOptions.data);

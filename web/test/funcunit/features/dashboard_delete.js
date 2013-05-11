@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Delete a dashboard", "dashboard_actions_scenario", function() {
+funcunitHelper.testFeature("Delete a dashboard", "dashboard_actions", function() {
   test("should remove the dashboard tab and focus on the first available one", function() {
     S("#tab-dashboard_2").visible().click();
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_2", "delete");

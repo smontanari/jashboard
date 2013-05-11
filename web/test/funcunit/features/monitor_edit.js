@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Edit a monitor", "monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Edit a monitor", "monitor_actions", function() {
   test("should update the monitor basic properties", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
     pageHelper.verifyInputValue("monitorName", "Zombie-Dash build", "display the existing name");

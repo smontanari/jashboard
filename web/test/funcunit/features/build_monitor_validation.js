@@ -1,4 +1,4 @@
-funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions_scenario", function() {
+funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", function() {
   test("should validate build monitor fields on creation", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({

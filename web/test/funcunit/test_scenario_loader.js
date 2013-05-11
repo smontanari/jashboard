@@ -8,6 +8,6 @@
       { src: 'lib/sinon-1.6.0.js', ignore: true },
       { src: 'jquery/dom/fixture', ignore: true },
       { src: 'test/funcunit/scenarios/scenario_helper.js', ignore: true }
-    ).then("test/funcunit/scenarios/" + scenarioName + ".js");
+    ).then("test/funcunit/scenarios/" + scenarioName + "_scenario.js");
   }
 }());

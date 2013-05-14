@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job name="test-job2a">
+  <link rel="self" href="http://test.host:1234/go/api/jobs/5.xml"/>
+  <id><![CDATA[urn:x-go.studios.thoughtworks.com:job-id:test-pipeline:2:test-stage2:1:test-job2a]]></id>
+  <pipeline name="test-pipeline" counter="2" label="2"/>
+  <stage name="test-stage2" counter="1" href="http://test.host:1234/go/api/stages/4.xml"/>
+  <result>Passed</result>
+  <state>Completed</state>
+  <properties>
+    <property name="cruise_agent"><![CDATA[mylaptop.local]]></property>
+    <property name="cruise_job_duration"><![CDATA[60]]></property>
+    <property name="cruise_job_id"><![CDATA[5]]></property>
+    <property name="cruise_job_result"><![CDATA[Passed]]></property>
+    <property name="cruise_pipeline_counter"><![CDATA[2]]></property>
+    <property name="cruise_pipeline_label"><![CDATA[2]]></property>
+    <property name="cruise_stage_counter"><![CDATA[1]]></property>
+    <property name="cruise_timestamp_01_scheduled"><![CDATA[2013-05-13T10:48:04+10:00]]></property>
+    <property name="cruise_timestamp_02_assigned"><![CDATA[2013-05-13T10:48:14+10:00]]></property>
+    <property name="cruise_timestamp_03_preparing"><![CDATA[2013-05-13T10:48:24+10:00]]></property>
+    <property name="cruise_timestamp_04_building"><![CDATA[2013-05-13T10:48:25+10:00]]></property>
+    <property name="cruise_timestamp_05_completing"><![CDATA[2013-05-13T10:49:25+10:00]]></property>
+    <property name="cruise_timestamp_06_completed"><![CDATA[2013-05-13T10:49:25+10:00]]></property>
+  </properties>
+  <agent uuid="fbf330ac-976a-4fb5-a893-776056156234"/>
+  <artifacts baseUri="http://test.host:1234/go/files/test-pipeline/2/test-stage2/1/test-job2a" pathFromArtifactRoot="pipelines/test-pipeline/2/test-stage2/1/test-job2a"/>
+  <resources/>
+  <environmentvariables/>
+</job>

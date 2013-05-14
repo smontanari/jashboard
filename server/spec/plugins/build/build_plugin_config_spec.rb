@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'plugins/build/build_plugin'
 require 'plugins/build/build_plugin_config'
 

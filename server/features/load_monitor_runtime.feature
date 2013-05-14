@@ -6,8 +6,8 @@ Feature: Get monitor runtime data
   @use_stub_server
   Scenario: Load build monitor runtime returns corresponding runtime data
     Given a jenkins build server at port 8000 running the following builds
-    | build_id      | build_response_fixture             | project_response_fixture          |
-    | zombie_build  | jenkins-lastbuild-success-response | jenkins-project-building-response |
+    | build_id      | build_response_fixture                           | project_response_fixture                        |
+    | zombie_build  | plugins/build/jenkins-lastbuild-success-response | plugins/build/jenkins-project-building-response |
 
     And the following monitors
     | id        | name              | type  | refresh_interval | position | size    | configuration                                                                    |

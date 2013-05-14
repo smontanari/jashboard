@@ -1,0 +1,71 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:go="http://www.thoughtworks-studios.com/ns/go">
+  <title><![CDATA[test-pipeline]]></title>
+  <id>http://test.host:1234/go/api/pipelines/test-pipeline/stages.xml</id>
+  <author>
+    <name>Go</name>
+  </author>
+  <updated>2013-05-13T10:50:07+10:00</updated>
+  <link rel="self" href="http://test.host:1234/go/api/pipelines/test-pipeline/stages.xml"/>
+  <link rel="next" href="http://test.host:1234/go/api/pipelines/test-pipeline/stages.xml?before=6"/>
+  <entry>
+    <title><![CDATA[test-pipeline(2) stage test-stage2(1) Failed]]></title>
+    <updated>2013-05-13T10:50:07+10:00</updated>
+    <id>http://test.host:1234/go/pipelines/test-pipeline/2/test-stage2/1</id>
+    <author>
+      <name><![CDATA[Silvio Montanari <montanari.silvio@gmail.com>]]></name>
+    </author>
+    <link title="test-stage2 Stage Detail" href="http://test.host:1234/go/api/stages/4.xml" rel="alternate" type="application/vnd.go+xml"/>
+    <link title="test-stage2 Stage Detail" href="http://test.host:1234/go/pipelines/test-pipeline/2/test-stage2/1" rel="alternate" type="text/html"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/api/pipelines/test-pipeline/2.xml" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="application/vnd.go+xml"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/pipelines/test-pipeline/2/test-stage2/1/pipeline" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="text/html"/>
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="stage" label="Stage" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="completed" label="Completed" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="failed" label="Failed" />
+  </entry>
+  <entry>
+    <title><![CDATA[test-pipeline(2) stage test-stage1(1) Passed]]></title>
+    <updated>2013-05-13T10:48:04+10:00</updated>
+    <id>http://test.host:1234/go/pipelines/test-pipeline/2/test-stage1/1</id>
+    <author>
+      <name><![CDATA[Silvio Montanari <montanari.silvio@gmail.com>]]></name>
+    </author>
+    <link title="test-stage1 Stage Detail" href="http://test.host:1234/go/api/stages/3.xml" rel="alternate" type="application/vnd.go+xml"/>
+    <link title="test-stage1 Stage Detail" href="http://test.host:1234/go/pipelines/test-pipeline/2/test-stage1/1" rel="alternate" type="text/html"/>
+    
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/api/pipelines/test-pipeline/2.xml" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="application/vnd.go+xml"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/pipelines/test-pipeline/2/test-stage1/1/pipeline" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="text/html"/>
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="stage" label="Stage" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="completed" label="Completed" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="passed" label="Passed" />
+  </entry>
+  <entry>
+    <title><![CDATA[test-pipeline(1) stage test-stage2(1) Failed]]></title>
+    <updated>2013-05-13T10:42:01+10:00</updated>
+    <id>http://test.host:1234/go/pipelines/test-pipeline/1/test-stage2/1</id>
+    <author>
+      <name><![CDATA[Silvio Montanari <montanari.silvio@gmail.com>]]></name>
+    </author>
+    <link title="test-stage2 Stage Detail" href="http://test.host:1234/go/api/stages/2.xml" rel="alternate" type="application/vnd.go+xml"/>
+    <link title="test-stage2 Stage Detail" href="http://test.host:1234/go/pipelines/test-pipeline/1/test-stage2/1" rel="alternate" type="text/html"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/api/pipelines/test-pipeline/1.xml" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="application/vnd.go+xml"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/pipelines/test-pipeline/1/test-stage2/1/pipeline" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="text/html"/>
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="stage" label="Stage" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="completed" label="Completed" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="failed" label="Failed" />
+  </entry>
+  <entry>
+    <title><![CDATA[test-pipeline(1) stage test-stage1(1) Passed]]></title>
+    <updated>2013-05-13T10:39:48+10:00</updated>
+    <id>http://test.host:1234/go/pipelines/test-pipeline/1/test-stage1/1</id>
+    <author>
+      <name><![CDATA[Silvio Montanari <montanari.silvio@gmail.com>]]></name>
+    </author>
+    <link title="test-stage1 Stage Detail" href="http://test.host:1234/go/api/stages/1.xml" rel="alternate" type="application/vnd.go+xml"/>
+    <link title="test-stage1 Stage Detail" href="http://test.host:1234/go/pipelines/test-pipeline/1/test-stage1/1" rel="alternate" type="text/html"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/api/pipelines/test-pipeline/1.xml" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="application/vnd.go+xml"/>
+    <link title="test-pipeline Pipeline Detail" href="http://test.host:1234/go/pipelines/test-pipeline/1/test-stage1/1/pipeline" rel="http://www.thoughtworks-studios.com/ns/relations/go/pipeline" type="text/html"/>
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="stage" label="Stage" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="completed" label="Completed" />
+    <category scheme="http://www.thoughtworks-studios.com/ns/categories/go" term="passed" label="Passed" />
+  </entry>
+</feed>

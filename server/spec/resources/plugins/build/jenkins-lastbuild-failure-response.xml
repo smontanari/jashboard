@@ -1,0 +1,20 @@
+<freeStyleBuild>
+  <action>
+    <cause>
+      <shortDescription>Started by user testuser</shortDescription>
+      <userName>testuser</userName>
+    </cause>
+  </action>
+  <building>false</building>
+  <duration>25454</duration>
+  <estimatedDuration>25703</estimatedDuration>
+  <fullDisplayName>test-build #3</fullDisplayName>
+  <id>2012-11-05_09-35-08</id>
+  <keepLog>false</keepLog>
+  <number>3</number>
+  <result>FAILURE</result>
+  <timestamp>1352068508021</timestamp>
+  <url>http://localhost:8080/job/test-build/3/</url>
+  <builtOn/>
+  <changeSet/>
+</freeStyleBuild>

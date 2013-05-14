@@ -4,6 +4,9 @@ require 'plugins/plugin'
 module Jashboard
   module Plugin
     module Build
+      Dir.glob(File.join(File.dirname(__FILE__), "/adapters/*.rb")) do |adapter_file|
+        require adapter_file
+      end
       class BuildPlugin < MonitorTypeAdapter
         extend Plugin
         is_monitor_plugin_for_type 'build'

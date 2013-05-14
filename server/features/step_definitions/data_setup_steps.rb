@@ -37,7 +37,7 @@ Given /^a dashboard with id "(.*)" and name "(.*)" with no monitors$/ do |dashbo
   )
 end
 
-Given /^a jenkins build server at port (\d+) running the following builds$/ do |port, builds|
+Given /^a jenkins build server running the following builds$/ do |builds|
   builds.hashes.each do |build_data|
     @fake_server.add_handler("/job/#{build_data[:build_id]}/api/xml", build_data[:project_response_fixture])
     @fake_server.add_handler("/job/#{build_data[:build_id]}/lastCompletedBuild/api/xml", build_data[:build_response_fixture])

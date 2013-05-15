@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'open-uri'
-require 'stringio'
 require 'plugins/build/adapters/jenkins_adapter'
 
 module Jashboard

@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'plugins/build/adapters/go_adapter'
 require 'go_api_client'
+require 'plugins/build/adapters/go_adapter'
 
 module Jashboard
   module Plugin
@@ -23,12 +23,16 @@ module Jashboard
               pipeline_run2
             ]
             stage1 = given_a_stage("test-stage1", true, Time.utc(2012, 5, 31, 7, 24, 15), [
-              given_a_job("test-job11", "Passed", 123, Time.utc(2012, 5, 31, 7, 24, 14))
+              given_a_job("test-job2", "Passed", 123, Time.utc(2012, 5, 31, 7, 24, 14))
             ])
             stage2 = given_a_stage("test-stage2", false, Time.utc(2012, 5, 13, 10, 49, 26), [
               given_a_job("test-job1", "Failed", 32, Time.utc(2012, 5, 31, 7, 24, 14)),
               given_a_job("test-job2", "Passed", 57, Time.utc(2012, 5, 13, 10, 49, 25))
             ])
+            stage3 = given_a_stage("test-stage3", true, Time.utc(2012, 5, 31, 7, 24, 15), [
+              given_a_job("test-job3", "Passed", 765, Time.utc(2012, 6, 24, 9, 14, 43))
+            ])
+            pipeline_run1.stub(:stages).and_return([stage1, stage2, stage3])
             pipeline_run2.stub(:stages).and_return([stage1, stage2])
 
             last_run = double("LastRun")
@@ -37,6 +41,23 @@ module Jashboard
               with(:host => 'test.host', :port => 1234, :pipeline_name => 'test-pipeline').
               and_return(last_run)
             GoApiClient.stub(:build_in_progress?)
+          end
+
+          it("should always retrieve the last completed stage") do
+            configuration = {
+              hostname: "test.host",
+              port: 1234,
+              type: "go",
+              pipeline: "test-pipeline",
+              stage: "test-stage3",
+              job: "test-job3"
+            }.to_struct
+            
+            runtime_info = @adapter.get_go_runtime_info(configuration)
+
+            runtime_info.last_build_time.should == "2012-06-24 19:14:43 +1000"
+            runtime_info.duration.should == 765
+            runtime_info.success.should == true
           end
 
           it("should return last build information for a successful job") do
@@ -120,20 +141,23 @@ module Jashboard
 
             runtime_info.status.should == 0
           end
-          # it("should return current build status as 1 when job is building") do
-          #   configuration = {
-          #     hostname: "test.host",
-          #     port: 1234,
-          #     type: "go",
-          #     pipeline: "test-pipeline",
-          #     stage: "test-stage1",
-          #     job: "test-job1"
-          #   }.to_struct
+          it("should return current build status as 1 when pipeline is building") do
+            GoApiClient.should_receive(:build_in_progress?).
+              with(:host => 'test.host', :port => 1234, :pipeline_name => 'test-pipeline').
+              and_return(true)
+            configuration = {
+              hostname: "test.host",
+              port: 1234,
+              type: "go",
+              pipeline: "test-pipeline",
+              stage: "test-stage2",
+              job: "test-job1"
+            }.to_struct
             
-          #   runtime_info = @adapter.get_go_runtime_info(configuration)
+            runtime_info = @adapter.get_go_runtime_info(configuration)
 
-          #   runtime_info.status.should == 1
-          # end
+            runtime_info.status.should == 1
+          end
         end
       def given_a_stage(name, passed = true, time = nil, jobs = [])
         stage = double("stage[#{name}]")

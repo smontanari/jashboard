@@ -1,4 +1,3 @@
-require 'open-uri'
 require 'nokogiri'
 require 'go_api_client'
 require 'plugins/build/build_runtime_info'
@@ -14,7 +13,7 @@ module Jashboard
             job = adapter.get_last_job
             runtime_info = BuildRuntimeInfo.new(job.completed.localtime.to_s, job.duration, job.result == "Passed", status)
           else
-            stage = adapter.get_last_stage
+            stage = adapter.get_last_completed_stage
             runtime_info = BuildRuntimeInfo.new(stage.completed_at.localtime.to_s, stage.duration, stage.passed?, status)
           end
           runtime_info
@@ -27,15 +26,20 @@ module Jashboard
             @job_name = configuration.job
           end
 
-          def get_last_stage
-            GoApiClient.runs(@options).pipelines.last.stages.find {|s| s.name == @stage_name} .tap do |stage|
-              def stage.duration
-                self.jobs.reduce(0) {|d, job| d + job.duration}
-              end
+          def get_last_completed_stage
+            stage = nil
+            GoApiClient.runs(@options).pipelines.reverse.find do |p|
+              stage = p.stages.find {|s| s.name == @stage_name}
+              !stage.nil?
             end
+            def stage.duration
+              self.jobs.reduce(0) {|d, job| d + job.duration}
+            end
+            stage
           end
+
           def get_last_job
-            get_last_stage.jobs.find {|j| j.name == @job_name}
+            get_last_completed_stage.jobs.find {|j| j.name == @job_name}
           end
 
           def get_current_status

@@ -13,6 +13,8 @@ GEM
     fsdb (0.7.2)
     gherkin (2.12.0)
       multi_json (~> 1.3)
+    go_api_client (0.4.0)
+      nokogiri
     grit (2.5.0)
       diff-lcs (~> 1.1)
       mime-types (~> 1.15)
@@ -69,6 +71,7 @@ PLATFORMS
 DEPENDENCIES
   cucumber
   fsdb
+  go_api_client
   grit
   ipsum
   json (~> 1.7.7)

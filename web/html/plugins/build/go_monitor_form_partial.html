@@ -19,14 +19,11 @@
       <div id="goStageRequiredError" class="help-inline" data-ng-show="buildMonitorForm.goStage.$error.required">You must provide a Go stage.</div>
     </div>
   </div>
-  <div class="control-group" data-ng-class="{'error': inputInError('goJob')}">
+  <div class="control-group">
     <label class="control-label" for="goJob">Job</label>
     <div class="controls">
       <input name="goJob" type="text" placeholder="job name" class="input-medium" 
-        data-ng-model="monitorConfigurationFormModel.build.job" data-ng-change="validateFields('goJob')">
-    </div>
-    <div class="controls">
-      <div id="goJobRequiredError" class="help-inline" data-ng-show="buildMonitorForm.goJob.$error.required">You must provide a Go job.</div>
+        data-ng-model="monitorConfigurationFormModel.build.job">
     </div>
   </div>
 </div>

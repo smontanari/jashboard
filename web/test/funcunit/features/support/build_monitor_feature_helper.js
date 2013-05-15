@@ -44,12 +44,6 @@ var buildMonitorFeatureHelper = (function(helper) {
           {errorSelector: "#goStageRequiredError", errorMessage: "You must provide a Go stage."},
           verifySaveButtonDisabled
         );
-        pageHelper.inputText("goJob", "test_job");
-        pageHelper.verifyInputError(
-          {inputName: "goJob", inputValue: ""},
-          {errorSelector: "#goJobRequiredError", errorMessage: "You must provide a Go job."},
-          verifySaveButtonDisabled
-        );
       }
     };
     

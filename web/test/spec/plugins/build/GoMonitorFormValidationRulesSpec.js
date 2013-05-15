@@ -15,7 +15,7 @@ describe("GoMonitorFormValidationRules", function() {
     rules = new jashboard.plugin.build.GoMonitorFormValidationRules(scope);
   });
 
-  _.each(['pipeline', 'stage', 'job'], function(field) {
+  _.each(['pipeline', 'stage'], function(field) {
     it("should validate the '" + field + "' field with the 'required' rule when monitor type is 'go'", function() {
       var inputName = "go" + jashboard.stringUtils.capitalise(field);
       scope.monitorConfigurationFormModel.build.type = 'go';
@@ -23,7 +23,7 @@ describe("GoMonitorFormValidationRules", function() {
       expect(rules[inputName]()).toEqual("required_validation_result");
       expect(requiredRule).toHaveBeenCalledWith("test_" + field);
     });
-    it("should not apply any rule to field '" + field + "' when monitor type is not 'jenkins'", function() {
+    it("should not apply any rule to field '" + field + "' when monitor type is not 'go'", function() {
       var inputName = "go" + jashboard.stringUtils.capitalise(field);
       scope.monitorConfigurationFormModel.build.type = 'another_type';
 

@@ -10,7 +10,6 @@
       };
       this.goPipeline = requiredRuleFor("pipeline");
       this.goStage = requiredRuleFor("stage");
-      this.goJob = requiredRuleFor("job");
     }
   });
 }(jashboard.plugin.build || {}));

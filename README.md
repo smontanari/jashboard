@@ -87,10 +87,11 @@ You can look at the existing monitor plugins that I've written to get an idea of
 
 * Client side: 
     * **javascript**: this is where you write the logic to interpret the monitor runtime information and configuration
-        1. Create a folder with name equal to your plugin type name under web/jashboard/plugins i.e. `web/jashboard/plugins/<type_name>`. This folder will contain your custom code.
-        2. Add a `MonitorAdapter.js` file which will define your very Monitor type adapter function.
-        3. Add a `<type_name>_plugin.js` file which will load your MonitorAdapter.js plus any other file necessary to run your plugin.
-        4. Add your plugin type name in the array of plugins defined in `web/jashboard/plugins.js`.
+        1. Add your plugin type name in the array of plugins defined in `web/jashboard/plugins.js`.
+        2. Create a folder with name equal to your plugin type name under web/jashboard/plugins i.e. `web/jashboard/plugins/<type_name>`. This folder will contain your custom code.
+        3. Define a **module** (yes, I like modules even in javascript) `jashboard.plugin.<type-name>` which will include all your objects, variables, functions, etc.
+        3. Add a `web/jashboard/plugins/<type_name>/MonitorAdapter.js` file which will define `jashboard.plugin.<type-name>.MonitorAdapter`, your very Monitor type adapter function.
+        4. Add a `<type_name>_plugin.js` file which will load your MonitorAdapter.js plus any other file necessary to run your plugin.
     * **html**: this is how you render the monitor runtime information and configuration form
         1. Create a folder with name equal to your plugin type name under web/html/plugins i.e. `web/html/plugins/<type_name>`.
         2. Add a monitor_runtime_partial.html file which will be used to display the monitor runtime information.
@@ -101,8 +102,10 @@ You can look at the existing monitor plugins that I've written to get an idea of
 * Server side:
     1. Create a folder with name equal to your plugin type name under server/app/plugins i.e. `server/app/plugins/<type_name>`.
     2. Add your own ruby plugin class, extending `Jashboard::Plugin` and implementing a `get_runtime_info` method which will contain the logic necessary to fetch and return the monitor data.
-    
-The **Ipsum** monitor plugin is a very simple example that you can look at as a starting point for adding a new monitor plugin. Have fun!
+
+Of course if you want to do things properly you should add tests for your monitor plugin, **Jasmine** and **FuncUnit** tests for the client/javascript side and **RSpec** and **Cucumber** for the server/ruby side. 
+
+The **ipsum** monitor plugin is a very simple example that you can look at as a starting point for adding a new monitor plugin. Have fun!
 
 # Copyright
 

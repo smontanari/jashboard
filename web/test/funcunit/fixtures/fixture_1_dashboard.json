@@ -7,7 +7,7 @@
         "name": "Epic build",
         "refreshInterval": 15,
         "type": "build",
-        "position": {"top": 10, "left": 60},
+        "position": {"top": 10, "left": 10},
         "size": {"width": 240, "height": 140},
         "configuration": {
           "type": "go",
@@ -22,7 +22,7 @@
         "id": "monitor_2",
         "name": "Forum build",
         "refreshInterval": 30,
-        "position": {"top": 200, "left": 400},
+        "position": {"top": 200, "left": 350},
         "size": {"width": 270, "height": 150},
         "type": "build",
         "configuration": {

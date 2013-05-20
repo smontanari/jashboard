@@ -5,6 +5,7 @@ var jashboard = (function(module) {
         resourceName: "css",
         resourceSet: [
           "css/bootstrap.css",
+          "css/bootstrap-responsive.css",
           "css/bootstrapSwitch.css",
           "css/jquery-ui/jquery-ui-1.10.1.custom.min.css",
           "css/angular-ui.css"
@@ -53,6 +54,7 @@ var jashboard = (function(module) {
         resourceName: "css",
         resourceSet: [
           "css/bootstrap.min.css",
+          "css/bootstrap-responsive.min.css",
           "css/bootstrapSwitch.css",
           "css/jquery-ui/jquery-ui-1.10.1.custom.min.css",
           "css/angular-ui.min.css",

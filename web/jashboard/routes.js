@@ -14,5 +14,5 @@
 
   jashboard.application.config(jashboard.defineRoutes).run(function($log) {
     $log.info("Routes definition completed");
-  });;
+  });
 }(jashboard || {}));

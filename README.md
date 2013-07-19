@@ -13,7 +13,7 @@ At the moment you can create and use the following type of monitors:
 Monitor type  | Description | 
 ------------  | ----------- |
 build/jenkins | monitor an existing Jenkins build | 
-build/go      | monitor an existing Go build (actually this is still a work in progress, sorry) |
+build/go      | monitor an existing Go build |
 vcs/git       | monitor the commits made to a git repository/branch |
 ipsum         | random generator of sentences (inspired by the *ipsum* gem). This is more for demo purposes |
 

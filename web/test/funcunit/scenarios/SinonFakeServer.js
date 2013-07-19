@@ -19,7 +19,7 @@
           returnCode: 200,
           contentType: "application/json",
           content: {}
-        });        
+        });
       };
 
       var executeResponse = function(returnCode, contentType, content) {

@@ -41,7 +41,7 @@
               }
             }
           }
-        );        
+        );
       };
 
       scope.$watch("monitor.configuration", function(newValue, oldValue) {

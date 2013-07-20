@@ -29,7 +29,7 @@ module Jashboard
     def initialize(*args)
       super(*args)
       @repository = FileRepository.new
-      @monitor_adapters = Plugin.load_plugins(File.join(File.dirname(__FILE__), 'plugins'))
+      @monitor_dispatcher = Plugin.load_monitor_plugins(File.join(File.dirname(__FILE__), 'plugins'))
     end
 
     error do
@@ -52,7 +52,7 @@ module Jashboard
 
     get '/ajax/monitor/:id/runtime' do
       monitor = @repository.load_monitor(params[:id])
-      runtime_data = @monitor_adapters[monitor.type].get_runtime_info(monitor.configuration)
+      runtime_data = @monitor_dispatcher.get_runtime_info(monitor)
       json(convert_case(runtime_data))
     end
 

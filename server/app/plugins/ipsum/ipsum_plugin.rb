@@ -7,10 +7,11 @@ module Jashboard
     module Ipsum
       class IpsumPlugin
         extend Plugin
-        is_monitor_plugin_for_type 'ipsum'
+        plugin_type 'ipsum'
 
         def get_runtime_info(monitor_configuration)
-          IpsumRuntimeInfo.new(monitor_configuration[:number_of_sentences].sentences(monitor_configuration[:language].to_sym))
+          text = monitor_configuration[:number_of_sentences].sentences(monitor_configuration[:language].to_sym)
+          IpsumRuntimeInfo.new(text)
         end
       end
     end

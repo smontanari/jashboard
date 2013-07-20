@@ -1,13 +1,12 @@
-require 'plugins/monitor_type_adapter'
 require 'plugins/plugin'
 
 module Jashboard
   module Plugin
     module Vcs
-      class VcsPlugin < MonitorTypeAdapter
+      class VcsPlugin
         extend Plugin
-        is_monitor_plugin_for_type 'vcs'
-        class_eval(File.read(File.join(File.dirname(__FILE__), 'vcs_plugin_config.rb')))
+        plugin_type 'vcs'
+        monitor_type_adapters(GitAdapter)
       end
     end
   end

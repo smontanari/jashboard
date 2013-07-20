@@ -16,11 +16,11 @@ module Jashboard
     before(:each) do
       @mock_repository = double("repository")
       FileRepository.stub(:new).and_return(@mock_repository)
-      @mock_monitor_adapter = double("monitor_adapter")
+      @mock_monitor_plugin_dispatcher = double("monitor_plugin_dispatcher")
       @mock_monitor = double
       @mock_monitor.stub(:type).and_return("test_type")
       @mock_monitor.stub(:configuration).and_return("test_configuration")
-      Plugin.stub(:load_plugins).and_return({"test_type" => @mock_monitor_adapter})
+      Plugin.stub(:load_monitor_plugins).and_return(@mock_monitor_plugin_dispatcher)
       def app
         subject
       end
@@ -59,7 +59,7 @@ module Jashboard
       describe("GET /ajax/monitor/:id/runtime") do
         it("should load monitor from the repository and return the runtime info from the service") do
           @mock_repository.should_receive(:load_monitor).with("test-monitor-id").and_return(@mock_monitor)
-          @mock_monitor_adapter.should_receive(:get_runtime_info).with("test_configuration").
+          @mock_monitor_plugin_dispatcher.should_receive(:get_runtime_info).with(@mock_monitor).
             and_return(Struct.new(:some_attr).new("test-monitor-runtime"))
 
           get '/ajax/monitor/test-monitor-id/runtime'

@@ -1,7 +1,7 @@
 (function() {
   var server = jashboard.test.getFakeServer();
   var monitors = [], monitorRuntimeResponses = [];
-  for (i=1; i<5; i++) {
+  _.times(5, function(i) {
     monitors.push({
       id: "monitor_" + i,
       name: "Test build",
@@ -26,8 +26,7 @@
         delay: jashboard.test.randomInt(3)
       }
     });
-  }
-
+  });
 
   server.fakeResponse("GET", "/ajax/dashboards", {
     content: [

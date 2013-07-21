@@ -1,9 +1,9 @@
 (function() {
   var server = jashboard.test.getFakeServer();
   var dashboards = [];
-  for (i=1; i<=5; i++) {
-    dashboards.push({id: "test_" + i, name: "dashboard_" + i, monitors: []});
-  }
+  _.times(5, function(i) {
+    dashboards.push({id: "test_" + (i+1), name: "dashboard_" + (i+1), monitors: []});
+  });
 
   server.fakeResponse("GET", "/ajax/dashboards", {
     content: dashboards,

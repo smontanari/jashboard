@@ -6,9 +6,13 @@ describe("TooltipDirective", function() {
     tooltipFn = spyOn(jashboard.widgets, "Tooltip").andReturn(tooltipWidget);
     scope = {
       $eval: sinon.stub(),
+      $evalAsync: jasmine.createSpy("scope.$evalAsync()"),
       $watch: jasmine.createSpy("scope.$watch()")
     };
     scope.$eval.withArgs("test_tooltip_expr").returns("test_target_selector");
+    scope.$evalAsync.andCallFake(function(callback) {
+      callback();
+    });
     scope.$watch.andCallFake(function(expression, listener) {
       watchListener = listener;
     });

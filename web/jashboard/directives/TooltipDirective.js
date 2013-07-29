@@ -7,11 +7,13 @@
 
         scope.$watch(attrs.jbTooltipToggle, function(newCondition, oldCondition) {
           if (newCondition !== oldCondition) {
-            if (newCondition === true) {
-              tooltip.show();
-            } else if (newCondition === false) {
-              tooltip.hide();
-            }
+            scope.$evalAsync(function() {
+              if (newCondition === true) {
+                tooltip.show();
+              } else if (newCondition === false) {
+                tooltip.hide();
+              }
+            });
           }
         });
       };

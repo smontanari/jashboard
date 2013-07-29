@@ -173,7 +173,6 @@ describe("SlideShowDirective", function() {
         {
           before: function() { eventListener(event); },
           waitFor: function() { return $stub.cycle.calls.length === 1; },
-          after: function() {}
         },
         {
           before: function() {

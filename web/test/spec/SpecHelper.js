@@ -31,11 +31,11 @@ var testHelper = {
   },
   asyncTestRun: function(testRuns) {
     _.each(testRuns, function(testRun) {
-      runs(testRun.before);
+      if (_.isFunction(testRun.before)) runs(testRun.before);
 
-      waitsFor(testRun.waitFor, "waitFor condition", 200);
+      if (_.isFunction(testRun.waitFor)) waitsFor(testRun.waitFor, "waitFor condition", 200);
 
-      runs(testRun.after);
+      if (_.isFunction(testRun.after)) runs(testRun.after);
     });
   }
 };

@@ -59,100 +59,66 @@ module Jashboard
     post '/ajax/dashboard' do
       dashboard_params = JSON.parse(request.body.read)
       dashboard = @repository.save_dashboard(Dashboard.new(dashboard_params['name']))
-      status 201
-      json(DashboardView.new(dashboard))
+      create_success_response DashboardView.new(dashboard)
     end
 
     put '/ajax/dashboard/:dashboard_id' do
-      dashboard_params = JSON.parse(request.body.read)
-      dashboard = @repository.load_dashboard(params[:dashboard_id])
-      dashboard.name = dashboard_params['name']
-      dashboard = @repository.save_dashboard(dashboard)
-      status 204
+      modify_dashboard params[:dashboard_id] do |dashboard|
+        dashboard_params = JSON.parse(request.body.read)
+        dashboard.name = dashboard_params['name']
+      end
     end
 
     post '/ajax/dashboard/:dashboard_id/monitor' do
-      data = JSON.parse(request.body.read)
-      monitor = create_monitor(data)
-      add_monitor_to_dashboard(params[:dashboard_id], monitor)
-      status 201
-      json(monitor)
+      monitor = Monitor.new
+      modify_dashboard params[:dashboard_id], false do |dashboard|
+        monitor.init_from_json request.body.read
+        @repository.save_monitor(monitor)
+        dashboard.monitor_ids << monitor.id.to_s
+      end
+      create_success_response monitor
     end
 
-    put '/ajax/monitor/:id/configuration' do
-      data = JSON.parse(request.body.read)
-      monitor = @repository.load_monitor(params[:id])
-      update_monitor(monitor, data)
-      @repository.save_monitor(monitor)
-      status 204
-    end
-
-    put '/ajax/monitor/:id/position' do
-      data = JSON.parse(request.body.read)
-      monitor = @repository.load_monitor(params[:id])
-      monitor.position = get_monitor_position(data)
-      @repository.save_monitor(monitor)
-      status 204
-    end
-
-    put '/ajax/monitor/:id/size' do
-      data = JSON.parse(request.body.read)
-      monitor = @repository.load_monitor(params[:id])
-      monitor.size = get_monitor_size(data)
-      @repository.save_monitor(monitor)
-      status 204
+    ['configuration', 'position', 'size'].each do |property|
+      put "/ajax/monitor/:id/#{property}" do
+        monitor = @repository.load_monitor(params[:id])
+        monitor.send("update_#{property}_from_json".to_sym, request.body.read)
+        @repository.save_monitor(monitor)
+        update_success_response
+      end
     end
 
     delete '/ajax/dashboard/:dashboard_id' do
-      dashboard_id = params[:dashboard_id]
-      dashboard = @repository.load_dashboard(dashboard_id)
+      dashboard = @repository.load_dashboard(params[:dashboard_id])
       dashboard.monitor_ids.each { |id| @repository.delete_monitor(id) }
-      @repository.delete_dashboard(dashboard_id)
-      status 204
+      @repository.delete_dashboard(dashboard.id)
+      update_success_response
     end
 
     delete '/ajax/dashboard/:dashboard_id/monitor/:monitor_id' do
-      dashboard_id = params[:dashboard_id]
-      monitor_id = params[:monitor_id]
-      @repository.delete_monitor(monitor_id)
-      dashboard = @repository.load_dashboard(dashboard_id)
-      dashboard.monitor_ids.delete(monitor_id)
-      @repository.save_dashboard(dashboard)
-      status 204
+      modify_dashboard params[:dashboard_id] do |dashboard|
+        monitor_id = params[:monitor_id]
+        @repository.delete_monitor(monitor_id)
+        dashboard.monitor_ids.delete(monitor_id)
+      end
     end
 
     private
 
-    def update_monitor(monitor, monitor_json)
-      monitor.name = monitor_json['name']
-      monitor.refresh_interval = monitor_json['refreshInterval']
-      monitor.configuration = monitor_json['configuration'].to_struct_with_snake_keys
-    end
-
-    def create_monitor(monitor_json)
-      new_monitor = Monitor.new.tap do |monitor|
-        monitor.name = monitor_json['name']
-        monitor.refresh_interval = monitor_json['refreshInterval']
-        monitor.type = monitor_json['type']
-        monitor.configuration = monitor_json['configuration'].to_struct_with_snake_keys
-        monitor.position = get_monitor_position(monitor_json['position'])
-        monitor.size = get_monitor_size(monitor_json['size'])
-      end
-      @repository.save_monitor(new_monitor)
-    end
-
-    def get_monitor_position(data)
-      Struct.new(:top, :left).new(data['top'], data['left'])
-    end
-
-    def get_monitor_size(data)
-      Struct.new(:width, :height).new(data['width'], data['height'])
-    end
-
-    def add_monitor_to_dashboard(dashboard_id, monitor)
+    def modify_dashboard dashboard_id, handle_response = true
       dashboard = @repository.load_dashboard(dashboard_id)
-      dashboard.monitor_ids << monitor.id.to_s
+      yield(dashboard) if block_given?
       @repository.save_dashboard(dashboard)
+      update_success_response if handle_response
+    end
+
+    def create_success_response obj
+      status 201
+      json obj
+    end
+
+    def update_success_response
+      status 204
     end
 
     def convert_case(data)

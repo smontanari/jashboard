@@ -15,4 +15,6 @@ group :test do
   gem 'rspec'
   gem 'json_spec'
   gem 'cucumber'
+  gem 'pry'
+  gem 'pry-debugger'
 end

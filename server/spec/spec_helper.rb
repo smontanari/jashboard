@@ -7,6 +7,7 @@ require 'fsdb_helper'
 require 'builder/builder_helper'
 require 'builder/dashboard_builder'
 require 'builder/monitor_builder'
+require 'pry'
 
 module Jashboard
   module RSpecHelper

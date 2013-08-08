@@ -217,10 +217,11 @@ module Jashboard
           def new_monitor_id.to_s
             "789"
           end
-          monitor = MonitorBuilder.new.
-            with_id(new_monitor_id).
-            build
-          @mock_repository.stub(:save_monitor).and_return(monitor)
+
+          @mock_repository.stub(:save_monitor) do |monitor|
+            monitor.id = new_monitor_id
+            monitor
+          end
 
           post '/ajax/dashboard/test.dashboard.id/monitor', @monitor_json
 
@@ -231,11 +232,12 @@ module Jashboard
         end
 
         it("should return the monitor as json") do
-          monitor = double
-          monitor.stub(:id)
-          monitor.stub(:to_json).and_return("test_json")
+          @mock_repository.stub(:save_monitor) do |monitor|
+            monitor.stub(:id)
+            monitor.stub(:to_json).and_return("test_json")
+            monitor
+          end
 
-          @mock_repository.stub(:save_monitor).and_return(monitor)
           post '/ajax/dashboard/test.dashboard.id/monitor', @monitor_json
 
           last_response.status.should == 201

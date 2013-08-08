@@ -21,7 +21,7 @@ module Jashboard
 
       it("should raise an error if a type adapter is not defined") do
         expect { obj.get_runtime_info(Struct.new(:type, :data).new("not_defined", "test_data")) }.
-          to raise_error("Type 'not_defined' not defined")
+          to raise_error("Type adapter 'not_defined' not defined")
       end
     end
   end

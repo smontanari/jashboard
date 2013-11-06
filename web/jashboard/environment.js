@@ -7,8 +7,8 @@ var jashboard = (function(module) {
           "css/bootstrap.css",
           "css/bootstrap-responsive.css",
           "css/bootstrapSwitch.css",
-          "css/jquery-ui/jquery-ui-1.10.1.custom.min.css",
-          "css/angular-ui.css"
+          "bower_components/jquery-ui/themes/base/jquery-ui.css",
+          "bower_components/angular-ui/build/angular-ui.css"
         ]
       },
       {
@@ -18,19 +18,19 @@ var jashboard = (function(module) {
       {
         resourceName: "lib",
         resourceSet: [
-          "lib/underscore.js",
           "lib/bootstrap.js",
           "lib/bootstrapSwitch.js", 
-          "lib/jquery.blockUI.js",
-          "lib/jquery-ui-1.10.1.custom.min.js",
           "lib/jquery.cycle2.js",
-          "lib/moment.js",
-          "lib/angular.js"
+          "bower_components/underscore/underscore.js",
+          "bower_components/blockui/jquery.blockUI.js",
+          "bower_components/jquery-ui/ui/jquery-ui.js",
+          "bower_components/moment/moment.js",
+          "bower_components/angular/angular.js"
         ]
       },
       {
         resourceName: "angular-ui",
-        resourceSet: ["lib/angular-ui.js"]
+        resourceSet: ["bower_components/angular-ui/build/angular-ui.js"]
       },
       {
         resourceName: "less",
@@ -56,9 +56,9 @@ var jashboard = (function(module) {
           "css/bootstrap.min.css",
           "css/bootstrap-responsive.min.css",
           "css/bootstrapSwitch.css",
-          "css/jquery-ui/jquery-ui-1.10.1.custom.min.css",
-          "css/angular-ui.min.css",
-          "css/jashboard.min.css"
+          "css/jashboard.min.css",
+          "bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css",
+          "bower_components/angular-ui/build/angular-ui.min.css"
         ]
       },
       {
@@ -68,19 +68,19 @@ var jashboard = (function(module) {
       {
         resourceName: "lib",
         resourceSet: [
-          "lib/underscore-min.js",
           "lib/bootstrap.min.js",
           "lib/bootstrapSwitch.js", 
-          "lib/jquery.blockUI.js",
-          "lib/jquery-ui-1.10.1.custom.min.js",
           "lib/jquery.cycle2.min.js",
-          "lib/moment.min.js",
-          "lib/angular.min.js"
+          "bower_components/underscore/underscore-min.js",
+          "bower_components/blockui/jquery.blockUI.js",
+          "bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
+          "bower_components/moment/min/moment.min.js",
+          "bower_components/angular/angular.min.js"
         ]
       },
       {
         resourceName: "angular-ui",
-        resourceSet: ["lib/angular-ui.min.js"]
+        resourceSet: ["bower_components/angular-ui/build/angular-ui.min.js"]
       },
       {
         resourceName: "mainFile",

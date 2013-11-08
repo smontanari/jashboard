@@ -1,5 +1,4 @@
 (function() {
-  var server = jashboard.test.getFakeServer();
   var monitors = [], monitorRuntimeResponses = [];
   _.times(5, function(i) {
     monitors.push({
@@ -28,14 +27,16 @@
     });
   });
 
-  server.fakeResponse("GET", "/ajax/dashboards", {
-    content: [
-      { id: "dashboard_1", name: "a dashboard with many monitors", monitors: monitors }
-    ]
+  smocker.scenario('demo_many_monitors', function() {
+    this.get("/ajax/dashboards").respondWith({
+      content: [
+        { id: "dashboard_1", name: "a dashboard with many monitors", monitors: monitors }
+      ]
+    });
+
+    this.get(/\/ajax\/monitor\/(\w+)\/runtime/).respondWith(function(url, data, headers, monitor_id) {
+      var monitorRuntime = _.find(monitorRuntimeResponses, function(res) { return res.id === monitor_id });
+      return monitorRuntime.response;
+    });
   });
-  
-  server.fakeResponse("GET", /\/ajax\/monitor\/(\w+)\/runtime/, function(request, monitor_id) {
-    var monitorRuntime = _.find(monitorRuntimeResponses, function(res) { return res.id === monitor_id });
-    return monitorRuntime.response;
-  });
-}());
+})();

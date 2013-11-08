@@ -53,7 +53,7 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
 
     S("#configuration-save").visible().click();
 
-    S("#dashboard_1 .monitor-panel").size(2, function() {
+    S("#dashboard_1 .monitor-panel").size(3, function() {
       S("#monitor_101").visible();
 
       FuncUnit.wait(500, function() {

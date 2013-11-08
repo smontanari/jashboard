@@ -1,13 +1,17 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
+steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(function() {
+  smocker.scenario('monitor_write_operations', function() {
+    this.delete('/ajax/dashboard/dashboard_2/monitor/monitor_2').respondWith({
+      status: 204
+    });
 
-$.fixture("DELETE /ajax/dashboard/dashboard_2/monitor/monitor_2", function(ajaxOriginalOptions, ajaxOptions, headers) {
-  return [204, "success", {}, {} ];
-});
+    this.put('/ajax/monitor/monitor_1/configuration').respondWith(function(url, requestData) {
+      var data = JSON.parse(requestData);
+      if ("New Zombie build" === data.name && 20000 === data.refreshInterval) {
+        return [204, "success", {}, {} ];
+      }
+      throw "unexpected data in the POST request: " + requestData;
+    });
+  });
 
-$.fixture("PUT /ajax/monitor/monitor_1/configuration", function(ajaxOriginalOptions, ajaxOptions, headers) {
-  var data = JSON.parse(ajaxOptions.data);
-  if ("New Zombie build" === data.name && 20000 === data.refreshInterval) {
-    return [204, "success", {}, {} ];
-  }
-  throw "unexpected data in the POST request: " + ajaxOptions.data;
+  smocker.groupScenarios('monitor_actions', ['monitor_write_operations', 'display_dashboards_data']);
 });

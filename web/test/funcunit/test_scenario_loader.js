@@ -6,8 +6,10 @@
     steal.dev.log("Loading test scenario: " + scenarioName);
     steal(
       { src: 'lib/sinon-1.7.3.js', ignore: true },
-      { src: 'jquery/dom/fixture', ignore: true },
-      { src: 'test/funcunit/scenarios/scenario_helper.js', ignore: true }
-    ).then("test/funcunit/scenarios/" + scenarioName + "_scenario.js");
+      { src: 'bower_components/smocker/smocker.js', ignore: true },
+      { src: 'test/funcunit/scenarios/test_scenario_utils.js', ignore: true }
+    ).then("test/funcunit/scenarios/" + scenarioName + "_scenario.js").then(function() {
+      smocker.play(scenarioName);
+    });
   }
 }());

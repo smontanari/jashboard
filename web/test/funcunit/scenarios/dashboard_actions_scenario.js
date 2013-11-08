@@ -1,23 +1,28 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
+steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(function() {
+  smocker.scenario('dashboard_write_operations', function() {
+    this.post('/ajax/dashboard').respondWith(function(url, requestData) {
+      var data = JSON.parse(requestData);
 
-$.fixture("POST /ajax/dashboard", function(ajaxOriginalOptions, ajaxOptions, headers) {
-  var data = JSON.parse(ajaxOptions.data);
+      if ("test new-dashboard" === data.name) {
+        return {
+          status: 201,
+          content: { id: "dashboard_4", name: "test new-dashboard", monitors: [] },
+        };
+      }
+      throw "unexpected data in the POST request: " + requestData;
+    });
 
-  if ("test new-dashboard" === data.name) {
-    return [201, "success", {json: {id: "dashboard_4", name: "test new-dashboard", monitors: [] } }, {} ];
-  }
-  throw "unexpected data in the POST request: " + ajaxOptions.data;
-});
+    this.put('/ajax/dashboard/dashboard_1').respondWith(function(url, requestData) {
+      var data = JSON.parse(requestData);
 
-$.fixture("PUT /ajax/dashboard/dashboard_1", function(ajaxOriginalOptions, ajaxOptions, headers) {
-  var data = JSON.parse(ajaxOptions.data);
+      if ("dashboard_new_name" === data.name) {
+        return { status: 204 };
+      }
+      throw "unexpected data in the " + method + " request: " + requestData;
+    });
+    
+    this.delete('/ajax/dashboard/dashboard_2').respondWith({ status: 204 });
+  });
 
-  if ("dashboard_new_name" === data.name) {
-    return [204, "success", {}, {} ];
-  }
-  throw "unexpected data in the POST request: " + ajaxOptions.data;
-});
-
-$.fixture("DELETE /ajax/dashboard/dashboard_2", function(ajaxOriginalOptions, ajaxOptions, headers) {
-  return [204, "success", {}, {} ];
+  smocker.groupScenarios('dashboard_actions', ['display_dashboards_data', 'dashboard_write_operations']);
 });

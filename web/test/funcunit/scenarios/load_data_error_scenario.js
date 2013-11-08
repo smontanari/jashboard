@@ -1,3 +1,7 @@
-$.fixture("GET /ajax/dashboards", function(ajaxOptions, requestSettings, headers) {
-  return [500, "Internal Server Error", {}, {}];
-});
+(function() {
+  smocker.scenario('load_data_error', function() {
+    this.get('/ajax/dashboards').respondWith({
+      status: 500
+    });
+  });
+})();

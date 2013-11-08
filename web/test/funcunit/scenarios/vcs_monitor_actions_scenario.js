@@ -1,5 +1,4 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
-(function() {
+steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(function() {
   var expectedConfig = {
     git: {
       type: "git",
@@ -11,32 +10,35 @@ steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
       interval: 5000
     }
   };
-  $.fixture("POST /ajax/dashboard/dashboard_2/monitor", function(ajaxOriginalOptions, ajaxOptions, headers) {
-    var data = JSON.parse(ajaxOptions.data);
-    var monitorConfigOk = data.name === "Test " + data.configuration.type + "-monitor" &&
-      data.refreshInterval === 30 &&
-      data.type === "vcs";
 
-    var vcsConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
-    
-    if (monitorConfigOk && vcsConfigOk) {
-      return [
-        201, 
-        "success",
-        _.extend(data, {id: "monitor_102"}),
-        {} 
-      ];
-    }
-    throw "unexpected data in the POST request: " + ajaxOptions.data;
+  smocker.scenario('monitor_write_operatios', function() {
+    this.post('/ajax/dashboard/dashboard_2/monitor').respondWith(function(url, requestData) {
+      var data = JSON.parse(requestData);
+      var monitorConfigOk = data.name === "Test " + data.configuration.type + "-monitor" &&
+        data.refreshInterval === 30 &&
+        data.type === "vcs";
+
+      var vcsConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
+      
+      if (monitorConfigOk && vcsConfigOk) {
+        return {
+          status: 201,
+          content: _.extend(data, {id: "monitor_102"}),
+        };
+      }
+      throw "unexpected data in the POST request: " + requestData;
+    });
+
+    this.put(/ajax\/monitor\/\w+\/configuration/).respondWith(function(url, requestData) {
+      var data = JSON.parse(requestData);
+      var vcsConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
+      
+      if (vcsConfigOk) {
+        return { status: 204 };
+      }
+      throw "unexpected data in the PUT request: " + requestData;
+    });
   });
 
-  $.fixture("PUT /ajax/monitor/{id}/configuration", function(ajaxOriginalOptions, ajaxOptions, headers) {
-    var data = JSON.parse(ajaxOptions.data);
-    var vcsConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
-    
-    if (vcsConfigOk) {
-      return [204, "success", {}, {} ];
-    }
-    throw "unexpected data in the PUT request: " + ajaxOptions.data;
-  });
-}());
+  smocker.groupScenarios('vcs_monitor_actions', ['display_dashboards_data', 'monitor_write_operatios']);
+});

@@ -1,7 +1,4 @@
-steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
-(function() {
-  var server = jashboard.test.getFakeServer();
-
+steal("test/funcunit/scenarios/two_dashboards_scenario.js").then(function() {
   var successResponse = {
     content: {
       lastBuildTime: "2012-08-23 14:32:23 +1000",
@@ -13,16 +10,21 @@ steal("test/funcunit/fixtures/fakeResponse_dashboards.js");
   };
 
   var requestCounts = {monitor_1: 0, monitor_3: 0};
-  server.fakeResponse("GET", /\/ajax\/monitor\/(\w+)\/runtime/, function(request, monitor_id) {
-    requestCounts[monitor_id]++;
-    if (requestCounts[monitor_id] % 2 == 0) {
-      return successResponse;
-    } else {
-      return {
-        returnCode: 500,
-        content: "something went very wrong for monitor " + monitor_id,
-        delay: 1
-      };
-    }
+
+  smocker.scenario('load_monitor_data', function() {
+    this.get(/\/ajax\/monitor\/(\w+)\/runtime/).respondWith(function(url, data, headers, monitor_id) {
+      requestCounts[monitor_id]++;
+      if (requestCounts[monitor_id] % 2 == 0) {
+        return successResponse;
+      } else {
+        return {
+          status: 500,
+          content: "something went very wrong for monitor " + monitor_id,
+          delay: 1
+        };
+      }
+    });
   });
-}());
+
+  smocker.groupScenarios('refresh_monitor_runtime', ['two_dashboards', 'load_monitor_data']);
+});

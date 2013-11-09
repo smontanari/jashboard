@@ -31,7 +31,8 @@
       };
     }
   });
-  jashboard.services.service('WidgetService', [jashboard.WidgetService]).run(function($log) {
-    $log.info("WidgetService initialized");
-  });
+  jashboard.services.service('WidgetService', [jashboard.WidgetService])
+  .run(['$log', function(log) {
+    log.info("WidgetService initialized");
+  }]);
 }(jashboard || {}));

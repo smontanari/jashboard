@@ -49,7 +49,8 @@
       };
     }
   });
-  jashboard.application.service('DashboardActionsHandler', ['Repository', 'AlertService', '$timeout', jashboard.DashboardActionsHandler]).run(function($log) {
-    $log.info("DashboardActionsHandler initialized");
-  });
+  jashboard.application.service('DashboardActionsHandler', ['Repository', 'AlertService', '$timeout', jashboard.DashboardActionsHandler])
+  .run(['$log', function(log) {
+    log.info("DashboardActionsHandler initialized");
+  }]);
 }(jashboard || {}));

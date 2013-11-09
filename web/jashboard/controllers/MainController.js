@@ -41,7 +41,8 @@
      'MenuActionsHandler',
      'DashboardActionsHandler',
      'Repository',
-     jashboard.MainController]).run(function($log) {
-    $log.info("MainController initialized");
-  });
+     jashboard.MainController])
+  .run(['$log', function(log) {
+    log.info("MainController initialized");
+  }]);
 }(jashboard || {}));

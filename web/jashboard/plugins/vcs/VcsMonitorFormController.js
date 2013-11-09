@@ -26,7 +26,7 @@
     }
   });
   jashboard.application.controller("VcsMonitorFormController", ['$scope', jashboard.plugin.vcs.VcsMonitorFormController])
-    .run(function($log) {
-      $log.info("VcsMonitorFormController initialized");
-  });
+  .run(['$log', function(log) {
+    log.info("VcsMonitorFormController initialized");
+  }]);
 }(jashboard.plugin.vcs || {}));

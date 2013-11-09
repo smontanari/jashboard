@@ -73,7 +73,8 @@
       });
     }
   });
-  jashboard.application.controller("MonitorFormController", ['$scope', 'Repository', 'PluginManager', 'MonitorLayoutManager', jashboard.MonitorFormController]).run(function($log) {
-    $log.info("MonitorFormController initialized");
-  });
+  jashboard.application.controller("MonitorFormController", ['$scope', 'Repository', 'PluginManager', 'MonitorLayoutManager', jashboard.MonitorFormController])
+  .run(['$log', function(log) {
+    log.info("MonitorFormController initialized");
+  }]);
 }(jashboard || {}));

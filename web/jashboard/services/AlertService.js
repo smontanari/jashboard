@@ -22,7 +22,8 @@
       };
     }
   });
-  jashboard.services.service('AlertService', [jashboard.AlertService]).run(function($log) {
-    $log.info("AlertService initialized");
-  });
+  jashboard.services.service('AlertService', [jashboard.AlertService])
+  .run(['$log', function(log) {
+    log.info("AlertService initialized");
+  }]);
 }(jashboard || {}));

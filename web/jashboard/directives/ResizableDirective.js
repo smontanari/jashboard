@@ -23,8 +23,8 @@
       };
     }
   });
+  jashboard.application.directive("jbResizable", ['WidgetService', jashboard.angular.resizableDirective])
+  .run(['$log', function(log) {
+    log.info("resizableDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbResizable", ['WidgetService', jashboard.angular.resizableDirective]).run(function($log) {
-  $log.info("resizableDirective initialized");
-});

@@ -19,8 +19,8 @@
       };
     }
   });
+  jashboard.application.directive("jbTooltip", [jashboard.angular.tooltipDirective])
+  .run(['$log', function(log) {
+    log.info("tooltipDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbTooltip", [jashboard.angular.tooltipDirective]).run(function($log) {
-  $log.info("tooltipDirective initialized");
-});

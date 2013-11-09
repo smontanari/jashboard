@@ -21,8 +21,8 @@
       };
     }
   });
+  jashboard.application.directive("jbMonitorDisplay", ['WidgetService', jashboard.angular.monitorDisplayDirective])
+  .run(['$log', function(log) {
+    log.info("monitorDisplayDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbMonitorDisplay", ['WidgetService', jashboard.angular.monitorDisplayDirective]).run(function($log) {
-  $log.info("monitorDisplayDirective initialized");
-});

@@ -47,7 +47,8 @@
       };
     }
   });
-  jashboard.services.service('MonitorLayoutManager', ['IntersectionDetector', 'MonitorPositioningStrategy', jashboard.MonitorLayoutManager]).run(function($log) {
-    $log.info("MonitorLayoutManager initialized");
-  });
+  jashboard.services.service('MonitorLayoutManager', ['IntersectionDetector', 'MonitorPositioningStrategy', jashboard.MonitorLayoutManager])
+  .run(['$log', function(log) {
+    log.info("MonitorLayoutManager initialized");
+  }]);
 }(jashboard || {}));

@@ -109,7 +109,8 @@
     'Repository',
     'AlertService',
     '$timeout',
-    jashboard.MonitorController]).run(function($log) {
-    $log.info("MonitorController initialized");
-  });
+    jashboard.MonitorController])
+  .run(['$log', function(log) {
+    log.info("MonitorController initialized");
+  }]);
 }(jashboard || {}));

@@ -16,8 +16,8 @@
       };
     }
   });
+  jashboard.application.directive("jbOverlay", ['OverlayService', jashboard.angular.overlayDirective])
+  .run(['$log', function(log) {
+    log.info("overlayDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbOverlay", ['OverlayService', jashboard.angular.overlayDirective]).run(function($log) {
-  $log.info("overlayDirective initialized");
-});

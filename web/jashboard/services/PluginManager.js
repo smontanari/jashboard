@@ -41,8 +41,9 @@
       _.each(jashboard.plugins, registerMonitorAdapter);
     }
   });
-  jashboard.services.service("PluginManager", ['$log', jashboard.PluginManager]).run(function($log) {
-    $log.info("PluginManager initialized");
-  });
+  jashboard.services.service("PluginManager", ['$log', jashboard.PluginManager])
+  .run(['$log', function(log) {
+    log.info("PluginManager initialized");
+  }]);
 }(jashboard ||{}));
 

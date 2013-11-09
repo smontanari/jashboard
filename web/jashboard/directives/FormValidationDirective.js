@@ -35,8 +35,8 @@
       };
     }
   });
+  jashboard.application.directive("jbFormValidation", [jashboard.angular.formValidationDirective])
+  .run(['$log', function(log) {
+    log.info("formValidationDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbFormValidation", [jashboard.angular.formValidationDirective]).run(function($log) {
-  $log.info("formValidationDirective initialized");
-});

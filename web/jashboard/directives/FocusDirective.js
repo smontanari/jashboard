@@ -11,8 +11,8 @@
       };
     }
   });
+  jashboard.application.directive("jbFocus", ['WidgetService', jashboard.angular.focusDirective])
+  .run(['$log', function(log) {
+    log.info("focusDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbFocus", ['WidgetService', jashboard.angular.focusDirective]).run(function($log) {
-  $log.info("focusDirective initialized");
-});

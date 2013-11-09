@@ -9,8 +9,10 @@
       };
     }
   });
+  
+  jashboard.application.directive("jbAlertBox", ['AlertService', jashboard.angular.alertBoxDirective])
+  .run(['$log', function(log) {
+    log.info("alertBoxDirective initialized");
+  }]);
 }(jashboard.angular || {}));
 
-jashboard.application.directive("jbAlertBox", ['AlertService', jashboard.angular.alertBoxDirective]).run(function($log) {
-  $log.info("alertBoxDirective initialized");
-});

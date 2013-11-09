@@ -30,8 +30,8 @@
       };
     }
   });
+  jashboard.application.directive("jbSwitchButton", [jashboard.angular.switchButtonDirective])
+  .run(['$log', function(log) {
+    log.info("switchButtonDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbSwitchButton", [jashboard.angular.switchButtonDirective]).run(function($log) {
-  $log.info("switchButtonDirective initialized");
-});

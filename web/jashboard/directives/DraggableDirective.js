@@ -20,8 +20,8 @@
       };
     }
   });
+  jashboard.application.directive("jbDraggable", ['WidgetService', jashboard.angular.draggableDirective])
+  .run(['$log', function(log) {
+    log.info("draggableDirective initialized");
+  }]);
 }(jashboard.angular || {}));
-
-jashboard.application.directive("jbDraggable", ['WidgetService', jashboard.angular.draggableDirective]).run(function($log) {
-  $log.info("draggableDirective initialized");
-});

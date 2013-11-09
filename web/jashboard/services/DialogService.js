@@ -12,7 +12,8 @@
       };
     }
   });
-  jashboard.services.service('DialogService', [jashboard.DialogService]).run(function($log) {
-    $log.info("DialogService initialized");
-  });
+  jashboard.services.service('DialogService', [jashboard.DialogService])
+  .run(['$log', function(log) {
+    log.info("DialogService initialized");
+  }]);
 }(jashboard || {}));

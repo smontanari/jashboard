@@ -15,7 +15,7 @@
     }
   });
   jashboard.application.controller("IpsumMonitorFormController", ['$scope', jashboard.plugin.ipsum.IpsumMonitorFormController])
-    .run(function($log) {
-      $log.info("IpsumMonitorFormController initialized");
-  });
+  .run(['$log', function(log) {
+    log.info("IpsumMonitorFormController initialized");
+  }]);
 }(jashboard.plugin.ipsum || {}));

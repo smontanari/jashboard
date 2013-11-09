@@ -18,7 +18,11 @@ describe("TooltipDirective", function() {
     });
 
     var linkFunction = jashboard.angular.tooltipDirective();
-    linkFunction(scope, "test-element", {jbTooltip: "test_tooltip_expr", jbTooltipToggle: "test_watch_expr"});
+    linkFunction(scope, "test-element", {
+      jbTooltip: "test_tooltip_expr",
+      jbTooltipToggle: "test_watch_expr",
+      jbTooltipClass: 'test_tooltip_class'
+    });
   });
 
   it("should watch the given expression", function() {
@@ -26,7 +30,7 @@ describe("TooltipDirective", function() {
   });
 
   it("should create a tooltip widget", function() {
-    expect(tooltipFn).toHaveBeenCalledWith("test_target_selector", "test-element");
+    expect(tooltipFn).toHaveBeenCalledWith('test_target_selector', 'test-element', 'test_tooltip_class');
   });
   it("should show the tooltip", function() {
     watchListener(true);

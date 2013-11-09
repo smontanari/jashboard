@@ -1,11 +1,10 @@
 (function(module) {
   jashboard.widgets = _.extend(module, {
-    Tooltip: function(targetSelector, contentSelector) {
+    Tooltip: function(targetSelector, contentSelector, tooltipClass) {
       this.show = function() {
         $(targetSelector).tooltip({
-          html: true,
-          title: $(contentSelector).html(),
-          container: "body"
+          content: $(contentSelector).html().trim(),
+          tooltipClass: tooltipClass
         });
       };
 

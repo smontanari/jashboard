@@ -22,8 +22,8 @@ funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", f
     S("#monitor_1 .monitor-title .monitor-icon-ajax-loader").invisible("the ajax loader is hidden");
     S("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible("the ajax error is shown");
     S("#monitor_1 .monitor-title .monitor-icon-ajax-error").mouseover();
-    S(".tooltip").visible(function() {
-      ok(S(".tooltip").text().match(/something went very wrong/), "tooltip content should contain expected text");
+    S(".html-tooltip-error").visible(function() {
+      ok(S(".html-tooltip-error").text().match(/something went very wrong/), "tooltip content should contain expected text");
     });
   });
   

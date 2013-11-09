@@ -1,3 +1,5 @@
+steal("funcunit/syn/synthetic.js", function(Syn){
+	
 module("funcunit/syn")
 
 st = {
@@ -27,7 +29,7 @@ st = {
 	rootJoin : (typeof steal == "undefined" ? function(path){
 			return "../../"+path;
 		} : 
-		function(path){ return steal.root.join(path) } )
+		function(path){ return steal.config().root.join(path) } )
 };
 
 
@@ -103,42 +105,6 @@ if(!Syn.skipFocusTests){
 		},10)
 		
 	});
-}
+};
 
-test("focus on an element then another in another page", function(){
-	stop();
-	
-	var page1 = "test/qunit/page1.html",
-		page2 = "test/qunit/page2.html"
-	if(typeof steal !== 'undefined'){
-		page1 = st.rootJoin("funcunit/syn/test/qunit/page1.html");
-		page2 = st.rootJoin("funcunit/syn/test/qunit/page2.html");
-	}
-	
-	var iframe = document.createElement('iframe'),
-		calls = 0;
-	
-	st.bind(iframe,"load",function(){
-		if(calls == 0){
-			
-			Syn.click( iframe.contentWindow.document.getElementById("first") ,{}, function(){
-				
-				iframe.contentWindow.location = page2;
-			})
-			calls++;
-		}else{
-			
-			Syn.click( iframe.contentWindow.document.documentElement ,{}, function(){
-				start();
-				
-			})
-		}
-			
-			
-	});
-	iframe.src = page1
-		
-	
-	
-	st.g("qunit-test-area").appendChild(iframe);
 })

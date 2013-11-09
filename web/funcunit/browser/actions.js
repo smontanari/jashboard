@@ -1,4 +1,5 @@
-(function($){
+steal('jquery', './core.js', 'funcunit/syn', function($, FuncUnit, Syn) {
+	window.Syn = Syn;
 	/**
 	 * @add FuncUnit
 	 */
@@ -8,8 +9,12 @@
 	 */
 	// methods
 	/**
-	 * @function click
-	 * Clicks an element.  This uses [Syn.prototype.click] to issue a:
+     *
+	 * @function FuncUnit.prototype.click click
+     * @parent FuncUnit.prototype
+     * @signature `click(options [,success])`
+     *
+	 * Clicks an element.  This issues a:
 	 * <ul>
 	 * 	<li><code>mousedown</code></li>
 	 *  <li><code>focus</code> - if the element is focusable</li>
@@ -32,12 +37,16 @@
 	 * You can pass it any of the serializable parameters you'd send to 
 	 * [http://developer.mozilla.org/en/DOM/event.initMouseEvent initMouseEvent], but command keys are 
 	 * controlled by [FuncUnit.prototype.type].
+     *
 	 * @param {Function} [success] a callback that runs after the click, but before the next action.
 	 * @return {funcUnit} returns the funcunit object for chaining.
 	 */
 	'click',
 	/**
-	 * @function dblclick
+     * @function FuncUnit.prototype.dblclick dblclick
+     * @parent FuncUnit.prototype
+     * @signature `dblclick(options [,success])`
+     *
 	 * Double clicks an element by [FuncUnit.prototype.click clicking] it twice and triggering a dblclick event.
 	 * @param {Object} options options to add to the mouse events.  This works
 	 * the same as [FuncUnit.prototype.click]'s options.
@@ -46,7 +55,9 @@
 	 */
 	'dblclick',
 	/**
-	 * @function rightClick
+     * @function FuncUnit.prototype.rightClick rightClick
+     * @parent FuncUnit.prototype
+     * @signature `rightClick(options [,success])`
 	 * Right clicks an element.  This typically results in a contextmenu event for browsers that
 	 * support it.
 	 * @param {Object} options options to add to the mouse events.  This works
@@ -62,13 +73,12 @@
 					success = options;
 					options = {};
 				}
-				var selector = this.selector, 
-					context = this.context;
+				var selector = this.selector;
 				FuncUnit.add({
 					method: function(success, error){
 						options = options || {}
 						steal.dev.log("Clicking " + selector)
-						this.bind.triggerSyn("_" + name, options, success);
+						Syn("_" + name, options, this.bind[0],success);
 					},
 					success: success,
 					error: "Could not " + name + " '" + this.selector+"'",
@@ -89,6 +99,10 @@
 			this.exists(false);
 		},
 		/**
+         * @function FuncUnit.prototype.type type
+         * @parent FuncUnit.prototype
+         * @signature `type(text [,success])`
+         *
 		 * Types text into an element.  This makes use of [Syn.type] and works in 
 		 * a very similar way.
 		 * <h3>Quick Examples</h3>
@@ -123,16 +137,18 @@
 		 */
 		type: function( text, success ) {
 			this._addExists();
-			var selector = this.selector, 
-				context = this.context;
+			// when you type in something you have to click on it first
+			this.click();
+			var selector = this.selector;
 			// type("") is a shortcut for clearing out a text input
 			if(text === ""){
 				text = "[ctrl]a[ctrl-up]\b"
 			}
 			FuncUnit.add({
 				method : function(success, error){
-					steal.dev.log("Typing "+text+" on "+selector)
-					this.bind.triggerSyn("_type", text, success);
+					steal.dev.log("Typing "+text+" on "+selector);
+					Syn("_type", text, this.bind[0], success);
+					
 				},
 				success : success,
 				error : "Could not type " + text + " into " + this.selector,
@@ -158,8 +174,10 @@
 			return this;
 		},
 		/**
-		 * Drags an element into another element or coordinates.  
-		 * This takes the same paramameters as [Syn.prototype.move move].
+         * @function FuncUnit.prototype.drag drag
+         * @parent FuncUnit.prototype
+         * @signature `drag(options [,success])`
+		 * Drags an element into another element or coordinates.
 		 * @param {String|Object} options A selector or coordinates describing the motion of the drag.
 		 * <h5>Options as a Selector</h5>
 		 * Passing a string selector to drag the mouse.  The drag runs to the center of the element
@@ -177,7 +195,9 @@
 		 * S('#foo').drag('100X200') 
 		 * @codeend
 		 * Or relative to the start position
+         * @codestart
 		 * S('#foo').drag('+10 +20')
+         * @codeend
 		 * <h5>Options as an Object</h5>
 		 * You can configure the duration, start, and end point of a drag by passing in a json object.
 		 * @codestart
@@ -198,12 +218,11 @@
 			}
 			options.from = this.selector;
 	
-			var selector = this.selector, 
-				context = this.context;
+			var selector = this.selector;
 			FuncUnit.add({
 				method: function(success, error){
-					steal.dev.log("dragging " + selector)
-					this.bind.triggerSyn("_drag", options, success);
+					steal.dev.log("dragging " + selector);
+					Syn("_drag", options, this.bind[0],success);
 				},
 				success: success,
 				error: "Could not drag " + this.selector,
@@ -213,6 +232,9 @@
 			return this;
 		},
 		/**
+         * @function FuncUnit.prototype.move move
+         * @parent FuncUnit.prototype
+         * @signature `move(options [,success])`
 		 * Moves an element into another element or coordinates.  This will trigger mouseover
 		 * mouseouts accordingly.
 		 * This takes the same paramameters as [Syn.prototype.move move].
@@ -233,7 +255,9 @@
 		 * S('#foo').move('100X200') 
 		 * @codeend
 		 * Or relative to the start position
+         * @codestart
 		 * S('#foo').move('+10 +20')
+         * @codeend
 		 * <h5>Options as an Object</h5>
 		 * You can configure the duration, start, and end point of a move by passing in a json object.
 		 * @codestart
@@ -254,12 +278,11 @@
 			}
 			options.from = this.selector;
 	
-			var selector = this.selector, 
-				context = this.context;
+			var selector = this.selector;
 			FuncUnit.add({
 				method: function(success, error){
-					steal.dev.log("moving " + selector)
-					this.bind.triggerSyn("_move", options, success);
+					steal.dev.log("moving " + selector);
+					Syn("_move", options, this.bind[0], success);
 				},
 				success: success,
 				error: "Could not move " + this.selector,
@@ -269,6 +292,9 @@
 			return this;
 		},
 		/**
+         * @function FuncUnit.prototype.scroll scroll
+         * @parent FuncUnit.prototype
+         * @signature `scroll(direction, amount, success)`
 		 * Scrolls an element in a particular direction by setting the scrollTop or srollLeft.
 		 * @param {String} direction "left" or "top"
 		 * @param {Number} amount number of pixels to scroll
@@ -276,8 +302,7 @@
 		 */
 		scroll: function( direction, amount, success ) {
 			this._addExists();
-			var selector = this.selector, 
-				context = this.context,
+			var selector = this.selector,
 				direction;
 			if (direction == "left" || direction == "right") {
 				direction = "Left";
@@ -300,4 +325,5 @@
 			return this;
 		}
 	})
-})(window.jQuery || window.FuncUnit.jQuery)
+	return FuncUnit;
+});

@@ -1,6 +1,7 @@
 @page funcunit.features Features
-@parent FuncUnit 9
+@parent FuncUnit.pages 9
 
+@body
 ## Why FuncUnit
 
 TESTING IS PAINFUL.  Everyone hates testing, and most front end developers simply don't test.  There 
@@ -92,11 +93,3 @@ The next FuncUnit features we plan to work on include. Let us know if you want t
 
 * [http://siliconforks.com/jscoverage/ JSCoverage] integration for test coverage stats
 * [http://code.google.com/p/js-test-driver/ JSTestDriver] integration
-
-## Comparison to other frameworks
-
-### Functional vs unit
-
-### Automated vs browser based
-
-### Accurate event simulation

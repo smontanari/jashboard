@@ -1,6 +1,7 @@
 @page funcunit.demos Demos
-@parent FuncUnit 8
+@parent FuncUnit.pages 8
 
+@body
 This page contains examples of tests that solve common problems.
 
 ## Login
@@ -46,8 +47,6 @@ if(location.protocol === "file:" || /fixtures\=on/.test(location.search)){
 This section will walk through creating a smoke test for the [http://javascriptmvc.com/srchr/srchr.html Srchr application].  
 Srchr is a simple demo application that lets you search several sources for images.  There is a search pane, 
 tabs, a history pane, and a results area.
-
-@image jmvc/images/srchr.png
 
 The purpose of a smoke test is to test enough functionality in an application to verify its working correctly, as 
 quickly as possible.

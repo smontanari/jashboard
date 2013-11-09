@@ -1,4 +1,4 @@
-(function($){
+steal('jquery', './core.js', function($, FuncUnit) {
 	
 	/**
 	 * @add FuncUnit
@@ -11,7 +11,9 @@
 	 */
 	// methods
 	/**
-	 * @function size
+     * @function FuncUnit.prototype.size size
+     * @parent FuncUnit.prototype
+     * @signature `size([size] [,timeout] [,success] [,message])`
 	 * Gets the number of elements matched by the selector or
 	 * waits until the the selector is size.  You can also 
 	 * provide a function that continues to the next action when
@@ -35,18 +37,18 @@
 	 */
 	'size' : 0,
 	/**
-	 * @function attr
+     * @function FuncUnit.prototype.attr attr
+     * @parent FuncUnit.prototype
+     * @signature `attr(data, value [,timeout] [,success] [,message])`
 	 * Gets the value of an attribute from an element or waits until the attribute
 	 * equals the attr param.
 	 * @codestart
-	 *  //gets the abc attribute
-	 * S("#something").attr("abc")
-	 * 
 	 * //waits until the abc attribute == some
 	 * S("#something").attr("abc","some") 
 	 * @codeend
 	 * @param {String} data The attribute to get, or wait for.
-	 * @param {String|Function} [value] If provided uses this as a check before continuing to the next action
+	 * @param {String|Function} value If provided uses this as a check before continuing to the next action
+     *
 	 * @param {Number} [timeout] overrides FuncUnit.timeout.  If provided, the wait will fail if not completed before this timeout.
 	 * @param {Function} [success] a callback that will run after this action completes.
 	 * @param {String} [message] if provided, an assertion will be passed when this wait condition completes successfully
@@ -55,11 +57,13 @@
 	 */
 	'attr' : 1, 
 	/**
-	 * @function hasClass
+     * @function FuncUnit.prototype.hasClass hasClass
+     * @parent FuncUnit.prototype
+     * @signature `hasClass(className [,value] [,timeout] [,success] [,message])`
 	 * @codestart
 	 * //returns if the element has the class in its className
 	 * S("#something").hasClass("selected");
-	 * 
+	 *
 	 * //waits until #something has selected in its className
 	 * S("#something").hasClass("selected",true);
 	 * 
@@ -76,16 +80,18 @@
 	 */
 	'hasClass' : 1, //makes wait
 	/**
-	 * @function html
+     * @function FuncUnit.prototype.html html
+     * @parent FuncUnit.prototype
+     * @signature `html([html] [,timeout] [,success] [,message])`
 	 * Gets the [http://api.jquery.com/html/ html] from an element or waits until the html is a certain value.
 	 * @codestart
 	 * //checks foo's html has "JupiterJS"
 	 * ok( /JupiterJS/.test( S('#foo').html() ) )
 	 * 
-	 * //waits until bar's html has JupiterJS
+	 * //waits until foo's html has JupiterJS
 	 * S('#foo').html(/JupiterJS/)
 	 * 
-	 * //waits until bar's html is JupiterJS
+	 * //waits until foo's html is JupiterJS
 	 * S('#foo').html("JupiterJS")
 	 * @codeend
 	 * 
@@ -98,7 +104,9 @@
 	 */
 	'html' : 0, 
 	/**
-	 * @function text
+     * @function FuncUnit.prototype.text text
+     * @parent FuncUnit.prototype
+     * @signature `text([text] [,timeout] [,success] [,message])`
 	 * Gets the [http://api.jquery.com/text/ text] from an element or waits until the text is a certain value.
 	 * @codestart
 	 * //checks foo's text has "JupiterJS"
@@ -120,7 +128,9 @@
 	 */
 	'text' : 0, 
 	/**
-	 * @function val
+     * @function FuncUnit.prototype.val val
+     * @parent FuncUnit.prototype
+     * @signature `val([val] [,timeout] [,success] [,message])`
 	 * Gets the [http://api.jquery.com/val/ val] from an element or waits until the val is a certain value.
 	 * @codestart
 	 * //checks foo's val has "JupiterJS"
@@ -142,7 +152,9 @@
 	 */
 	'val' : 0, 
 	/**
-	 * @function css
+     * @function FuncUnit.prototype.css css
+     * @parent FuncUnit.prototype
+     * @signature `css(prop [,val] [,timeout] [,success] [,message])`
 	 * Gets a [http://api.jquery.com/css/ css] property from an element or waits until the property is 
 	 * a specified value.
 	 * @codestart
@@ -162,8 +174,11 @@
 	 * returns the funcUnit selector for chaining, otherwise returns the css of the selector.
 	 */
 	'css': 1, 
+	'prop': 1, 
 	/**
-	 * @function offset
+     * @function FuncUnit.prototype.offset offset
+     * @parent FuncUnit.prototype
+     * @signature `offset([offset] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/offset/ offset] or waits until 
 	 * the offset is a specified value.
 	 * @codestart
@@ -184,7 +199,9 @@
 	 */
 	'offset' : 0,
 	/**
-	 * @function position
+     * @function FuncUnit.prototype.position position
+     * @parent FuncUnit.prototype
+     * @signature `position([position] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/position/ position] or waits until 
 	 * the position is a specified value.
 	 * @codestart
@@ -205,7 +222,9 @@
 	 */
 	'position' : 0,
 	/**
-	 * @function scrollTop
+     * @function FuncUnit.prototype.scrollTop scrollTop
+     * @parent FuncUnit.prototype
+     * @signature `scrollTop([scrollTop] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/scrollTop/ scrollTop] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -226,7 +245,9 @@
 	 */ 
 	'scrollTop' : 0, 
 	/**
-	 * @function scrollLeft
+     * @function FuncUnit.prototype.scrollLeft scrollLeft
+     * @parent FuncUnit.prototype
+     * @signature `scrollLeft([scrollLeft] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/scrollLeft/ scrollLeft] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -247,7 +268,9 @@
 	 */ 
 	'scrollLeft' : 0, 
 	/**
-	 * @function height
+     * @function FuncUnit.prototype.height height
+     * @parent FuncUnit.prototype
+     * @signature `height([height] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/height/ height] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -268,7 +291,9 @@
 	 */
 	'height' : 0, 
 	/**
-	 * @function width
+     * @function FuncUnit.prototype.width width
+     * @parent FuncUnit.prototype
+     * @signature `width([width] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/width/ width] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -289,7 +314,9 @@
 	 */
 	'width' : 0, 
 	/**
-	 * @function innerHeight
+     * @function FuncUnit.prototype.innerHeight innerHeight
+     * @parent FuncUnit.prototype
+     * @signature `innerHeight([innerHeight] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/innerHeight/ innerHeight] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -310,7 +337,9 @@
 	 */
 	'innerHeight' : 0, 
 	/**
-	 * @function innerWidth
+     * @function FuncUnit.prototype.innerWidth innerWidth
+     * @parent FuncUnit.prototype
+     * @signature `innerWidth([innerWidth] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/innerWidth/ innerWidth] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -331,7 +360,9 @@
 	 */
 	'innerWidth' : 0, 
 	/**
-	 * @function outerHeight
+     * @function FuncUnit.prototype.outerHeight outerHeight
+     * @parent FuncUnit.prototype
+     * @signature `outerHeight([outerHeight] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/outerHeight/ outerHeight] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -352,7 +383,9 @@
 	 */
 	'outerHeight' : 0, 
 	/**
-	 * @function outerWidth
+     * @function FuncUnit.prototype.outerWidth outerWidth
+     * @parent FuncUnit.prototype
+     * @signature `outerWidth([outerWidth] [,timeout] [,success] [,message])`
 	 * Gets an element's [http://api.jquery.com/outerWidth/ outerWidth] or waits until 
 	 * it equals a specified value.
 	 * @codestart
@@ -382,9 +415,10 @@
 			//assume last arg is success
 			var args = FuncUnit.makeArray(arguments), 
 				isWait = args.length > argIndex,
-				success;
+				success,
+				self = this;
 			
-			args.unshift(this.selector,this.context,fname)
+			args.unshift(this.selector,this.frame,fname)
 			if(isWait){
 				//get the args greater and equal to argIndex
 				var tester = args[argIndex+3],
@@ -477,6 +511,7 @@
 							} else {
 								// after every successful wait, check for a new document (if someone clicked a link), 
 								// and overwrite alert/confirm/prompt
+								// TODO this creates a potential race if a new document is loaded but its steal isn't ready...should poll
 								FuncUnit.checkForNewDocument();
 							}
 						}
@@ -518,4 +553,6 @@
 	for (var prop in FuncUnit.funcs) {
 		FuncUnit.makeFunc(prop, FuncUnit.funcs[prop]);
 	}
-})(window.jQuery || window.FuncUnit.jQuery)
+
+	return FuncUnit;
+});

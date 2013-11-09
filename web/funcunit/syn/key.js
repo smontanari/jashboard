@@ -1,6 +1,5 @@
-(function(){
+steal('./synthetic','./browsers.js',function(Syn) {
 	var h = Syn.helpers,
-		S = Syn,
 
 		// gets the selection of an input or textarea
 		getSelection = function( el ) {
@@ -82,7 +81,6 @@
 
 
 		};
-
 	/**
 	 * @add Syn static
 	 */
@@ -297,20 +295,20 @@
 		// retrieves a description of what events for this character should look like
 		data: function( key ) {
 			//check if it is described directly
-			if ( S.key.browser[key] ) {
-				return S.key.browser[key];
+			if ( Syn.key.browser[key] ) {
+				return Syn.key.browser[key];
 			}
-			for ( var kind in S.key.kinds ) {
-				if ( h.inArray(key, S.key.kinds[kind]) > -1 ) {
-					return S.key.browser[kind]
+			for ( var kind in Syn.key.kinds ) {
+				if ( h.inArray(key, Syn.key.kinds[kind]) > -1 ) {
+					return Syn.key.browser[kind]
 				}
 			}
-			return S.key.browser.character
+			return Syn.key.browser.character
 		},
 
 		//returns the special key if special
 		isSpecial: function( keyCode ) {
-			var specials = S.key.kinds.special;
+			var specials = Syn.key.kinds.special;
 			for ( var i = 0; i < specials.length; i++ ) {
 				if ( Syn.keycodes[specials[i]] == keyCode ) {
 					return specials[i];
@@ -388,7 +386,7 @@
 					key = key.match(/\d+/)[0]
 				}
 
-				if ( force || (!S.support.keyCharacters && Syn.typeable.test(this.nodeName)) ) {
+				if ( force || (!Syn.support.keyCharacters && Syn.typeable.test(this.nodeName)) ) {
 					var current = this.value,
 						before = current.substr(0, sel.start),
 						after = current.substr(sel.end),
@@ -396,7 +394,7 @@
 
 					this.value = before + character + after;
 					//handle IE inserting \r\n
-					var charLength = character == "\n" && S.support.textareaCarriage ? 2 : character.length;
+					var charLength = character == "\n" && Syn.support.textareaCarriage ? 2 : character.length;
 					Syn.selectText(this, before.length + charLength)
 				}
 			},
@@ -458,7 +456,7 @@
 			},
 			'\b': function( options, scope, key, force, sel ) {
 				//this assumes we are deleting from the end
-				if (!S.support.backspaceWorks && Syn.typeable.test(this.nodeName) ) {
+				if (!Syn.support.backspaceWorks && Syn.typeable.test(this.nodeName) ) {
 					var current = this.value,
 						before = current.substr(0, sel.start),
 						after = current.substr(sel.end);
@@ -476,7 +474,7 @@
 				}
 			},
 			'delete': function( options, scope, key, force, sel ) {
-				if (!S.support.backspaceWorks && Syn.typeable.test(this.nodeName) ) {
+				if (!Syn.support.backspaceWorks && Syn.typeable.test(this.nodeName) ) {
 					var current = this.value,
 						before = current.substr(0, sel.start),
 						after = current.substr(sel.end);
@@ -493,7 +491,11 @@
 
 				var nodeName = this.nodeName.toLowerCase()
 				// submit a form
-				if (!S.support.keypressSubmits && nodeName == 'input' ) {
+				if (nodeName == 'input' ) {
+					Syn.trigger("change", {}, this);
+				}
+				
+				if (!Syn.support.keypressSubmits && nodeName == 'input' ) {
 					var form = Syn.closest(this, "form");
 					if ( form ) {
 						Syn.trigger("submit", {}, form);
@@ -501,11 +503,11 @@
 
 				}
 				//newline in textarea
-				if (!S.support.keyCharacters && nodeName == 'textarea' ) {
+				if (!Syn.support.keyCharacters && nodeName == 'textarea' ) {
 					Syn.key.defaults.character.call(this, options, scope, "\n", undefined, sel)
 				}
 				// 'click' hyperlinks
-				if (!S.support.keypressOnAnchorClicks && nodeName == 'a' ) {
+				if (!Syn.support.keypressOnAnchorClicks && nodeName == 'a' ) {
 					Syn.trigger("click", {}, this);
 				}
 			},
@@ -614,6 +616,9 @@
 			},
 			'shift': function() {
 				return null;
+			},
+			'ctrl': function() {
+				return null;
 			}
 		}
 	});
@@ -632,7 +637,7 @@
 				// if this browsers supports writing keys on events
 				// but doesn't write them if the element isn't focused
 				// focus on the element (ignored if already focused)
-				if ( S.support.keyCharacters && !S.support.keysOnNotFocused ) {
+				if ( Syn.support.keyCharacters && !Syn.support.keysOnNotFocused ) {
 					element.focus()
 				}
 			}
@@ -655,7 +660,7 @@
 				//don't change the orignial
 				options = h.extend({}, options)
 				if ( options.character ) {
-					h.extend(options, S.key.options(options.character, type));
+					h.extend(options, Syn.key.options(options.character, type));
 					delete options.character;
 				}
 
@@ -879,7 +884,7 @@
 
 		form.onsubmit = function( ev ) {
 			if ( ev.preventDefault ) ev.preventDefault();
-			S.support.keypressSubmits = true;
+			Syn.support.keypressSubmits = true;
 			ev.returnValue = false;
 			return false;
 		};
@@ -889,37 +894,39 @@
 
 
 		Syn.trigger("keypress", "a", inputter);
-		S.support.keyCharacters = inputter.value == "a";
+		Syn.support.keyCharacters = inputter.value == "a";
 
 
 		inputter.value = "a";
 		Syn.trigger("keypress", "\b", inputter);
-		S.support.backspaceWorks = inputter.value == "";
+		Syn.support.backspaceWorks = inputter.value == "";
 
 
 
 		inputter.onchange = function() {
-			S.support.focusChanges = true;
+			Syn.support.focusChanges = true;
 		}
 		inputter.focus();
 		Syn.trigger("keypress", "a", inputter);
 		form.childNodes[5].focus(); // this will throw a change event
 		Syn.trigger("keypress", "b", inputter);
-		S.support.keysOnNotFocused = inputter.value == "ab";
+		Syn.support.keysOnNotFocused = inputter.value == "ab";
 
 		//test keypress \r on anchor submits
-		S.bind(anchor, "click", function( ev ) {
+		Syn.bind(anchor, "click", function( ev ) {
 			if ( ev.preventDefault ) ev.preventDefault();
-			S.support.keypressOnAnchorClicks = true;
+			Syn.support.keypressOnAnchorClicks = true;
 			ev.returnValue = false;
 			return false;
 		})
 		Syn.trigger("keypress", "\r", anchor);
 
-		S.support.textareaCarriage = textarea.value.length == 4;
+		Syn.support.textareaCarriage = textarea.value.length == 4;
 		
 		document.documentElement.removeChild(div);
 
-		S.support.ready++;
+		Syn.support.ready++;
 	})();
-})()
+	return Syn;
+	
+});

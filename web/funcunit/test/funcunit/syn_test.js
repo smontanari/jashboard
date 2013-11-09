@@ -8,6 +8,21 @@ test("Type and slow Click", function(){
 	
 	S("#copy").click();
 	S("#seewhatyoutyped").text("copied javascriptmvc","copy");
+	S("#seewhatyouchanged").text("changed javascriptmvc","change");
+})
+
+test("ctrl test", function(){
+	S.open("//funcunit/test/myapp.html");
+	S("#typehere").type("abc[ctrl]ac[ctrl-up]", function(){
+		equals(S("#typehere").val(), "abc");
+	})
+})
+
+test("clipboard", function(){
+	S.open("//funcunit/test/myapp.html");
+	S("#typehere").type("abc[ctrl]ac[ctrl-up][right][ctrl]v[ctrl-up]", function(){
+		equals(S("#typehere").val(), "abcabc");
+	})
 })
 
 test("Type and clear", function(){

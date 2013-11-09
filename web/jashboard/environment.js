@@ -13,7 +13,7 @@ var jashboard = (function(module) {
       },
       {
         resourceName: "jquery",
-        resourceSet: ["jquery"]
+        resourceSet: ["bower_components/jquery/jquery.js"]
       },
       {
         resourceName: "lib",
@@ -31,10 +31,6 @@ var jashboard = (function(module) {
       {
         resourceName: "angular-ui",
         resourceSet: ["bower_components/angular-ui/build/angular-ui.js"]
-      },
-      {
-        resourceName: "less",
-        resourceSet: ["steal/less"]
       },
       {
         resourceName: "jashboard.less",

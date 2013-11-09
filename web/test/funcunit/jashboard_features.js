@@ -3,8 +3,8 @@ var jashboard = {
 };
 
 steal(
-  "funcunit", 
-  "bower_components/underscore/underscore-min.js"
+  "bower_components/underscore/underscore-min.js",
+  "funcunit/funcunit.js"
 ).then(function() {
   var feature_sets = {
     misc_features: [
@@ -69,19 +69,19 @@ steal(
   };
 
   var featurePath = function(featureName) {
-    return "./features/" + featureName + ".js";
+    return "test/funcunit/features/" + featureName + ".js";
   }
 
   steal(
-    "./features/support/page_helper.js",
-    "./features/support/jashboard_feature_helper.js",
-    "./features/support/build_monitor_feature_helper.js",
-    "./features/support/vcs_monitor_feature_helper.js",
-    "./funcunit_helper.js"
+    "test/funcunit/features/support/page_helper.js",
+    "test/funcunit/features/support/jashboard_feature_helper.js",
+    "test/funcunit/features/support/build_monitor_feature_helper.js",
+    "test/funcunit/features/support/vcs_monitor_feature_helper.js",
+    "test/funcunit/funcunit_helper.js"
   ).then(function() {
     steal.apply(window, _.map(selectFeatures(), featurePath));
   })
-  .then("./browser_close.js")
+  .then("test/funcunit/browser_close.js")
   .then(function() {
     _.each(jashboard.functional_tests, function(test) {
       test();

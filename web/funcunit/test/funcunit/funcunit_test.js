@@ -12,12 +12,15 @@ test("qUnit module setup works async", function(){
 })
 
 test("Iframe access", function(){
-	equals(S("h2",0).text(), "Goodbye World", "text of iframe")
+	var frame = 0;
+	S("h2", frame).exists(function(){
+		equal(S("h2", frame).text(), "Goodbye World", "text of iframe");
+	});
 })
 
 test("typing alt and shift characters", function(){
 	S('#typehere').type("@", function(){
-		equals(S('#typehere').val(), "@", "types weird chars" );
+		equal(S('#typehere').val(), "@", "types weird chars" );
 	})
 })
 
@@ -107,7 +110,7 @@ test("two getters in a row", function(){
 
 test("then", function(){
 	S("#exists").exists().then(function(){
-		equals(this.length, 1, "this is correct")
+		equal(this.length, 1, "this is correct")
 	});
 })
 
@@ -138,4 +141,10 @@ test("branch", function(){
 
 test("invisible", function(){
 	S(".hidden").invisible("Invisible works");
+})
+
+test("offset", function(){
+	S("#drag").offset(function(offset){
+		return offset.left < 50;
+	})
 })

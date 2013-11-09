@@ -1,6 +1,6 @@
-(function($){
+steal('jquery', './core.js', function($, FuncUnit) {
 	
-	if(steal.options.browser === "phantomjs"){
+	if(steal.config().browser === "phantomjs"){
 		FuncUnit.frameMode = true;
 	}
 	
@@ -21,10 +21,6 @@ var confirms = [],
 	urlWithoutHash = function(url){
 		return url.replace(/\#.*$/, "");
 	},
-	absolutize = function(url){
-		var f = steal.File(url);
-		return f.protocol() ? f.path : f.joinFrom(steal.pageUrl().dir(), true);
-	},
 	// returns true if url matches current window's url
 	isCurrentPage = function(url){
 		var pathname = urlWithoutHash(FuncUnit.win.location.pathname),
@@ -39,25 +35,39 @@ var confirms = [],
 /**
  * @add FuncUnit
  */
+//
+/**
+ * @static
+ */
 $.extend(FuncUnit,{
 	/**
-	 * @attribute browsers
+     * @parent FuncUnit.static
+     *
+     *
+	 * @property FuncUnit.browsers browsers
 	 * Used to configure the browsers selenium uses to run FuncUnit tests.  See the 
 	 * [funcunit.selenium Selenium] page for more information.
 	 */
-	
+
 	// open is a method
+
 	/**
+     *
+     * @function FuncUnit.open open
+     * @signature `open(path, success, timeout)`
+     *
 	 * Opens a page.  It will error if the page can't be opened before timeout. If a URL begins with "//", pages are opened 
 	 * from the FuncUnit root (the root folder where funcunit is located)
-	 * ### Example 
-
-    S.open("//app/app.html")
-
+	 * ### Example
+     *
+     * @codestart
+     * S.open("//app/app.html")
+     * @codeend
 	 * 
 	 * @param {String} path a full or partial url to open.
 	 * @param {Function} success
 	 * @param {Number} timeout
+     * @return {undefined}
 	 */
 	open: function( path, success, timeout ) {
 		if(typeof success != 'function'){
@@ -136,23 +146,33 @@ $.extend(FuncUnit,{
 		lookingForNewDocument = true;
 	},
 	/**
-	 * When a browser's native confirm dialog is used, this method is used to repress the dialog and simulate 
+     * @function FuncUnit.confirm confirm
+     * @signature `confirm(answer)`
+     *
+	 * When a browser's native confirm dialog is used, this method is used to repress the dialog and simulate
 	 * clicking OK or Cancel.  Alerts are repressed by default in FuncUnit application windows.
+     *
 	 * @codestart
 	 * S.confirm(true);
 	 * @codeend
+     *
 	 * @param {Boolean} answer true if you want to click OK, false otherwise
+     * @return {undefined}
 	 */
 	confirm: function(answer){
 		confirms.push(!!answer)
 	},
 	/**
+     * @function FuncUnit.prompt prompt
+     * @signature `prompt(answer)`
+     *
 	 * When a browser's native prompt dialog is used, this method is used to repress the dialog and simulate 
 	 * clicking typing something into the dialog.
 	 * @codestart
 	 * S.prompt("Harry Potter");
 	 * @codeend
 	 * @param {String} answer Whatever you want to simulate a user typing in the prompt box
+     * @return {undefined}
 	 */
 	prompt: function(answer){
 		prompts.push(answer)
@@ -217,13 +237,12 @@ $.extend(FuncUnit,{
 	 */
 	getAbsolutePath: function( path ) {
 		if ( /^\/\//.test(path) ){
-			return steal.File(absolutize(steal.root.path)).join(path.substr(2)) + '';
-		} else {
-			return absolutize(path);
+			path = path.substr(2);
 		}
+		return steal.config().root.join(path)+''
 	},
 	/**
-	 * @attribute win
+	 * @property {window} FuncUnit.win win
 	 * Use this to refer to the window of the application page.
 	 * @codestart
 	 * S(S.window).innerWidth(function(w){
@@ -237,6 +256,9 @@ $.extend(FuncUnit,{
 		readystate: "readyState" in document
 	},
 	/**
+     * @function FuncUnit.eval eval
+     * @signature `eval(str)`
+     *
 	 * Used to evaluate code in the application page.
 	 * @param {String} str the code to evaluate
 	 * @return {Object} the result of the evaluated code
@@ -254,11 +276,16 @@ $.extend(FuncUnit,{
 	},
 	// return true if new document found
 	checkForNewDocument: function(){
-		var documentFound = ((FuncUnit.win.document !== currentDocument && // new document 
+		var documentFound = false;
+
+		// right after setting a new hash and reloading, IE barfs on this occassionally (only the first time)
+		try {
+			documentFound = ((FuncUnit.win.document !== currentDocument && // new document 
 							!FuncUnit.win.___FUNCUNIT_OPENED) // hasn't already been marked loaded
 							// covers opera case after you click a link, since document doesn't change in opera
 							|| (currentHref != FuncUnit.win.location.href)) && // url is different 
 							FuncUnit.documentLoaded(); // fully loaded
+		} catch(e){}
 		if(documentFound){
 			// reset flags
 			lookingForNewDocument = false;
@@ -322,15 +349,6 @@ $.extend(FuncUnit,{
 	var newDocument = false, 
 		poller = function(){
 			var ls;
-			// right after setting a new hash and reloading, IE barfs on this occassionally (only the first time)
-			try{
-				if(FuncUnit.win && FuncUnit.win.document == null){
-					return;
-				}
-			}catch(e){
-				setTimeout(arguments.callee, 500);
-				return;
-			}
 			
 			if (lookingForNewDocument && FuncUnit.checkForNewDocument() ) {
 				
@@ -353,5 +371,6 @@ $.extend(FuncUnit,{
 	$(window).unload(function(){
 		FuncUnit.win && FuncUnit.win.close();
 	});
-	
-})(window.jQuery || window.FuncUnit.jQuery)
+
+	return FuncUnit;
+});

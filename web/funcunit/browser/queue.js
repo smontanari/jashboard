@@ -1,4 +1,4 @@
-(function(){ 
+steal('./core.js', function(FuncUnit) {
 	/**
 	 * @add FuncUnit
 	 */
@@ -12,10 +12,13 @@
 		
 		
 	/**
+     * @property FuncUnit.timeout timeout
+     * @parent FuncUnit.static
 	 * A global timeout value for wait commands.  Defaults to 10 seconds.
 	 */
 	FuncUnit.timeout = 10000;
 	/**
+     * @hide
 	 * A queue of methods.  Each method in the queue are run in order.  After the method is complete, it 
 	 * calls FuncUnit._done, which pops the next method off the queue and runs it.
 	 */
@@ -63,6 +66,9 @@
 	}
 	FuncUnit.
 	/**
+     * @parent FuncUnit.static
+     * @function FuncUnit.add add
+     * @signature `add(handler)`
 	 * Adds a function to the queue.
 	 * @param {Object} handler An object that contains the method to run along with other properties:
 
@@ -72,7 +78,7 @@
  - timeout : the time until success should be called
  - bind : an object that will be 'this' of the success
  - type: the type of method (optional)
- 
+
 	 */
 	add = function(handler){
 		//if we are in a callback, add to the current position
@@ -93,6 +99,11 @@
 	}
 	var currentEl;
 	/**
+     * @hide
+     * @parent FuncUnit.static
+     * @function FuncUnit._done _done
+     * @signature `_done(handler)`
+     *
 	 * Every queued method calls this when its complete.  It gets the next function from the queue and calls it.
 	 * @param {Object} el the current jQuery collection
 	 * @param {Object} selector
@@ -165,4 +176,6 @@
 			FuncUnit.unit.resumeTest();
 		}
 	}
-})()
+
+	return FuncUnit;
+});

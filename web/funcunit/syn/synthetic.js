@@ -1,4 +1,4 @@
-(function(){
+steal(function(){
 	var extend = function( d, s ) {
 		var p;
 		for (p in s) {
@@ -328,9 +328,15 @@
 		 */
 		isFocusable: function( elem ) {
 			var attributeNode;
-			return (this.focusable.test(elem.nodeName) || 
-				((attributeNode = elem.getAttributeNode("tabIndex")) 
-				&& attributeNode.specified)) && Syn.isVisible(elem);
+
+			// IE8 Standards doesn't like this on some elements
+			if(elem.getAttributeNode){
+				attributeNode = elem.getAttributeNode("tabIndex")
+			}
+
+			return this.focusable.test(elem.nodeName) || 
+				   (attributeNode && attributeNode.specified) && 
+				    Syn.isVisible(elem);
 		},
 		/**
 		 * Returns if an element is visible or not
@@ -377,7 +383,9 @@
 				return -1;
 			},
 			getWindow: function( element ) {
-				return element.ownerDocument.defaultView || element.ownerDocument.parentWindow;
+				if(element.ownerDocument){
+					return element.ownerDocument.defaultView || element.ownerDocument.parentWindow;
+				}
 			},
 			extend: extend,
 			scrollOffset: function( win , set) {
@@ -608,8 +616,7 @@
 				//send the event
 				ret = Syn.dispatch(event, dispatchEl, type, autoPrevent);
 			}
-
-			//run default behavior
+			
 			ret && Syn.support.ready === 2 && Syn.defaults[type] && Syn.defaults[type].call(element, options, autoPrevent);
 			return ret;
 		},
@@ -814,27 +821,12 @@
 			};
 		},
 		i = 0;
-		for ( ; i < actions.length; i++ ) {
-			makeAction(actions[i]);
-		}
-		/**
-		 * Used for creating and dispatching synthetic events.
-		 * @codestart
-		 * new MVC.Syn('click').send(MVC.$E('id'))
-		 * @codeend
-		 * @constructor Sets up a synthetic event.
-		 * @param {String} type type of event, ex: 'click'
-		 * @param {optional:Object} options
-		 */
-		if ( (window.FuncUnit && window.FuncUnit.jQuery) || window.jQuery ) {
-			((window.FuncUnit && window.FuncUnit.jQuery) || window.jQuery).fn.triggerSyn = function( type, options, callback ) {
-				if(!this[0]){
-					throw "Can't "+type.substring(1)+" because no element matching '"+this.selector+"' was found"
-				}
-				Syn(type, options, this[0], callback);
-				return this;
-			};
-		}
 
-		window.Syn = Syn;
-})()
+	for ( ; i < actions.length; i++ ) {
+		makeAction(actions[i]);
+	}
+
+	
+
+	return Syn;
+})

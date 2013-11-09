@@ -1,6 +1,7 @@
 @page funcunit.waits Waits
-@parent FuncUnit 3
+@parent FuncUnit.pages 3
 
+@body
 Wait commands are used to check conditions of your page. The test checks a condition repeatedly 
 until its either true or a timeout period is reached.
 
@@ -48,7 +49,6 @@ Some jQuery methods accept 2 parameters.  Similarly, those wait methods accept t
 
 <code>wait( keyVal, checkVal, [timeout], [callback], [message] )</code>
 
-- [FuncUnit.prototype.data data]
 - [FuncUnit.prototype.attr attr]
 - [FuncUnit.prototype.hasClass hasClass]
 - [FuncUnit.prototype.css css]

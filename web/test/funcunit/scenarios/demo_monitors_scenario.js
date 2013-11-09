@@ -1,4 +1,4 @@
-steal("test/funcunit/scenarios/monitor_layout_operations_scenario.js").then(function() {
+(function() {
   var monitorCounter = 0;
   var storedMonitors = [];
   var generateDate = function() {
@@ -37,7 +37,7 @@ steal("test/funcunit/scenarios/monitor_layout_operations_scenario.js").then(func
     }
   };
 
-  smocker.scenario('monitor_common_operations', function() {
+  smocker.scenario('demo_monitors', function() {
     this.post(/^\/ajax\/dashboard\/(\w+)\/monitor$/).respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);
       monitorCounter++;
@@ -79,6 +79,4 @@ steal("test/funcunit/scenarios/monitor_layout_operations_scenario.js").then(func
       return {status: 204};
     });
   });
-  
-  smocker.groupScenarios('demo_monitors', ['monitor_common_operations', 'monitor_layout_operations']);
-});
+})();

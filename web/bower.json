@@ -10,7 +10,8 @@
     "angular-ui": "~0.4.0",
     "jquery-ui": "1.10.3",
     "blockui": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "bootstrap": "~2.3.0"
   },
   "devDependencies": {
     "smocker": "latest"

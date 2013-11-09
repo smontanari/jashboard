@@ -11,7 +11,8 @@
     "jquery-ui": "1.10.3",
     "blockui": "latest",
     "moment": "latest",
-    "bootstrap": "~2.3.0"
+    "bootstrap": "~2.3.0",
+    "bootstrap-switch": "latest"
   },
   "devDependencies": {
     "smocker": "latest"

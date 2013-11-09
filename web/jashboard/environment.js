@@ -6,7 +6,7 @@ var jashboard = (function(module) {
         resourceSet: [
           "bower_components/bootstrap/docs/assets/css/bootstrap.css",
           "bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css",
-          "css/bootstrapSwitch.css",
+          "bower_components/bootstrap-switch/static/stylesheets/bootstrap-switch.css",
           "bower_components/jquery-ui/themes/base/jquery-ui.css",
           "bower_components/angular-ui/build/angular-ui.css"
         ]
@@ -19,7 +19,7 @@ var jashboard = (function(module) {
         resourceName: "lib",
         resourceSet: [
           "bower_components/bootstrap/docs/assets/js/bootstrap.js",
-          "lib/bootstrapSwitch.js", 
+          "bower_components/bootstrap-switch/static/js/bootstrap-switch.js", 
           "lib/jquery.cycle2.js",
           "bower_components/underscore/underscore.js",
           "bower_components/blockui/jquery.blockUI.js",
@@ -51,7 +51,7 @@ var jashboard = (function(module) {
         resourceSet: [
           "bower_components/bootstrap/docs/assets/css/bootstrap.css",
           "bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css",
-          "css/bootstrapSwitch.css",
+          "bower_components/bootstrap-switch/static/stylesheets/bootstrap-switch.css",
           "css/jashboard.min.css",
           "bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css",
           "bower_components/angular-ui/build/angular-ui.min.css"
@@ -65,7 +65,7 @@ var jashboard = (function(module) {
         resourceName: "lib",
         resourceSet: [
           "bower_components/bootstrap/docs/assets/js/bootstrap.min.js",
-          "lib/bootstrapSwitch.js", 
+          "bower_components/bootstrap-switch/static/js/bootstrap-switch.min.js", 
           "lib/jquery.cycle2.min.js",
           "bower_components/underscore/underscore-min.js",
           "bower_components/blockui/jquery.blockUI.js",

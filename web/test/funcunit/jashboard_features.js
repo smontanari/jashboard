@@ -4,7 +4,7 @@ var jashboard = {
 
 steal(
   "funcunit", 
-  "lib/underscore-min.js"
+  "bower_components/underscore/underscore-min.js"
 ).then(function() {
   var feature_sets = {
     misc_features: [

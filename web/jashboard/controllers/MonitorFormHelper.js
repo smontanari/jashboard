@@ -26,7 +26,7 @@
 
       this.registerMonitorTypeForm = function(type, form) {
         monitorForms[type] = form;
-      }
+      };
 
       this.isActionEnabled = function(action) {
         if (action === 'back') {

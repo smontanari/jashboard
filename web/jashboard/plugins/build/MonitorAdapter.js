@@ -24,7 +24,7 @@
       };
 
       var extractBuildTypeProperties = function(object) {
-        return _.omit(object, "hostname", "port")
+        return _.omit(object, "hostname", "port");
       };
 
       this.parseMonitorConfigurationForm = function(formModel) {

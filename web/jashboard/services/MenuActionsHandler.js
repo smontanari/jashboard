@@ -9,7 +9,7 @@
         };
         scope.menuAction = function(name) {
           menuActions[name]();
-        }
+        };
       };
     }
   });

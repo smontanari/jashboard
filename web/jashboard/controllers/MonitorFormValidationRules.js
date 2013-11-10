@@ -7,7 +7,7 @@
         .build();
       
       this.monitorName = function() { return jashboard.commonValidationRules.required(scope.monitorFormModel.name); };
-      this.monitorRefresh = function() { return monitorRefreshRule(scope.monitorFormModel.refreshInterval); };;
+      this.monitorRefresh = function() { return monitorRefreshRule(scope.monitorFormModel.refreshInterval); };
     }
   });
 }(jashboard || {}));

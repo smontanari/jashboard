@@ -13,7 +13,7 @@
             items: _.first(remainingItems, pageSize)
           });
           remainingItems = _.rest(remainingItems, pageSize);
-        };
+        }
         if (numberOfItemsOnLastPage > 0) {
           pages.push({
             items: _.last(items, numberOfItemsOnLastPage)

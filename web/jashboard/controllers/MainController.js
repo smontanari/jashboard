@@ -29,7 +29,7 @@
         repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
       };
       scope.context = {
-        currentPath: function() {return locationService.path()}
+        currentPath: function() {return locationService.path();}
       };
       menuActionsHandler.init(scope);
       dashboardActionsHandler.init(scope);

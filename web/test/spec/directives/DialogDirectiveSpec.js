@@ -11,7 +11,7 @@ describe("DialogDirective", function() {
     dialogService.showModal.andCallFake(function(element, callback) {
       onVisibleCallback = callback;
     });
-    jashboard.angularUtils.mapEventActions = jasmine.createSpy("jashboard.angular.mapEventActions()").andCallFake(function(scope, eventsMap, actionsMap) {
+    spyOn(jashboard.angularUtils, 'mapEventActions').andCallFake(function(scope, eventsMap, actionsMap) {
       actions = actionsMap;
     });
 

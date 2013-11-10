@@ -92,25 +92,25 @@
 
       this.updateMonitorPosition = function(monitor_id, position) {
         http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/position", position);
-      }
+      };
 
       this.updateMonitorSize = function(monitor_id, size) {
         http.putJSON(AJAX_MONITOR + "/" + monitor_id + "/size", size);
-      }
+      };
 
       this.deleteDashboard = function(dashboard_id, handlers) {
         executeRequest(
           http.deleteResource(AJAX_DASHBOARD + "/" + dashboard_id),
           handlers
         );
-      }
+      };
 
       this.deleteMonitor = function(dashboard_id, monitor_id, handlers) {
         executeRequest(
           http.deleteResource(AJAX_DASHBOARD + "/" + dashboard_id + "/monitor/" + monitor_id),
           handlers
         );
-      }
+      };
     }
   });
   jashboard.services.service('Repository', ['HttpService', 'PluginManager', jashboard.Repository])

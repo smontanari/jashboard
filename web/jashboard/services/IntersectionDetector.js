@@ -14,7 +14,8 @@
           (this.position.top + this.size.height) > rectangle.position.top);
 
         return horizontalIntersection && verticalIntersection;
-      }
+      };
+      
       this.intersect = function(rectangle1, rectangle2) {
         return intersectsWith.call(rectangle1, rectangle2) || intersectsWith.call(rectangle2, rectangle1);
       };

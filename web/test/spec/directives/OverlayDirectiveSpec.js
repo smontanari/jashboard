@@ -6,7 +6,7 @@ describe("OverlayDirective", function() {
       $eval: sinon.stub()
     };
     scope.$eval.withArgs("test-map").returns("test-events");
-    jashboard.angularUtils.mapEventActions = jasmine.createSpy("jashboard.angular.mapEventActions()").andCallFake(function(scope, eventsMap, actionsMap) {
+    spyOn(jashboard.angularUtils, 'mapEventActions').andCallFake(function(scope, eventsMap, actionsMap) {
       actions = actionsMap;
     });
 

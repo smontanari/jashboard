@@ -20,7 +20,7 @@
         _.each(requiredMethods, function(method) {
           if(!_.contains(_.functions(adapter), method)) {
             throw "Adapter for [" + typeIdentifier + "] does not implement a " + method + " method";
-          };
+          }
         });
         return adapter;
       };

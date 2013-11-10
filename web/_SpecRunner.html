@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="stylesheet" type="text/css" href=".grunt/grunt-contrib-jasmine/jasmine.css">
+
+
+  
+  <script src=".grunt/grunt-contrib-jasmine/phantom-polyfill.js"></script>
+  
+  <script src=".grunt/grunt-contrib-jasmine/jasmine.js"></script>
+  
+  <script src=".grunt/grunt-contrib-jasmine/jasmine-html.js"></script>
+  
+  <script src="bower_components/underscore/underscore-min.js"></script>
+  
+  <script src="bower_components/moment/min/moment.min.js"></script>
+  
+  <script src="lib/sinon-1.7.3.js"></script>
+  
+  <script src="test/spec/SpecHelper.js"></script>
+  
+  <script src="jashboard/environment.js"></script>
+  
+  <script src="jashboard/modules.js"></script>
+  
+  <script src="jashboard/jashboardUtils.js"></script>
+  
+  <script src="jashboard/routes.js"></script>
+  
+  <script src="jashboard/controllers/DashboardFormController.js"></script>
+  
+  <script src="jashboard/controllers/DashboardFormValidationRules.js"></script>
+  
+  <script src="jashboard/controllers/MainController.js"></script>
+  
+  <script src="jashboard/controllers/MonitorController.js"></script>
+  
+  <script src="jashboard/controllers/MonitorFormController.js"></script>
+  
+  <script src="jashboard/controllers/MonitorFormHelper.js"></script>
+  
+  <script src="jashboard/controllers/MonitorFormValidationRules.js"></script>
+  
+  <script src="jashboard/controllers/scopeContextHelper.js"></script>
+  
+  <script src="jashboard/directives/AlertBoxDirective.js"></script>
+  
+  <script src="jashboard/directives/DialogDirective.js"></script>
+  
+  <script src="jashboard/directives/DraggableDirective.js"></script>
+  
+  <script src="jashboard/directives/FocusDirective.js"></script>
+  
+  <script src="jashboard/directives/FormValidationDirective.js"></script>
+  
+  <script src="jashboard/directives/MonitorDisplayDirective.js"></script>
+  
+  <script src="jashboard/directives/NotifyLastDirective.js"></script>
+  
+  <script src="jashboard/directives/OverlayDirective.js"></script>
+  
+  <script src="jashboard/directives/ResizableDirective.js"></script>
+  
+  <script src="jashboard/directives/SlideShowDirective.js"></script>
+  
+  <script src="jashboard/directives/SwitchButtonDirective.js"></script>
+  
+  <script src="jashboard/directives/TooltipDirective.js"></script>
+  
+  <script src="jashboard/model/Dashboard.js"></script>
+  
+  <script src="jashboard/model/Monitor.js"></script>
+  
+  <script src="jashboard/model/inputOptions.js"></script>
+  
+  <script src="jashboard/model/loadingStatus.js"></script>
+  
+  <script src="jashboard/plugins/build/BuildMonitorFormController.js"></script>
+  
+  <script src="jashboard/plugins/build/BuildMonitorFormValidationRules.js"></script>
+  
+  <script src="jashboard/plugins/build/GoMonitorFormValidationRules.js"></script>
+  
+  <script src="jashboard/plugins/build/JenkinsMonitorFormValidationRules.js"></script>
+  
+  <script src="jashboard/plugins/build/MonitorAdapter.js"></script>
+  
+  <script src="jashboard/plugins/build/buildTypes.js"></script>
+  
+  <script src="jashboard/plugins/build/goConfigurationHandler.js"></script>
+  
+  <script src="jashboard/plugins/build/jenkinsConfigurationHandler.js"></script>
+  
+  <script src="jashboard/plugins/ipsum/IpsumMonitorFormController.js"></script>
+  
+  <script src="jashboard/plugins/ipsum/IpsumMonitorFormValidationRules.js"></script>
+  
+  <script src="jashboard/plugins/ipsum/MonitorAdapter.js"></script>
+  
+  <script src="jashboard/plugins/vcs/MonitorAdapter.js"></script>
+  
+  <script src="jashboard/plugins/vcs/VcsMonitorFormController.js"></script>
+  
+  <script src="jashboard/plugins/vcs/VcsMonitorFormValidationRules.js"></script>
+  
+  <script src="jashboard/services/AlertService.js"></script>
+  
+  <script src="jashboard/services/DashboardActionsHandler.js"></script>
+  
+  <script src="jashboard/services/DialogService.js"></script>
+  
+  <script src="jashboard/services/ElementBinding.js"></script>
+  
+  <script src="jashboard/services/HttpService.js"></script>
+  
+  <script src="jashboard/services/IntersectionDetector.js"></script>
+  
+  <script src="jashboard/services/MenuActionsHandler.js"></script>
+  
+  <script src="jashboard/services/MonitorLayoutManager.js"></script>
+  
+  <script src="jashboard/services/MonitorPositioningStrategy.js"></script>
+  
+  <script src="jashboard/services/OverlayService.js"></script>
+  
+  <script src="jashboard/services/PaginationService.js"></script>
+  
+  <script src="jashboard/services/PluginManager.js"></script>
+  
+  <script src="jashboard/services/Repository.js"></script>
+  
+  <script src="jashboard/services/WidgetService.js"></script>
+  
+  <script src="jashboard/validation/FormValidator.js"></script>
+  
+  <script src="jashboard/validation/ValidationRulesBuilder.js"></script>
+  
+  <script src="jashboard/validation/commonValidationRules.js"></script>
+  
+  <script src="jashboard/widgets/SwitchButton.js"></script>
+  
+  <script src="jashboard/widgets/Tooltip.js"></script>
+  
+  <script src="test/spec/controllers/DashboardFormControllerSpec.js"></script>
+  
+  <script src="test/spec/controllers/DashboardFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/controllers/MainControllerSpec.js"></script>
+  
+  <script src="test/spec/controllers/MonitorControllerSpec.js"></script>
+  
+  <script src="test/spec/controllers/MonitorFormControllerSpec.js"></script>
+  
+  <script src="test/spec/controllers/MonitorFormHelperSpec.js"></script>
+  
+  <script src="test/spec/controllers/MonitorFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/controllers/scopeContextHelperSpec.js"></script>
+  
+  <script src="test/spec/directives/AlertBoxDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/DialogDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/DraggableDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/FocusDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/FormValidationDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/MonitorDisplayDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/NotifyLastDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/OverlayDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/ResizableDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/SlideShowDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/SwitchButtonDirectiveSpec.js"></script>
+  
+  <script src="test/spec/directives/TooltipDirectiveSpec.js"></script>
+  
+  <script src="test/spec/jashboardUtilsSpec.js"></script>
+  
+  <script src="test/spec/model/DashboardSpec.js"></script>
+  
+  <script src="test/spec/model/MonitorSpec.js"></script>
+  
+  <script src="test/spec/plugins/build/BuildMonitorFormControllerSpec.js"></script>
+  
+  <script src="test/spec/plugins/build/BuildMonitorFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/plugins/build/GoMonitorFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/plugins/build/JenkinsMonitorFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/plugins/build/MonitorAdapterSpec.js"></script>
+  
+  <script src="test/spec/plugins/build/goConfigurationHandlerSpec.js"></script>
+  
+  <script src="test/spec/plugins/ipsum/IpsumMonitorFormControllerSpec.js"></script>
+  
+  <script src="test/spec/plugins/ipsum/IpsumMonitorFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/plugins/ipsum/MonitorAdapterSpec.js"></script>
+  
+  <script src="test/spec/plugins/vcs/MonitorAdapterSpec.js"></script>
+  
+  <script src="test/spec/plugins/vcs/VcsMonitorFormControllerSpec.js"></script>
+  
+  <script src="test/spec/plugins/vcs/VcsMonitorFormValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/routesSpec.js"></script>
+  
+  <script src="test/spec/services/AlertServiceSpec.js"></script>
+  
+  <script src="test/spec/services/DashboardActionsHandlerSpec.js"></script>
+  
+  <script src="test/spec/services/DialogServiceSpec.js"></script>
+  
+  <script src="test/spec/services/ElementBindingSpec.js"></script>
+  
+  <script src="test/spec/services/HttpServiceSpec.js"></script>
+  
+  <script src="test/spec/services/IntersectionDetectorSpec.js"></script>
+  
+  <script src="test/spec/services/MenuActionsHandlerSpec.js"></script>
+  
+  <script src="test/spec/services/MonitorLayoutManagerSpec.js"></script>
+  
+  <script src="test/spec/services/MonitorPositioningStrategySpec.js"></script>
+  
+  <script src="test/spec/services/OverlayServiceSpec.js"></script>
+  
+  <script src="test/spec/services/PaginationServiceSpec.js"></script>
+  
+  <script src="test/spec/services/PluginManagerSpec.js"></script>
+  
+  <script src="test/spec/services/RepositorySpec.js"></script>
+  
+  <script src="test/spec/services/WidgetServiceSpec.js"></script>
+  
+  <script src="test/spec/validation/FormValidatorSpec.js"></script>
+  
+  <script src="test/spec/validation/ValidationRulesBuilderSpec.js"></script>
+  
+  <script src="test/spec/validation/commonValidationRulesSpec.js"></script>
+  
+  <script src="test/spec/widgets/SwitchButtonSpec.js"></script>
+  
+  <script src="test/spec/widgets/TooltipSpec.js"></script>
+  
+  <script src=".grunt/grunt-contrib-jasmine/reporter.js"></script>
+  
+  <script src=".grunt/grunt-contrib-jasmine/jasmine-helper.js"></script>
+  
+
+</head>
+<body>
+</body>
+</html>

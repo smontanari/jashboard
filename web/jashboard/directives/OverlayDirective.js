@@ -5,7 +5,7 @@
         var eventsMap = scope.$eval(attrs.jbOverlay);
         var actionsMap = {
           show: function() {
-            overlayService.show(element, scope.$eval(attrs['jbOverlayOptions']));
+            overlayService.show(element, scope.$eval(attrs.jbOverlayOptions));
           },
           hide: function() {
             overlayService.hide();

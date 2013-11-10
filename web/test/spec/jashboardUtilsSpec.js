@@ -54,7 +54,7 @@ describe("Jashboard utility functions", function() {
     var scope;
     describe("safeApply()", function() {
       beforeEach(function() {
-        scope = jasmine.createSpyObj("scope", ['$eval', '$apply']);
+        scope = jasmine.createSpyObj("$scope", ['$eval', '$apply']);
         scope.$root = {};
       });
 

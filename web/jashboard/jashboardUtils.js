@@ -73,7 +73,7 @@
         var self = this;
         return function() {
           self.verify(testFn()).then(fn);
-        }
+        };
       }
     }
   });

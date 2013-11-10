@@ -1,11 +1,13 @@
 .DS_Store
 selenium.log
 testresults.xml
+.grunt
 .ruby-version
 .ruby-gemset
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*
 web/node_modules
+web/bower_components
+web/build
 deploy/rvm-init.sh
 deploy/jashboard_app
-bower_components

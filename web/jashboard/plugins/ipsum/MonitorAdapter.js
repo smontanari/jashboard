@@ -13,7 +13,7 @@
 
       this.defaultSize = function() {
         return { width: 250, height: 150 };
-      }
+      };
     }
   });
 }(jashboard.plugin.ipsum || {}));

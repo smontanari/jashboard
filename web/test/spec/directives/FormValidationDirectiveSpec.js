@@ -1,13 +1,10 @@
 describe("FormValidationDirective", function() {
-  var scope, listener, validatorConstructor, validator, linkFunction, rulesFn;
+  var scope, listener, validatorConstructor, validator, linkFunction;
 
   beforeEach(function() {
     jashboard.test = {
-      TestRules: function(s) {
-        this.id = "test-rules";
-      }
+      TestRules: jasmine.createSpy().andReturn({id: 'test-rules'})
     };
-    rulesFn = spyOn(jashboard.test, "TestRules").andCallThrough();
     scope = jasmine.createSpyObj("scope", ['$on', '$eval']);
 
     validator = jasmine.createSpyObj("FormValidator", ['validate', 'applyRules', 'prepareFormForUpdate']);
@@ -21,7 +18,7 @@ describe("FormValidationDirective", function() {
       if (value === "test-map") return {validationRules: "test.TestRules"};
     });
     linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
-    expect(rulesFn).toHaveBeenCalledWith(scope);
+    expect(jashboard.test.TestRules).toHaveBeenCalledWith(scope);
   });
 
   describe("when combined with the ngForm directive", function() {

@@ -52,7 +52,7 @@ var jashboard = (function(module) {
           "bower_components/bootstrap/docs/assets/css/bootstrap.css",
           "bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css",
           "bower_components/bootstrap-switch/static/stylesheets/bootstrap-switch.css",
-          "css/jashboard.min.css",
+          "build/jashboard.min.css",
           "bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css",
           "bower_components/angular-ui/build/angular-ui.min.css"
         ]
@@ -80,7 +80,7 @@ var jashboard = (function(module) {
       },
       {
         resourceName: "mainFile",
-        resourceSet: ["lib/jashboard.min.js"]
+        resourceSet: ["build/jashboard.min.js"]
       }
     ]
   };

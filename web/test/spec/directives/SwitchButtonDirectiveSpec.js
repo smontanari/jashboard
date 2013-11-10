@@ -88,7 +88,7 @@ describe("SwitchButtonDirective", function() {
         };
         $input.is = sinon.stub();
         angular.element.withArgs("target_element").returns($input);
-        jashboard.angularUtils.safeApply = jasmine.createSpy("jashboard.angularUtils.safeApply()");
+        spyOn(jashboard.angularUtils, 'safeApply');
 
         directiveDefinitionObject.link(scope, "test-element", {
           jbSwitchButtonId: "test_button_id",

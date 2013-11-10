@@ -6,7 +6,7 @@
       scope.setCiServerType = function(type) {
         scope.monitorConfigurationFormModel.build.type = type;
         scope.$formValidator.validate();
-      }
+      };
 
       scope.$on("OpenMonitorDialog", function(event, options) {
         if (options.mode === jashboard.model.inputOptions.createMode) {

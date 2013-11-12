@@ -1,4 +1,4 @@
-(function() {
+steal('test/scenario_utils.js', function() {
   var monitorCounter = 0;
   var storedMonitors = [];
   var generateDate = function() {
@@ -79,4 +79,4 @@
       return {status: 204};
     });
   });
-})();
+});

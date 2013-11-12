@@ -1,4 +1,5 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(function() {
+steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
+(function() {
   smocker.scenario('monitor_write_operations', function() {
     this.delete('/ajax/dashboard/dashboard_2/monitor/monitor_2').respondWith({
       status: 204
@@ -14,4 +15,4 @@ steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(functi
   });
 
   smocker.groupScenarios('monitor_actions', ['monitor_write_operations', 'display_dashboards_data']);
-});
+})();

@@ -79,6 +79,5 @@
         steal("jashboard/plugins/" + pluginName + "/" + pluginName + "_plugin.js");
       });
     });
-    steal('test/funcunit/test_scenario_loader.js');
   });
 })();

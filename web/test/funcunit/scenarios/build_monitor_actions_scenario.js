@@ -1,7 +1,8 @@
 steal(
   "test/funcunit/scenarios/display_dashboards_data_scenario.js",
   "test/funcunit/scenarios/monitor_layout_operations_scenario.js"
-).then(function() {
+);
+(function() {
   smocker.scenario('build_monitor_write_operations', function() {
     this.post('/ajax/dashboard/dashboard_1/monitor').respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);
@@ -62,6 +63,10 @@ steal(
       throw "unexpected data in the PUT request: " + requestData;
     });
   });
-  
-  smocker.groupScenarios('build_monitor_actions', ['display_dashboards_data', 'monitor_layout_operations', 'build_monitor_write_operations']);
+
+  smocker.groupScenarios('build_monitor_actions', [
+    'display_dashboards_data',
+    'monitor_layout_operations',
+    'build_monitor_write_operations'
+  ]);
 })();

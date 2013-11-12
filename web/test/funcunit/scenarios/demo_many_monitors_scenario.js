@@ -1,4 +1,4 @@
-(function() {
+steal('test/scenario_utils.js', function() {
   var monitors = [], monitorRuntimeResponses = [];
   _.times(5, function(i) {
     monitors.push({
@@ -39,4 +39,4 @@
       return monitorRuntime.response;
     });
   });
-})();
+});

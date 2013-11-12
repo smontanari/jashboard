@@ -2,10 +2,7 @@ var jashboard = {
   functionalTests: []
 };
 
-steal(
-  "bower_components/underscore/underscore-min.js",
-  "funcunit/funcunit.js"
-).then(function() {
+(function() {
   var feature_sets = {
     misc_features: [
       'tabs_display',
@@ -73,18 +70,23 @@ steal(
   }
 
   steal(
+    "bower_components/underscore/underscore-min.js",
+    "funcunit/funcunit.js",
     "test/funcunit/features/support/page_helper.js",
     "test/funcunit/features/support/jashboard_feature_helper.js",
     "test/funcunit/features/support/build_monitor_feature_helper.js",
     "test/funcunit/features/support/vcs_monitor_feature_helper.js",
-    "test/funcunit/funcunit_helper.js"
-  ).then(function() {
-    steal.apply(null, _.map(selectFeatures(), featurePath));
-  })
-  .then("test/funcunit/browser_close.js")
-  .then(function() {
-    _.each(jashboard.functionalTests, function(test) {
-      test();
-    });
-  });
-});
+    "test/funcunit/funcunit_helper.js",
+    function() {
+      var features = _.map(selectFeatures(), featurePath);
+      features.push(function() {
+        steal("test/funcunit/browser_close.js", function() {
+          _.each(jashboard.functionalTests, function(test) {
+            test();
+          });
+        });
+      });
+      steal.apply(null, features);
+    }
+  );
+})();

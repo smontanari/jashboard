@@ -1,4 +1,5 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(function() {
+steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
+(function() {
   var expectedConfig = {
     git: {
       type: "git",
@@ -41,4 +42,4 @@ steal("test/funcunit/scenarios/display_dashboards_data_scenario.js").then(functi
   });
 
   smocker.groupScenarios('vcs_monitor_actions', ['display_dashboards_data', 'monitor_write_operatios']);
-});
+})();

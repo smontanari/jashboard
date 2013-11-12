@@ -2,7 +2,7 @@
   var JASHBOARD_ENVIRONMENT = 'development';
   var environment = {
     development: {
-      application: 'jashboard/jashboard_loader.js',
+      application: 'test/scenario_runner.js',
       stylesheet: 'css/jashboard.less'
     },
     production: {

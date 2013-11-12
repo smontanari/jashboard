@@ -25,7 +25,7 @@
       'jquery-ui':                'bower_components/jquery-ui/ui/minified/jquery-ui.min.js',
       'jquery-ui.css':            'bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css',
       'blockUI':                  'bower_components/blockui/jquery.blockUI.js',
-      'cycle2':                   'lib/jquery.cycle2.js',
+      'cycle2':                   'lib/jquery.cycle2.min.js',
       'moment':                   'bower_components/moment/min/moment.min.js',
       'underscore':               'bower_components/underscore/underscore-min.js',
       'angular':                  'bower_components/angular/angular.min.js',

@@ -6,8 +6,8 @@
       stylesheet: 'css/jashboard.less'
     },
     production: {
-      application: 'build/jashboard.min.js',
-      stylesheet: 'build/jashboard.min.css'
+      application: 'app/jashboard.min.js',
+      stylesheet: 'app/jashboard.min.css'
     }
   };
 

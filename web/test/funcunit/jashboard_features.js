@@ -1,5 +1,5 @@
 var jashboard = {
-  functional_tests: []
+  functionalTests: []
 };
 
 steal(
@@ -79,11 +79,11 @@ steal(
     "test/funcunit/features/support/vcs_monitor_feature_helper.js",
     "test/funcunit/funcunit_helper.js"
   ).then(function() {
-    steal.apply(window, _.map(selectFeatures(), featurePath));
+    steal.apply(null, _.map(selectFeatures(), featurePath));
   })
   .then("test/funcunit/browser_close.js")
   .then(function() {
-    _.each(jashboard.functional_tests, function(test) {
+    _.each(jashboard.functionalTests, function(test) {
       test();
     });
   });

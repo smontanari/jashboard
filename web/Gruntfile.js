@@ -9,14 +9,14 @@ module.exports = function(grunt) {
           '!jashboard/*loader.js',
           '!jashboard/**/*_plugin.js'
         ],
-        dest: 'build/jashboard.js'
+        dest: 'app/jashboard.js'
       }
     },
     uglify: {
       options: {},
       dist: {
         files: {
-          'build/jashboard.min.js': ['<%= concat.dist.dest %>']
+          'app/jashboard.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
@@ -30,8 +30,7 @@ module.exports = function(grunt) {
       ],
       options: {
         specs: [
-          'test/spec/**/*Spec.js',
-          '!test/spec/SpecHelper.js'
+          'test/spec/**/*Spec.js'
         ],
         helpers: 'test/spec/SpecHelper.js',
         keepRunner: true,
@@ -55,7 +54,7 @@ module.exports = function(grunt) {
       }
     },
     less: {
-      'build/jashboard.min.css': 'css/jashboard.less',
+      'app/jashboard.min.css': 'css/jashboard.less',
       options: {
         cleancss: true
       }

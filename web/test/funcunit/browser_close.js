@@ -1,4 +1,4 @@
-jashboard.functional_tests.push(function () {
+jashboard.functionalTests.push(function () {
   module("Global teardown",{
     teardown: function() {
       S.win.close();

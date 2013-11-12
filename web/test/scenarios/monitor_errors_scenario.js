@@ -1,4 +1,4 @@
-steal("test/funcunit/scenarios/two_dashboards_scenario.js");
+steal("test/scenarios/two_dashboards_scenario.js");
 (function() {
   smocker.scenario('monitor_common_operations', function() {
     this.get("/ajax/monitor/monitor_1/runtime").respondWith({

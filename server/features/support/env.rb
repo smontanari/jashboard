@@ -1,5 +1,5 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '/../../spec')
-$JSON_FIXTURE_PATH = File.join(File.dirname(__FILE__), '/../../../web/test/funcunit/fixtures')
+$JSON_FIXTURE_PATH = File.join(File.dirname(__FILE__), '/../../../web/test/scenarios/fixtures')
 
 require 'rack/test'
 require 'json_spec'

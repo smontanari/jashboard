@@ -1,4 +1,4 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
+steal("test/scenarios/display_dashboards_data_scenario.js");
 (function() {
   smocker.scenario('monitor_write_operations', function() {
     this.delete('/ajax/dashboard/dashboard_2/monitor/monitor_2').respondWith({

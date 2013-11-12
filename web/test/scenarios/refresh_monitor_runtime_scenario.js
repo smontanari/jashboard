@@ -1,4 +1,4 @@
-steal("test/funcunit/scenarios/two_dashboards_scenario.js");
+steal("test/scenarios/two_dashboards_scenario.js");
 (function() {
   var successResponse = {
     content: {

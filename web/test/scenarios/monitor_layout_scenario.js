@@ -1,8 +1,8 @@
 (function() {
   smocker.scenario('monitor_layout', function() {
-    this.get('/ajax/dashboards').redirectToFixture("test/funcunit/fixtures/fixture_1_dashboard.json");
-    this.get('/ajax/monitor/monitor_1/runtime').redirectToFixture("test/funcunit/fixtures/fixture_build_monitor_1.json");
-    this.get('/ajax/monitor/monitor_2/runtime').redirectToFixture("test/funcunit/fixtures/fixture_build_monitor_2.json");
+    this.get('/ajax/dashboards').redirectToFixture("test/scenarios/fixtures/fixture_1_dashboard.json");
+    this.get('/ajax/monitor/monitor_1/runtime').redirectToFixture("test/scenarios/fixtures/fixture_build_monitor_1.json");
+    this.get('/ajax/monitor/monitor_2/runtime').redirectToFixture("test/scenarios/fixtures/fixture_build_monitor_2.json");
 
     this.put('/ajax/monitor/monitor_1/position').respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);

@@ -1,6 +1,6 @@
 steal(
-  "test/funcunit/scenarios/display_dashboards_data_scenario.js",
-  "test/funcunit/scenarios/monitor_layout_operations_scenario.js"
+  "test/scenarios/display_dashboards_data_scenario.js",
+  "test/scenarios/monitor_layout_operations_scenario.js"
 );
 (function() {
   smocker.scenario('build_monitor_write_operations', function() {

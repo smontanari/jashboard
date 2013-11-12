@@ -9,7 +9,7 @@
       'bower_components/smocker/smocker.js',
       'jashboard/jashboard_loader.js',
       function() {
-        steal("test/funcunit/scenarios/" + scenarioName + "_scenario.js", function() {
+        steal("test/scenarios/" + scenarioName + "_scenario.js", function() {
           smocker.play(scenarioName);
         });
       }

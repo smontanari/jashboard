@@ -1,6 +1,6 @@
 steal(
-  "test/funcunit/scenarios/two_dashboards_scenario.js",
-  "test/funcunit/scenarios/build_monitor_runtime_scenario.js"
+  "test/scenarios/two_dashboards_scenario.js",
+  "test/scenarios/build_monitor_runtime_scenario.js"
 );
 (function() {
   smocker.scenario('dashboard_write_errors', function() {

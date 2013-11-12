@@ -1,4 +1,4 @@
-steal("test/funcunit/scenarios/display_dashboards_data_scenario.js");
+steal("test/scenarios/display_dashboards_data_scenario.js");
 (function() {
   smocker.scenario('dashboard_write_operations', function() {
     this.post('/ajax/dashboard').respondWith(function(url, requestData) {

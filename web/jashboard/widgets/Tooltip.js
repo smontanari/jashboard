@@ -3,8 +3,9 @@
     Tooltip: function(targetSelector, contentSelector, tooltipClass) {
       this.show = function() {
         $(targetSelector).tooltip({
-          content: $(contentSelector).html().trim(),
-          tooltipClass: tooltipClass
+          html: true,
+          title: $(contentSelector).html(),
+          container: "body"
         });
       };
 

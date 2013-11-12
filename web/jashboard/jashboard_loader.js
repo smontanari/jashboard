@@ -1,10 +1,10 @@
-steal('jashboard/modules.js')
-.then(function() {
-  jashboard.resources = [
+(function() {
+  var jashboardResources = [
     'jashboardUtils',
     'routes'
   ];
-  jashboard.packages = {
+
+  var jashboardPackages = {
     services: [
       'ElementBinding',
       'AlertService',
@@ -62,32 +62,23 @@ steal('jashboard/modules.js')
     ]
   };
 
-  var loadPackage = function(packageName) {
-    return function() {
-      var files = _.map(jashboard.packages[packageName], function(file) {
-        return "jashboard/" + packageName + "/" + file + ".js";
+  var resources = _.map(jashboardResources, function(file) {
+    return "jashboard/" + file + ".js";
+  });
+  var packages = _.reduce(_.keys(jashboardPackages), function(modules, packageName) {
+    return modules.concat(_.map(jashboardPackages[packageName], function(file) {
+      return "jashboard/" + packageName + "/" + file + ".js";
+    }));
+  }, []);
+  
+  steal('jashboard/modules.js', function() {
+    steal.apply(null, resources);
+    steal.apply(null, packages);
+    steal('jashboard/plugins.js', function() {
+      _.each(jashboard.plugins, function(pluginName) {
+        steal("jashboard/plugins/" + pluginName + "/" + pluginName + "_plugin.js");
       });
-      return steal.apply(null, files);
-    };
-  };
-  var loadResources = function() {
-    var files = _.map(jashboard.resources, function(file) {
-      return "jashboard/" + file + ".js";
     });
-    return steal.apply(null, files);
-  };
-  var loadPlugins = function() {
-    _.each(jashboard.plugins, function(pluginName) {
-      steal(
-        "jashboard/plugins/" + pluginName + "/" + pluginName + "_plugin.js"
-      );  
-    });
-  };
-
-  _.reduce(_.keys(jashboard.packages), function(loader, packageName) {
-    return loader.then(loadPackage(packageName));
-  }, steal())
-  .then(loadResources)
-  .then('jashboard/plugins.js')
-  .then(loadPlugins);
-});
+    steal('test/funcunit/test_scenario_loader.js');
+  });
+})();

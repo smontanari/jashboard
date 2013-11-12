@@ -3,7 +3,7 @@
     tooltipDirective: function() {
       return function(scope, element, attrs) {
         var targetSelector = scope.$eval(attrs.jbTooltip);
-        var tooltip = new jashboard.widgets.Tooltip(targetSelector, element, attrs.jbTooltipClass);
+        var tooltip = new jashboard.widgets.Tooltip(targetSelector, element);
 
         scope.$watch(attrs.jbTooltipToggle, function(newCondition, oldCondition) {
           if (newCondition !== oldCondition) {

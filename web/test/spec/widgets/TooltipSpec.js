@@ -9,14 +9,15 @@ describe("Tooltip", function() {
     $stub.withArgs("test-target-selector").returns(targetElement);
     $stub.withArgs("test-content-selector").returns(contentElement);
 
-    widget = new jashboard.widgets.Tooltip('test-target-selector', 'test-content-selector', 'test_class');
+    widget = new jashboard.widgets.Tooltip('test-target-selector', 'test-content-selector');
   });
 
   it("should create the tooltip", function() {
     widget.show();
     expect(targetElement.tooltip).toHaveBeenCalledWith({
-      content: "test_content",
-      tooltipClass: 'test_class'
+      html: true,
+      title: "test_content",
+      container: "body"
     });
   });
   it("should remove the tooltip", function() {

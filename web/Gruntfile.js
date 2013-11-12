@@ -7,10 +7,9 @@ module.exports = function(grunt) {
           'jashboard/plugins.js',
           'jashboard/**/*.js',
           '!jashboard/*loader.js',
-          '!jashboard/environment.js',
           '!jashboard/**/*_plugin.js'
         ],
-        dest: 'lib/jashboard.js'
+        dest: 'build/jashboard.js'
       }
     },
     uglify: {
@@ -23,7 +22,6 @@ module.exports = function(grunt) {
     },
     jasmine: {
       src: [
-        'jashboard/environment.js',
         'jashboard/modules.js',
         'jashboard/jashboardUtils.js',
         'jashboard/routes.js',

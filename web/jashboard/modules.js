@@ -1,7 +1,8 @@
-(function(module) {
-  jashboard = _.extend(module, {
+(function() {
+  var jashboard = {
     services: angular.module('jashboard.services', []),
     application: angular.module('jashboard', ['jashboard.services', 'ui']),
     plugin: {}
-  });
-}(jashboard || {}));
+  };
+  window.jashboard = jashboard;
+})();

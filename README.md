@@ -19,27 +19,34 @@ ipsum         | random generator of sentences (inspired by the *ipsum* gem). Thi
 
 ## Installation
 ### Prerequisites
-You will only need Ruby installed on your machine. I've only tested the app with Ruby 1.9.3, but I suppose you could try 2.0.0 and possibly nothing will break (I'm planning to switch to Ruby 2 at some point though).
+For the backend server you will need **Ruby** and **Bundler** installed on your machine. I've only tested the app with Ruby 1.9.3, but I suppose you could try 2.0.0 and possibly nothing will break (I'm planning to switch to Ruby 2 at some point though).  
+For the frontend part you will need to use [**Bower**](http://bower.io/) to manage the javascript libraries/resources.
 
 ### Production instance
 
     $ cd deploy
     $ rake install
 
-This will generate a directory **deploy/jashboard_app** which will contain the full webapp with only production files, css and javascript minified, environment variables set to production etc. You can then copy that folder anywhere you like or just leave it there.
+This will generate a directory `deploy/jashboard_app` which will contain the full webapp with only production files, css and javascript minified, environment variables set to production etc. You can then copy that folder anywhere you like or just leave it there.
+	
+##### Install required javascript libraries
+From within the folder `deploy/jashboard_app/app/web` run the following script:
 
-From within the application folder run the following script:
+	$ bower install -p
+	
+This will download and install all the the necessary javascript libraries into a local folder named *bower_components*.  
+
+##### Install required ruby gems
+From within the folder `deploy/jashboard_app` run the following script:
 
 	$ bundle install --without=test
 	
-This will download and install all the the necessary gems for the server to run.
-
-After bundle completes (successfully), you can then start the Sinatra application:
+This will download and install all the the necessary gems for the server to run.  
+After bundle and bower complete (successfully), you can then start the Sinatra application:
 
 	$ ./start_server.sh
 	
-This will start up a WEBRick server listening on port 8001. If you want a different port just change the script.
-
+This will start up a WEBRick server listening on port 8001. If you want a different port just change the script.  
 Now you can fire up your favourite browser (and I mean browser, not IE) and load the app at
 
 	http://<hostname>:8001/index.html
@@ -47,12 +54,19 @@ Now you can fire up your favourite browser (and I mean browser, not IE) and load
 ### Development instance
 This is more for test/development purposes, that is you want to modify the code, the web styles, add a new monitor plugin, etc. and then test your changes
 
+#### Install dependencies
+
+	$ cd web
+	$ bower install
+	
 	$ cd server
 	$ bundle install
+
+#### Start the server
+
 	$./start_server.sh
 
-This will start the application in *development* mode (more details about customising your Jashboard are given below).
-
+This will start the application in *development* mode (more details about customising your Jashboard are given below).   
 Note that nothing stops you from running the application in *development* mode and using it as a production instance.
 
 

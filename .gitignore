@@ -2,8 +2,7 @@
 selenium.log
 testresults.xml
 .grunt
-.ruby-version
-.ruby-gemset
+.versions.conf
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*
 web/node_modules

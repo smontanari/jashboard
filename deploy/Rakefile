@@ -18,7 +18,7 @@ directory TARGET_DIR_WEB
 
 task :init => [:clean, TARGET_DIR]
 
-task :install_server_files => [TARGET_DIR] do |t|
+task :install_server_files => [TARGET_DIR] do
   cp_r "#{SERVER_ROOT}/app", TARGET_DIR
   ["#{SERVER_ROOT}/Gemfile", "#{SERVER_ROOT}/start_server.sh"].each {|f| cp(f, TARGET_DIR)}
   copy_and_replace("#{SERVER_ROOT}/config.ru", "#{TARGET_DIR}/config.ru", /current_environment\s+=\s+'development'/, "current_environment = 'production'")
@@ -26,53 +26,31 @@ task :install_server_files => [TARGET_DIR] do |t|
   mkdir_p "#{TARGET_DIR}/db/production/monitor"
 end
 
-task :copy_html_files =>[TARGET_DIR, TARGET_DIR_WEB] do |t|
+task :copy_html_files =>[TARGET_DIR, TARGET_DIR_WEB] do
+  cp "#{WEB_ROOT}/index.html", TARGET_DIR_WEB
   cp_r "#{WEB_ROOT}/html", TARGET_DIR_WEB
 end
-task :copy_img_files => [TARGET_DIR, TARGET_DIR_WEB] do |t|
+task :copy_img_files => [TARGET_DIR, TARGET_DIR_WEB] do
   cp_r "#{WEB_ROOT}/img", TARGET_DIR_WEB
 end
-task :copy_css_files => [TARGET_DIR, TARGET_DIR_WEB] do |t|
-  mkdir_p "#{TARGET_DIR_WEB}/css"
-  cp_r "#{WEB_ROOT}/css/jquery-ui", "#{TARGET_DIR_WEB}/css"
-  [
-    "#{WEB_ROOT}/css/angular-ui.min.css",
-    "#{WEB_ROOT}/css/bootstrap-responsive.min.css",
-    "#{WEB_ROOT}/css/bootstrap.min.css",
-    "#{WEB_ROOT}/css/bootstrapSwitch.css"
-  ].each {|f| cp(f, "#{TARGET_DIR_WEB}/css")}
-end
-task :copy_lib_files => [TARGET_DIR, TARGET_DIR_WEB] do |t|
+task :copy_lib_files => [TARGET_DIR, TARGET_DIR_WEB] do
   mkdir_p "#{TARGET_DIR_WEB}/lib"
   [
-    "#{WEB_ROOT}/lib/underscore-min.js",
-    "#{WEB_ROOT}/lib/bootstrap.min.js",
-    "#{WEB_ROOT}/lib/bootstrapSwitch.js", 
-    "#{WEB_ROOT}/lib/jquery-1.9.1.min.js",
-    "#{WEB_ROOT}/lib/jquery.blockUI.js",
-    "#{WEB_ROOT}/lib/jquery-ui-1.10.1.custom.min.js",
     "#{WEB_ROOT}/lib/jquery.cycle2.min.js",
-    "#{WEB_ROOT}/lib/moment.min.js",
-    "#{WEB_ROOT}/lib/angular.min.js",
-    "#{WEB_ROOT}/lib/angular-ui.min.js"
+    "#{WEB_ROOT}/lib/stealconfig.js"
   ].each {|f| cp(f, "#{TARGET_DIR_WEB}/lib")}
-  mkdir_p "#{TARGET_DIR_WEB}/steal"
-  cp("#{WEB_ROOT}/steal/steal.production.js", "#{TARGET_DIR_WEB}/steal/steal.js")
-  cp_r("#{WEB_ROOT}/steal/dev", "#{TARGET_DIR_WEB}/steal")
+  mkdir_p "#{TARGET_DIR_WEB}/lib/steal"
+  cp("#{WEB_ROOT}/lib/steal/steal.production.js", "#{TARGET_DIR_WEB}/lib/steal/steal.js")
+  cp_r("#{WEB_ROOT}/lib/steal/dev", "#{TARGET_DIR_WEB}/lib/steal")
 end
-task :copy_javascript_files => [TARGET_DIR, TARGET_DIR_WEB] do |t|
-  mkdir_p "#{TARGET_DIR_WEB}/jashboard"
-  cp "#{WEB_ROOT}/jashboard/environment.js", "#{TARGET_DIR_WEB}/jashboard"
-  copy_and_replace("#{WEB_ROOT}/jashboard/loader.js", "#{TARGET_DIR_WEB}/jashboard/loader.js", /var\s+JASHBOARD_ENVIRONMENT\s+=\s+'development';/, "var JASHBOARD_ENVIRONMENT = 'production';")
-end
-task :package_javascript_files => [TARGET_DIR, TARGET_DIR_WEB, :copy_css_files, :copy_lib_files] do |t|
-  system "node #{WEB_ROOT}/package.js #{TARGET_DIR_WEB}"
-end
-task :copy_web_files => [TARGET_DIR, TARGET_DIR_WEB] do |t|
-  cp "#{WEB_ROOT}/index.html", TARGET_DIR_WEB
+task :copy_app_files => [TARGET_DIR, TARGET_DIR_WEB] do
+  mkdir_p "#{TARGET_DIR_WEB}/app"
+  copy_and_replace("#{WEB_ROOT}/app/loader.js", "#{TARGET_DIR_WEB}/app/loader.js", /var\s+JASHBOARD_ENVIRONMENT\s+=\s+'development';/, "var JASHBOARD_ENVIRONMENT = 'production';")
+  cp "#{WEB_ROOT}/app/jashboard.min.js", "#{TARGET_DIR_WEB}/app"
+  cp "#{WEB_ROOT}/app/jashboard.min.css", "#{TARGET_DIR_WEB}/app"
 end
 
-multitask :install_web_files => [:copy_html_files, :copy_img_files, :copy_css_files, :copy_lib_files, :copy_javascript_files, :package_javascript_files, :copy_web_files]
+multitask :install_web_files => [:copy_html_files, :copy_img_files, :copy_lib_files, :copy_app_files]
 
 desc "install the application in folder: #{File.join(File.dirname(__FILE__), TARGET_DIR)}"
 task :install =>[:init, :install_server_files, :install_web_files]

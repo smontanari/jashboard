@@ -17,36 +17,20 @@ module Jashboard
       @db[DASHBOARD_NAMESPACE].map {|id| YAML.load(@db["#{DASHBOARD_NAMESPACE}/#{id}"])}
     end
 
-    def load_dashboard(dashboard_id)
-      YAML.load(@db["#{DASHBOARD_NAMESPACE}/#{dashboard_id}.txt"])
-    end
+    [DASHBOARD_NAMESPACE, MONITOR_NAMESPACE].each do |ns|
+      define_method "load_#{ns}".to_sym do |id|
+        YAML.load(@db["#{ns}/#{id}.txt"])
+      end
 
-    def load_monitor(monitor_id)
-      YAML.load(@db["#{MONITOR_NAMESPACE}/#{monitor_id}.txt"])
-    end
+      define_method "delete_#{ns}" do |id|
+        @db.delete("#{ns}/#{id}.txt")
+      end
 
-    def delete_monitor(monitor_id)
-      @db.delete("#{MONITOR_NAMESPACE}/#{monitor_id}.txt")
-    end
-
-    def delete_dashboard(dashboard_id)
-      @db.delete("#{DASHBOARD_NAMESPACE}/#{dashboard_id}.txt")
-    end
-
-    def save_dashboard(dashboard)
-      save(dashboard, DASHBOARD_NAMESPACE)
-    end
-
-    def save_monitor(monitor)
-      save(monitor, MONITOR_NAMESPACE)
-    end
-
-    private
-
-    def save(object, namespace)
-      object.id = UUIDTools::UUID.random_create if (object.id.nil?)
-      @db["#{namespace}/#{object.id}.txt"] = YAML.dump(object)
-      object
+      define_method "save_#{ns}" do |object|
+        object.id = UUIDTools::UUID.random_create if (object.id.nil?)
+        @db["#{ns}/#{object.id}.txt"] = YAML.dump(object)
+        object
+      end
     end
   end
 end

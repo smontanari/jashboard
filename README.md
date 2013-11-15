@@ -4,6 +4,32 @@ This is a web application that allows the user to set up dashboards to contain a
 
 Jashboard works as a **single page web application**, where the client side is fully written in Javascript (AngularJS) and the server side is a simple Sinatra (Ruby) instance.
 
+### Screenshots
+
+<table>
+  <tr>
+    <td style="text-align:center">
+      <a href="http://smontanari.github.io/jashboard/screenshots/generic_dashboard.png"><img src="http://smontanari.github.io/jashboard/screenshots/generic_dashboard-thb.png">A generic multi-dashboard set up
+    </td>
+    <td style="text-align:center">
+      <a href="http://smontanari.github.io/jashboard/screenshots/build_monitor_form.png"><img src="http://smontanari.github.io/jashboard/screenshots/build_monitor_form-thb.png">Form to create a Build monitor
+    </td>
+    <td style="text-align:center">
+      <a href="http://smontanari.github.io/jashboard/screenshots/git_monitor_form.png"><img src="http://smontanari.github.io/jashboard/screenshots/git_monitor_form-thb.png">Form to create a Git monitor
+    </td>
+  </tr>
+</table>
+
+<!--
+[![](screenshots/generic_dashboard-thb.png "generic dashboard")  
+A generic multi-dashboard set up](http://smontanari.github.io/jashboard/screenshots/generic_dashboard.png)
+
+[![](screenshots/build_monitor_form-thb.png "build monitor")  
+Form to create a Build monitor](http://smontanari.github.io/jashboard/screenshots/build_monitor_form.png)  
+
+[![](screenshots/git_monitor_form-thb.png "git monitor")  
+Form to create a Git monitor](http://smontanari.github.io/jashboard/screenshots/git_monitor_form.png)  -->
+
 ## Why?
 I just wanted to have some fun and learn a bit of AngularJS. Initially the idea was to create a CI build monitor web application (right, like we needed another one…), but then I expanded the concept to be more general purpose and provide the ability to quickly extend the application and include any type of monitor you can think of.
 

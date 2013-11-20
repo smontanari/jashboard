@@ -21,6 +21,7 @@
     'bootstrap-switch',
     'moment',
     'angular',
+    'angular-route',
     'angular-ui',
     environment[JASHBOARD_ENVIRONMENT].stylesheet,
     function() {

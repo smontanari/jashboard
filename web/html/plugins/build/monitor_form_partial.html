@@ -29,28 +29,26 @@
         <div data-ng-switch-when="create">
           <ul class="nav nav-tabs">
             <li><label>CI Server</label></li>
-            <li data-ng-class="{active: (ciServerType == monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
-              <a id="ciServerType-{{ciServerType}}-tab" data-toggle="tab" href="#ciServerType-{{ciServerType}}"
+            <li data-ng-class="{active: (ciServerType === monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
+              <a id="ciServerType-{{ciServerType}}-tab" data-toggle="tab" data-target="#ciServerType-{{ciServerType}}" href=""
                 data-ng-click="setCiServerType(ciServerType)">{{ciServerType}}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div id="ciServerType-{{ciServerType}}" class="tab-pane" data-ng-class="{active: (ciServerType == monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
+            <div id="ciServerType-{{ciServerType}}" class="tab-pane" data-ng-class="{active: (ciServerType === monitorConfigurationFormModel.build.type)}" data-ng-repeat="ciServerType in availableCiServerTypes">
               <div data-ng-include="'html/plugins/build/' + ciServerType + '_monitor_form_partial.html'"></div>
             </div>
           </div>
         </div>
         <div data-ng-switch-when="update">
-          <div data-ng-switch="monitorFormModel.type">
-            <div data-ng-switch-when="build">
-              <div class="control-group form-horizontal">
-                <label class="control-label">CI Server</label>
-                <div class="controls">
-                  <span class="readonly-field">{{monitorConfigurationFormModel.build.type}}</span>
-                </div>
+          <div data-ng-if="monitorFormModel.type === 'build'">
+            <div class="control-group form-horizontal">
+              <label class="control-label">CI Server</label>
+              <div class="controls">
+                <span class="readonly-field">{{monitorConfigurationFormModel.build.type}}</span>
               </div>
-              <div data-ng-include="'html/plugins/build/' + monitorConfigurationFormModel.build.type + '_monitor_form_partial.html'"></div>
             </div>
+            <div data-ng-include="'html/plugins/build/' + monitorConfigurationFormModel.build.type + '_monitor_form_partial.html'"></div>
           </div>
         </div>
       </div>

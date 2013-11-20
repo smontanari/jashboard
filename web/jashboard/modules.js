@@ -1,7 +1,7 @@
 (function() {
   var jashboard = {
     services: angular.module('jashboard.services', []),
-    application: angular.module('jashboard', ['jashboard.services', 'ui']),
+    application: angular.module('jashboard', ['jashboard.services', 'ui', 'ngRoute']),
     plugin: {}
   };
   window.jashboard = jashboard;

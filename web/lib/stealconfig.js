@@ -12,6 +12,7 @@
         'cycle2/cycle2.js': 'cycle2',
         'moment/moment.js': 'moment',
         'angular/angular.js': 'angular',
+        'angular-route/angular-route.js': 'angular-route',
         'angular-ui/angular-ui.js': 'angular-ui'
       }
     },
@@ -29,6 +30,7 @@
       'moment':                   'bower_components/moment/min/moment.min.js',
       'underscore':               'bower_components/underscore/underscore-min.js',
       'angular':                  'bower_components/angular/angular.min.js',
+      'angular-route':            'bower_components/angular-route/angular-route.min.js',
       'angular-ui':               'bower_components/angular-ui/build/angular-ui.min.js',
       'angular-ui.css':           'bower_components/angular-ui/build/angular-ui.min.css'
     },
@@ -54,6 +56,9 @@
       'angular': {
         deps: ['jquery'],
         exports: 'angular'
+      },
+      'angular-route': {
+        deps: ['angular']
       },
       'angular-ui': {
         deps: ['angular', 'angular-ui.css']

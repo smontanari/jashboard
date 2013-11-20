@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "underscore": "~1.5.2",
-    "angular": "1.0.8",
+    "angular": "1.2.1",
+    "angular-route": "1.2.1",
     "angular-ui": "~0.4.0",
     "jquery-ui": "1.10.3",
     "blockui": "latest",
@@ -15,6 +16,7 @@
     "bootstrap-switch": "latest"
   },
   "devDependencies": {
+    "angular-mocks": "1.2.1",
     "smocker": "latest"
   }
 }

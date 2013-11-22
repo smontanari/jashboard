@@ -46,11 +46,16 @@ end
 task :copy_app_files => [TARGET_DIR, TARGET_DIR_WEB] do
   mkdir_p "#{TARGET_DIR_WEB}/app"
   copy_and_replace("#{WEB_ROOT}/app/loader.js", "#{TARGET_DIR_WEB}/app/loader.js", /var\s+JASHBOARD_ENVIRONMENT\s+=\s+'development';/, "var JASHBOARD_ENVIRONMENT = 'production';")
-  cp "#{WEB_ROOT}/app/jashboard.min.js", "#{TARGET_DIR_WEB}/app"
-  cp "#{WEB_ROOT}/app/jashboard.min.css", "#{TARGET_DIR_WEB}/app"
+  system "grunt build", {chdir: "#{WEB_ROOT}"}
+  cp "#{WEB_ROOT}/bower.json", "#{TARGET_DIR_WEB}"
+  system "bower install", {chdir: "#{TARGET_DIR_WEB}"}
+  mv "#{WEB_ROOT}/app/jashboard.min.js", "#{TARGET_DIR_WEB}/app"
+  mv "#{WEB_ROOT}/app/jashboard.min.css", "#{TARGET_DIR_WEB}/app"
 end
 
 multitask :install_web_files => [:copy_html_files, :copy_img_files, :copy_lib_files, :copy_app_files]
 
 desc "install the application in folder: #{File.join(File.dirname(__FILE__), TARGET_DIR)}"
-task :install =>[:init, :install_server_files, :install_web_files]
+task :install =>[:init, :install_server_files, :install_web_files] do
+  puts "DONE."
+end

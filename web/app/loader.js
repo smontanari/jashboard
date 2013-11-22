@@ -22,7 +22,7 @@
     'moment',
     'angular',
     'angular-route',
-    'angular-ui',
+    'angular-ui-keypress',
     environment[JASHBOARD_ENVIRONMENT].stylesheet,
     function() {
       steal(environment[JASHBOARD_ENVIRONMENT].application);

@@ -1,0 +1,12 @@
+{
+  "name": "jashboard",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-jasmine": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-less": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-uglify": "latest"
+  }
+}

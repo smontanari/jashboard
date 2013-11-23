@@ -30,9 +30,11 @@ task :copy_html_files =>[TARGET_DIR, TARGET_DIR_WEB] do
   cp "#{WEB_ROOT}/index.html", TARGET_DIR_WEB
   cp_r "#{WEB_ROOT}/html", TARGET_DIR_WEB
 end
+
 task :copy_img_files => [TARGET_DIR, TARGET_DIR_WEB] do
   cp_r "#{WEB_ROOT}/img", TARGET_DIR_WEB
 end
+
 task :copy_lib_files => [TARGET_DIR, TARGET_DIR_WEB] do
   mkdir_p "#{TARGET_DIR_WEB}/lib"
   [
@@ -43,19 +45,33 @@ task :copy_lib_files => [TARGET_DIR, TARGET_DIR_WEB] do
   cp("#{WEB_ROOT}/lib/steal/steal.production.js", "#{TARGET_DIR_WEB}/lib/steal/steal.js")
   cp_r("#{WEB_ROOT}/lib/steal/dev", "#{TARGET_DIR_WEB}/lib/steal")
 end
+
 task :copy_app_files => [TARGET_DIR, TARGET_DIR_WEB] do
   mkdir_p "#{TARGET_DIR_WEB}/app"
   copy_and_replace("#{WEB_ROOT}/app/loader.js", "#{TARGET_DIR_WEB}/app/loader.js", /var\s+JASHBOARD_ENVIRONMENT\s+=\s+'development';/, "var JASHBOARD_ENVIRONMENT = 'production';")
-  system "grunt build", {chdir: "#{WEB_ROOT}"}
   cp "#{WEB_ROOT}/bower.json", "#{TARGET_DIR_WEB}"
-  system "bower install", {chdir: "#{TARGET_DIR_WEB}"}
+  system 'npm install', {chdir: WEB_ROOT}
+  system 'grunt build', {chdir: WEB_ROOT}
   mv "#{WEB_ROOT}/app/jashboard.min.js", "#{TARGET_DIR_WEB}/app"
   mv "#{WEB_ROOT}/app/jashboard.min.css", "#{TARGET_DIR_WEB}/app"
+end
+
+task :install_dependencies => [TARGET_DIR, TARGET_DIR_WEB] do
+  puts 'installing ruby libraries'
+  system 'bundle install --without=test', {chdir: TARGET_DIR}
+  puts 'installing javascript libraries'
+  system 'bower install -p', {chdir: TARGET_DIR_WEB}
 end
 
 multitask :install_web_files => [:copy_html_files, :copy_img_files, :copy_lib_files, :copy_app_files]
 
 desc "install the application in folder: #{File.join(File.dirname(__FILE__), TARGET_DIR)}"
-task :install =>[:init, :install_server_files, :install_web_files] do
-  puts "DONE."
+task :install =>[:init, :install_server_files, :install_web_files, :install_dependencies] do
+  out = "Jashboard installed in #{TARGET_DIR}."
+  delimiter = Array.new(out.length + 2, '-').join()
+  puts <<-EOF
+ #{delimiter}
+| #{out} |
+ #{delimiter}
+EOF
 end

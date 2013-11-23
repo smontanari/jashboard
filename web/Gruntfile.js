@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+    clean: ["app/jashboard*"],
     concat: {
       dist: {
         src: [
@@ -61,11 +62,12 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.registerTask('default', ['jasmine']);
-  grunt.registerTask('build', ['jshint', 'jasmine', 'concat', 'uglify', 'less']);
+  grunt.registerTask('build', ['clean', 'jshint', 'jasmine', 'concat', 'uglify', 'less']);
 };

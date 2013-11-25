@@ -1,6 +1,6 @@
 # Jashboard
 
-This is a web application that allows the user to set up dashboards to contain a variety of monitors that dynamically fetch and report any sort of information.
+Jashboard is a web application that allows the user to set up dashboards to contain a variety of monitors that dynamically fetch and report any sort of information.
 
 Jashboard works as a **single page web application**, where the client side is fully written in Javascript (AngularJS) and the server side is a simple Sinatra (Ruby) instance.
 
@@ -21,7 +21,7 @@ Jashboard works as a **single page web application**, where the client side is f
 </table>
 
 ## Why?
-I just wanted to have some fun and learn a bit of AngularJS. Initially the idea was to create a CI build monitor web application (right, like we needed another one…), but then I expanded the concept to be more general purpose and provide the ability to quickly extend the application and include any type of monitor you can think of.
+Initially the idea was to create a CI build monitor web application (right, like we needed another one…), but then I expanded the concept to be more general purpose and provide the ability to quickly extend the application and include plugins for any type of monitor you can think of.
 
 ## Currently supported monitor types
 At the moment you can create and use the following type of monitors:
@@ -55,7 +55,7 @@ Now you launch your favourite browser (and I mean browser, not IE) and load the 
 	http://<hostname>:8001/index.html
 
 ### Development instance
-This is more for test/development purposes, that is you want to modify the code, the web styles, add a new monitor plugin, etc. and then test your changes
+This is more for test/development purposes, that is you want to modify the code, the web styles, add a new monitor plugin, etc. and then test your changes.
 
 #### Install dependencies
 

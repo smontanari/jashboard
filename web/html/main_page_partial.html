@@ -48,26 +48,37 @@
       </div>
     </div>
   </div>
-</div>
-<div class="hide" data-jb-overlay="{show: 'DashboardSaveStart', hide: 'DashboardSaveComplete'}">
-  <div class="overlay-msg info">
-    <spam class="ajax-loader-msg"> Saving dashboard... Please wait.</spam>
+  <div class="hide" data-jb-overlay="{show: 'AjaxError'}" data-jb-overlay-options="{opacity: '0.1', autoHideAfter: 1500}">
+    <div class="overlay-msg alert alert-error">
+      <spam>Unfortunately an error occurred while processing your request.</spam>
+    </div>
   </div>
-</div>
-<div class="hide" data-jb-overlay="{show: 'DashboardDeleteStart', hide: 'DashboardDeleteComplete'}">
-  <div class="overlay-msg info">
-    <spam class="ajax-loader-msg"> Deleting dashboard... Please wait.</spam>
+  <div class="hide" data-jb-overlay="{show: 'DataLoadingStart', hide: 'DataLoadingComplete,DataLoadingError'}">
+    <div class="overlay-msg info">
+      <spam class="ajax-loader-msg"> Loading dashboards... Please wait.</spam>
+    </div>
   </div>
-</div>
-<div class="hide" data-jb-overlay="{show: 'MonitorSaveStart', hide: 'MonitorSaveComplete'}">
-  <div class="overlay-msg info">
-    <spam class="ajax-loader-msg"> Saving monitor... Please wait.</spam>
+  <div class="hide" data-jb-overlay="{show: 'DashboardSaveStart', hide: 'DashboardSaveComplete'}">
+    <div class="overlay-msg info">
+      <spam class="ajax-loader-msg"> Saving dashboard... Please wait.</spam>
+    </div>
   </div>
-</div>
-<div class="hide" data-jb-overlay="{show: 'MonitorDeleteStart', hide: 'MonitorDeleteComplete'}">
-  <div class="overlay-msg info">
-    <spam class="ajax-loader-msg"> Deleting monitor... Please wait.</spam>
+  <div class="hide" data-jb-overlay="{show: 'DashboardDeleteStart', hide: 'DashboardDeleteComplete'}">
+    <div class="overlay-msg info">
+      <spam class="ajax-loader-msg"> Deleting dashboard... Please wait.</spam>
+    </div>
   </div>
+  <div class="hide" data-jb-overlay="{show: 'MonitorSaveStart', hide: 'MonitorSaveComplete'}">
+    <div class="overlay-msg info">
+      <spam class="ajax-loader-msg"> Saving monitor... Please wait.</spam>
+    </div>
+  </div>
+  <div class="hide" data-jb-overlay="{show: 'MonitorDeleteStart', hide: 'MonitorDeleteComplete'}">
+    <div class="overlay-msg info">
+      <spam class="ajax-loader-msg"> Deleting monitor... Please wait.</spam>
+    </div>
+  </div>
+  <div data-ng-include="'html/monitor_form_dialog_partial.html'"></div>
+  <div data-ng-include="'html/dashboard_form_dialog_partial.html'"></div>
+  <div data-ng-include="'html/alert_msg_partial.html'"></div>
 </div>
-<div data-ng-include="'html/monitor_form_dialog_partial.html'"></div>
-<div data-ng-include="'html/dashboard_form_dialog_partial.html'"></div>

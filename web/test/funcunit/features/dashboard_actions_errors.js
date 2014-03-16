@@ -1,7 +1,7 @@
 funcunitHelper.testFeature("Dashboard actions error handling", "dashboard_errors", function() {
   test("should display an error overlay when failing to create a dashboard", function() {
-    FuncUnit.wait(1000, function() {
-      jashboardFeatureHelper.openDashboardDialog();
+    jashboardFeatureHelper.openDashboardDialog();
+    FuncUnit.wait(500, function() {
       pageHelper.inputText("dashboardName", "test new-dashboard");
     });
 

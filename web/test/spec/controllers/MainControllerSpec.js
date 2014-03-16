@@ -19,10 +19,10 @@ describe("MainController", function() {
       scope, locationService, menuDelegate, dashboardDelegate, repository);
   });
 
-  it("context.currentPath() should return the current view path", function() {
-    locationService.path.andReturn("test-path");
+  it("context.currentView() should return the current view name", function() {
+    locationService.path.andReturn("/");
 
-    expect(scope.context.currentPath()).toEqual("test-path");
+    expect(scope.context.currentView()).toEqual("main");
   });
   it("should initialise a new MenuActionsHandler", function() {
     expect(menuDelegate.init).toHaveBeenCalledWith(scope);
@@ -60,9 +60,9 @@ describe("MainController", function() {
     });
   });
 
-  describe("scope.loadData()", function() {
+  describe("on receiving $viewContentLoaded event", function() {
     it("should broadcast the 'DataLoadingStart' event", function() {
-      scope.loadData();
+      listeners['$viewContentLoaded']();
 
       expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingStart");
     });
@@ -74,7 +74,7 @@ describe("MainController", function() {
           handlers.success(test_dashboards);
         });
 
-        scope.loadData();
+        listeners['$viewContentLoaded']();
       });
 
       it("should load all the dashboards in the scope", function() {
@@ -98,7 +98,7 @@ describe("MainController", function() {
           handlers.error();
         });
 
-        scope.loadData();
+        listeners['$viewContentLoaded']();
       });
       it("should set the dataLoadingStatus to error", function() {
         expect(scope.dataLoadingStatus).toEqual(jashboard.model.loadingStatus.error);

@@ -16,6 +16,7 @@
         scope.$apply();
         scope.$broadcast("DataLoadingError");
       };
+      var pathToViewNames = _.invert(jashboard.viewMapping);
 
       scope.showDashboard = function() {
         scope.context.activeDashboardId = this.dashboard.id;
@@ -24,12 +25,16 @@
       scope.isActiveDashboard = function() {
         return scope.context.activeDashboardId === this.dashboard.id;
       };
-      scope.loadData = function() {
+
+      scope.$on('$viewContentLoaded', function() {
         scope.$broadcast("DataLoadingStart");
         repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
-      };
+      });
+      
       scope.context = {
-        currentPath: function() {return locationService.path();}
+        currentView: function() {
+          return pathToViewNames[locationService.path()];
+        }
       };
       menuActionsHandler.init(scope);
       dashboardActionsHandler.init(scope);

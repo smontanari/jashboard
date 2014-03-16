@@ -27,8 +27,10 @@
       };
 
       scope.$on('$viewContentLoaded', function() {
-        scope.$broadcast("DataLoadingStart");
-        repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
+        if (scope.context.currentView() === 'main') {
+          scope.$broadcast("DataLoadingStart");
+          repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
+        }
       });
       
       scope.context = {

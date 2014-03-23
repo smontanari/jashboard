@@ -8,7 +8,7 @@ var MockModule = function() {
   this.run = function(){return this};
 };
 var angular = {
-  module: jasmine.createSpy().andReturn(new MockModule())
+  module: jasmine.createSpy('angular.module()').andReturn(new MockModule())
 }
 
 var steal = {

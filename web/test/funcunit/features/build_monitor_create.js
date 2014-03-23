@@ -23,7 +23,7 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
       FuncUnit.wait(500, function() {
         pageHelper.verifyElementContent("#monitor_101",
           {
-            '.monitor-title': "Test jenkins-monitor",
+            '.monitor-name': "Test jenkins-monitor",
             '.build-time': "28-03-2013 16:10:50",
             '.build-duration': "08:50",
             '.build-result': "success",
@@ -59,7 +59,7 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
       FuncUnit.wait(500, function() {
         pageHelper.verifyElementContent("#monitor_101",
           {
-            '.monitor-title': "Test go-monitor",
+            '.monitor-name': "Test go-monitor",
             '.build-time': "28-03-2013 16:10:50",
             '.build-duration': "08:50",
             '.build-result': "success",

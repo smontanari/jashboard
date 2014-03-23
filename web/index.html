@@ -12,6 +12,12 @@
   <div class="container">
     <div data-ng-view></div>
   </div>
+    <div class="hide" data-jb-overlay="{show: 'AjaxError'}" data-jb-overlay-options="{opacity: '0.1', autoHideAfter: 1500}">
+    <div class="overlay-msg alert alert-error">
+      <spam>Unfortunately an error occurred while processing your request.</spam>
+    </div>
+  </div>
+  <div data-ng-include="'html/alert_msg_partial.html'"></div>
   <script type='text/javascript' src='lib/steal/steal.js?app/loader.js'></script>
 </body>
 </html>

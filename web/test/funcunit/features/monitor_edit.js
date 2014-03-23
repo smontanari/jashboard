@@ -16,7 +16,7 @@ funcunitHelper.testFeature("Edit a monitor", "monitor_actions", function() {
     FuncUnit.wait(500, function() {
       pageHelper.verifyElementContent("#monitor_1",
         {
-          '.monitor-title': "New Zombie build"
+          '.monitor-name': "New Zombie build"
         }
       );
     });

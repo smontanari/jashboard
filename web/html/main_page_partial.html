@@ -32,15 +32,10 @@
           <div class="monitor-title">
             <span class="monitor-icon-ajax-loader" data-ng-show="monitor.loadingStatus == 'waiting'"></span>
             <span class="monitor-icon-ajax-error" title="" data-ng-show="monitor.loadingStatus == 'error'">
+              <jb-tooltip-error class="hide" data-message="errorMessage" data-toggle="monitor.loadingStatus == 'error'"/>
             </span>
-            <span>{{monitor.name}}</span>
+            <span class="monitor-name">{{monitor.name}}</span>
           </div>
-            <div class="hide"
-              data-jb-tooltip="'#' + monitor.id + ' .monitor-icon-ajax-error'" 
-              data-jb-tooltip-toggle="monitor.loadingStatus == 'error'"
-              data-jb-tooltip-class="monitor-tooltip-error">
-              <div class="html-tooltip-error">{{errorMessage}}</div>
-            </div>
           <div class="monitor-details scrolling" data-jb-monitor-display>
             <div data-ng-include="'html/plugins/' + monitor.type + '/monitor_runtime_partial.html'" onload="resetSize()"></div>
           </div>
@@ -80,5 +75,4 @@
   </div>
   <div data-ng-include="'html/monitor_form_dialog_partial.html'"></div>
   <div data-ng-include="'html/dashboard_form_dialog_partial.html'"></div>
-  <div data-ng-include="'html/alert_msg_partial.html'"></div>
 </div>

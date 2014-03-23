@@ -29,7 +29,7 @@
       'DialogDirective', 
       'OverlayDirective',
       'AlertBoxDirective',
-      'TooltipDirective',
+      'TooltipErrorDirective',
       'DraggableDirective',
       'ResizableDirective',
       'MonitorDisplayDirective',

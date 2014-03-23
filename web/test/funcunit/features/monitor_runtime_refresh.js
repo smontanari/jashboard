@@ -2,7 +2,7 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
   test("should update the monitor runtime data", function() {
     S("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible();
     pageHelper.verifyElementContent("#monitor_1", {
-      '.monitor-title': "Epic build",
+      '.monitor-name': "Epic build",
       '.build-time': "",
       '.build-duration': "",
       '.build-result': "",
@@ -13,7 +13,7 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
     
     FuncUnit.wait(1000, function() {
       pageHelper.verifyElementContent("#monitor_1", {
-        '.monitor-title': "Epic build",
+        '.monitor-name': "Epic build",
         '.build-time': "23-08-2012 14:32:23",
         '.build-duration': "12:32",
         '.build-result': "success",

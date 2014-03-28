@@ -1,8 +1,7 @@
-steal(
-  "test/scenarios/display_dashboards_data_scenario.js",
-  "test/scenarios/monitor_layout_operations_scenario.js"
-);
-(function() {
+define([
+  "test/scenarios/display_dashboards_data_scenario",
+  "test/scenarios/monitor_layout_operations_scenario"
+], function() {
   smocker.scenario('build_monitor_write_operations', function() {
     this.post('/ajax/dashboard/dashboard_1/monitor').respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);
@@ -69,4 +68,4 @@ steal(
     'monitor_layout_operations',
     'build_monitor_write_operations'
   ]);
-})();
+});

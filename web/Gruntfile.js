@@ -4,26 +4,26 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: [
-          'jashboard/modules.js',
+          'jashboard/jashboard.js',
           'jashboard/plugins.js',
           'jashboard/**/*.js',
           '!jashboard/*loader.js',
           '!jashboard/**/*_plugin.js'
         ],
-        dest: 'app/jashboard.js'
+        dest: 'app/jashboard-prod.js'
       }
     },
     uglify: {
       options: {},
       dist: {
         files: {
-          'app/jashboard.min.js': ['<%= concat.dist.dest %>']
+          'app/jashboard-prod.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
     jasmine: {
       src: [
-        'jashboard/modules.js',
+        'jashboard/jashboard-module.js',
         'jashboard/jashboardUtils.js',
         'jashboard/routes.js',
         'jashboard/*/**/*.js',

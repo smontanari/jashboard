@@ -1,4 +1,4 @@
-steal(
+require([
   'jashboard/plugins/build/buildTypes.js',
   'jashboard/plugins/build/MonitorAdapter.js',
   'jashboard/plugins/build/BuildMonitorFormValidationRules.js',
@@ -7,4 +7,4 @@ steal(
   'jashboard/plugins/build/GoMonitorFormValidationRules.js',
   'jashboard/plugins/build/BuildMonitorFormController.js',
   'jashboard/plugins/build/goConfigurationHandler.js'
-);
+]);

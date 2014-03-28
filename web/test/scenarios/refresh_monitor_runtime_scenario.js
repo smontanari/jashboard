@@ -1,5 +1,4 @@
-steal("test/scenarios/two_dashboards_scenario.js");
-(function() {
+define(["test/scenarios/two_dashboards_scenario"], function() {
   var successResponse = {
     content: {
       lastBuildTime: "2012-08-23 14:32:23 +1000",
@@ -28,4 +27,4 @@ steal("test/scenarios/two_dashboards_scenario.js");
   });
 
   smocker.groupScenarios('refresh_monitor_runtime', ['two_dashboards', 'load_monitor_data']);
-})();
+});

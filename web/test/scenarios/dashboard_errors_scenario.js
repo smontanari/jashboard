@@ -1,8 +1,7 @@
-steal(
-  "test/scenarios/two_dashboards_scenario.js",
-  "test/scenarios/build_monitor_runtime_scenario.js"
-);
-(function() {
+define([
+  "test/scenarios/two_dashboards_scenario",
+  "test/scenarios/build_monitor_runtime_scenario"
+], function() {
   smocker.scenario('dashboard_write_errors', function() {
     this.post("/ajax/dashboard").respondWith({
       status: 501,
@@ -18,4 +17,4 @@ steal(
   });
 
   smocker.groupScenarios('dashboard_errors', ['two_dashboards', 'build_monitor_runtime', 'dashboard_write_errors']);
-})();
+});

@@ -1,10 +1,10 @@
-(function() {
-  var jashboardResources = [
+define(['jashboard/jashboard-module', 'test/scenario_runner'], function(application, testRunner) {
+  var misc = [
     'jashboardUtils',
     'routes'
   ];
 
-  var jashboardPackages = {
+  var packages = {
     services: [
       'ElementBinding',
       'AlertService',
@@ -61,23 +61,33 @@
       'MonitorFormController'
     ]
   };
+  var root = 'jashboard/';
 
-  var resources = _.map(jashboardResources, function(file) {
-    return "jashboard/" + file + ".js";
+  var dependencies = [];
+  _.each(misc, function(file) {
+    dependencies.push(root + file);
   });
-  var packages = _.reduce(_.keys(jashboardPackages), function(modules, packageName) {
-    return modules.concat(_.map(jashboardPackages[packageName], function(file) {
-      return "jashboard/" + packageName + "/" + file + ".js";
-    }));
-  }, []);
-  
-  steal('jashboard/modules.js', function() {
-    steal.apply(null, resources);
-    steal.apply(null, packages);
-    steal('jashboard/plugins.js', function() {
-      _.each(jashboard.plugins, function(pluginName) {
-        steal("jashboard/plugins/" + pluginName + "/" + pluginName + "_plugin.js");
-      });
+
+  _.each(_.keys(packages), function(packageName) {
+    _.each(packages[packageName], function(file) {
+      dependencies.push(root + packageName + "/" + file);
     });
   });
-})();
+
+  return {
+    run: function() {
+      require([root + 'plugins.js'], function() {
+        _.each(jashboard.plugins, function(pluginName) {
+          dependencies.push(root + 'plugins/' + pluginName + '/' + pluginName + '_plugin.js');
+        });
+        require(dependencies, function() {
+          if (_.isFunction(testRunner)) {
+            testRunner(application.run);
+          } else {
+            application.run();
+          }
+        });
+      });
+    }
+  };
+});

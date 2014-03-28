@@ -1,4 +1,4 @@
-steal('test/scenario_utils.js', function() {
+define(['test/scenario_utils'], function() {
   var monitorCounter = 0;
   var storedMonitors = [];
   var generateDate = function() {

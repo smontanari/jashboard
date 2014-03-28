@@ -5,10 +5,12 @@
   "authors": [ "Silvio Montanari" ],
   "license": "MIT",
   "dependencies": {
-    "underscore": "latest",
-    "angular": "~1.2.2",
-    "angular-route": "~1.2.2",
-    "angular-ui-utils": "~0.0.4",
+    "requirejs": "latest",
+    "require-css": "latest",
+    "underscore": "1.5.2",
+    "angular": "1.2.6",
+    "angular-route": "1.2.6",
+    "angular-ui-utils": "~0.1",
     "jquery-ui": "1.10.3",
     "blockui": "latest",
     "moment": "latest",
@@ -16,7 +18,7 @@
     "bootstrap-switch": "latest"
   },
   "devDependencies": {
-    "angular-mocks": "~1.2.2",
+    "require-less": "latest",
     "smocker": "latest"
   }
 }

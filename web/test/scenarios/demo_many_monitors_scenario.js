@@ -1,4 +1,4 @@
-steal('test/scenario_utils.js', function() {
+define(['test/scenario_utils'], function() {
   var monitors = [], monitorRuntimeResponses = [];
   _.times(5, function(i) {
     monitors.push({

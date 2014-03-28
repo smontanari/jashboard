@@ -13,7 +13,7 @@
         'moment/moment.js': 'moment',
         'angular/angular.js': 'angular',
         'angular-route/angular-route.js': 'angular-route',
-        'angular-ui-keypress/angular-ui-keypress.js': 'angular-ui-keypress'
+        'angular-ui/angular-ui.js': 'angular-ui'
       }
     },
     paths: {
@@ -31,7 +31,7 @@
       'underscore':               'bower_components/underscore/underscore-min.js',
       'angular':                  'bower_components/angular/angular.min.js',
       'angular-route':            'bower_components/angular-route/angular-route.min.js',
-      'angular-ui-keypress':      'bower_components/angular-ui-utils/modules/keypress/keypress.js'
+      'angular-ui':               'bower_components/angular-ui-utils/ui-utils.min.js'
     },
     shim : {
       'bootstrap': {
@@ -59,7 +59,7 @@
       'angular-route': {
         deps: ['angular']
       },
-      'angular-ui-keypress': {
+      'angular-ui': {
         deps: ['angular']
       }
     },

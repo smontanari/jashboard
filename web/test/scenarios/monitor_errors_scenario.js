@@ -1,5 +1,4 @@
-steal("test/scenarios/two_dashboards_scenario.js");
-(function() {
+define(["test/scenarios/two_dashboards_scenario"], function() {
   smocker.scenario('monitor_common_operations', function() {
     this.get("/ajax/monitor/monitor_1/runtime").respondWith({
       status: 500,
@@ -29,4 +28,4 @@ steal("test/scenarios/two_dashboards_scenario.js");
   });
 
   smocker.groupScenarios('monitor_errors', ['two_dashboards', 'monitor_common_operations']);
-})();
+});

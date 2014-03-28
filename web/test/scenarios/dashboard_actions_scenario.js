@@ -1,5 +1,4 @@
-steal("test/scenarios/display_dashboards_data_scenario.js");
-(function() {
+define(["test/scenarios/display_dashboards_data_scenario"], function() {
   smocker.scenario('dashboard_write_operations', function() {
     this.post('/ajax/dashboard').respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);
@@ -26,4 +25,4 @@ steal("test/scenarios/display_dashboards_data_scenario.js");
   });
 
   smocker.groupScenarios('dashboard_actions', ['display_dashboards_data', 'dashboard_write_operations']);
-})();
+});

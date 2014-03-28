@@ -11,9 +11,9 @@ var angular = {
   module: jasmine.createSpy('angular.module()').andReturn(new MockModule())
 }
 
-var steal = {
-  dev: jasmine.createSpyObj("steal.dev", ["log"])
-};
+// var steal = {
+//   dev: jasmine.createSpyObj("steal.dev", ["log"])
+// };
 
 var $, jQuery = function() {throw "you must stub or mock any call to jQuery!"};
 

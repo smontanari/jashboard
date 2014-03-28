@@ -1,5 +1,4 @@
-steal("test/scenarios/display_dashboards_data_scenario.js");
-(function() {
+define(["test/scenarios/display_dashboards_data_scenario"], function() {
   var expectedConfig = {
     git: {
       type: "git",
@@ -42,4 +41,4 @@ steal("test/scenarios/display_dashboards_data_scenario.js");
   });
 
   smocker.groupScenarios('vcs_monitor_actions', ['display_dashboards_data', 'monitor_write_operatios']);
-})();
+});

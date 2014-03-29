@@ -7,7 +7,7 @@
   "dependencies": {
     "requirejs": "latest",
     "require-css": "latest",
-    "underscore": "1.5.2",
+    "underscore": "~1.6",
     "angular": "1.2.6",
     "angular-route": "1.2.6",
     "angular-ui-utils": "~0.1",

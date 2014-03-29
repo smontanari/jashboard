@@ -12,12 +12,12 @@
     }
   };
 
-  requirejs.config({
+  require.config({
     baseUrl: '.',
     paths: {
       'css':                        'bower_components/require-css/css',
       'less':                       'bower_components/require-less/less',
-      'underscore':                 'bower_components/underscore/underscore-min',
+      'underscore':                 'bower_components/underscore/underscore',
       'jquery':                     'bower_components/jquery/jquery.min',
       'bootstrap':                  'bower_components/bootstrap/docs/assets/js/bootstrap.min',
       'bootstrap-style':            'bower_components/bootstrap/docs/assets/css/bootstrap',

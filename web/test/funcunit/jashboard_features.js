@@ -70,7 +70,7 @@ var jashboard = {
   }
 
   steal(
-    "bower_components/underscore/underscore-min.js",
+    "bower_components/underscore/underscore.js",
     "funcunit/funcunit.js",
     "test/funcunit/features/support/page_helper.js",
     "test/funcunit/features/support/jashboard_feature_helper.js",

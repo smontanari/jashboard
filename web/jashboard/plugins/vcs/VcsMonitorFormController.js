@@ -4,10 +4,12 @@
       scope.availableVcsTypes = ["git"];
 
       scope.toggleSlideShowEffect = function() {
+        scope.monitorConfigurationFormModel.vcs.pagination = !scope.monitorConfigurationFormModel.vcs.pagination;
         if (!scope.monitorConfigurationFormModel.vcs.pagination) {
           scope.monitorConfigurationFormModel.vcs.commitsPerPage = 1;
           scope.monitorConfigurationFormModel.vcs.interval = 5;
         }
+        scope.$apply('monitorConfigurationFormModel.vcs.pagination');
       };
 
       scope.$on("OpenMonitorDialog", function(event, options) {

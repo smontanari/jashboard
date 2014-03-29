@@ -1,0 +1,7 @@
+upgrade funcunit
+remove steal
+upgrade jquery
+upgrade angular
+upgrade jasmine
+refactor specs
+fix deployment scripts

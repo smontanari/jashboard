@@ -2,115 +2,65 @@ describe("SwitchButtonDirective", function() {
   var scope, directiveDefinitionObject, switchButtonWidget, switchButtonFunction, toggleFn;
 
   beforeEach(function() {
-    switchButtonWidget = jasmine.createSpyObj("SwitchButton", ['setOn', 'setOff']);
-    switchButtonFunction = spyOn(jashboard.widgets, "SwitchButton").andCallFake(function(el, callback) {
+    switchButtonWidget = jasmine.createSpyObj("SwitchButton", ['reset']);
+    switchButtonFunction = spyOn(jashboard.widgets, "SwitchButton").andCallFake(function(el, state, callback) {
       toggleFn = callback;
       return switchButtonWidget;
     });
-    scope = jasmine.createSpyObj("scope", ['$eval', '$on']);
+    scope = jasmine.createSpyObj("scope", ['$on', 'state', 'toggle']);
     directiveDefinitionObject = jashboard.angular.switchButtonDirective();
   });
 
-  it("should replace the current element with the new template", function() {
+  it('restricts the usage to just elements', function() {
+    expect(directiveDefinitionObject.restrict).toEqual('E');
+  });
+  
+  it('defines an isolated scope', function() {
+    expect(directiveDefinitionObject.scope).toEqual({
+      attrId: '@id',
+      attrOn: '@on',
+      attrClass:'@class',
+      state: '&value',
+      toggle: '&'
+    });
+  });
+  
+  it("replaces the current element with the new template", function() {
     expect(directiveDefinitionObject.replace).toBeTruthy();
-    expect(directiveDefinitionObject.template).toEqual('<div><input type="checkbox"></div>');
+    expect(directiveDefinitionObject.template).toEqual('<input id="{{attrId}}" name="{{attrId}}" class="{{attrClass}}" data-on="{{attrOn}}" type="checkbox">');
   });
 
   describe("link function", function() {
-    var watcherFn, watcherDeregistrationFn, $input;
+    var listener;
     beforeEach(function() {
-      $input = {
-        attr: jasmine.createSpy("$.attr()")
-      };
-      var $element = {
-        find: sinon.stub()
-      };
-      $element.find.withArgs("input").returns($input);
-      angular.element = sinon.stub();
-      angular.element.withArgs("test-element").returns($element);
+      scope.state.andReturn('test_state');
+      scope.$on.andCallFake(function(event, fn) {
+        if (event === "activate_event") {
+          listener = fn;
+          listener({});
+        }
+      });
+      directiveDefinitionObject.link(scope, "test-element", {activateOn: 'activate_event'});
     });
 
-    describe("input initialisation", function() {
-      beforeEach(function() {
-        directiveDefinitionObject.link(scope, "test-element", {
-          jbSwitchButtonId: "test_button_id",
-          jbSwitchButtonToggle: "test_toggle_expr",
-          ngModel: "test_model"
-        });
-      });
-
-      it("should set the input 'id' and 'name' attributes according to the directive attribute", function() {
-        expect($input.attr).toHaveBeenCalledWith("id", "test_button_id");
-        expect($input.attr).toHaveBeenCalledWith("name", "test_button_id");
-      });
-      it("should create a switch button", function() {
-        expect(switchButtonFunction).toHaveBeenCalledWith("test-element", jasmine.any(Function));
-      });
-    })
-
-    describe("button activation", function() {
-      beforeEach(function() {
-        scope.$on.andCallFake(function(event, listener) {
-          if (event === "OpenMonitorDialog") {
-            listener({});
-          }
-        });
-      });
-
-      _.each(['test_expr', null], function(expr) {
-        _.each([true, false], function(value) {
-          it("should set the current switch button state according to the model value", function() {
-            scope.$eval.andCallFake(function(expr) {
-              if (expr === "test_model") return value;
-              if (expr === "test_expr") return {activateOn: "OpenMonitorDialog"};
-            });
-            directiveDefinitionObject.link(scope, "test-element", {
-              jbSwitchButton: expr,
-              jbSwitchButtonId: "test_button_id",
-              jbSwitchButtonToggle: "test_toggle_expr",
-              ngModel: "test_model"
-            });
-            if (value) {
-              expect(switchButtonWidget.setOn).toHaveBeenCalled();
-            } else {
-              expect(switchButtonWidget.setOff).toHaveBeenCalled();
-            }
-          });
-        });
-      });
+    it("creates a switch button", function() {
+      expect(switchButtonFunction).toHaveBeenCalledWith("test-element", 'test_state', jasmine.any(Function));
+      expect(switchButtonWidget.reset).not.toHaveBeenCalled();
     });
 
-    describe("toggle functionality", function() {
-      var mockEvent;
-      beforeEach(function() {
-        mockEvent = {
-          target: "target_element"
-        };
-        $input.is = sinon.stub();
-        angular.element.withArgs("target_element").returns($input);
-        spyOn(jashboard.angularUtils, 'safeApply');
+    it("resets the switch button if it already exists", function() {
+      scope.state.andReturn('another_state');
+      listener({});
 
-        directiveDefinitionObject.link(scope, "test-element", {
-          jbSwitchButtonId: "test_button_id",
-          jbSwitchButtonToggle: "test_toggle_expr",
-          ngModel: "test_model"
-        });
-      });
+      expect(switchButtonWidget.reset).toHaveBeenCalledWith('another_state');
+    });
 
-      _.each([true, false], function(isChecked) {
-        it("should set the model value depending on whether the element is checked or not", function() {
-          $input.is.withArgs(":checked").returns(isChecked);
-          toggleFn(mockEvent);
+    it("stes set the current switch button state according to the state scope attribute", function() {
+      expect(switchButtonFunction).toHaveBeenCalledWith("test-element", 'test_state', jasmine.any(Function));
+    });
 
-          expect(scope.$eval).toHaveBeenCalledWith("test_model=" + isChecked);
-        });
-        it("should apply the toggle attribute expression to the scope", function() {
-          $input.is.withArgs(":checked").returns(isChecked);
-          toggleFn(mockEvent);
-
-          expect(jashboard.angularUtils.safeApply).toHaveBeenCalledWith(scope, "test_toggle_expr");
-        });
-      });
+    it("uses the toggle callback defined in the scope", function() {
+      expect(switchButtonFunction).toHaveBeenCalledWith("test-element", 'test_state', scope.toggle);
     });
   });
 });

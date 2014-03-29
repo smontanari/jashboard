@@ -4,30 +4,56 @@ describe("SwitchButton", function() {
     callback = jasmine.createSpy("callback");
     $element = testHelper.stubJQuery("test-selector");
     $element.on = jasmine.createSpy("$.on()");
-    $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()");
+    $element.unbind = jasmine.createSpy("$.unbind()");
+    $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()").andCallFake(function() {
+      console.log('*****');
+      console.log(arguments);
+      if ('state' === arguments[0]) return 'false';
+    })
   });
 
-  it("should initialise the widget", function() {
-    widget = new jashboard.widgets.SwitchButton("test-selector", callback);
+  it("initialises the widget with an initial false state", function() {
+    widget = new jashboard.widgets.SwitchButton("test-selector");
 
-    expect($element.bootstrapSwitch).toHaveBeenCalled();
-    expect($element.on).toHaveBeenCalledWith('change', callback);
+    expect($element.bootstrapSwitch.calls.length).toEqual(2);
+    expect($element.bootstrapSwitch.calls[1].args[0]).toEqual('setState');
+    expect($element.bootstrapSwitch.calls[1].args[1]).toEqual(false);
   });
-  it("should not bind a 'change' callback", function() {
-    widget = new jashboard.widgets.SwitchButton("test-selector", "test_state");
+  
+  it("initialises the widget with an initial true state", function() {
+    widget = new jashboard.widgets.SwitchButton("test-selector", true);
+
+    expect($element.bootstrapSwitch.calls.length).toEqual(2);
+    expect($element.bootstrapSwitch.calls[1].args[0]).toEqual('setState');
+    expect($element.bootstrapSwitch.calls[1].args[1]).toEqual(true);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it("destroys the widget when resetting", function() {
+    widget = new jashboard.widgets.SwitchButton("test-selector", true);
+
+    widget.reset(false);
+
+    expect($element.bootstrapSwitch).toHaveBeenCalledWith('destroy');
+  });
+
+  it("unbinds the event from the element when resetting", function() {
+    widget = new jashboard.widgets.SwitchButton("test-selector", true);
+
+    widget.reset(false);
+
+    expect($element.unbind).toHaveBeenCalledWith('switch-change');
+  });
+
+  it("binds a change callback", function() {
+    widget = new jashboard.widgets.SwitchButton("test-selector", false, callback);
+
+    expect($element.on).toHaveBeenCalledWith('switch-change', callback);
+  });
+
+  it("does not bind a 'change' callback", function() {
+    widget = new jashboard.widgets.SwitchButton("test-selector");
 
     expect($element.on).not.toHaveBeenCalled();
-  });
-  it("should turn on the switch", function() {
-    widget = new jashboard.widgets.SwitchButton("test-selector", "test_state");
-    widget.setOn();
-
-    expect($element.bootstrapSwitch).toHaveBeenCalledWith('setState', true);
-  });
-  it("should turn off the switch", function() {
-    widget = new jashboard.widgets.SwitchButton("test-selector", "test_state");
-    widget.setOff();
-
-    expect($element.bootstrapSwitch).toHaveBeenCalledWith('setState', false);
   });
 });

@@ -5,20 +5,21 @@
   "authors": [ "Silvio Montanari" ],
   "license": "MIT",
   "dependencies": {
-    "requirejs": "latest",
-    "require-css": "latest",
+    "requirejs": "~2.1",
+    "require-css": "~0.1",
     "underscore": "~1.6",
     "angular": "1.2.6",
     "angular-route": "1.2.6",
     "angular-ui-utils": "~0.1",
+    "jquery": "~1.9",
     "jquery-ui": "1.10.3",
     "blockui": "latest",
     "moment": "latest",
     "bootstrap": "~2.3.0",
-    "bootstrap-switch": "latest"
+    "bootstrap-switch": "~2.0"
   },
   "devDependencies": {
-    "require-less": "latest",
+    "require-less": "~0.1",
     "smocker": "latest"
   }
 }

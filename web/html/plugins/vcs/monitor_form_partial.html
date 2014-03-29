@@ -37,10 +37,9 @@
     <div class="control-group">
       <label class="control-label" for="vcsPageSlideShow">Pagination</label>
       <div class="controls">
-        <div class="switch switch-small" data-on="info" data-jb-switch-button="{activateOn: 'OpenMonitorDialog'}" 
-          data-ng-model="monitorConfigurationFormModel.vcs.pagination"
-          data-jb-switch-button-toggle="toggleSlideShowEffect();validateFields('vcsPageSize', 'vcsPageInterval')"
-          data-jb-switch-button-id="vcsPageSlideShow"/>
+        <jb-switch-button id="vcsPageSlideShow" class="switch-small" data-on="info" data-activate-on="OpenMonitorDialog"
+          data-value="monitorConfigurationFormModel.vcs.pagination"
+          data-toggle="toggleSlideShowEffect();validateFields('vcsPageSize', 'vcsPageInterval')"/>
       </div>
     </div>
     <div data-ng-show="monitorConfigurationFormModel.vcs.pagination">

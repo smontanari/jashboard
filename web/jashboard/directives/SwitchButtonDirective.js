@@ -2,29 +2,30 @@
   jashboard.angular = _.extend(module, {
     switchButtonDirective: function() {
       return {
+        restrict: 'E',
         replace: true,
-        template: '<div><input type="checkbox"></div>',
+        template: '<input id="{{attrId}}" name="{{attrId}}" class="{{attrClass}}" data-on="{{attrOn}}" type="checkbox">',
+        scope: {
+          attrId: '@id',
+          attrOn: '@on',
+          attrClass:'@class',
+          state: '&value',
+          toggle: '&'
+        },
         link: function(scope, element, attrs) {
-          var toggle = function(event) {
-            scope.$eval(attrs.ngModel + "=" + angular.element(event.target).is(":checked"));
-            jashboard.angularUtils.safeApply(scope, attrs.jbSwitchButtonToggle);
+          var switchButton = null;
+          var initButton = function() {
+            var initialState = scope.state();
+            if (_.isObject(switchButton)) {
+              switchButton.reset(initialState);
+            } else {
+              switchButton = new jashboard.widgets.SwitchButton(element, initialState, scope.toggle);
+            }
           };
-          var setWidgetState = function(widget) {
-            var state = scope.$eval(attrs.ngModel) ? "setOn" : "setOff";
-            widget[state]();
-          };
-          var inputElement = angular.element(element).find("input");
-          inputElement.attr("id", attrs.jbSwitchButtonId);
-          inputElement.attr("name", attrs.jbSwitchButtonId);
-          var switchButton = new jashboard.widgets.SwitchButton(element, toggle);
-          var attributes = scope.$eval(attrs.jbSwitchButton);
-
-          if (_.isObject(attributes) && attributes.activateOn) {
-            scope.$on(attributes.activateOn, function(event) {
-              setWidgetState(switchButton);
-            });
+          if (attrs.activateOn) {
+            scope.$on(attrs.activateOn, initButton);
           } else {
-            setWidgetState(switchButton);
+            initButton();
           }
         }
       };

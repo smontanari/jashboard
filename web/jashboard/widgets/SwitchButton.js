@@ -1,22 +1,22 @@
 (function(module) {
   jashboard.widgets = _.extend(module, {
-    SwitchButton: function(selector, onChangeFn) {
+    SwitchButton: function(selector, initialState, onChangeFn) {
       var element = $(selector);
-      var setState = function(state) {
+      var initButton = function(state) {
+        element.bootstrapSwitch();
         element.bootstrapSwitch('setState', state);
+        if (_.isFunction(onChangeFn)) {
+          element.on('switch-change', onChangeFn);
+        }
       };
-            
-      element.bootstrapSwitch();
-      if (_.isFunction(onChangeFn)) {
-        element.on('change', onChangeFn);
-      }
 
-      this.setOn = function() {
-        setState(true);
+      this.reset = function(state) {
+        element.bootstrapSwitch('destroy');
+        element.unbind('switch-change');
+        initButton(state);
       };
-      this.setOff = function() {
-        setState(false);
-      };
+
+      initButton(initialState || false);
     }
   });
 }(jashboard.widgets || {}));

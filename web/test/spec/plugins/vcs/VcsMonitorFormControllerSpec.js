@@ -5,7 +5,8 @@ describe("VcsMonitorFormController", function() {
     scope = {
       $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
         eventListener = handler;
-      })
+      }),
+      $apply: jasmine.createSpy('scope.$apply')
     };
 
     controller = new jashboard.plugin.vcs.VcsMonitorFormController(scope);
@@ -19,27 +20,35 @@ describe("VcsMonitorFormController", function() {
   });
 
   describe("scope.toggleSlideShowEffect()", function() {
-    it("should reset the commitsPerPage and interval values if the pagination is disabled", function() {
-      scope.monitorConfigurationFormModel = { vcs: {
-        pagination: false,
-        commitsPerPage: 123,
-        interval: 345
-      }};
-      scope.toggleSlideShowEffect();
-
-      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(1);
-      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(5);
-    });
-    it("should not reset the commitsPerPage value if the pagination is enabled", function() {
+    beforeEach(function() {
       scope.monitorConfigurationFormModel = { vcs: {
         pagination: true,
         commitsPerPage: 123,
-        interval: 1000
+        interval: 345
       }};
+    });
+    it("resets the commitsPerPage and interval values if the pagination is disabled", function() {
+      scope.monitorConfigurationFormModel.vcs.pagination = true;
+
+      scope.toggleSlideShowEffect();
+      
+      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(1);
+      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(5);
+    });
+    it("not reset the commitsPerPage value if the pagination is enabled", function() {
+      scope.monitorConfigurationFormModel.vcs.pagination = false;
+
+      scope.toggleSlideShowEffect();
+      
+      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(123);
+      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(345);
+    });
+    it("applies the changes to the scope", function() {
+      scope.monitorConfigurationFormModel.vcs.pagination = false;
+
       scope.toggleSlideShowEffect();
 
-      expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(123);
-      expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(1000);
+      expect(scope.$apply).toHaveBeenCalledWith('monitorConfigurationFormModel.vcs.pagination');
     });
   });
 

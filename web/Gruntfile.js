@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         vendor: [
           './bower_components/underscore/underscore.js',
           './bower_components/moment/min/moment.min.js',
-          './lib/sinon-1.7.3.js'
+          './bower_components/sinonjs/sinon.js'
         ]
       }
     },

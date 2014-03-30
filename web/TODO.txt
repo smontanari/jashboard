@@ -1,4 +1,3 @@
-remove steal
 upgrade angular
 upgrade jasmine
 refactor specs

@@ -22,6 +22,7 @@
     "require-less": "~0.1",
     "qunit": "~1.14",
     "funcunit": "~2.0",
-    "smocker": "latest"
+    "sinonjs": "~1.9",
+    "smocker": "~0.4"
   }
 }

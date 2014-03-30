@@ -1,4 +1,4 @@
-define(['lib/sinon-1.7.3', 'bower_components/smocker/smocker'], function() {
+define(['bower_components/sinonjs/sinon', 'bower_components/smocker/smocker'], function() {
   var regexp = /\?test_scenario=(\w+)/
   var match = regexp.exec(window.location.search);
   if (match) {

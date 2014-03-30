@@ -39,16 +39,12 @@ task :copy_lib_files => [TARGET_DIR, TARGET_DIR_WEB] do
   mkdir_p "#{TARGET_DIR_WEB}/lib"
   [
     "#{WEB_ROOT}/lib/jquery.cycle2.min.js",
-    "#{WEB_ROOT}/lib/stealconfig.js"
   ].each {|f| cp(f, "#{TARGET_DIR_WEB}/lib")}
-  mkdir_p "#{TARGET_DIR_WEB}/lib/steal"
-  cp("#{WEB_ROOT}/lib/steal/steal.production.js", "#{TARGET_DIR_WEB}/lib/steal/steal.js")
-  cp_r("#{WEB_ROOT}/lib/steal/dev", "#{TARGET_DIR_WEB}/lib/steal")
 end
 
 task :copy_app_files => [TARGET_DIR, TARGET_DIR_WEB] do
   mkdir_p "#{TARGET_DIR_WEB}/app"
-  copy_and_replace("#{WEB_ROOT}/app/loader.js", "#{TARGET_DIR_WEB}/app/loader.js", /var\s+JASHBOARD_ENVIRONMENT\s+=\s+'development';/, "var JASHBOARD_ENVIRONMENT = 'production';")
+  copy_and_replace("#{WEB_ROOT}/app/configuration.js", "#{TARGET_DIR_WEB}/app/configuration.js", /var\s+JASHBOARD_ENVIRONMENT\s+=\s+'development';/, "var JASHBOARD_ENVIRONMENT = 'production';")
   cp "#{WEB_ROOT}/bower.json", "#{TARGET_DIR_WEB}"
   system 'npm install', {chdir: WEB_ROOT}
   system 'grunt build', {chdir: WEB_ROOT}

@@ -8,7 +8,7 @@
     },
     production: {
       application: 'app/jashboard.min',
-      stylesheet: 'css!app/jashboard-prod.min'
+      stylesheet: 'css!app/jashboard.min'
     }
   };
 
@@ -32,7 +32,7 @@
       'angular':                    'bower_components/angular/angular.min',
       'angular-route':              'bower_components/angular-route/angular-route.min',
       'angular-ui':                 'bower_components/angular-ui-utils/ui-utils.min',
-      'jashboard-app':              environment[JASHBOARD_ENVIRONMENT].application
+      'jashboard-main':              environment[JASHBOARD_ENVIRONMENT].application
     },
     map: {
       '*': {
@@ -61,8 +61,7 @@
       },
       'angular-route': ['angular'],
       'angular-ui': ['angular'],
-      'jashboard-app': [
-        environment[JASHBOARD_ENVIRONMENT].stylesheet,
+      'jashboard-main': [
         'underscore',
         'angular',
         'angular-route',
@@ -76,7 +75,8 @@
     }
   });
 
-  require(['jashboard-app'], function(application) {
+  require(['jashboard-main'], function(application) {
+    require([environment[JASHBOARD_ENVIRONMENT].stylesheet]);
     application.run();
     console.info('jashboard running!');
   });

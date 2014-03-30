@@ -1,4 +1,3 @@
-fix deployment scripts
 upgrade jasmine
 refactor specs
 change error style

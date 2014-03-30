@@ -1,5 +1,5 @@
-upgrade angular
+fix deployment scripts
 upgrade jasmine
 refactor specs
-fix deployment scripts
+change error style
 upgrade bootstrap

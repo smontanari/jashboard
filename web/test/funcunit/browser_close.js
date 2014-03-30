@@ -1,8 +1,8 @@
 jashboard.functionalTests.push(function () {
   module("Global teardown",{
     teardown: function() {
-      S.win.close();
+      F.win.close();
     }
 	});
-  test("closing browser", function() {});
+  test("closing browser", function() {expect(0);});
 });

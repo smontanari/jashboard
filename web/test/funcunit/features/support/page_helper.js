@@ -1,16 +1,16 @@
 var pageHelper = (function(helper) {
   helper.inputText = function(inputName, text) {
     var selector = "input[name='" + inputName + "']";
-    S(selector).visible().focus().type("");
-    S(selector).visible().focus().type(text, function() {
-      S(selector).trigger('input');
+    F(selector).visible().focus().type("");
+    F(selector).visible().focus().type(text, function() {
+      F(selector).trigger('input');
     });
   };
 
   helper.toggleInput = function(inputName, value) {
-    var isChecked = S("input[name='" + inputName + "']").attr("checked") === "checked";
+    var isChecked = F("input[name='" + inputName + "']").attr("checked") === "checked";
     if (value !== isChecked) {
-      S("input[name='" + inputName + "']").click();
+      F("input[name='" + inputName + "']").click();
     }
   };
 
@@ -21,43 +21,43 @@ var pageHelper = (function(helper) {
     };
     options = _.defaults(options, defaults);
     if (options.elementSelector) {
-      S(options.elementSelector).visible().mouseover();
+      F(options.elementSelector).visible().mouseover();
     }
     FuncUnit.wait(options.dragStartDelay, function() {
-      S(options.handleSelector).mouseover();
-      S(options.handleSelector).drag({to: options.offset, duration: options.duration});
+      F(options.handleSelector).mouseover();
+      F(options.handleSelector).drag({to: options.offset, duration: options.duration});
     });
   };
 
   helper.verifyInputValue = function(inputName, value, errorMessage) {
-    S("input[name='" + inputName + "']").visible().val(value, errorMessage);
+    F("input[name='" + inputName + "']").visible().val(value, errorMessage);
   };
 
   helper.verifyElementEnabled = function(selector, message) {
-    S(selector).visible(function() {
-      var disabled = S(selector).attr("disabled");
+    F(selector).visible(function() {
+      var disabled = F(selector).attr("disabled");
       ok(_.isEmpty(disabled), message);
     });
   };
 
   helper.verifyElementDisabled = function(selector, message) {
-    S(selector).visible(function() {
-      var disabled = S(selector).attr("disabled");
+    F(selector).visible(function() {
+      var disabled = F(selector).attr("disabled");
       ok(!_.isEmpty(disabled), message);
     });
   };
 
   helper.verifyElementPosition = function(selector, expectedPosition) {
-    S(selector).visible(function() {
-      var actualPosition = S(selector).position();
+    F(selector).visible(function() {
+      var actualPosition = F(selector).position();
       equal(actualPosition.top, expectedPosition.top, "should have Y coordinate: " + expectedPosition.top);
       equal(actualPosition.left, expectedPosition.left, "should have X coordinate: " + expectedPosition.left);
     });
   };
   helper.verifyElementSize = function(selector, expectedSize) {
-    S(selector).visible(function() {
-      var actualWidth = S(selector).width();
-      var actualHeight = S(selector).height();
+    F(selector).visible(function() {
+      var actualWidth = F(selector).width();
+      var actualHeight = F(selector).height();
       ok((expectedSize.width - 10) < actualWidth && actualWidth < (expectedSize.width + 10), 
         "Element width should be == " + expectedSize.width);
       ok((expectedSize.height - 10) < actualHeight && actualHeight < (expectedSize.height + 10),
@@ -65,17 +65,17 @@ var pageHelper = (function(helper) {
     });
   };
   helper.verifyElementContent = function(selector, expectedData) {
-    S(selector).visible(function() {
+    F(selector).visible(function() {
       _.each(_.keys(expectedData), function(propertySelector) {
-        equal(S(selector + " " + propertySelector).text().trim(), expectedData[propertySelector], "should have content: " + expectedData[propertySelector]);
+        equal(F(selector + " " + propertySelector).text().trim(), expectedData[propertySelector], "should have content: " + expectedData[propertySelector]);
       });
     });
   };
   helper.verifyInputError = function(input, expectedError, callback) {
     FuncUnit.wait(300, function() {
       pageHelper.inputText(input.inputName, input.inputValue);
-      S(expectedError.errorSelector).visible(function() {
-        equal(S(expectedError.errorSelector).text().trim(), expectedError.errorMessage, "The error message is equal to " + expectedError.message);
+      F(expectedError.errorSelector).visible(function() {
+        equal(F(expectedError.errorSelector).text().trim(), expectedError.errorMessage, "The error message is equal to " + expectedError.message);
       }, "should display error");
       if (_.isFunction(callback)) {
         callback();

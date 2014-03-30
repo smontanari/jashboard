@@ -1,8 +1,27 @@
+require.config({
+  baseUrl: '.',
+  paths: {
+    'underscore': 'bower_components/underscore/underscore',
+    'jquery':     'bower_components/jquery/jquery.min',
+    'funcunit':   'bower_components/funcunit/dist/funcunit',
+    'test':       'test/funcunit'
+  }
+});
+
 var jashboard = {
-  functionalTests: []
+  testFeatures: []
 };
 
-(function() {
+require([
+  'underscore',
+  'jquery',
+  'funcunit',
+  'test/features/support/page_helper',
+  'test/features/support/jashboard_feature_helper',
+  'test/features/support/build_monitor_feature_helper',
+  'test/features/support/vcs_monitor_feature_helper',
+  'test/funcunit_helper'
+], function() {
   var feature_sets = {
     misc_features: [
       'tabs_display',
@@ -66,27 +85,20 @@ var jashboard = {
   };
 
   var featurePath = function(featureName) {
-    return "test/funcunit/features/" + featureName + ".js";
+    return "test/features/" + featureName;
   }
 
-  steal(
-    "bower_components/underscore/underscore.js",
-    "funcunit/funcunit.js",
-    "test/funcunit/features/support/page_helper.js",
-    "test/funcunit/features/support/jashboard_feature_helper.js",
-    "test/funcunit/features/support/build_monitor_feature_helper.js",
-    "test/funcunit/features/support/vcs_monitor_feature_helper.js",
-    "test/funcunit/funcunit_helper.js",
-    function() {
-      var features = _.map(selectFeatures(), featurePath);
-      features.push(function() {
-        steal("test/funcunit/browser_close.js", function() {
-          _.each(jashboard.functionalTests, function(test) {
-            test();
-          });
-        });
-      });
-      steal.apply(null, features);
-    }
-  );
+  var features = _.map(selectFeatures(), featurePath);
+
+  require(features, function() {
+    function closeBrowser() {
+      if (_.every(jashboard.testFeatures, function(feature) { return feature.completed; })) {
+        module('Shutdown');
+        test("closing browser", function() {expect(0); F.win.close();});
+      } else {
+        _.delay(closeBrowser, 1000);
+      }
+    };
+    closeBrowser();
+  });
 })();

@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Monitor resizing", "monitor_layout", function() {
-  test("should display monitors with the given size and be able to resize them", function() {
+  this.createTest("should display monitors with the given size and be able to resize them", function() {
     pageHelper.verifyElementSize("#monitor_1", {width: 240, height: 140});
     pageHelper.verifyElementSize("#monitor_2", {width: 270, height: 150});
 

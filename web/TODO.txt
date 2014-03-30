@@ -1,5 +1,3 @@
-upgrade jquery
-upgrade funcunit
 remove steal
 upgrade angular
 upgrade jasmine

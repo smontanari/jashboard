@@ -1,8 +1,8 @@
 funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions", function() {
-  test("should update the jenkins monitor properties", function() {
+  this.createTest("should update the jenkins monitor properties", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
 
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
 
     pageHelper.verifyInputValue("buildServerName", "zombie-dev.host.com", "display the existing hostname");
     pageHelper.verifyInputValue("buildServerPort", "9080", "display the existing port");
@@ -15,22 +15,22 @@ funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions", func
       buildId: "new_build"
     });
 
-    S("#configuration-save").visible().click();
+    F("#configuration-save").visible().click();
 
     FuncUnit.wait(500, function() {
       jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
-      S("#configuration-next").visible().click();
+      F("#configuration-next").visible().click();
       pageHelper.verifyInputValue("buildServerName", "zombie-test.host.com", "display the modified hostname");
       pageHelper.verifyInputValue("buildServerPort", "5678", "display the modified port");
       pageHelper.verifyInputValue("jenkinsBuildId", "new_build", "display the modified buid_id");
     });
   });
 
-  test("should update the go monitor properties", function() {
-    S("#tab-dashboard_2").visible().click();
+  this.createTest("should update the go monitor properties", function() {
+    F("#tab-dashboard_2").visible().click();
     jashboardFeatureHelper.triggerMonitorAction("#monitor_2", "edit");
 
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
 
     pageHelper.verifyInputValue("buildServerName", "epic-ci.test.com", "display the existing hostname");
     pageHelper.verifyInputValue("buildServerPort", "81", "display the existing port");
@@ -47,11 +47,11 @@ funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions", func
       job: "new_job"
     });
 
-    S("#configuration-save").visible().click();
+    F("#configuration-save").visible().click();
 
     FuncUnit.wait(500, function() {
       jashboardFeatureHelper.triggerMonitorAction("#monitor_2", "edit");
-      S("#configuration-next").visible().click();
+      F("#configuration-next").visible().click();
       pageHelper.verifyInputValue("buildServerName", "epic-ci.uat.com", "display the modified hostname");
       pageHelper.verifyInputValue("buildServerPort", "4777", "display the modified port");
       pageHelper.verifyInputValue("goPipeline", "new_pipeline", "display the existing pipeline");

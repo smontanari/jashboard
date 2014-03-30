@@ -20,6 +20,8 @@
   },
   "devDependencies": {
     "require-less": "~0.1",
+    "qunit": "~1.14",
+    "funcunit": "~2.0",
     "smocker": "latest"
   }
 }

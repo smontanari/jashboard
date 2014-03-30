@@ -10,11 +10,11 @@ funcunitHelper.testFeature("Dashboard validation", "dashboard_actions", function
       }
     );
   };
-  test("should validate the name when creating a dashboard", function() {
+  this.createTest("should validate the name when creating a dashboard", function() {
     jashboardFeatureHelper.openDashboardDialog();
     
     pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
-    S(errorMessageSelector).invisible("should not display error");
+    F(errorMessageSelector).invisible("should not display error");
     
     pageHelper.inputText("dashboardName", "test name");
     pageHelper.verifyElementEnabled(saveButton, "the Save button should be enabled");
@@ -22,10 +22,10 @@ funcunitHelper.testFeature("Dashboard validation", "dashboard_actions", function
     verifyDashboardNameError();
   });
 
-  test("should validate the name when editing a dashboard", function() {
+  this.createTest("should validate the name when editing a dashboard", function() {
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_1", "edit");
 
-    S(errorMessageSelector).invisible("should not display error");
+    F(errorMessageSelector).invisible("should not display error");
     pageHelper.verifyElementEnabled(saveButton, "the Save button should be enabled");
 
     verifyDashboardNameError();

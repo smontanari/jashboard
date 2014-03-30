@@ -1,6 +1,6 @@
 funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_monitor_runtime", function() {
-  test("should update the monitor runtime data", function() {
-    S("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible();
+  this.createTest("should update the monitor runtime data", function() {
+    F("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible();
     pageHelper.verifyElementContent("#monitor_1", {
       '.monitor-name': "Epic build",
       '.build-time': "",
@@ -9,7 +9,7 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
       '.build-status': ""
     });
 
-    S("#monitor_1 .monitor-action.action-refresh").visible().click();
+    F("#monitor_1 .monitor-action.action-refresh").visible().click();
     
     FuncUnit.wait(1000, function() {
       pageHelper.verifyElementContent("#monitor_1", {
@@ -21,14 +21,14 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
       });
     });
   });
-  test("should update the monitor runtime data at the given intervals", function() {
-    S("#monitor_3 .monitor-title .monitor-icon-ajax-error").visible("should display an error icon");
+  this.createTest("should update the monitor runtime data at the given intervals", function() {
+    F("#monitor_3 .monitor-title .monitor-icon-ajax-error").visible("should display an error icon");
 
     FuncUnit.wait(2500, function() {
-      S("#monitor_3 .monitor-title .monitor-icon-ajax-error").invisible("should not display an error icon");
+      F("#monitor_3 .monitor-title .monitor-icon-ajax-error").invisible("should not display an error icon");
     });
     FuncUnit.wait(2500, function() {
-      S("#monitor_3 .monitor-title .monitor-icon-ajax-error").visible("should display an error icon");
+      F("#monitor_3 .monitor-title .monitor-icon-ajax-error").visible("should display an error icon");
     });
   });
 });

@@ -1,40 +1,40 @@
 funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", function() {
-  test("should validate build monitor fields on creation", function() {
+  this.createTest("should validate build monitor fields on creation", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test jenkins-monitor",
       monitorRefresh: "30",
       monitorType: "build"
     });
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
     
     pageHelper.verifyElementDisabled("#configuration-save", "the Save button should be disabled");
 
-    S("#buildServerNameRequiredError").invisible("should not display error");
-    S("#buildServerPortRequiredError").invisible("should not display error");
-    S("#buildServerPortNumberError").invisible("should not display error");
+    F("#buildServerNameRequiredError").invisible("should not display error");
+    F("#buildServerPortRequiredError").invisible("should not display error");
+    F("#buildServerPortNumberError").invisible("should not display error");
     pageHelper.inputText("buildServerName", "test name");
     pageHelper.inputText("buildServerPort", "123");
-    S("#ciServerType-go-tab").visible().click();
+    F("#ciServerType-go-tab").visible().click();
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("go");
-    S("#ciServerType-jenkins-tab").visible().click();
+    F("#ciServerType-jenkins-tab").visible().click();
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("jenkins");
   });
   
-  test("should validate build monitor fields on modification", function() {
+  this.createTest("should validate build monitor fields on modification", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
 
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("jenkins");
 
-    S("#cancelMonitor").visible().click();
+    F("#cancelMonitor").visible().click();
 
-    S("#tab-dashboard_2").visible().click();
+    F("#tab-dashboard_2").visible().click();
     FuncUnit.wait(300, function() {
       jashboardFeatureHelper.triggerMonitorAction("#monitor_2", "edit");
     });
 
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("go");
   });
 });

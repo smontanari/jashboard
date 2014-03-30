@@ -1,12 +1,12 @@
 funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions", function() {
-  test("should create a new jenkins build monitor", function() {
+  this.createTest("should create a new jenkins build monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test jenkins-monitor",
       monitorRefresh: "30",
       monitorType: "build"
     });
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
 
     buildMonitorFeatureHelper.inputBuildMonitorData(true, {
       configurationType: "jenkins",
@@ -15,10 +15,10 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
       buildId: "jenkins-build-123"
     });
 
-    S("#configuration-save").visible().click();
+    F("#configuration-save").visible().click();
 
-    S("#dashboard_1 .monitor-panel").size(3, function() {
-      S("#monitor_101").visible();
+    F("#dashboard_1 .monitor-panel").size(3, function() {
+      F("#monitor_101").visible();
 
       FuncUnit.wait(500, function() {
         pageHelper.verifyElementContent("#monitor_101",
@@ -33,14 +33,14 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
       });
     });
   });
-  test("should create a new go build monitor", function() {
+  this.createTest("should create a new go build monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test go-monitor",
       monitorRefresh: "30",
       monitorType: "build"
     });
-    S("#configuration-next").visible().click();
+    F("#configuration-next").visible().click();
 
     buildMonitorFeatureHelper.inputBuildMonitorData(true, {
       configurationType: "go",
@@ -51,10 +51,10 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
       job: "test-job"
     });
 
-    S("#configuration-save").visible().click();
+    F("#configuration-save").visible().click();
 
-    S("#dashboard_1 .monitor-panel").size(3, function() {
-      S("#monitor_101").visible();
+    F("#dashboard_1 .monitor-panel").size(3, function() {
+      F("#monitor_101").visible();
 
       FuncUnit.wait(500, function() {
         pageHelper.verifyElementContent("#monitor_101",

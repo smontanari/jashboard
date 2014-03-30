@@ -18,12 +18,12 @@
     });
 
     this.put(/^\/ajax\/dashboard\/(\w+)$/).respondWith(function(url, data, headers, dashboard_id) {
-      steal.dev.log("dashboard[" + dashboard_id + "] updated");
+      console.log("dashboard[" + dashboard_id + "] updated");
       return {status: 204, delay: 1};
     });
     
     this.delete(/^\/ajax\/dashboard\/(\w+)$/).respondWith(function(url, data, headers, dashboard_id) {
-      steal.dev.log("dashboard[" + dashboard_id + "] deleted");
+      console.log("dashboard[" + dashboard_id + "] deleted");
       return {status: 204, delay: 1};
     });
   });

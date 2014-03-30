@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Monitor positioning", "monitor_layout", function() {
-  test("should layout monitors in the given position and be able to move them around", function() {
+  this.createTest("should layout monitors in the given position and be able to move them around", function() {
     pageHelper.verifyElementPosition("#monitor_1", {top: 10, left: 10});
     pageHelper.verifyElementPosition("#monitor_2", {top: 200, left: 350});
 

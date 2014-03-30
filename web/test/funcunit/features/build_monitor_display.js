@@ -1,8 +1,8 @@
 funcunitHelper.testFeature("Display build monitor information", "display_dashboards_data", function() {
-  test("should load and display build monitor data", function() {
-    S("#tab-dashboard_3").visible().click();
-    S(".build-panel-runtime").invisible("No build monitors are visible");
-    S("#tab-dashboard_2").visible().click();
+  this.createTest("should load and display build monitor data", function() {
+    F("#tab-dashboard_3").visible().click();
+    F(".build-panel-runtime").invisible("No build monitors are visible");
+    F("#tab-dashboard_2").visible().click();
     pageHelper.verifyElementContent("#monitor_2",
       {
         '.monitor-name': "Epic build",
@@ -13,7 +13,7 @@ funcunitHelper.testFeature("Display build monitor information", "display_dashboa
       }
     );
 
-    S("#tab-dashboard_1").visible().click();
+    F("#tab-dashboard_1").visible().click();
     pageHelper.verifyElementContent("#monitor_1",
       {
         '.monitor-name': "Zombie-Dash build",

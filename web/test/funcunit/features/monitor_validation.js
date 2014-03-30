@@ -1,10 +1,10 @@
 funcunitHelper.testFeature("Monitor validation", "display_dashboards_data", function() {
-  test("should validate the monitor basic properties when creating a monitor", function() {
+  this.createTest("should validate the monitor basic properties when creating a monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     pageHelper.verifyElementDisabled("#configuration-next", "the Next button should be disabled");
 
     _.each(["#monitorNameRequiredError", "#monitorRefreshNumberError", "#monitorRefreshPositiveNumberError"], function (selector) {
-      S(selector).invisible("should not display error");  
+      F(selector).invisible("should not display error");  
     });
 
     pageHelper.inputText("monitorName", "test name");
@@ -35,10 +35,10 @@ funcunitHelper.testFeature("Monitor validation", "display_dashboards_data", func
     );
   });
 
-  test("should validate the monitor basic properties when editing a monitor", function() {
+  this.createTest("should validate the monitor basic properties when editing a monitor", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
     _.each(["#monitorNameRequiredError", "#monitorRefreshNumberError", "#monitorRefreshPositiveNumberError"], function (selector) {
-      S(selector).invisible("should not display error");  
+      F(selector).invisible("should not display error");  
     });
     pageHelper.verifyElementEnabled("#configuration-next", "the Next button should be enabled");
 

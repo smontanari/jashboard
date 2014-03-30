@@ -42,8 +42,8 @@ define(['test/scenario_utils'], function() {
       var data = JSON.parse(requestData);
       monitorCounter++;
       storedMonitors.push({id: "monitor_" + monitorCounter, type: data.type, configuration: data.configuration});
-      steal.dev.log("created monitor");
-      steal.dev.log(data);
+      console.log("created monitor");
+      console.log(data);
       return {
         status: 201,
         content: {
@@ -70,8 +70,8 @@ define(['test/scenario_utils'], function() {
     });
 
     this.put(/^\/ajax\/monitor\/(\w+)\/configuration$/).respondWith(function(url, data, headers, monitor_id) {
-      steal.dev.log("monitor[" + monitor_id + "] configuration changed to ");
-      steal.dev.log(data);
+      console.log("monitor[" + monitor_id + "] configuration changed to ");
+      console.log(data);
       var monitor = _.find(storedMonitors, function(m) {
         return monitor_id === m.id;
       });

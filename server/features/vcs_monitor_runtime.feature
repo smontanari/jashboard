@@ -3,6 +3,7 @@ Feature: Get vcs monitor runtime data
   As a jashboard client 
   I want to request runtime information for an existing monitor  
 
+  @wip
   Scenario: Load vcs monitor runtime returns corresponding runtime data
     Given the following monitors
     | id        | name        | type | refresh_interval | position | size    | configuration                                                            |

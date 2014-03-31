@@ -1,5 +1,5 @@
-require([
-  'jashboard/plugins/ipsum/MonitorAdapter.js',
-  'jashboard/plugins/ipsum/IpsumMonitorFormValidationRules.js',
-  'jashboard/plugins/ipsum/IpsumMonitorFormController.js'
-]);
+define([
+  'jashboard/plugins/ipsum/MonitorAdapter',
+  'jashboard/plugins/ipsum/IpsumMonitorFormValidationRules',
+  'jashboard/plugins/ipsum/IpsumMonitorFormController'
+], {});

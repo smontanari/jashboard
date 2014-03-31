@@ -1,10 +1,10 @@
-require([
-  'jashboard/plugins/build/buildTypes.js',
-  'jashboard/plugins/build/MonitorAdapter.js',
-  'jashboard/plugins/build/BuildMonitorFormValidationRules.js',
-  'jashboard/plugins/build/JenkinsMonitorFormValidationRules.js',
-  'jashboard/plugins/build/jenkinsConfigurationHandler.js',
-  'jashboard/plugins/build/GoMonitorFormValidationRules.js',
-  'jashboard/plugins/build/BuildMonitorFormController.js',
-  'jashboard/plugins/build/goConfigurationHandler.js'
-]);
+define([
+  'jashboard/plugins/build/buildTypes',
+  'jashboard/plugins/build/MonitorAdapter',
+  'jashboard/plugins/build/BuildMonitorFormValidationRules',
+  'jashboard/plugins/build/JenkinsMonitorFormValidationRules',
+  'jashboard/plugins/build/jenkinsConfigurationHandler',
+  'jashboard/plugins/build/GoMonitorFormValidationRules',
+  'jashboard/plugins/build/BuildMonitorFormController',
+  'jashboard/plugins/build/goConfigurationHandler'
+], {});

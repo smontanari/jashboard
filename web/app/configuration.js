@@ -3,7 +3,7 @@
 
   var environment = {
     development: {
-      application: 'jashboard/development_loader',
+      application: 'app/dev/loader',
       stylesheet: 'less!style/jashboard'
     },
     production: {

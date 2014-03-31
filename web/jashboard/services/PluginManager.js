@@ -9,12 +9,11 @@
           "convertDataToRuntimeInfo",
           "defaultSize"
         ];
-
         if (_.isUndefined(jashboard.plugin[typeIdentifier])) {
-          throw "namespace [jashboard.plugins." + typeIdentifier + "] not defined";
+          throw "namespace [jashboard.plugin." + typeIdentifier + "] not defined";
         }
         if (!_.isFunction(jashboard.plugin[typeIdentifier].MonitorAdapter)) {
-          throw "Function [jashboard.plugins." + typeIdentifier + ".MonitorAdapter] not defined";
+          throw "Function [jashboard.plugin." + typeIdentifier + ".MonitorAdapter] not defined";
         }
         var adapter = new jashboard.plugin[typeIdentifier].MonitorAdapter();
         _.each(requiredMethods, function(method) {

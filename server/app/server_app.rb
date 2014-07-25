@@ -33,11 +33,15 @@ module Jashboard
     end
 
     error do
-      # puts "********"
-      # puts env['sinatra.error']
-      # puts "********"
+      if self.class.development? || self.class.test?
+        puts env['sinatra.error'].backtrace
+      end
       status 500
       env['sinatra.error'].to_s
+    end
+
+    get '/' do
+      redirect '/index.html'
     end
 
     get '/ajax/dashboards' do

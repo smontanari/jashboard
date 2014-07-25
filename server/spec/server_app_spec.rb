@@ -26,6 +26,15 @@ module Jashboard
       end
     end
 
+    describe 'redirection' do
+      it 'redirects GET / to /index.html' do
+        get '/'
+
+        last_response.status.should == 302
+        last_response['Location'].should include('/index.html')
+      end
+    end
+
     context "Error handling" do
       it("should return a response with an error description") do
         @mock_repository.should_receive(:load_dashboards).and_raise("test_error")

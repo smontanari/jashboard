@@ -9,7 +9,7 @@ gem 'uuidtools'
 # plugins dependencies
 gem 'nokogiri'
 gem 'ipsum'
-gem 'grit'
+gem 'rugged'
 gem 'go_api_client'
 
 group :test do

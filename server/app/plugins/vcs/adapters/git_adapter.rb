@@ -1,4 +1,4 @@
-require 'grit'
+require 'rugged'
 require 'plugins/vcs/vcs_runtime_info'
 
 module Jashboard
@@ -6,15 +6,18 @@ module Jashboard
     module Vcs
       module GitAdapter
         def get_git_runtime_info(configuration)
-          repo = Grit::Repo.new(configuration.working_directory)
           branch = 'master'
           branch = configuration.branch unless configuration.branch.nil? || configuration.branch.empty?
-          repo.commits(branch, configuration.history_length).map do |commit|
+          repo = Rugged::Repository.discover(configuration.working_directory)
+          walker = Rugged::Walker.new(repo)
+          walker.sorting(Rugged::SORT_DATE)
+          walker.push(repo.branches[branch].target_id)
+          walker.first(configuration.history_length).map do |commit|
             VcsRuntimeInfo.new(
-              commit.id,
-              commit.authored_date,
-              commit.author.name,
-              commit.author.email,
+              commit.oid,
+              commit.time,
+              commit.author[:name],
+              commit.author[:email],
               commit.message
             )
           end

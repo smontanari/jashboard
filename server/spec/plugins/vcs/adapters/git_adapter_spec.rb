@@ -1,81 +1,75 @@
 require 'spec_helper'
 require 'json_spec'
 require 'stringio'
-require 'grit'
 require 'plugins/vcs/adapters/git_adapter'
 
 module Jashboard
   module Plugin
     module Vcs
+      StubCommit = Struct.new(:oid, :author, :time, :message)
       describe GitAdapter do
-        before(:each) do
-          adapter_class = Class.new do
-            include GitAdapter
-          end
-          @adapter = adapter_class.new
-        end
+        let(:subject) {Object.new.extend GitAdapter}
 
-        context("VCS runtime info retrieval") do
+        describe("VCS runtime info retrieval") do
+          let(:repo) {double('repository')}
+          let(:walker) {double('walker')}
+          let(:branch) {double('branch')}
+
           before(:each) do
-            @repo = double
-            @repo.stub(:commits => [])
-            Grit::Repo.should_receive(:new).with("test-basedir").and_return(@repo)
-            
+            Rugged::Repository.should_receive(:discover).with("test-basedir").and_return(repo)
           end
 
-          it("should retrieve the given number of commits from the 'master' branch if none is specified") do
-            @repo.should_receive(:commits).with('master', 123)
-            @configuration = {working_directory: "test-basedir", history_length: 123, branch: nil, type: "git"}.to_struct
+          context 'non empty repository' do
+            shared_examples 'retrieving commits from branch' do |input_branch_name, actual_branch_name|
+              commits = [
+                StubCommit.new("test-commit_1", {name: "test-committer_1", email: "committer1@test.com"}, "2012-09-10 17:28:34 +1000", "test-message1"),
+                StubCommit.new("test-commit_2", {name: "test-committer_2", email: "committer2@test.com"}, "2012-09-13 11:56:19 +1000", "test-message2")
+              ]
 
-            runtime_info = @adapter.get_git_runtime_info(@configuration)
-          end
+              before(:each) do
+                repo.stub(:branches).and_return({actual_branch_name => branch})
+                branch.stub(:target_id).and_return('test_sha')
+                Rugged::Walker.should_receive(:new).with(repo).and_return(walker)
+                walker.should_receive(:sorting).with(Rugged::SORT_DATE)
+                walker.should_receive(:push).with('test_sha')
+                walker.should_receive(:first).with(commits.count).and_return(commits)
+              end
 
-          it("should retrieve the given number of commits from the 'master' branch if an empty string is specified") do
-            @repo.should_receive(:commits).with('master', 123)
-            @configuration = {working_directory: "test-basedir", history_length: 123, branch: "", type: "git"}.to_struct
+              it("retrieves the given number of commits from the #{actual_branch_name} branch") do
+                configuration = {
+                  working_directory: "test-basedir",
+                  history_length: commits.count,
+                  branch: input_branch_name,
+                  type: "git"
+                }.to_struct
 
-            runtime_info = @adapter.get_git_runtime_info(@configuration)
-          end
+                runtime_info = subject.get_git_runtime_info(configuration)
+                runtime_info.count.should == commits.count
+                commits.each_with_index do |commit, index|
+                  runtime_info[index].revision_id.should == commit.oid
+                  runtime_info[index].date.should == commit.time
+                  runtime_info[index].author.should == commit.author[:name]
+                  runtime_info[index].email.should == commit.author[:email]
+                  runtime_info[index].message.should == commit.message
+                end
+              end
+            end
 
-          it("should retrieve the given number of commits from the given branch") do
-            @configuration = {working_directory: "test-basedir", history_length: 123, branch: "test-branch", type: "git"}.to_struct
-            @repo.should_receive(:commits).with('test-branch', 123)
+            before(:each) do
+              repo.stub(:empty? => false)
+            end
 
-            runtime_info = @adapter.get_git_runtime_info(@configuration)
-          end
+            context 'no branch specified' do
+              include_examples 'retrieving commits from branch', nil, 'master'
+            end
 
-          it("should return a collection of git commit info objects") do
-            @configuration = {working_directory: "test-basedir", history_length: 123, branch: nil, type: "git"}.to_struct
-            commit1 = stub_commit("test-commit_1", "test-committer_1", "committer1@test.com", "2012-09-10 17:28:34 +1000", "test-message1")
-            commit2 = stub_commit("test-commit_2", "test-committer_2", "committer2@test.com", "2012-09-13 11:56:19 +1000", "test-message2")
-      
-            @repo.stub(:commits => [commit1, commit2])
+            context 'empty branch name' do
+              include_examples 'retrieving commits from branch', '', 'master'
+            end
 
-            runtime_info = @adapter.get_git_runtime_info(@configuration)
-            runtime_info.size.should == 2
-            runtime_info[0].revision_id.should == "test-commit_1"
-            runtime_info[0].date.should == Time.parse("2012-09-10 17:28:34 +1000")
-            runtime_info[0].author.should == "test-committer_1"
-            runtime_info[0].email.should == "committer1@test.com"
-            runtime_info[0].message.should == "test-message1"
-            runtime_info[1].revision_id.should == "test-commit_2"
-            runtime_info[1].date.should == Time.parse("2012-09-13 11:56:19 +1000")
-            runtime_info[1].author.should == "test-committer_2"
-            runtime_info[1].email.should == "committer2@test.com"
-            runtime_info[1].message.should == "test-message2"
-          end
-        end
-  
-        def stub_commit(id, author_name, author_email, date, message)
-          committer = double.tap do |author|
-            author.stub(:name => author_name)
-            author.stub(:email => author_email)
-          end
-          double.tap do |commit|
-            commit.stub(:id => id)
-            commit.stub(:author => committer)
-            commit.stub(:authored_date => Time.parse(date))
-            commit.stub(:message => message)
+            context 'non master branch' do
+              include_examples 'retrieving commits from branch', 'test-branch', 'test-branch'
+            end
           end
         end
       end

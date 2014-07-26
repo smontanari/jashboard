@@ -32,15 +32,15 @@ module Jashboard
             stage3 = given_a_stage("test-stage3", true, Time.utc(2012, 5, 31, 7, 24, 15), [
               given_a_job("test-job3", "Passed", 765, Time.utc(2012, 6, 24, 9, 14, 43))
             ])
-            pipeline_run1.stub(:stages).and_return([stage1, stage2, stage3])
-            pipeline_run2.stub(:stages).and_return([stage1, stage2])
+            allow(pipeline_run1).to receive(:stages).and_return([stage1, stage2, stage3])
+            allow(pipeline_run2).to receive(:stages).and_return([stage1, stage2])
 
             last_run = double("LastRun")
-            last_run.stub(:pipelines).and_return(@pipelines)
-            GoApiClient.should_receive(:runs).
+            allow(last_run).to receive(:pipelines).and_return(@pipelines)
+            expect(GoApiClient).to receive(:runs).
               with(:host => 'test.host', :port => 1234, :pipeline_name => 'test-pipeline').
               and_return(last_run)
-            GoApiClient.stub(:build_in_progress?)
+            allow(GoApiClient).to receive(:build_in_progress?)
           end
 
           it("should always retrieve the last completed stage") do
@@ -55,9 +55,9 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.last_build_time.should == "2012-06-24 19:14:43 +1000"
-            runtime_info.duration.should == 765
-            runtime_info.success.should == true
+            expect(runtime_info.last_build_time).to eq("2012-06-24 19:14:43 +1000")
+            expect(runtime_info.duration).to eq(765)
+            expect(runtime_info.success).to eq(true)
           end
 
           it("should return last build information for a successful job") do
@@ -72,9 +72,9 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.last_build_time.should == "2012-05-13 20:49:25 +1000"
-            runtime_info.duration.should == 57
-            runtime_info.success.should == true
+            expect(runtime_info.last_build_time).to eq("2012-05-13 20:49:25 +1000")
+            expect(runtime_info.duration).to eq(57)
+            expect(runtime_info.success).to eq(true)
           end
           it("should return last build information for a successful stage") do
             configuration = {
@@ -88,9 +88,9 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.last_build_time.should == "2012-05-31 17:24:15 +1000"
-            runtime_info.duration.should == 123
-            runtime_info.success.should == true
+            expect(runtime_info.last_build_time).to eq("2012-05-31 17:24:15 +1000")
+            expect(runtime_info.duration).to eq(123)
+            expect(runtime_info.success).to eq(true)
           end
           it("should return last build information for a failed job") do
             configuration = {
@@ -104,9 +104,9 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.last_build_time.should == "2012-05-31 17:24:14 +1000"
-            runtime_info.duration.should == 32
-            runtime_info.success.should == false
+            expect(runtime_info.last_build_time).to eq("2012-05-31 17:24:14 +1000")
+            expect(runtime_info.duration).to eq(32)
+            expect(runtime_info.success).to eq(false)
           end
           it("should return last build information for a failed stage") do
             configuration = {
@@ -120,12 +120,12 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.last_build_time.should == "2012-05-13 20:49:26 +1000"
-            runtime_info.duration.should == 89
-            runtime_info.success.should == false
+            expect(runtime_info.last_build_time).to eq("2012-05-13 20:49:26 +1000")
+            expect(runtime_info.duration).to eq(89)
+            expect(runtime_info.success).to eq(false)
           end
           it("should return current build status as 0 when pipeline is not building") do
-            GoApiClient.should_receive(:build_in_progress?).
+            expect(GoApiClient).to receive(:build_in_progress?).
               with(:host => 'test.host', :port => 1234, :pipeline_name => 'test-pipeline').
               and_return(false)
             configuration = {
@@ -139,10 +139,10 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.status.should == 0
+            expect(runtime_info.status).to eq(0)
           end
           it("should return current build status as 1 when pipeline is building") do
-            GoApiClient.should_receive(:build_in_progress?).
+            expect(GoApiClient).to receive(:build_in_progress?).
               with(:host => 'test.host', :port => 1234, :pipeline_name => 'test-pipeline').
               and_return(true)
             configuration = {
@@ -156,24 +156,24 @@ module Jashboard
             
             runtime_info = @adapter.get_go_runtime_info(configuration)
 
-            runtime_info.status.should == 1
+            expect(runtime_info.status).to eq(1)
           end
         end
       def given_a_stage(name, passed = true, time = nil, jobs = [])
         stage = double("stage[#{name}]")
-        stage.stub(:name => name)
-        stage.stub(:passed? => passed)
-        stage.stub(:failed? => !passed)
-        stage.stub(:completed_at => time)
-        stage.stub(:jobs => jobs)
+        allow(stage).to receive_messages(:name => name)
+        allow(stage).to receive_messages(:passed? => passed)
+        allow(stage).to receive_messages(:failed? => !passed)
+        allow(stage).to receive_messages(:completed_at => time)
+        allow(stage).to receive_messages(:jobs => jobs)
         stage
       end
       def given_a_job(name, result, duration, time)
         job = double("job[#{name}")
-        job.stub(:name => name)
-        job.stub(:result => result)
-        job.stub(:duration => duration)
-        job.stub(:completed => time)
+        allow(job).to receive_messages(:name => name)
+        allow(job).to receive_messages(:result => result)
+        allow(job).to receive_messages(:duration => duration)
+        allow(job).to receive_messages(:completed => time)
         job
       end
       end

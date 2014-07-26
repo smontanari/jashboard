@@ -16,7 +16,7 @@ module Jashboard
         configuration = Struct.new(:type, :data).new("dummy", "test_data")
         runtime_info = obj.get_runtime_info(configuration)
 
-        runtime_info.test_runtime.should == "test_data"
+        expect(runtime_info.test_runtime).to eq("test_data")
       end
 
       it("should raise an error if a type adapter is not defined") do

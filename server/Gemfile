@@ -14,7 +14,7 @@ gem 'go_api_client'
 
 group :test do
   gem 'json', '~> 1.7.7'
-  gem 'rspec', '~> 2.14'
+  gem 'rspec', '>= 3.0'
   gem 'json_spec'
   gem 'cucumber'
   gem 'pry'

@@ -33,9 +33,9 @@ module Jashboard
 
             runtime_info = @adapter.get_jenkins_runtime_info(@configuration)
 
-            runtime_info.last_build_time.should == "2012-11-05 09:35:08 +1100"
-            runtime_info.duration.should == 25
-            runtime_info.success.should == true
+            expect(runtime_info.last_build_time).to eq("2012-11-05 09:35:08 +1100")
+            expect(runtime_info.duration).to eq(25)
+            expect(runtime_info.success).to eq(true)
           end
           it("should return last build information for a failed build") do
             stub_http_response(LAST_BUILD_URL) do
@@ -44,7 +44,7 @@ module Jashboard
 
             runtime_info = @adapter.get_jenkins_runtime_info(@configuration)
 
-            runtime_info.success.should == false
+            expect(runtime_info.success).to eq(false)
           end
           it("should return current build status as 0 when last build number is same as last completed build") do
             stub_http_response(LAST_BUILD_URL) do
@@ -56,7 +56,7 @@ module Jashboard
 
             runtime_info = @adapter.get_jenkins_runtime_info(@configuration)
 
-            runtime_info.status.should == 0
+            expect(runtime_info.status).to eq(0)
           end
           it("should return current build status as 1 when requestinglast build number is greater than last completed build") do
             stub_http_response(LAST_BUILD_URL) do
@@ -68,7 +68,7 @@ module Jashboard
 
             runtime_info = @adapter.get_jenkins_runtime_info(@configuration)
 
-            runtime_info.status.should == 1
+            expect(runtime_info.status).to eq(1)
           end
           it("should return current build status as nil when requesting project info fails") do
             stub_http_response(LAST_BUILD_URL) do
@@ -80,7 +80,7 @@ module Jashboard
 
             runtime_info = @adapter.get_jenkins_runtime_info(@configuration)
 
-            runtime_info.status.should be_nil
+            expect(runtime_info.status).to be_nil
           end
         end
       end

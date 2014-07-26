@@ -20,12 +20,12 @@ module Jashboard
 
       monitor = subject.load_monitor("test-monitor-id")
 
-      monitor.id.should == "test-monitor-id"
-      monitor.name.should == "test monitor-name"
-      monitor.type.should == 123
-      monitor.refresh_interval.should == 12
-      monitor.configuration.attr1.should == "test_attr1"
-      monitor.configuration.attr2.should == 1234
+      expect(monitor.id).to eq("test-monitor-id")
+      expect(monitor.name).to eq("test monitor-name")
+      expect(monitor.type).to eq(123)
+      expect(monitor.refresh_interval).to eq(12)
+      expect(monitor.configuration.attr1).to eq("test_attr1")
+      expect(monitor.configuration.attr2).to eq(1234)
     end
 
     it("should delete a monitor yaml file") do
@@ -39,7 +39,7 @@ module Jashboard
 
       subject.delete_monitor("test-monitor-id")
 
-      @db_helper.find_monitor("test-monitor-id").should be_nil
+      expect(@db_helper.find_monitor("test-monitor-id")).to be_nil
     end
 
     it("should store a monitor as yaml into a file") do
@@ -51,13 +51,13 @@ module Jashboard
         with_configuration(Struct.new(:attr1, :attr2).new("test_attr1", 1234)).
         build)
 
-      new_monitor.id.should_not be_nil
+      expect(new_monitor.id).not_to be_nil
       @db_helper.verify_monitor(new_monitor.id) do |monitor|
-        monitor.type.should == 123
-        monitor.name.should == "test new_name"
-        monitor.refresh_interval.should == 456
-        monitor.configuration.attr1.should == "test_attr1"
-        monitor.configuration.attr2.should == 1234
+        expect(monitor.type).to eq(123)
+        expect(monitor.name).to eq("test new_name")
+        expect(monitor.refresh_interval).to eq(456)
+        expect(monitor.configuration.attr1).to eq("test_attr1")
+        expect(monitor.configuration.attr2).to eq(1234)
       end
     end
 
@@ -80,10 +80,10 @@ module Jashboard
       subject.save_monitor(monitor)
 
       @db_helper.verify_monitor("test-new_monitor-id") do |m|
-        m.name.should == "test change name"
-        m.refresh_interval.should == 123
-        m.configuration.attr1.should == "test_changed_attr1"
-        m.configuration.attr2.should == 9876
+        expect(m.name).to eq("test change name")
+        expect(m.refresh_interval).to eq(123)
+        expect(m.configuration.attr1).to eq("test_changed_attr1")
+        expect(m.configuration.attr2).to eq(9876)
       end
     end
 
@@ -98,9 +98,9 @@ module Jashboard
 
       dashboard = subject.load_dashboard("test-dashboard-id")
 
-      dashboard.id.should == "test-dashboard-id"
-      dashboard.name.should == "test dashboard-name"
-      dashboard.monitor_ids.should == ["test-mon-1", "test-mon-2"]
+      expect(dashboard.id).to eq("test-dashboard-id")
+      expect(dashboard.name).to eq("test dashboard-name")
+      expect(dashboard.monitor_ids).to eq(["test-mon-1", "test-mon-2"])
     end
 
     it("should remove a dashboard from a yaml file") do
@@ -112,7 +112,7 @@ module Jashboard
 
       subject.delete_dashboard("test-dashboard-id")
 
-      @db_helper.find_dashboard("test-dashboard-id").should be_nil
+      expect(@db_helper.find_dashboard("test-dashboard-id")).to be_nil
     end
 
     it("should load all dashboards") do
@@ -132,13 +132,13 @@ module Jashboard
 
       dashboards = subject.load_dashboards()
 
-      dashboards.size.should == 2
-      dashboards[0].id.should == "test-dashboard-id1"
-      dashboards[0].name.should == "test dashboard-name1"
-      dashboards[0].monitor_ids.should == ["test-mon-1", "test-mon-2"]
-      dashboards[1].id.should == "test-dashboard-id2"
-      dashboards[1].name.should == "test dashboard-name2"
-      dashboards[1].monitor_ids.should == ["test-mon-3"]
+      expect(dashboards.size).to eq(2)
+      expect(dashboards[0].id).to eq("test-dashboard-id1")
+      expect(dashboards[0].name).to eq("test dashboard-name1")
+      expect(dashboards[0].monitor_ids).to eq(["test-mon-1", "test-mon-2"])
+      expect(dashboards[1].id).to eq("test-dashboard-id2")
+      expect(dashboards[1].name).to eq("test dashboard-name2")
+      expect(dashboards[1].monitor_ids).to eq(["test-mon-3"])
     end
 
     it("should store a dashboard as yaml into a new file") do
@@ -150,12 +150,12 @@ module Jashboard
           build
       )
 
-      new_dashboard.id.should_not be_nil
+      expect(new_dashboard.id).not_to be_nil
       @db_helper.verify_dashboard(new_dashboard.id) do |dashboard|
-        dashboard.name.should == "test dashboard-name"
-        dashboard.monitor_ids.length.should == 2
-        dashboard.monitor_ids[0].should == "test-mon-1"
-        dashboard.monitor_ids[1].should == "test-mon-2"
+        expect(dashboard.name).to eq("test dashboard-name")
+        expect(dashboard.monitor_ids.length).to eq(2)
+        expect(dashboard.monitor_ids[0]).to eq("test-mon-1")
+        expect(dashboard.monitor_ids[1]).to eq("test-mon-2")
       end
     end
   end

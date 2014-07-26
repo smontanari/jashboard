@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rackup -p 8001
+JASHBOARD_LOGDIR=./log bundle exec rackup -p 8001

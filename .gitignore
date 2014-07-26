@@ -2,7 +2,7 @@
 selenium.log
 testresults.xml
 .grunt
-.versions.conf
+server/log/
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*
 web/node_modules

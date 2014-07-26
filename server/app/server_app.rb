@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require 'logger'
 require 'sinatra/base'
 require "sinatra/json"
 require 'json'
@@ -13,7 +14,15 @@ module Jashboard
   class ServerApp < Sinatra::Base
     set :json_encoder, :to_json
     helpers Sinatra::JSON
+    
     enable :logging
+    log_dir = ENV['JASHBOARD_LOGDIR'] || File.join(File.dirname(__FILE__), '../log')
+    Dir.mkdir(log_dir) unless Dir.exists?(log_dir)
+    logfile = File.new("#{log_dir}/#{settings.environment}.log", 'w+')
+    logfile.sync = true
+    use Rack::CommonLogger, logfile
+    logger = Logger.new(logfile, 'a+')
+
     configure :development do |conf|
       set :public_folder, File.join(File.dirname(__FILE__), '../../web')
       set :static_cache_control, "no-cache"
@@ -34,7 +43,7 @@ module Jashboard
 
     error do
       if self.class.development? || self.class.test?
-        puts env['sinatra.error'].backtrace
+        logger.error(env['sinatra.error'].backtrace.join("\n"))
       end
       status 500
       env['sinatra.error'].to_s

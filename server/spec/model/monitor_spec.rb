@@ -20,15 +20,15 @@ module Jashboard
       monitor = MonitorBuilder.new.build
       monitor.init_from_json json
 
-      monitor.type.should == "test_type"
-      monitor.name.should == "test.monitor.name"
-      monitor.refresh_interval.should == 345
-      monitor.position.top.should == 10
-      monitor.position.left.should == 20
-      monitor.size.width.should == 100
-      monitor.size.height.should == 200
-      monitor.configuration.attr_one.should == "test_attr1"
-      monitor.configuration.attr_two.should == 123
+      expect(monitor.type).to eq("test_type")
+      expect(monitor.name).to eq("test.monitor.name")
+      expect(monitor.refresh_interval).to eq(345)
+      expect(monitor.position.top).to eq(10)
+      expect(monitor.position.left).to eq(20)
+      expect(monitor.size.width).to eq(100)
+      expect(monitor.size.height).to eq(200)
+      expect(monitor.configuration.attr_one).to eq("test_attr1")
+      expect(monitor.configuration.attr_two).to eq(123)
     end
 
     it ("should update configuration from json data") do
@@ -52,13 +52,13 @@ module Jashboard
       
       monitor.update_configuration_from_json json
 
-      monitor.id.should == "test_id"
-      monitor.name.should == "test_new_name"
-      monitor.type.should == 123
-      monitor.refresh_interval.should == 1234
-      monitor.configuration.attr_one.should == "test_attr1"
-      monitor.configuration.attr_two.should == "test_attr2_new"
-      monitor.configuration.attr_three.should == "test_attr3"
+      expect(monitor.id).to eq("test_id")
+      expect(monitor.name).to eq("test_new_name")
+      expect(monitor.type).to eq(123)
+      expect(monitor.refresh_interval).to eq(1234)
+      expect(monitor.configuration.attr_one).to eq("test_attr1")
+      expect(monitor.configuration.attr_two).to eq("test_attr2_new")
+      expect(monitor.configuration.attr_three).to eq("test_attr3")
     end
 
     it ("should update the position from json data") do
@@ -70,8 +70,8 @@ module Jashboard
       
       monitor.update_position_from_json json
 
-      monitor.position.top.should == 243
-      monitor.position.left.should == 765
+      expect(monitor.position.top).to eq(243)
+      expect(monitor.position.left).to eq(765)
     end
 
     it ("should update the size from json data") do
@@ -82,8 +82,8 @@ module Jashboard
       json = %({"width": 243, "height": 765})
       monitor.update_size_from_json json
 
-      monitor.size.width.should == 243
-      monitor.size.height.should == 765
+      expect(monitor.size.width).to eq(243)
+      expect(monitor.size.height).to eq(765)
     end
 
     it("should represent the build monitor as json") do
@@ -111,7 +111,7 @@ module Jashboard
         }
       })
 
-      monitor.to_json.should be_json_eql(expected_json).including(:id)
+      expect(monitor.to_json).to be_json_eql(expected_json).including(:id)
     end
     it("should not have position if not initialised") do
       monitor = MonitorBuilder.new.
@@ -134,7 +134,7 @@ module Jashboard
         }
       })
 
-      monitor.to_json.should be_json_eql(expected_json).including(:id)
+      expect(monitor.to_json).to be_json_eql(expected_json).including(:id)
     end
   end
 end

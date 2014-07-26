@@ -8,7 +8,7 @@ module Jashboard
         dispatcher = Plugin.load_monitor_plugins("spec/resources/test_plugins")
   
         ["type1", "type2"].each do |type|
-          dispatcher.instance_variable_get('@plugins')[type].should be_a Jashboard::Plugin.const_get "#{type.capitalize}MonitorPlugin".to_sym
+          expect(dispatcher.instance_variable_get('@plugins')[type]).to be_a Jashboard::Plugin.const_get "#{type.capitalize}MonitorPlugin".to_sym
         end
       end
     end

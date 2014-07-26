@@ -25,12 +25,12 @@ module Jashboard
           it("should return sentences in french") do
             monitor_configuration = Struct.new(:number_of_sentences, :language).new(10, "french")
             runtime_info = subject.get_runtime_info(monitor_configuration)
-            runtime_info.text.should == "10 sentences in :french"
+            expect(runtime_info.text).to eq("10 sentences in :french")
           end
           it("should return sentences in english") do
             monitor_configuration = Struct.new(:number_of_sentences, :language).new(5, "english")
             runtime_info = subject.get_runtime_info(monitor_configuration)
-            runtime_info.text.should == "5 sentences in :english"
+            expect(runtime_info.text).to eq("5 sentences in :english")
           end
         end
       end

@@ -13,8 +13,8 @@ module Jashboard
   module RSpecHelper
     def stub_http_response(url, name = nil)
       uri = double(name)
-      uri.stub(:open) { yield }
-      URI.stub(:parse).with(url).and_return(uri)
+      allow(uri).to receive(:open) { yield }
+      allow(URI).to receive(:parse).with(url).and_return(uri)
     end
 
   end

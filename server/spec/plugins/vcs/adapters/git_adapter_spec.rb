@@ -16,7 +16,7 @@ module Jashboard
           let(:branch) {double('branch')}
 
           before(:each) do
-            Rugged::Repository.should_receive(:discover).with("test-basedir").and_return(repo)
+            expect(Rugged::Repository).to receive(:discover).with("test-basedir").and_return(repo)
           end
 
           context 'non empty repository' do
@@ -27,12 +27,12 @@ module Jashboard
               ]
 
               before(:each) do
-                repo.stub(:branches).and_return({actual_branch_name => branch})
-                branch.stub(:target_id).and_return('test_sha')
-                Rugged::Walker.should_receive(:new).with(repo).and_return(walker)
-                walker.should_receive(:sorting).with(Rugged::SORT_DATE)
-                walker.should_receive(:push).with('test_sha')
-                walker.should_receive(:first).with(commits.count).and_return(commits)
+                allow(repo).to receive(:branches).and_return({actual_branch_name => branch})
+                allow(branch).to receive(:target_id).and_return('test_sha')
+                expect(Rugged::Walker).to receive(:new).with(repo).and_return(walker)
+                expect(walker).to receive(:sorting).with(Rugged::SORT_DATE)
+                expect(walker).to receive(:push).with('test_sha')
+                expect(walker).to receive(:first).with(commits.count).and_return(commits)
               end
 
               it("retrieves the given number of commits from the #{actual_branch_name} branch") do
@@ -44,19 +44,19 @@ module Jashboard
                 }.to_struct
 
                 runtime_info = subject.get_git_runtime_info(configuration)
-                runtime_info.count.should == commits.count
+                expect(runtime_info.count).to eq(commits.count)
                 commits.each_with_index do |commit, index|
-                  runtime_info[index].revision_id.should == commit.oid
-                  runtime_info[index].date.should == commit.time
-                  runtime_info[index].author.should == commit.author[:name]
-                  runtime_info[index].email.should == commit.author[:email]
-                  runtime_info[index].message.should == commit.message
+                  expect(runtime_info[index].revision_id).to eq(commit.oid)
+                  expect(runtime_info[index].date).to eq(commit.time)
+                  expect(runtime_info[index].author).to eq(commit.author[:name])
+                  expect(runtime_info[index].email).to eq(commit.author[:email])
+                  expect(runtime_info[index].message).to eq(commit.message)
                 end
               end
             end
 
             before(:each) do
-              repo.stub(:empty? => false)
+              allow(repo).to receive_messages(:empty? => false)
             end
 
             context 'no branch specified' do

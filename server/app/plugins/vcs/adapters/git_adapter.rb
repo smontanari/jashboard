@@ -18,7 +18,7 @@ module Jashboard
               commit.time,
               commit.author[:name],
               commit.author[:email],
-              commit.message
+              commit.message.strip
             )
           end
         end

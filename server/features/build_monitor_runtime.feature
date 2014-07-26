@@ -24,4 +24,4 @@ Feature: Get build monitor runtime data
 
     When I request the runtime info for monitor monitor_1
 
-    Then the app should return the error response "Connection refused - connect(2)"
+    Then the app should return the error response 'Connection refused - connect(2) for "localhost" port 8000'

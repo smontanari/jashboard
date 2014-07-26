@@ -35,7 +35,7 @@ ipsum         | random generator of sentences (inspired by the *ipsum* gem). Thi
 
 ## Installation
 ### Prerequisites
-For the backend server you will need **Ruby** (~> 1.9) and **Bundler** installed on your machine. 
+For the backend server you will need **Ruby** (~> 1.9.3) and **Bundler** installed on your machine. 
 For the frontend you will need [**npm**](https://npmjs.org/) and [**Bower**](http://bower.io/) to manage the javascript libraries, dependencies and packaging.
 
 ### Production instance
@@ -52,7 +52,7 @@ After the install complete (successfully), you can then start the Sinatra applic
 This will fire up a WEBRick server listening on port 8001. If you want a different port just change the config.ru script.  
 Now you launch your favourite browser (and I mean browser, not IE) and load the app at
 
-	http://<hostname>:8001/index.html
+	http://<hostname>:8001/
 
 ### Development instance
 This is more for test/development purposes, that is you want to modify the code, the web styles, add a new monitor plugin, etc. and then test your changes.

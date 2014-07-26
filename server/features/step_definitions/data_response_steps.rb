@@ -5,7 +5,7 @@ Then /^the app should return the json response "(.*)"$/ do |fixture_path|
   end
 end
 
-Then /^the app should return the error response "(.*)"$/ do |reponse_text|
+Then /^the app should return the error response '(.*)'$/ do |reponse_text|
   last_response.status.should == 500
   last_response.body.should == reponse_text
 end

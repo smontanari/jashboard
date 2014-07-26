@@ -10,3 +10,4 @@ web/bower_components
 web/app/jashboard*
 deploy/rvm-init.sh
 deploy/jashboard_app
+.ruby-version

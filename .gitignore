@@ -2,6 +2,7 @@
 selenium.log
 testresults.xml
 .grunt
+server/*.png
 server/log/
 server/db/*/*/*.txt
 server/db/*/*/..fsdb*

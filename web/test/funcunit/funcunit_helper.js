@@ -25,6 +25,9 @@ FuncunitFeature.prototype.createTest = function(description, fn) {
     execute: fn
   });
 };
+
+F.speed = 10;
+
 var funcunitHelper = {
   testFeature: function(featureName, scenarioName, testDefinitions) {
     var feature = new FuncunitFeature(featureName, scenarioName);

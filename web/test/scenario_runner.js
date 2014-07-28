@@ -1,5 +1,5 @@
 define(['bower_components/sinonjs/sinon', 'bower_components/smocker/smocker.min'], function() {
-  var regexp = /\?test_scenario=(\w+)/
+  var regexp = /\?test_scenario=(\w+)/;
   var match = regexp.exec(window.location.search);
   if (match) {
     var scenarioName = match[1];

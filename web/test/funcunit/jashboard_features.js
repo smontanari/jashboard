@@ -2,8 +2,6 @@ require.config({
   baseUrl: '.',
   paths: {
     'underscore': 'bower_components/underscore/underscore',
-    'jquery':     'bower_components/jquery/jquery.min',
-    'funcunit':   'bower_components/funcunit/dist/funcunit',
     'test':       'test/funcunit'
   }
 });
@@ -14,8 +12,6 @@ var jashboard = {
 
 require([
   'underscore',
-  'jquery',
-  'funcunit',
   'test/features/support/page_helper',
   'test/features/support/jashboard_feature_helper',
   'test/features/support/build_monitor_feature_helper',

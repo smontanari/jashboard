@@ -1,12 +1,12 @@
 (function() {
   smocker.scenario('monitor_layout_operations', function() {
-    this.put(/\/ajax\/monitor\/(\w+)\/position/).respondWith(function(url, data, headers, monitor_id) {
+    this.put(/^\/ajax\/monitor\/(\w+)\/position$/).respondWith(function(url, data, headers, monitor_id) {
       var position = JSON.parse(data);
       console.log("monitor[" + monitor_id + "] moved to [top: " + position.top + ", left: " + position.left + "]");
       return {status: 201};
     });
 
-    this.put(/\/ajax\/monitor\/(\w+)\/size/).respondWith(function(url, data, headers, monitor_id) {
+    this.put(/^\/ajax\/monitor\/(\w+)\/size$/).respondWith(function(url, data, headers, monitor_id) {
       var size = JSON.parse(data);
       console.log("monitor[" + monitor_id + "] resized to [width: " + size.width + ", height: " + size.height + "]");
       return {status: 201};

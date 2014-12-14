@@ -1,4 +1,4 @@
-<div id="monitor-form" class="modal hide fade" role="dialog" aria-hidden="true" 
+<div id="monitor-form" class="modal hide fade" role="dialog" aria-hidden="true"
      data-jb-dialog="{show: 'OpenMonitorDialog', hide: 'CloseMonitorDialog'}">
   <div data-ng-form="baseMonitorForm" data-ng-controller="MonitorFormController"
     data-jb-form-validation="{triggerOnEvent: 'OpenMonitorDialog', triggerOnLoad: false, validationRules: 'MonitorFormValidationRules'}"
@@ -15,7 +15,7 @@
         <div class="control-group" data-ng-class="{'error': inputInError('monitorName')}">
           <label class="control-label" for="monitorName">Name</label>
           <div class="controls">
-            <input type="text" name="monitorName" class="input-large" placeholder="monitor name" 
+            <input type="text" name="monitorName" class="input-large" placeholder="monitor name"
               data-ng-model="monitorFormModel.name" data-ng-change="validateFields('monitorName')"
               data-jb-focus="{triggerOnEvent: 'DialogVisible'}">
           </div>
@@ -26,7 +26,7 @@
         <div class="control-group" data-ng-class="{'error': inputInError('monitorRefresh')}">
           <label class="control-label" for="monitorRefresh">Refresh interval</label>
           <div class="controls">
-            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorFormModel.refreshInterval" 
+            <input class="input-mini" name="monitorRefresh" type="text" data-ng-model="monitorFormModel.refreshInterval"
               data-ng-change="validateFields('monitorRefresh')"> seconds
           </div>
           <div class="controls">
@@ -38,8 +38,8 @@
           <label class="control-label">Type</label>
           <div data-ng-switch="$editMode">
             <div class="controls" data-ng-switch-when="create">
-              <select name="monitorType" class="input-medium" 
-                data-ng-model="monitorFormModel.type" 
+              <select name="monitorType" class="input-medium"
+                data-ng-model="monitorFormModel.type"
                 data-ng-options="t for t in availableMonitorTypes">
               </select>
             </div>

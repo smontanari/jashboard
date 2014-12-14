@@ -5,7 +5,7 @@
         return _.extend(formModel, {
           job: _.isEmpty(formModel.job) ? null : formModel.job
         });
-      }, 
+      },
       convertMonitorConfigurationToFormModel: _.clone
     }
   });

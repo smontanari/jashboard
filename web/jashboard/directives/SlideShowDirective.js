@@ -10,7 +10,7 @@
           if (items) {
             stopSlideShow();
             scope.slides = paginationService.paginate(items, itemsPerSlide);
-          }        
+          }
         };
         var stopSlideShow = function() {
           if (slideShowStarted) {

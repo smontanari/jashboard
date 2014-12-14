@@ -17,7 +17,7 @@
     paths: {
       'css':                        'bower_components/require-css/css',
       'less':                       'bower_components/require-less/less',
-      'underscore':                 'bower_components/underscore/underscore',
+      'underscore':                 'bower_components/underscore/underscore-min',
       'jquery':                     'bower_components/jquery/jquery.min',
       'bootstrap':                  'bower_components/bootstrap/docs/assets/js/bootstrap.min',
       'bootstrap-style':            'bower_components/bootstrap/docs/assets/css/bootstrap',
@@ -41,20 +41,10 @@
       }
     },
     shim: {
-      'underscore': {
-        exports: '_'
-      },
       'bootstrap': ['jquery', 'jquery-ui', 'css!bootstrap-style', 'css!bootstrap-responsive-style'],
       'bootstrap-switch': ['bootstrap', 'css!bootstrap-switch-style'],
-      'jquery': {
-        exports: "jQuery"
-      },
       'jquery-ui': ['jquery', 'css!jquery-ui-style'],
-      'blockUI': ['jquery'],
       'cycle2': ['jquery-ui'],
-      'moment': {
-        exports: 'moment'
-      },
       'angular': {
         deps: ['jquery'],
         exports: 'angular'

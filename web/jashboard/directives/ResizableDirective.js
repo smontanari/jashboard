@@ -4,7 +4,7 @@
       return function(scope, element, attrs) {
         var directiveOptions = scope.$eval(attrs.jbResizable);
         var options = {};
-        
+
         if(_.isObject(directiveOptions)) {
           if (_.isString(directiveOptions.onResizeStop)) {
             options.stop = function(event, ui) {
@@ -19,7 +19,7 @@
             options.alsoResize = angular.element(element).children(directiveOptions.resizeChildren);
           }
         }
-        
+
         widgetService.makeResizable(element, options);
       };
     }

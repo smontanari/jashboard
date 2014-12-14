@@ -12,10 +12,10 @@ funcunitHelper.testFeature("Dashboard validation", "dashboard_actions", function
   };
   this.createTest("should validate the name when creating a dashboard", function() {
     jashboardFeatureHelper.openDashboardDialog();
-    
+
     pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
     F(errorMessageSelector).invisible("should not display error");
-    
+
     pageHelper.inputText("dashboardName", "test name");
     pageHelper.verifyElementEnabled(saveButton, "the Save button should be enabled");
 

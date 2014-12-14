@@ -45,10 +45,10 @@
             });
           });
       };
-      
+
       this.loadMonitorRuntimeInfo = function(monitor_id, monitorType, handlers) {
         executeRequest(
-          http.getJSON(AJAX_MONITOR + "/" + monitor_id + "/runtime"), 
+          http.getJSON(AJAX_MONITOR + "/" + monitor_id + "/runtime"),
           handlers,
           function(data) {
             return pluginManager.monitorAdapters[monitorType].convertDataToRuntimeInfo(data);

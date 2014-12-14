@@ -38,7 +38,7 @@
       }],
       delay: 1.5
     });
-    
+
     this.get("/ajax/monitor/monitor_1/runtime").respondWith({
       content: {
         lastBuildTime: "2012-08-23 14:32:23 +1000",

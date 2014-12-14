@@ -10,7 +10,7 @@ funcunitHelper.testFeature("Refreshing monitor runtime information", "refresh_mo
     });
 
     F("#monitor_1 .monitor-action.action-refresh").visible().click();
-    
+
     FuncUnit.wait(1000, function() {
       pageHelper.verifyElementContent("#monitor_1", {
         '.monitor-name': "Epic build",

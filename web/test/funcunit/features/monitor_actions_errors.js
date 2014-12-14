@@ -26,14 +26,14 @@ funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", f
       ok(F(".html-tooltip-error").text().match(/something went very wrong/), "tooltip content should contain expected text");
     });
   });
-  
+
   this.createTest("should display an error when failing to delete a monitor", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_3", "delete");
-    
+
     jashboardFeatureHelper.confirmAlert();
 
     jashboardFeatureHelper.checkOverlayMessage(/Deleting monitor/);
 
     jashboardFeatureHelper.checkOverlayMessage(/an error occurred/, true);
-  });  
+  });
 });

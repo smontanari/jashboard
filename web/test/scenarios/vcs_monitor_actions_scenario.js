@@ -19,7 +19,7 @@ define(["test/scenarios/display_dashboards_data_scenario"], function() {
         data.type === "vcs";
 
       var vcsConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
-      
+
       if (monitorConfigOk && vcsConfigOk) {
         return {
           status: 201,
@@ -32,7 +32,7 @@ define(["test/scenarios/display_dashboards_data_scenario"], function() {
     this.put(/ajax\/monitor\/\w+\/configuration/).respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);
       var vcsConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
-      
+
       if (vcsConfigOk) {
         return { status: 204 };
       }

@@ -5,7 +5,7 @@
       <div class="control-group" data-ng-class="{'error': inputInError('buildServerName')}">
         <label class="control-label" for="buildServerName">Hostname</label>
         <div class="controls">
-          <input name="buildServerName" type="text" placeholder="ci hostname" class="input-large" 
+          <input name="buildServerName" type="text" placeholder="ci hostname" class="input-large"
             data-ng-model="monitorConfigurationFormModel.build.hostname" data-ng-change="validateFields('buildServerName')">
         </div>
         <div class="controls">
@@ -15,7 +15,7 @@
       <div class="control-group" data-ng-class="{'error': inputInError('buildServerPort')}">
         <label class="control-label" for="buildServerPort">Port</label>
         <div class="controls">
-          <input name="buildServerPort" type="text" class="input-mini" 
+          <input name="buildServerPort" type="text" class="input-mini"
             data-ng-model="monitorConfigurationFormModel.build.port" data-ng-change="validateFields('buildServerPort')">
         </div>
         <div class="controls">

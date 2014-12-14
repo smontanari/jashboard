@@ -7,7 +7,7 @@
     defineRoutes: function(routeProvider, locationProvider) {
       routeProvider.when(jashboard.viewMapping.main, {
         templateUrl: 'html/main_page_partial.html'
-      }); 
+      });
       routeProvider.when(jashboard.viewMapping.about, {
         templateUrl: 'html/about_partial.html'
       });

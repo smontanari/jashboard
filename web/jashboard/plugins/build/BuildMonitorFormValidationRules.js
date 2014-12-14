@@ -16,7 +16,7 @@
         self[inputName] = _.wrap(rules[inputName], function(rule) {
           if (scope.monitorConfigurationFormModel.build) {
             return rule();
-          }  
+          }
         });
       });
     }

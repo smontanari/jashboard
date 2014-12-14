@@ -26,10 +26,10 @@ define([
         data.type === "build";
 
       var buildConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
-      
+
       if (monitorConfigOk && buildConfigOk) {
         return {
-          status: 201, 
+          status: 201,
           content: _.extend(data, {id: "monitor_101"})
         };
       }
@@ -55,7 +55,7 @@ define([
         }
       };
       var buildConfigOk = _.isEqual(data.configuration, expectedConfig[data.configuration.type]);
-      
+
       if (buildConfigOk) {
         return { status: 204 };
       }

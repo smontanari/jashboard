@@ -7,7 +7,7 @@ funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", 
       monitorType: "build"
     });
     F("#configuration-next").visible().click();
-    
+
     pageHelper.verifyElementDisabled("#configuration-save", "the Save button should be disabled");
 
     F("#buildServerNameRequiredError").invisible("should not display error");
@@ -20,7 +20,7 @@ funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", 
     F("#ciServerType-jenkins-tab").visible().click();
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("jenkins");
   });
-  
+
   this.createTest("should validate build monitor fields on modification", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
 

@@ -5,10 +5,10 @@
         .withRule(jashboard.commonValidationRules.required)
         .withRule(jashboard.commonValidationRules.positiveInteger)
         .build();
-      
+
       this.ipsumNumberOfSentences = function() {
         if (scope.monitorConfigurationFormModel.ipsum) {
-          return validationRule(scope.monitorConfigurationFormModel.ipsum.numberOfSentences); 
+          return validationRule(scope.monitorConfigurationFormModel.ipsum.numberOfSentences);
         }
       };
     }

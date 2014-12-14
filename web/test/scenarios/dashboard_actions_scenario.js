@@ -20,7 +20,7 @@ define(["test/scenarios/display_dashboards_data_scenario"], function() {
       }
       throw "unexpected data in the " + method + " request: " + requestData;
     });
-    
+
     this.delete('/ajax/dashboard/dashboard_2').respondWith({ status: 204 });
   });
 

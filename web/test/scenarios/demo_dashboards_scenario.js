@@ -11,7 +11,7 @@
       dashboardCounter++;
       return {
         content: {
-          "id": "dashboard_" + dashboardCounter, "name": data.name, "monitors": [] 
+          "id": "dashboard_" + dashboardCounter, "name": data.name, "monitors": []
         },
         delay: 1
       };
@@ -21,7 +21,7 @@
       console.log("dashboard[" + dashboard_id + "] updated");
       return {status: 204, delay: 1};
     });
-    
+
     this.delete(/^\/ajax\/dashboard\/(\w+)$/).respondWith(function(url, data, headers, dashboard_id) {
       console.log("dashboard[" + dashboard_id + "] deleted");
       return {status: 204, delay: 1};

@@ -32,7 +32,7 @@
           repository.loadDashboards({success: onDataLoadSuccess, error: onDataLoadError});
         }
       });
-      
+
       scope.context = {
         currentView: function() {
           return pathToViewNames[locationService.path()];
@@ -42,7 +42,7 @@
       dashboardActionsHandler.init(scope);
     }
   });
-  jashboard.application.controller("MainController", 
+  jashboard.application.controller("MainController",
     ['$scope',
      '$location',
      'MenuActionsHandler',

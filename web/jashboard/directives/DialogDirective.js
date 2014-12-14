@@ -15,7 +15,7 @@
             dialogService.hideModal(element);
           }
         };
-        
+
         jashboard.angularUtils.mapEventActions(scope, eventsMap, actionsMap);
       };
     }

@@ -10,7 +10,7 @@ define(['test/scenario_utils'], function() {
   var runtimeContentGenerator = {
     build: function() {
       return {
-        lastBuildTime: moment(generateDate()).format("YYYY-DD-MM HH:mm:ss ZZ"),
+        lastBuildTime: moment(generateDate()).format("YYYY-MM-DD HH:mm:ss ZZ"),
         duration: jashboard.test.randomInt(1000),
         success: jashboard.test.randomBoolean(),
         status: jashboard.test.randomInt(2)
@@ -29,7 +29,7 @@ define(['test/scenario_utils'], function() {
           revisionId: jashboard.test.randomInt(1000) + "aa1dd5cd1b2315e75c26e6c53169148054948",
           author: "Test Author Name",
           email: "test.email@test.com",
-          date: moment(generateDate()).format("YYYY-DD-MM HH:mm:ss ZZ"),
+          date: moment(generateDate()).format("YYYY-MM-DD HH:mm:ss ZZ"),
           message: "It took me a while to figure out how to flick this stupid panel"
         });
       };

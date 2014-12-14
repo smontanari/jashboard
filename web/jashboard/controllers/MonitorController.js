@@ -34,7 +34,7 @@
               scope.errorMessage = "Error refreshing runtime information - " +  statusMessage;
               if (_.isString(errorDetails)) {
                 scope.errorMessage += " [" + jashboard.stringUtils.ellipsis(errorDetails, 30) + "]";
-              } 
+              }
               scope.$apply();
               if (scheduleNext) {
                 scheduleNextUpdate();

@@ -7,7 +7,7 @@ funcunitHelper.testFeature("Create a dashboard", "dashboard_actions", function()
     F("#saveDashboard").visible().click();
 
     F(".dashboard-tab").size(4, function() {
-      equal(F(".dashboard-tab").last().text().trim(), name, "dashboard name should be equal to " + name);    
+      equal(F(".dashboard-tab").last().text().trim(), name, "dashboard name should be equal to " + name);
     });
   });
 

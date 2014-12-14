@@ -14,7 +14,7 @@
       var orderMonitorsByDistanceFromTopLeftCorner = function(monitors) {
         return _.sortBy(monitors, function(monitor) {
           return (monitor.position.top + 2 * monitor.position.left);
-        });        
+        });
       };
 
       var noOverlapWithMonitors = function(location, monitors) {
@@ -36,7 +36,7 @@
         var monitors = orderMonitorsByDistanceFromTopLeftCorner(dashboard.monitors);
         if (noOverlapWithMonitors({position: defaultPosition, size: monitorSize}, monitors)) {
           return defaultPosition;
-        }        
+        }
         for (var i = 0; i < monitors.length; i++) {
           var otherMonitors = _.without(monitors, monitors[i]);
           var location = {position: monitors[i].position, size: sizeWithMargin(monitors[i].size)};

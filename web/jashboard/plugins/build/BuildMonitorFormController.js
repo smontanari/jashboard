@@ -2,7 +2,7 @@
   jashboard.plugin.build = _.extend(module, {
     BuildMonitorFormController: function(scope) {
       scope.availableCiServerTypes = jashboard.plugin.build.buildTypes;
-      
+
       scope.setCiServerType = function(type) {
         scope.monitorConfigurationFormModel.build.type = type;
         scope.$formValidator.validate();

@@ -1,4 +1,4 @@
-define(['test/scenario_utils'], function() {
+define(['smocker', 'test/scenario_utils'], function(smocker) {
   var monitors = [], monitorRuntimeResponses = [];
   _.times(5, function(i) {
     monitors.push({

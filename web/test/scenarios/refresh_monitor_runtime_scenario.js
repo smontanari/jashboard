@@ -1,4 +1,4 @@
-define(["test/scenarios/two_dashboards_scenario"], function() {
+define(["smocker", "test/scenarios/two_dashboards_scenario"], function(smocker) {
   var successResponse = {
     content: {
       lastBuildTime: "2012-08-23 14:32:23 +1000",

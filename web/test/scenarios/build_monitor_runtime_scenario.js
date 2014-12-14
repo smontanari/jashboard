@@ -1,4 +1,4 @@
-(function() {
+define(['smocker'], function(smocker) {
   smocker.scenario('build_monitor_runtime', function() {
     this.get(/\/ajax\/monitor\/\w+\/runtime/).respondWith({
       content: {

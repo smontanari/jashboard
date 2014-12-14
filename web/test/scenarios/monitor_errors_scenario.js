@@ -1,4 +1,4 @@
-define(["test/scenarios/two_dashboards_scenario"], function() {
+define(["smocker", "test/scenarios/two_dashboards_scenario"], function(smocker) {
   smocker.scenario('monitor_common_operations', function() {
     this.get("/ajax/monitor/monitor_1/runtime").respondWith({
       status: 500,

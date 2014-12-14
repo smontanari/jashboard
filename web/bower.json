@@ -23,6 +23,6 @@
     "qunit": "latest",
     "funcunit": "latest",
     "sinon": "http://sinonjs.org/releases/sinon-1.12.2.js",
-    "smocker": "~0.4"
+    "smocker": "latest"
   }
 }

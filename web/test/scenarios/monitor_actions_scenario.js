@@ -1,4 +1,4 @@
-define(["test/scenarios/display_dashboards_data_scenario"], function() {
+define(["smocker", "test/scenarios/display_dashboards_data_scenario"], function(smocker) {
   smocker.scenario('monitor_write_operations', function() {
     this.delete('/ajax/dashboard/dashboard_2/monitor/monitor_2').respondWith({
       status: 204

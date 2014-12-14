@@ -1,4 +1,4 @@
-(function() {
+define(['smocker'], function(smocker) {
   smocker.scenario('delayed_response', function() {
     this.get('/ajax/dashboards').respondWith({
       content: [{
@@ -59,4 +59,4 @@
       delay: 1
     });
   });
-}());
+});

@@ -1,7 +1,8 @@
 define([
+  "smocker",
   "test/scenarios/two_dashboards_scenario",
   "test/scenarios/build_monitor_runtime_scenario"
-], function() {
+], function(smocker) {
   smocker.scenario('dashboard_write_errors', function() {
     this.post("/ajax/dashboard").respondWith({
       status: 501,

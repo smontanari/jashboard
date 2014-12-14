@@ -20,7 +20,7 @@
       };
 
       var getBuildDate = function(date) {
-        return moment(date, "YYYY-MM-DD HH:mm:ss ZZ").format("DD-MM-YYYY HH:mm:ss");
+        return jashboard.dependencies.moment(date, "YYYY-MM-DD HH:mm:ss ZZ").format("DD-MM-YYYY HH:mm:ss");
       };
 
       var extractBuildTypeProperties = function(object) {

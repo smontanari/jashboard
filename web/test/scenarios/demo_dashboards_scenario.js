@@ -1,4 +1,4 @@
-(function() {
+define(['smocker'], function(smocker) {
   var dashboardCounter = 0;
   smocker.scenario('demo_dashboards', function() {
     this.get("/ajax/dashboards").respondWith({
@@ -27,4 +27,4 @@
       return {status: 204, delay: 1};
     });
   });
-})();
+});

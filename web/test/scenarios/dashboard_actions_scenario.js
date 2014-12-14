@@ -1,4 +1,4 @@
-define(["test/scenarios/display_dashboards_data_scenario"], function() {
+define(["smocker", "test/scenarios/display_dashboards_data_scenario"], function(smocker) {
   smocker.scenario('dashboard_write_operations', function() {
     this.post('/ajax/dashboard').respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);

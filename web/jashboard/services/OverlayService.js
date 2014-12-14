@@ -20,10 +20,10 @@
 
       this.show = function(selector, options) {
         options = options || {};
-        $.blockUI(getSettings(selector, options));
+        jQuery.blockUI(getSettings(selector, options));
       };
       this.hide = function() {
-        $.unblockUI();
+        jQuery.unblockUI();
       };
     }
   });

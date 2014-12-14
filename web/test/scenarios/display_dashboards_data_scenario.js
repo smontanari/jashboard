@@ -1,4 +1,4 @@
-(function() {
+define(['smocker'], function(smocker) {
   smocker.scenario('display_dashboards_data', function() {
     this.get('/ajax/dashboards').redirectToFixture("test/scenarios/fixtures/fixture_dashboards.json");
     this.get('/ajax/monitor/monitor_1/runtime').redirectToFixture("test/scenarios/fixtures/fixture_build_monitor_1.json");
@@ -8,4 +8,4 @@
     this.get('/ajax/monitor/monitor_101/runtime').redirectToFixture("test/scenarios/fixtures/fixture_build_monitor_new.json");
     this.get('/ajax/monitor/monitor_102/runtime').redirectToFixture("test/scenarios/fixtures/fixture_vcs_monitor_new.json");
   });
-})();
+});

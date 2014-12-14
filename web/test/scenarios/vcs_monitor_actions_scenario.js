@@ -1,4 +1,4 @@
-define(["test/scenarios/display_dashboards_data_scenario"], function() {
+define(["smocker", "test/scenarios/display_dashboards_data_scenario"], function(smocker) {
   var expectedConfig = {
     git: {
       type: "git",

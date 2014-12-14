@@ -45,10 +45,7 @@
       'bootstrap-switch': ['bootstrap', 'css!bootstrap-switch-style'],
       'jquery-ui': ['jquery', 'css!jquery-ui-style'],
       'cycle2': ['jquery-ui'],
-      'angular': {
-        deps: ['jquery'],
-        exports: 'angular'
-      },
+      'angular': ['jquery'],
       'angular-route': ['angular'],
       'angular-ui': ['angular'],
       'jashboard-main': [
@@ -58,7 +55,6 @@
         'angular-ui',
         'blockUI',
         'cycle2',
-        'moment',
         'bootstrap',
         'bootstrap-switch'
        ]

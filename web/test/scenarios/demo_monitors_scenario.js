@@ -1,4 +1,4 @@
-define(['test/scenario_utils'], function() {
+define(['moment', 'smocker', 'test/scenario_utils'], function(moment, smocker) {
   var monitorCounter = 0;
   var storedMonitors = [];
   var generateDate = function() {

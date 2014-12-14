@@ -1,4 +1,4 @@
-(function() {
+define(['smocker'], function(smocker) {
   smocker.scenario('two_dashboards', function() {
     this.get("/ajax/dashboards").respondWith({
       content: [
@@ -45,4 +45,4 @@
       delay: 1
     });
   });
-})();
+});

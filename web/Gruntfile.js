@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         helpers: 'test/spec/SpecHelper.js',
         keepRunner: true,
         vendor: [
-          './bower_components/underscore/underscore.js',
+          './bower_components/underscore/underscore-min.js',
           './bower_components/moment/min/moment.min.js',
           './bower_components/sinon/index.js'
         ]

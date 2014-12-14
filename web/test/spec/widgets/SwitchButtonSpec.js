@@ -6,8 +6,6 @@ describe("SwitchButton", function() {
     $element.on = jasmine.createSpy("$.on()");
     $element.unbind = jasmine.createSpy("$.unbind()");
     $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()").andCallFake(function() {
-      console.log('*****');
-      console.log(arguments);
       if ('state' === arguments[0]) return 'false';
     })
   });
@@ -19,7 +17,7 @@ describe("SwitchButton", function() {
     expect($element.bootstrapSwitch.calls[1].args[0]).toEqual('setState');
     expect($element.bootstrapSwitch.calls[1].args[1]).toEqual(false);
   });
-  
+
   it("initialises the widget with an initial true state", function() {
     widget = new jashboard.widgets.SwitchButton("test-selector", true);
 

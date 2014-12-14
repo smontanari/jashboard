@@ -1,4 +1,4 @@
-(function() {
+define(['smocker'], function(smocker) {
   smocker.scenario('monitor_layout_operations', function() {
     this.put(/^\/ajax\/monitor\/(\w+)\/position$/).respondWith(function(url, data, headers, monitor_id) {
       var position = JSON.parse(data);
@@ -17,4 +17,4 @@
       return {status: 204, delay: 1};
     });
   });
-})();
+});

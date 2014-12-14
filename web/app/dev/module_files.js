@@ -1,4 +1,4 @@
-define([], function() {
+define(['underscore'], function(_) {
   var misc = [
     'jashboardUtils',
     'routes'
@@ -33,12 +33,11 @@ define([], function() {
       'IntersectionDetector',
       'MonitorPositioningStrategy',
       'MonitorLayoutManager',
-      // 'PluginManager',
       'DashboardActionsHandler',
       'MenuActionsHandler'
     ],
     directives: [
-      'DialogDirective', 
+      'DialogDirective',
       'OverlayDirective',
       'AlertBoxDirective',
       'TooltipErrorDirective',
@@ -74,4 +73,4 @@ define([], function() {
   });
 
   return modules;
-});  
+});

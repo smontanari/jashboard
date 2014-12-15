@@ -3,7 +3,7 @@ describe("Tooltip", function() {
   beforeEach(function() {
     targetElement = jasmine.createSpyObj("$()", ['tooltip']);
     contentElement = {
-      html: jasmine.createSpy("$.html()").andReturn("test_content")
+      html: jasmine.createSpy("$.html()").and.returnValue("test_content")
     };
     $stub = testHelper.stubJQuery();
     $stub.withArgs("test-target-selector").returns(targetElement);

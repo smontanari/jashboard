@@ -54,7 +54,7 @@ require([
       // 'vcs_monitor_validation'
     ]
   };
-  
+
   var allFeatures = [].concat(
     feature_sets.misc_features,
     feature_sets.dashboard_features,
@@ -73,7 +73,7 @@ require([
   var selectFeatures = function() {
     var selectedFeature = getUrlParameter("feature");
     if (selectedFeature) return [selectedFeature];
-    
+
     var selectedFeatureSet = getUrlParameter("suite");
     if (selectedFeatureSet) return feature_sets[selectedFeatureSet];
 

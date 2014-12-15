@@ -6,7 +6,7 @@ describe("MonitorDisplayDirective", function() {
     $stub = testHelper.stubJQuery("test-element");
     widgetService = jasmine.createSpyObj("widgetService", ['resetContainerHeight'])
     linkFunction = jashboard.angular.monitorDisplayDirective(widgetService);
-    
+
     linkFunction(scope, "test-element", {});
   });
 
@@ -29,7 +29,7 @@ describe("MonitorDisplayDirective", function() {
       scope.monitor = {size: {}};
       cancelListener = jasmine.createSpy("cancelListener");
       $stub.is = sinon.stub().withArgs(":visible").returns(false);
-      scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, listener) {
+      scope.$on = jasmine.createSpy("scope.$on()").and.callFake(function(eventName, listener) {
         eventHandler = listener;
         return cancelListener;
       })
@@ -48,23 +48,27 @@ describe("MonitorDisplayDirective", function() {
       });
       it("should not recalculate the size if not same dashboard", function() {
         eventHandler({}, "another_dashboard_id");
-        
+
         expect(widgetService.resetContainerHeight).not.toHaveBeenCalled();
         expect(cancelListener).not.toHaveBeenCalled();
       });
       it("should deregister the listener once executed", function() {
         eventHandler({}, "test_dashboard_id");
-        
+
         expect(cancelListener).toHaveBeenCalled();
       });
-      it("should recalculate the size of the element at a later point in time", function() {
-        testHelper.asyncTestRun([
-          {
-            before: function() { eventHandler({}, "test_dashboard_id"); },
-            waitFor: function() { return widgetService.resetContainerHeight.calls.length === 1; },
-            after: function() { expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element"); }
-          }
-        ]);
+
+      describe('Element size calculation', function() {
+        beforeEach(function(done) {
+          eventHandler({}, "test_dashboard_id");
+          expect(widgetService.resetContainerHeight).not.toHaveBeenCalled();
+          setTimeout(function() {
+            done();
+          }, 100);
+        });
+        it("recalculates the size of the element at a later point in time", function() {
+          expect(widgetService.resetContainerHeight).toHaveBeenCalledWith("test-element");
+        });
       });
     });
   });

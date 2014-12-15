@@ -5,13 +5,13 @@ describe("Build MonitorAdapter", function() {
     jashboard.plugin.build.buildTypes = ['buildType1', 'buildType2'];
     _.each(['buildType1', 'buildType2'], function(type) {
       jashboard.plugin.build[type] = {
-        parseFormConfiguration: jasmine.createSpy(type + "ConfigurationParser").andReturn(
+        parseFormConfiguration: jasmine.createSpy(type + "ConfigurationParser").and.returnValue(
         {
           type: type,
           modelParameter: "test_model_param"
         }
       ),
-      convertMonitorConfigurationToFormModel: jasmine.createSpy(type + "ConfigurationConverter").andReturn(
+      convertMonitorConfigurationToFormModel: jasmine.createSpy(type + "ConfigurationConverter").and.returnValue(
         {
           type: type,
           formParameter: "test_form_param"

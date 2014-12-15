@@ -39,7 +39,7 @@ describe("WidgetService", function() {
       service.makeResizable("test-selector");
 
       expect($stub.resizable).toHaveBeenCalledWith(
-        { 
+        {
           containment: "parent",
           autoHide: true
         });
@@ -60,9 +60,9 @@ describe("WidgetService", function() {
     var $element;
     beforeEach(function() {
       $element = testHelper.stubJQuery("test-selector");
-      $element.height = jasmine.createSpy("$.height()").andReturn(100);
-      $element.outerHeight = jasmine.createSpy("$.outerHeight()").andReturn(120);
-      $element.position = jasmine.createSpy("$.position()").andReturn({top: 30});
+      $element.height = jasmine.createSpy("$.height()").and.returnValue(100);
+      $element.outerHeight = jasmine.createSpy("$.outerHeight()").and.returnValue(120);
+      $element.position = jasmine.createSpy("$.position()").and.returnValue({top: 30});
     });
 
     it("should recalculate the height of the element", function() {

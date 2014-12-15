@@ -6,8 +6,8 @@ describe("FormValidator", function() {
       input2: {}
     };
     validationRules = {
-      input1: jasmine.createSpy("validationRules.input1").andReturn({}),
-      input2: jasmine.createSpy("validationRules.input2").andReturn({})
+      input1: jasmine.createSpy("validationRules.input1").and.returnValue({}),
+      input2: jasmine.createSpy("validationRules.input2").and.returnValue({})
     };
 
     formValidator = new jashboard.FormValidator(form);
@@ -34,8 +34,8 @@ describe("FormValidator", function() {
   });
   it("should set the form as not valid when some validation rules fail", function() {
     var rules = {
-      input1: jasmine.createSpy("validationRules.input1").andReturn({test: "error"}),
-      input2: jasmine.createSpy("validationRules.input2").andReturn({})
+      input1: jasmine.createSpy("validationRules.input1").and.returnValue({test: "error"}),
+      input2: jasmine.createSpy("validationRules.input2").and.returnValue({})
     };
     formValidator.applyRules(rules);
 
@@ -45,8 +45,8 @@ describe("FormValidator", function() {
   describe("validate()", function() {
     it("should get the error object from the validation rule", function() {
       var rules = {
-        input1: jasmine.createSpy("validationRules.input1").andReturn({test: "error"}),
-        input2: jasmine.createSpy("validationRules.input1").andReturn({})
+        input1: jasmine.createSpy("validationRules.input1").and.returnValue({test: "error"}),
+        input2: jasmine.createSpy("validationRules.input1").and.returnValue({})
       }
 
       formValidator.applyRules(rules);
@@ -59,8 +59,8 @@ describe("FormValidator", function() {
       formValidator.applyRules(validationRules);
       formValidator.validate(['input1']);
 
-      expect(validationRules.input1.calls.length).toEqual(3);
-      expect(validationRules.input2.calls.length).toEqual(2);
+      expect(validationRules.input1.calls.count()).toEqual(3);
+      expect(validationRules.input2.calls.count()).toEqual(2);
     });
     it("should set the form as valid when all validation rules succeed", function() {
       formValidator.applyRules(validationRules);
@@ -70,10 +70,10 @@ describe("FormValidator", function() {
     });
     it("should set the form as not valid when some validation rules fail", function() {
       var rules = {
-        input1: jasmine.createSpy("rules.input1").andReturn({test: "error"}),
-        input2: jasmine.createSpy("rules.input2").andReturn({})
+        input1: jasmine.createSpy("rules.input1").and.returnValue({test: "error"}),
+        input2: jasmine.createSpy("rules.input2").and.returnValue({})
       }
-      rules.input2.andReturn({test: "error"});
+      rules.input2.and.returnValue({test: "error"});
 
       formValidator.applyRules(rules);
 

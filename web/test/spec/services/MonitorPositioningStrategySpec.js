@@ -3,7 +3,7 @@ describe("MonitorPositioningStrategy", function() {
   describe("Available positions around one rectangle", function() {
     beforeEach(function() {
       $stub = testHelper.stubJQuery("#dashboard-container");
-      $stub.width = jasmine.createSpy().andReturn(100);
+      $stub.width = jasmine.createSpy().and.returnValue(100);
       positioningStrategy = new jashboard.MonitorPositioningStrategy();
     });
 

@@ -5,7 +5,7 @@ describe("SwitchButton", function() {
     $element = testHelper.stubJQuery("test-selector");
     $element.on = jasmine.createSpy("$.on()");
     $element.unbind = jasmine.createSpy("$.unbind()");
-    $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()").andCallFake(function() {
+    $element.bootstrapSwitch = jasmine.createSpy("$.bootstrapSwitch()").and.callFake(function() {
       if ('state' === arguments[0]) return 'false';
     })
   });
@@ -13,17 +13,15 @@ describe("SwitchButton", function() {
   it("initialises the widget with an initial false state", function() {
     widget = new jashboard.widgets.SwitchButton("test-selector");
 
-    expect($element.bootstrapSwitch.calls.length).toEqual(2);
-    expect($element.bootstrapSwitch.calls[1].args[0]).toEqual('setState');
-    expect($element.bootstrapSwitch.calls[1].args[1]).toEqual(false);
+    expect($element.bootstrapSwitch.calls.count()).toEqual(2);
+    expect($element.bootstrapSwitch.calls.argsFor(1)).toEqual(['setState', false]);
   });
 
   it("initialises the widget with an initial true state", function() {
     widget = new jashboard.widgets.SwitchButton("test-selector", true);
 
-    expect($element.bootstrapSwitch.calls.length).toEqual(2);
-    expect($element.bootstrapSwitch.calls[1].args[0]).toEqual('setState');
-    expect($element.bootstrapSwitch.calls[1].args[1]).toEqual(true);
+    expect($element.bootstrapSwitch.calls.count()).toEqual(2);
+    expect($element.bootstrapSwitch.calls.argsFor(1)).toEqual(['setState', true]);
     expect(callback).not.toHaveBeenCalled();
   });
 

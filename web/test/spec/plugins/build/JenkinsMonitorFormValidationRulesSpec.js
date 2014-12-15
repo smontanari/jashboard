@@ -5,7 +5,7 @@ describe("JenkinsMonitorFormValidationRules", function() {
     scope = {monitorConfigurationFormModel: {build: {buildId: "test_build_id"}}};
 
     requiredRule = spyOn(jashboard.commonValidationRules, "required");
-    requiredRule.andReturn("required_validation_result");
+    requiredRule.and.returnValue("required_validation_result");
 
     rules = new jashboard.plugin.build.JenkinsMonitorFormValidationRules(scope);
   });

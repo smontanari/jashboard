@@ -3,7 +3,7 @@ describe("VcsMonitorFormController", function() {
 
   beforeEach(function() {
     scope = {
-      $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+      $on: jasmine.createSpy("scope.$on").and.callFake(function(eventName, handler) {
         eventListener = handler;
       }),
       $apply: jasmine.createSpy('scope.$apply')
@@ -31,7 +31,7 @@ describe("VcsMonitorFormController", function() {
       scope.monitorConfigurationFormModel.vcs.pagination = true;
 
       scope.toggleSlideShowEffect();
-      
+
       expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(1);
       expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(5);
     });
@@ -39,7 +39,7 @@ describe("VcsMonitorFormController", function() {
       scope.monitorConfigurationFormModel.vcs.pagination = false;
 
       scope.toggleSlideShowEffect();
-      
+
       expect(scope.monitorConfigurationFormModel.vcs.commitsPerPage).toEqual(123);
       expect(scope.monitorConfigurationFormModel.vcs.interval).toEqual(345);
     });

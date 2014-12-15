@@ -4,7 +4,7 @@ describe("BuildMonitorFormController", function() {
     scope = jasmine.createSpyObj("scope", ['$on']);
 
     jashboard.plugin.build.buildTypes = ["test_build_type1", "test_build_type2"];
-    scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+    scope.$on = jasmine.createSpy("scope.$on").and.callFake(function(eventName, handler) {
        listener = handler;
     });
 

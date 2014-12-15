@@ -10,7 +10,7 @@ describe("HttpService", function() {
       }
     };
     $stub = testHelper.stubJQuery();
-    $stub.ajax = jasmine.createSpy("$.ajax()").andReturn(mockRequest);
+    $stub.ajax = jasmine.createSpy("$.ajax()").and.returnValue(mockRequest);
     httpService = new jashboard.HttpService(logger);
   });
 
@@ -20,12 +20,14 @@ describe("HttpService", function() {
     var request = httpService.getJSON("/test/path/to/resource", expectedParams);
 
     expect(request).toEqual(mockRequest);
-    expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
-    expect($stub.ajax.mostRecentCall.args[1]).toEqual({
-      type: 'GET',
-      data: expectedParams,
-      dataType: 'json'
-    });
+    expect($stub.ajax.calls.mostRecent().args).toEqual([
+      "/test/path/to/resource",
+      {
+        type: 'GET',
+        data: expectedParams,
+        dataType: 'json'
+      }
+    ]);
   });
   it("should log an error when the JSON GET request fails", function() {
     var request = httpService.getJSON("/test/path/to/resource");
@@ -39,14 +41,16 @@ describe("HttpService", function() {
     var request = httpService.postJSON("/test/path/to/resource", data);
 
     expect(request).toEqual(mockRequest);
-    expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
-    expect($stub.ajax.mostRecentCall.args[1]).toEqual({
-      type: 'POST',
-      data: '{"param1":"test.value","param2":123}',
-      processData: false,
-      contentType: 'application/json',
-      dataType: 'json'
-    });
+    expect($stub.ajax.calls.mostRecent().args).toEqual([
+      "/test/path/to/resource",
+      {
+        type: 'POST',
+        data: '{"param1":"test.value","param2":123}',
+        processData: false,
+        contentType: 'application/json',
+        dataType: 'json'
+      }
+    ]);
   });
   it("should invoke jQuery.ajax to perform a JSON PUT request", function() {
     var data = {
@@ -56,22 +60,24 @@ describe("HttpService", function() {
     var request = httpService.putJSON("/test/path/to/resource", data);
 
     expect(request).toEqual(mockRequest);
-    expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
-    expect($stub.ajax.mostRecentCall.args[1]).toEqual({
-      type: 'PUT',
-      data: '{"param1":"test.value","param2":123}',
-      processData: false,
-      contentType: 'application/json',
-      dataType: 'json'
-    });
+    expect($stub.ajax.calls.mostRecent().args).toEqual([
+      "/test/path/to/resource",
+      {
+        type: 'PUT',
+        data: '{"param1":"test.value","param2":123}',
+        processData: false,
+        contentType: 'application/json',
+        dataType: 'json'
+      }
+    ]);
   });
   it("should invoke jQuery.ajax to perform a DELETE request", function() {
     var request = httpService.deleteResource("/test/path/to/resource");
 
     expect(request).toEqual(mockRequest);
-    expect($stub.ajax.mostRecentCall.args[0]).toEqual("/test/path/to/resource");
-    expect($stub.ajax.mostRecentCall.args[1]).toEqual({
-      type: 'DELETE'
-    });
+    expect($stub.ajax.calls.mostRecent().args).toEqual([
+      "/test/path/to/resource",
+      { type: 'DELETE' }
+    ]);
   });
 });

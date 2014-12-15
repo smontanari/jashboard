@@ -1,7 +1,7 @@
 describe("MonitorLayoutManager", function() {
   var $stub, layoutManager, expectedMargin = 20, newMonitorSize,
       detectorConstructor, intersectionDetector, strategyConstructor, positioningStrategy;
-  var dashboard, m1, m2, m3, defaultLocation, 
+  var dashboard, m1, m2, m3, defaultLocation,
         m1Location, m2Location, m3Location,
         position1, position2, position3,
         location1, location2, location3;

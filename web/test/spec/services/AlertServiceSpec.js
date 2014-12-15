@@ -3,22 +3,22 @@ describe("AlertService", function() {
 
   beforeEach(function() {
     elementBinding = jasmine.createSpyObj("elementBinding", ['bindDefaultElement', 'applyToElement']);
-    spyOn(jashboard, "ElementBinding").andReturn(elementBinding);
-    
+    spyOn(jashboard, "ElementBinding").and.returnValue(elementBinding);
+
     service = new jashboard.AlertService();
   });
 
   it("shoul bind the element as default", function() {
     service.bindTo("test_selector");
-    
-    expect(elementBinding.bindDefaultElement).toHaveBeenCalledWith("test_selector");    
+
+    expect(elementBinding.bindDefaultElement).toHaveBeenCalledWith("test_selector");
   });
 
   describe("showAlert()", function() {
     var $stub, scope;
     beforeEach(function() {
       scope = {};
-      elementBinding.applyToElement = jasmine.createSpy().andCallFake(function(callback) {
+      elementBinding.applyToElement = jasmine.createSpy().and.callFake(function(callback) {
         callback("test_element", scope);
       });
       $stub = testHelper.stubJQuery(["test_element", ".modal-backdrop"]);

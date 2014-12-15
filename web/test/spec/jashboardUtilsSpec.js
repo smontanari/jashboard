@@ -23,7 +23,7 @@ describe("Jashboard utility functions", function() {
       expect(jashboard.variableProcessor.validateData("some variable")).toEqual("some variable");
     });
     it("should invoke the passed function to convert the variable value", function() {
-      var mockFunction = jasmine.createSpy("conversionFunction").andReturn("some value");
+      var mockFunction = jasmine.createSpy("conversionFunction").and.returnValue("some value");
 
       var result = jashboard.variableProcessor.validateData("some variable", "", mockFunction);
 
@@ -89,7 +89,7 @@ describe("Jashboard utility functions", function() {
         };
 
         scope = {
-          $on: jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
+          $on: jasmine.createSpy("scope.$on()").and.callFake(function(eventName, callback) {
             callback({});
           })
         };
@@ -105,7 +105,7 @@ describe("Jashboard utility functions", function() {
       it("should invoke the actions", function() {
         expect(actionCallback1).toHaveBeenCalled();
         expect(actionCallback2).toHaveBeenCalled();
-        expect(actionCallback2.calls.length).toEqual(2);
+        expect(actionCallback2.calls.count()).toEqual(2);
       });
     });
   });

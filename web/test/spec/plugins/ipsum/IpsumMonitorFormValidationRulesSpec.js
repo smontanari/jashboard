@@ -5,7 +5,7 @@ describe("IpsumMonitorFormValidationRules", function() {
 
     validationFn = sinon.stub();
     var fakeRulesBuilder = jasmine.createSpyObj("ValidationRulesBuilder", ['withRule', 'build']);
-    fakeRulesBuilder.withRule.andReturn(fakeRulesBuilder);
+    fakeRulesBuilder.withRule.and.returnValue(fakeRulesBuilder);
     rulesBuilder = {
       withRule: sinon.stub(),
       build: function() {return validationFn;}
@@ -21,15 +21,15 @@ describe("IpsumMonitorFormValidationRules", function() {
 
   it("should not validate the fields if the monitorConfigurationFormModel of type 'ipsum' is not defined", function() {
     scope.monitorConfigurationFormModel.ipsum = undefined;
-    
+
     rules = new jashboard.plugin.ipsum.IpsumMonitorFormValidationRules(scope);
-    
+
     expect(rules.ipsumNumberOfSentences()).toBeUndefined();
   });
 
   it("should validate the 'numberOfSentences' field with the 'required' and 'positiveInteger' rule", function() {
     _.each(['required', 'positiveInteger'], function(rule) {
-      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
+      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);
     });
     validationFn.withArgs("test_number").returns("test_validation_result");
 

@@ -3,7 +3,7 @@ describe("OverlayService", function() {
 
   beforeEach(function() {
     $stub = testHelper.stubJQuery("test-message");
-    $stub.blockUI = jasmine.createSpy("$.blockUI()").andCallFake(function(config) {
+    $stub.blockUI = jasmine.createSpy("$.blockUI()").and.callFake(function(config) {
       settings = config;
     });
     $stub.unblockUI = jasmine.createSpy("$.unblockUI()");

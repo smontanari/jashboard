@@ -3,7 +3,7 @@ describe("BuildMonitorFormValidationRules", function() {
   beforeEach(function() {
     validationFn = sinon.stub();
     var fakeRulesBuilder = jasmine.createSpyObj("ValidationRulesBuilder", ['withRule', 'build']);
-    fakeRulesBuilder.withRule.andReturn(fakeRulesBuilder);
+    fakeRulesBuilder.withRule.and.returnValue(fakeRulesBuilder);
     rulesBuilder = {
       withRule: sinon.stub(),
       build: function() {return validationFn;}
@@ -34,7 +34,7 @@ describe("BuildMonitorFormValidationRules", function() {
 
   it("should validate the 'buildServerName' field with the 'required' rule", function() {
     var requiredRule = spyOn(jashboard.commonValidationRules, "required");
-    requiredRule.andReturn("required_validation_result");
+    requiredRule.and.returnValue("required_validation_result");
 
     expect(rules.buildServerName()).toEqual("required_validation_result");
     expect(requiredRule).toHaveBeenCalledWith("test_hostname");
@@ -42,7 +42,7 @@ describe("BuildMonitorFormValidationRules", function() {
 
   it("should validate the 'buildServerPort' field with the 'required' and 'positiveInteger' rule", function() {
     _.each(['required', 'positiveInteger'], function(rule) {
-      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
+      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);
     });
     validationFn.withArgs("test_port").returns("test_validation_result");
     rules = new jashboard.plugin.build.BuildMonitorFormValidationRules(scope);

@@ -3,7 +3,7 @@ describe("MonitorFormValidationRules", function() {
   beforeEach(function() {
     validationFn = sinon.stub();
     var fakeRulesBuilder = jasmine.createSpyObj("ValidationRulesBuilder", ['withRule', 'build']);
-    fakeRulesBuilder.withRule.andReturn(fakeRulesBuilder);
+    fakeRulesBuilder.withRule.and.returnValue(fakeRulesBuilder);
     rulesBuilder = {
       withRule: sinon.stub(),
       build: function() {return validationFn;}
@@ -26,7 +26,7 @@ describe("MonitorFormValidationRules", function() {
 
   it("should validate the 'monitorName' field with the 'required' rule", function() {
     var requiredRule = spyOn(jashboard.commonValidationRules, "required");
-    requiredRule.andReturn("test_validation_result");
+    requiredRule.and.returnValue("test_validation_result");
     rules = new jashboard.MonitorFormValidationRules(scope);
 
     expect(rules.monitorName()).toEqual("test_validation_result");
@@ -35,9 +35,9 @@ describe("MonitorFormValidationRules", function() {
 
   it("should validate the 'monitorRefresh' field with the 'number' and 'positiveNumber' rule", function() {
     _.each(['number', 'positiveNumber'], function(rule) {
-      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
+      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);
     });
-    
+
     validationFn.withArgs("test_monitor_refresh").returns("test_validation_result");
 
     rules = new jashboard.MonitorFormValidationRules(scope);

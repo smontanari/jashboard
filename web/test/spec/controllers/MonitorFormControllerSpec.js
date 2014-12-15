@@ -3,10 +3,10 @@ describe("MonitorFormController", function() {
   beforeEach(function() {
     pluginManager = {
       monitorAdapters: {'test_type1': {}, 'test_type2': {}}
-    };    
+    };
     scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
-    
-    scope.$on.andCallFake(function(eventName, handler) {
+
+    scope.$on.and.callFake(function(eventName, handler) {
       listener = handler;
     });
     monitorLayoutManager = {
@@ -30,7 +30,7 @@ describe("MonitorFormController", function() {
   describe("'OpenMonitorDialog' event listener", function() {
     var saveMonitorCallback;
     beforeEach(function() {
-      spyOn(jashboard, "MonitorFormHelper").andCallFake(function(form, model, handler) {
+      spyOn(jashboard, "MonitorFormHelper").and.callFake(function(form, model, handler) {
         saveMonitorCallback = handler;
         return {test: "formHelper"};
       });
@@ -76,7 +76,7 @@ describe("MonitorFormController", function() {
             test_type2: "testConfig2"
           };
 
-          repository.createMonitor = jasmine.createSpy("repository.createMonitor()").andCallFake(function(dashboard_id, monitorParameters, handlers) {
+          repository.createMonitor = jasmine.createSpy("repository.createMonitor()").and.callFake(function(dashboard_id, monitorParameters, handlers) {
             successHandler = handlers.success;
             errorHandler = handlers.error;
           });
@@ -91,13 +91,13 @@ describe("MonitorFormController", function() {
           monitorLayoutManager.nextAvailableMonitorPosition.withArgs({id: "test_dashboard", monitors: [{id: "m2"}]}, {width: 678, height: 654})
               .returns({top: 123, left: 456});
         });
-        
+
         describe("Form data evaluation", function() {
           it("should call the repository to create a monitor with parameters from the input form", function() {
             saveMonitorCallback();
 
             expect(repository.createMonitor).toHaveBeenCalledWith(
-              "test_dashboard", 
+              "test_dashboard",
               {
                 name: "test.name",
                 type: "test_type2",
@@ -105,7 +105,7 @@ describe("MonitorFormController", function() {
                 position: {top: 123, left: 456},
                 size: {width: 678, height: 654},
                 configuration: "test_configuration_model"
-              }, 
+              },
               jasmine.any(Object)
             );
           });
@@ -116,7 +116,7 @@ describe("MonitorFormController", function() {
               type: "test_type2"
             };
             saveMonitorCallback();
-            expect(repository.createMonitor.mostRecentCall.args[1].refreshInterval).toBeNaN();
+            expect(repository.createMonitor.calls.mostRecent().args[1].refreshInterval).toBeNaN();
           });
         });
 
@@ -141,7 +141,7 @@ describe("MonitorFormController", function() {
           });
           it("should emit the 'MonitorSaveComplete'", function() {
             successHandler("test.monitor");
-            
+
             expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveComplete");
           });
           it("should emit the 'CloseMonitorDialog'", function() {
@@ -200,7 +200,7 @@ describe("MonitorFormController", function() {
       describe("save action callback", function() {
         var successHandler, errorHandler;
         beforeEach(function() {
-          repository.updateMonitorConfiguration = jasmine.createSpy("repository.updateMonitorConfiguration()").andCallFake(function(monitorModel, handlers) {
+          repository.updateMonitorConfiguration = jasmine.createSpy("repository.updateMonitorConfiguration()").and.callFake(function(monitorModel, handlers) {
             successHandler = handlers.success;
             errorHandler = handlers.error;
           });
@@ -217,7 +217,7 @@ describe("MonitorFormController", function() {
             test_type2: "testConfig2"
           };
         });
-        
+
         describe("Form data evaluation", function() {
           it("should call the repository to update the monitor with parameters from the input form", function() {
             saveMonitorCallback();
@@ -229,7 +229,7 @@ describe("MonitorFormController", function() {
                 refreshInterval: 456,
                 type: "test_type2",
                 configuration: "test_new_configuration"
-              }, 
+              },
               jasmine.any(Object)
             );
           });
@@ -242,7 +242,7 @@ describe("MonitorFormController", function() {
             };
             saveMonitorCallback();
 
-            expect(repository.updateMonitorConfiguration.mostRecentCall.args[0].refreshInterval).toBeNaN();
+            expect(repository.updateMonitorConfiguration.calls.mostRecent().args[0].refreshInterval).toBeNaN();
           });
         });
 
@@ -273,7 +273,7 @@ describe("MonitorFormController", function() {
           });
           it("should emit the 'MonitorSaveComplete'", function() {
             successHandler(null);
-            
+
             expect(scope.$emit).toHaveBeenCalledWith("MonitorSaveComplete");
           });
           it("should emit the 'CloseMonitorDialog'", function() {

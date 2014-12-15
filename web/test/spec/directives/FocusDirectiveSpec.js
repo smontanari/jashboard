@@ -5,7 +5,7 @@ describe("FocusDirective", function() {
     widgetService = jasmine.createSpyObj("WidgetService", ["setFocus"]);
     scope = {
       $eval: sinon.stub(),
-      $on: jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
+      $on: jasmine.createSpy("scope.$on()").and.callFake(function(eventName, callback) {
         if (eventName === "test-event") eventListener = callback;
       })
     };

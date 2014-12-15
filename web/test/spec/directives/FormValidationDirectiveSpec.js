@@ -3,7 +3,7 @@ describe("FormValidationDirective", function() {
 
   beforeEach(function() {
     jashboard.test = {
-      TestRules: jasmine.createSpy().andReturn({id: 'test-rules'})
+      TestRules: jasmine.createSpy().and.returnValue({id: 'test-rules'})
     };
     scope = jasmine.createSpyObj("scope", ['$on', '$eval']);
 
@@ -14,7 +14,7 @@ describe("FormValidationDirective", function() {
 
   it("should instantiate the validation rules", function() {
     scope.$formValidator = validator;
-    scope.$eval.andCallFake(function(value) {
+    scope.$eval.and.callFake(function(value) {
       if (value === "test-map") return {validationRules: "test.TestRules"};
     });
     linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
@@ -26,7 +26,7 @@ describe("FormValidationDirective", function() {
       validatorConstructor = sinon.stub(jashboard, "FormValidator");
       validatorConstructor.withArgs({id: "test-form", input: {}}, scope).returns(validator);
       scope.testForm = {id: "test-form", input: {}};
-      scope.$eval.andCallFake(function(value) {
+      scope.$eval.and.callFake(function(value) {
         if (value === "test-map") return {triggerOnEvent: "test-event1", validationRules: "test.TestRules"};
       });
 
@@ -68,20 +68,20 @@ describe("FormValidationDirective", function() {
     });
     _.each([{validationRules: "test.TestRules"}, {validationRules: "test.TestRules", triggerOnLoad: true}], function(attributes) {
       it("should apply the validation rules to the validator when not defined or true", function() {
-        scope.$eval.andCallFake(function(value) {
+        scope.$eval.and.callFake(function(value) {
           if (value === "test-map") return attributes;
         });
-        
+
         linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
 
         expect(validator.applyRules).toHaveBeenCalledWith({id: "test-rules"});
       });
     });
     it("should not apply the validation rules to the validator when false", function() {
-      scope.$eval.andCallFake(function(value) {
+      scope.$eval.and.callFake(function(value) {
         if (value === "test-map") return {validationRules: "test.TestRules", triggerOnLoad: false};
       });
-      
+
       linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
 
       expect(validator.applyRules).not.toHaveBeenCalled();
@@ -91,13 +91,13 @@ describe("FormValidationDirective", function() {
   describe("triggerOnEvent event listener", function() {
     beforeEach(function() {
       scope.$formValidator = validator;
-      scope.$eval.andCallFake(function(value) {
+      scope.$eval.and.callFake(function(value) {
         if (value === "test-map") return {triggerOnEvent: "test-event1", validationRules: "test.TestRules"};
       });
-      scope.$on.andCallFake(function(name, handler) {
+      scope.$on.and.callFake(function(name, handler) {
         if (name === "test-event1") listener = handler;
       });
-      
+
       linkFunction(scope, "test-element", {jbFormValidation: "test-map"});
     });
 

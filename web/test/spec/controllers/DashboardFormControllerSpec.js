@@ -3,7 +3,7 @@ describe("DashboardFormController", function() {
 
   beforeEach(function() {
     scope = jasmine.createSpyObj("scope", ['$on', '$emit', '$apply']);
-    scope.$on = jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+    scope.$on = jasmine.createSpy("scope.$on").and.callFake(function(eventName, handler) {
       if (eventName === "OpenDashboardDialog") eventListener = handler;
     });
     scope.dashboardForm = {};
@@ -32,7 +32,7 @@ describe("DashboardFormController", function() {
         beforeEach(function() {
           scope.dashboards = [{id: "some dashboard"}];
           scope.context = {};
-          repository.createDashboard = jasmine.createSpy("repository.createDashboard()").andCallFake(function(input, handlers) {
+          repository.createDashboard = jasmine.createSpy("repository.createDashboard()").and.callFake(function(input, handlers) {
             successHandler = handlers.success;
             errorHandler = handlers.error;
           });
@@ -76,12 +76,12 @@ describe("DashboardFormController", function() {
           });
           it("should set the current active dashboard", function() {
             successHandler({id: "test_dashboard"});
-            
+
             expect(scope.context.activeDashboardId).toEqual("test_dashboard");
           });
           it("should emit the 'DashboardSaveComplete' if successful", function() {
             successHandler({id: "test_dashboard"});
-            
+
             expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveComplete");
           });
           it("should fire the 'AjaxError' event when failing to save the dashboard", function() {
@@ -116,7 +116,7 @@ describe("DashboardFormController", function() {
       describe("updating a dashboard", function() {
         beforeEach(function() {
           scope.dashboards = [{id: "some dashboard", name: "some name"}, {id: "test.id", name: "test.name"}];
-          repository.updateDashboard = jasmine.createSpy("repository.updateDashboard()").andCallFake(function(input, handlers) {
+          repository.updateDashboard = jasmine.createSpy("repository.updateDashboard()").and.callFake(function(input, handlers) {
             successHandler = handlers.success;
             errorHandler = handlers.error;
           });
@@ -159,7 +159,7 @@ describe("DashboardFormController", function() {
           });
           it("should emit the 'DashboardSaveComplete' if successful", function() {
             successHandler({id: "test_dashboard"});
-            
+
             expect(scope.$emit).toHaveBeenCalledWith("DashboardSaveComplete");
           });
           it("should fire the 'AjaxError' event when failing to save the dashboard", function() {

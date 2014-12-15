@@ -3,7 +3,7 @@ describe("SwitchButtonDirective", function() {
 
   beforeEach(function() {
     switchButtonWidget = jasmine.createSpyObj("SwitchButton", ['reset']);
-    switchButtonFunction = spyOn(jashboard.widgets, "SwitchButton").andCallFake(function(el, state, callback) {
+    switchButtonFunction = spyOn(jashboard.widgets, "SwitchButton").and.callFake(function(el, state, callback) {
       toggleFn = callback;
       return switchButtonWidget;
     });
@@ -14,7 +14,7 @@ describe("SwitchButtonDirective", function() {
   it('restricts the usage to just elements', function() {
     expect(directiveDefinitionObject.restrict).toEqual('E');
   });
-  
+
   it('defines an isolated scope', function() {
     expect(directiveDefinitionObject.scope).toEqual({
       attrId: '@id',
@@ -24,7 +24,7 @@ describe("SwitchButtonDirective", function() {
       toggle: '&'
     });
   });
-  
+
   it("replaces the current element with the new template", function() {
     expect(directiveDefinitionObject.replace).toBeTruthy();
     expect(directiveDefinitionObject.template).toEqual('<input id="{{attrId}}" name="{{attrId}}" class="{{attrClass}}" data-on="{{attrOn}}" type="checkbox">');
@@ -33,8 +33,8 @@ describe("SwitchButtonDirective", function() {
   describe("link function", function() {
     var listener;
     beforeEach(function() {
-      scope.state.andReturn('test_state');
-      scope.$on.andCallFake(function(event, fn) {
+      scope.state.and.returnValue('test_state');
+      scope.$on.and.callFake(function(event, fn) {
         if (event === "activate_event") {
           listener = fn;
           listener({});
@@ -49,7 +49,7 @@ describe("SwitchButtonDirective", function() {
     });
 
     it("resets the switch button if it already exists", function() {
-      scope.state.andReturn('another_state');
+      scope.state.and.returnValue('another_state');
       listener({});
 
       expect(switchButtonWidget.reset).toHaveBeenCalledWith('another_state');

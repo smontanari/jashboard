@@ -2,12 +2,12 @@ describe("Repository", function() {
   var httpService, repository, successHandler, errorHandler, pluginManager;
 
   var AjaxPromise = function(successfulResponse) {
-    this.done = function(callBack) { 
+    this.done = function(callBack) {
       callBack(successfulResponse);
       return this;
     };
-    this.fail = function(callback) { 
-      callback({responseText: "test_error"}, "test_status", "test_message"); 
+    this.fail = function(callback) {
+      callback({responseText: "test_error"}, "test_status", "test_message");
       return this;
     };
   };
@@ -30,10 +30,10 @@ describe("Repository", function() {
         {id: "test_dashboard2", name: "dashboard2", monitors: []}
       ];
       httpService.getJSON = jasmine.createSpy("httpService.getJSON()")
-        .andReturn(new AjaxPromise(data)
+        .and.returnValue(new AjaxPromise(data)
       );
-      dashboardFn = spyOn(jashboard.model, "Dashboard").andCallThrough();
-      monitorFn = spyOn(jashboard.model, "Monitor").andCallThrough();
+      dashboardFn = spyOn(jashboard.model, "Dashboard").and.callThrough();
+      monitorFn = spyOn(jashboard.model, "Monitor").and.callThrough();
     });
     it("should invoke the http service to load and return the dashboards information", function() {
       repository.loadDashboards({success: successHandler});
@@ -52,7 +52,7 @@ describe("Repository", function() {
   describe("Loading monitor runtime data", function() {
     beforeEach(function() {
       httpService.getJSON = jasmine.createSpy("httpService.getJSON")
-        .andReturn(new AjaxPromise("test_monitor_data")
+        .and.returnValue(new AjaxPromise("test_monitor_data")
       );
       pluginManager.monitorAdapters = {
         'test_type': {
@@ -78,10 +78,10 @@ describe("Repository", function() {
   describe("createDashboard()", function() {
     var dashboardFn;
     beforeEach(function() {
-      httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
+      httpService.postJSON = jasmine.createSpy("httpService.postJSON()").and.returnValue(
         new AjaxPromise("test_dashboard_response")
       );
-      dashboardFn = spyOn(jashboard.model, "Dashboard").andReturn({name: "test_dashboard"});
+      dashboardFn = spyOn(jashboard.model, "Dashboard").and.returnValue({name: "test_dashboard"});
     });
     it("should use the http service to save the dashboard data and invoke the success handler", function() {
       repository.createDashboard("test.dashboard.request", {success: successHandler});
@@ -99,7 +99,7 @@ describe("Repository", function() {
 
   describe("updateDashboard()", function() {
     beforeEach(function() {
-      httpService.putJSON = jasmine.createSpy("httpService.putJSON()").andReturn(
+      httpService.putJSON = jasmine.createSpy("httpService.putJSON()").and.returnValue(
         new AjaxPromise("")
       );
     });
@@ -119,10 +119,10 @@ describe("Repository", function() {
   describe("createMonitor()", function() {
     var monitorFn;
     beforeEach(function() {
-      httpService.postJSON = jasmine.createSpy("httpService.postJSON()").andReturn(
+      httpService.postJSON = jasmine.createSpy("httpService.postJSON()").and.returnValue(
         new AjaxPromise("create_monitor_response")
       );
-      monitorFn = spyOn(jashboard.model, "Monitor").andReturn({name: "test_monitor"});
+      monitorFn = spyOn(jashboard.model, "Monitor").and.returnValue({name: "test_monitor"});
     });
     it("should use the http service to save the monitor data and invoke the callback", function() {
       repository.createMonitor("test_dashboard", "test.monitor", {success: successHandler});
@@ -137,7 +137,7 @@ describe("Repository", function() {
       expect(errorHandler).toHaveBeenCalledWith("test_status", "test_message", "test_error");
     });
   });
-  
+
   describe("Updating a monitor", function() {
     it("should use the http service to update the monitor position", function() {
       repository.updateMonitorPosition("test_id", "test.position");
@@ -152,7 +152,7 @@ describe("Repository", function() {
 
     describe("Updating monitor configuration", function() {
       beforeEach(function() {
-        httpService.putJSON = jasmine.createSpy("httpService.putJSON()").andReturn(
+        httpService.putJSON = jasmine.createSpy("httpService.putJSON()").and.returnValue(
           new AjaxPromise("")
         );
         var monitor = {
@@ -183,7 +183,7 @@ describe("Repository", function() {
 
   describe("Removing a dashboard and all its monitors", function() {
     beforeEach(function() {
-      httpService.deleteResource = jasmine.createSpy("httpService.deleteResource()").andReturn(
+      httpService.deleteResource = jasmine.createSpy("httpService.deleteResource()").and.returnValue(
         new AjaxPromise("")
       );
     });
@@ -202,7 +202,7 @@ describe("Repository", function() {
 
   describe("Removing a monitor from a dashboard", function() {
     beforeEach(function() {
-      httpService.deleteResource = jasmine.createSpy("httpService.deleteResource()").andReturn(
+      httpService.deleteResource = jasmine.createSpy("httpService.deleteResource()").and.returnValue(
         new AjaxPromise("")
       );
     });

@@ -1,6 +1,6 @@
 describe("MainController", function() {
-  var repository, controller, scope, 
-      menuDelegate, dashboardDelegate, 
+  var repository, controller, scope,
+      menuDelegate, dashboardDelegate,
       locationService, listeners, scopeHelperSpy;
 
   beforeEach(function() {
@@ -10,7 +10,7 @@ describe("MainController", function() {
     menuDelegate = jasmine.createSpyObj("MenuActionsHandler", ['init']);
     dashboardDelegate = jasmine.createSpyObj("DashboardActionsHandler", ['init']);
     listeners = {};
-    scope.$on.andCallFake(function(eventName, fn) {
+    scope.$on.and.callFake(function(eventName, fn) {
       listeners[eventName] = fn;
     });
     scopeHelperSpy = spyOn(jashboard.scopeContextHelper, "setDefaultActiveDashboard");
@@ -20,7 +20,7 @@ describe("MainController", function() {
   });
 
   it("context.currentView() should return the current view name", function() {
-    locationService.path.andReturn("/");
+    locationService.path.and.returnValue("/");
 
     expect(scope.context.currentView()).toEqual("main");
   });
@@ -63,7 +63,7 @@ describe("MainController", function() {
   describe("on receiving $viewContentLoaded event", function() {
     describe("when not in 'main' view'", function() {
       it('should do nothing', function() {
-        locationService.path.andReturn("/about");
+        locationService.path.and.returnValue("/about");
 
         listeners['$viewContentLoaded']();
 
@@ -73,7 +73,7 @@ describe("MainController", function() {
     });
     describe("when in 'main' view'", function() {
       beforeEach(function() {
-        locationService.path.andReturn("/");
+        locationService.path.and.returnValue("/");
       });
 
       it("should broadcast the 'DataLoadingStart' event", function() {
@@ -85,7 +85,7 @@ describe("MainController", function() {
         var test_dashboards = [];
         beforeEach(function() {
           test_dashboards = [{id: "test.dashboard.1"}, {id: "test.dashboard.2"}];
-          repository.loadDashboards.andCallFake(function(handlers) {
+          repository.loadDashboards.and.callFake(function(handlers) {
             handlers.success(test_dashboards);
           });
 
@@ -98,7 +98,7 @@ describe("MainController", function() {
         });
         it("should set the current active dashboard", function() {
           expect(scopeHelperSpy).toHaveBeenCalled();
-          expect(scopeHelperSpy.calls[0].object).toEqual(scope);
+          expect(scopeHelperSpy.calls.first().object).toEqual(scope);
         });
         it("should broadcast the 'DataLoadingComplete' event when data loading completes successfully", function() {
           expect(scope.$broadcast).toHaveBeenCalledWith("DataLoadingComplete");
@@ -109,7 +109,7 @@ describe("MainController", function() {
       });
       describe("loadData failure", function() {
         beforeEach(function() {
-          repository.loadDashboards.andCallFake(function(handlers) {
+          repository.loadDashboards.and.callFake(function(handlers) {
             handlers.error();
           });
 

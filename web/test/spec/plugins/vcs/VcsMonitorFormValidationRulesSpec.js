@@ -3,7 +3,7 @@ describe("VcsMonitorFormValidationRules", function() {
   beforeEach(function() {
     validationFn = sinon.stub();
     var fakeRulesBuilder = jasmine.createSpyObj("ValidationRulesBuilder", ['withRule', 'build']);
-    fakeRulesBuilder.withRule.andReturn(fakeRulesBuilder);
+    fakeRulesBuilder.withRule.and.returnValue(fakeRulesBuilder);
     rulesBuilder = {
       withRule: sinon.stub(),
       build: function() {return validationFn;}
@@ -13,7 +13,7 @@ describe("VcsMonitorFormValidationRules", function() {
     rulesBuilder.withRule.returns(fakeRulesBuilder);
 
     requiredRule = spyOn(jashboard.commonValidationRules, "required");
-    requiredRule.andReturn("required_validation_result");
+    requiredRule.and.returnValue("required_validation_result");
 
     scope = {monitorConfigurationFormModel: {vcs: {
       workingDirectory: "test_directory",
@@ -41,10 +41,10 @@ describe("VcsMonitorFormValidationRules", function() {
   });
   it("should validate the 'vcsHistoryLength' field with the 'required' and 'positiveInteger' rule", function() {
     _.each(['required', 'positiveInteger'], function(rule) {
-      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
+      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);
     });
     validationFn.withArgs("test_length").returns("test_validation_result");
-    
+
     rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules(scope);
 
     expect(rules.vcsHistoryLength()).toEqual("test_validation_result");
@@ -55,11 +55,11 @@ describe("VcsMonitorFormValidationRules", function() {
     scope.monitorConfigurationFormModel.vcs.interval = "test_page_interval";
 
     _.each(['required', 'positiveInteger'], function(rule) {
-      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);  
+      rulesBuilder.withRule.withArgs(jashboard.commonValidationRules[rule]).returns(rulesBuilder);
     });
     validationFn.withArgs("test_page_size").returns("test_validation_result");
     validationFn.withArgs("test_page_interval").returns("test_validation_result");
-    
+
     rules = new jashboard.plugin.vcs.VcsMonitorFormValidationRules(scope);
 
     expect(rules.vcsPageSize()).toEqual("test_validation_result");
@@ -71,7 +71,7 @@ describe("VcsMonitorFormValidationRules", function() {
 
     _.each([false, null, undefined], function (value) {
       scope.monitorConfigurationFormModel.vcs.pagination = value;
-      
+
       expect(rules.vcsPageSize()).toBeUndefined();
     });
   });

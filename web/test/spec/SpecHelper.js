@@ -4,11 +4,11 @@ var MockModule = function() {
   this.service =
   this.controller =
   this.directive =
-  this.config = 
+  this.config =
   this.run = function(){return this};
 };
 var angular = {
-  module: jasmine.createSpy('angular.module()').andReturn(new MockModule())
+  module: jasmine.createSpy('angular.module()').and.returnValue(new MockModule())
 }
 
 var $, jQuery = function() {throw "you must stub or mock any call to jQuery!"};
@@ -48,37 +48,68 @@ beforeEach(function() {
     }
     return [positiveMessage, invertedMessage];
   };
-  this.addMatchers({
-    sinonStubToHaveBeenCalled: function() {
-      if (arguments.length > 0) {
-        throw new Error('sinonStubToHaveBeenCalled does not take arguments, use sinonStubToHaveBeenCalledWith');
-      }
-      this.message = function() {
-        return [
-          "Expected spy " + this.actual.displayName + " to not have been called.",
-          "Expected spy " + this.actual.displayName + " to have been called."
-        ];
+  jasmine.addMatchers({
+    sinonStubToHaveBeenCalled: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          if (arguments.length > 1) {
+            throw new Error('sinonStubToHaveBeenCalled does not take arguments, use sinonStubToHaveBeenCalledWith');
+          }
+          var result = {
+            pass: actual.called
+          };
+          if (result.pass) {
+            result.message = "Expected spy " + actual + " to not have been called.";
+          } else {
+            result.message = "Expected spy " + actual + " to have been called.";
+          }
+
+          return result;
+        }
       };
-      return this.actual.called;
     },
-    sinonStubToHaveBeenCalledWith: function() {
-      this.message = function() {
-        return calledWithArgumentsMessage.apply(this, arguments);
+    sinonStubToHaveBeenCalledWith: function(util, customEqualityTesters) {
+      return {
+        compare: function() {
+          var args = _.toArray(arguments);
+          var actual = _.first(args);
+          var callArgs = _.rest(args, 1);
+          var result = {
+            pass: actual.calledWith.apply(actual, callArgs)
+          };
+          if (result.pass) {
+            result.message = "Expected spy " + actual + " to not have been called with the given arguments.";
+          } else {
+            result.message = "Expected spy " + actual + " to have been called with the given arguments.";
+          }
+
+          return result;
+        }
       };
-      return this.actual.calledWith.apply(this.actual, arguments);
     },
-    sinonStubToHaveBeenCalledInOrderWith: function() {
-      var args = _.toArray(arguments);
-      var order = _.first(args);
-      var callArgs = _.rest(args, 1);
-      this.message = function() {
-        return calledWithArgumentsMessage.apply(this, callArgs);
+    sinonStubToHaveBeenCalledInOrderWith: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual, expected) {
+          var args = _.toArray(arguments);
+          var actual = _.first(args);
+          var order = _.first(_.rest(args, 1));
+          var callArgs = _.rest(args, 2);
+          var actualCall = actual.getCall(order);
+          var result = {
+            pass: actualCall.calledWith.apply(actualCall, callArgs)
+          };
+          return result;
+        }
       };
-      var actualCall = this.actual.getCall(order);
-      return actualCall.calledWith.apply(actualCall, callArgs);
     },
-    toBeEmpty: function() {
-      return _.isEmpty(this.actual);
+    toBeEmpty: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          return {
+            pass: _.isEmpty(actual)
+          }
+        }
+      };
     }
   });
 });

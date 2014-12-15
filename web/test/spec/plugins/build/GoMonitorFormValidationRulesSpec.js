@@ -10,7 +10,7 @@ describe("GoMonitorFormValidationRules", function() {
     }}};
 
     requiredRule = spyOn(jashboard.commonValidationRules, "required");
-    requiredRule.andReturn("required_validation_result");
+    requiredRule.and.returnValue("required_validation_result");
 
     rules = new jashboard.plugin.build.GoMonitorFormValidationRules(scope);
   });

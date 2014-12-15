@@ -24,15 +24,15 @@ describe("TooltipErrorDirective", function() {
     var tooltipFn, tooltipWidget, scope, watchListener;
     beforeEach(function() {
       tooltipWidget = jasmine.createSpyObj("tooltip", ['show', 'hide']);
-      tooltipFn = spyOn(jashboard.widgets, "Tooltip").andReturn(tooltipWidget);
-      angular.element = jasmine.createSpy().andReturn({
+      tooltipFn = spyOn(jashboard.widgets, "Tooltip").and.returnValue(tooltipWidget);
+      angular.element = jasmine.createSpy().and.returnValue({
         parent: function() {return 'parent_element';}
       });
       scope = {
         toggleStatus: 'test_toggle',
         $watch: jasmine.createSpy("scope.$watch()")
       };
-      scope.$watch.andCallFake(function(expression, listener) {
+      scope.$watch.and.callFake(function(expression, listener) {
         watchListener = listener;
       });
       this.directiveDefinition.link(scope, "test-element", {

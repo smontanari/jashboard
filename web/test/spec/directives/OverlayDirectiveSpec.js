@@ -6,7 +6,7 @@ describe("OverlayDirective", function() {
       $eval: sinon.stub()
     };
     scope.$eval.withArgs("test-map").returns("test-events");
-    spyOn(jashboard.angularUtils, 'mapEventActions').andCallFake(function(scope, eventsMap, actionsMap) {
+    spyOn(jashboard.angularUtils, 'mapEventActions').and.callFake(function(scope, eventsMap, actionsMap) {
       actions = actionsMap;
     });
 
@@ -31,13 +31,13 @@ describe("OverlayDirective", function() {
   it("should set the opacity level given in the options attribute", function() {
     scope.$eval.withArgs("test_options_map").returns({opacity: 123});
     actions.show();
-    
+
     expect(overlayService.show).toHaveBeenCalledWith(jasmine.any(String), {opacity: 123});
   });
   it("should set the autoHideAfter property given in the options attribute", function() {
     scope.$eval.withArgs("test_options_map").returns({autoHideAfter: 123});
     actions.show();
-    
+
     expect(overlayService.show).toHaveBeenCalledWith(jasmine.any(String), {autoHideAfter: 123});
   });
 });

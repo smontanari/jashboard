@@ -2,7 +2,7 @@ describe("MonitorController", function() {
   var delegate, rootScope, scope, repository, alertService, testMonitor, timeoutService;
 
   beforeEach(function() {
-    testMonitor = 
+    testMonitor =
     {
       id: "test_id",
       name: "test.monitor",
@@ -32,7 +32,7 @@ describe("MonitorController", function() {
         },
         stopPropagation: jasmine.createSpy("event.stopPropagation()")
       };
-      scope.$on = jasmine.createSpy("scope.$on()").andCallFake(function(eventName, callback) {
+      scope.$on = jasmine.createSpy("scope.$on()").and.callFake(function(eventName, callback) {
         if (eventName === "MonitorPositionChanged") {
           callback(positionChangedEventObject, {top: 10, left: 20});
         }
@@ -84,12 +84,12 @@ describe("MonitorController", function() {
     var deleteHandlers, alertOptions;
     beforeEach(function() {
       alertService = {
-        showAlert: jasmine.createSpy("alertService.showAlert()").andCallFake(function(options) {
+        showAlert: jasmine.createSpy("alertService.showAlert()").and.callFake(function(options) {
           alertOptions = options;
         })
       };
       repository = {
-          deleteMonitor: jasmine.createSpy("repository.deleteMonitor()").andCallFake(function(dashboard_id, monitor_id, handlers) {
+          deleteMonitor: jasmine.createSpy("repository.deleteMonitor()").and.callFake(function(dashboard_id, monitor_id, handlers) {
             deleteHandlers = handlers;
           })
       };
@@ -126,14 +126,14 @@ describe("MonitorController", function() {
     it("should fire the 'MonitorDeleteComplete' event on successful deletion", function() {
       alertOptions.confirmAction();
       deleteHandlers.success();
-      
+
       expect(scope.$emit).toHaveBeenCalledWith("MonitorDeleteComplete");
     });
     it("should cancel the monitor update scheduler on successful deletion", function() {
       scope.monitor.runtimeUpdateScheduler = {id: "scheduler"};
       alertOptions.confirmAction();
       deleteHandlers.success();
-      
+
       expect(timeoutService.cancel).toHaveBeenCalledWith({id: "scheduler"});
     });
     it("should fire the 'AjaxError' event when failing to remove the monitor", function() {
@@ -147,7 +147,7 @@ describe("MonitorController", function() {
   describe("Configuration change", function() {
     var configurationWatcher, timeoutService, scheduler;
     beforeEach(function() {
-      scope.$watch = jasmine.createSpy("scope.$watch()").andCallFake(function(expr, listener) {
+      scope.$watch = jasmine.createSpy("scope.$watch()").and.callFake(function(expr, listener) {
         if (expr === "monitor.configuration") configurationWatcher = listener;
       });
       timeoutService = jasmine.createSpyObj("$timeout", ['cancel']);
@@ -182,17 +182,17 @@ describe("MonitorController", function() {
 
     describe("runtime data refresh scheduling", function() {
       var scheduleFunction, handlers;
-  
+
       beforeEach(function() {
         scope.monitor.refreshInterval = 10;
         timeoutService = jasmine.createSpy("$timeout");
-        timeoutService.andCallFake(function(fn, delay, invokeApply) {
+        timeoutService.and.callFake(function(fn, delay, invokeApply) {
           scheduleFunction = fn;
           return scheduler;
         });
 
         repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
-          .andCallFake(function(id, type, callbacks) {
+          .and.callFake(function(id, type, callbacks) {
             handlers = callbacks;
           });
 
@@ -216,12 +216,12 @@ describe("MonitorController", function() {
           scheduleFunction();
 
           expect(repository.loadMonitorRuntimeInfo).toHaveBeenCalledWith("test_id", "test_type", jasmine.any(Object));
-          expect(repository.loadMonitorRuntimeInfo.calls.length).toEqual(2);
+          expect(repository.loadMonitorRuntimeInfo.calls.count()).toEqual(2);
         });
         _.each([0, NaN, null], function(value) {
           it("should not schedule a data load if the refresh interval is " + value, function() {
             scope.monitor.refreshInterval = value;
-            
+
             handlers[action]();
 
             expect(timeoutService).not.toHaveBeenCalled();
@@ -236,7 +236,7 @@ describe("MonitorController", function() {
     beforeEach(function() {
       timeoutService = jasmine.createSpy("$timeout");
       repository.loadMonitorRuntimeInfo = jasmine.createSpy("repository.loadMonitorRuntimeInfo()")
-          .andCallFake(function(monitor_id, monitor_type, callbacks) {
+          .and.callFake(function(monitor_id, monitor_type, callbacks) {
             handlers = callbacks;
           });
 

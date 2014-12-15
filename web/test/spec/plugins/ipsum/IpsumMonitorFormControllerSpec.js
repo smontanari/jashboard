@@ -3,7 +3,7 @@ describe("IpsumMonitorFormController", function() {
 
   beforeEach(function() {
     scope = {
-      $on: jasmine.createSpy("scope.$on").andCallFake(function(eventName, handler) {
+      $on: jasmine.createSpy("scope.$on").and.callFake(function(eventName, handler) {
         eventListener = handler;
       })
     };

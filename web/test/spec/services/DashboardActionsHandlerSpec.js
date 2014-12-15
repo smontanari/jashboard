@@ -16,7 +16,7 @@ describe("DashboardActionsHandler", function() {
       var innerScope = { dashboard: "test-dashboard" };
 
       scope.dashboardAction.apply(innerScope, ['newMonitor']);
-      
+
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenMonitorDialog", {
         mode: jashboard.model.inputOptions.createMode,
         parameters: {dashboard: "test-dashboard"}
@@ -29,7 +29,7 @@ describe("DashboardActionsHandler", function() {
       var innerScope = { dashboard: {id: "test_dashboard_id"} };
 
       scope.dashboardAction.apply(innerScope, ['editDashboard']);
-      
+
       expect(scope.$broadcast).toHaveBeenCalledWith("OpenDashboardDialog", {
         mode: jashboard.model.inputOptions.updateMode,
         parameters: {dashboard: {id: "test_dashboard_id"}}
@@ -43,11 +43,11 @@ describe("DashboardActionsHandler", function() {
       currentDashboard = {id: "test_dashboard_id"};
       scope.dashboards = [currentDashboard, {id: "another_dashboard"}];
       innerScope = { dashboard: currentDashboard };
-      repository.deleteDashboard.andCallFake(function(id, handlers) {
+      repository.deleteDashboard.and.callFake(function(id, handlers) {
         deleteSuccessCallback = handlers.success;
         deleteErrorCallback = handlers.error;
       });
-      alertService.showAlert.andCallFake(function(options) {
+      alertService.showAlert.and.callFake(function(options) {
         alertOptions = options;
       });
       scopeHelperSpy = spyOn(jashboard.scopeContextHelper, "setDefaultActiveDashboard");
@@ -84,7 +84,7 @@ describe("DashboardActionsHandler", function() {
         deleteSuccessCallback();
 
         expect(scopeHelperSpy).toHaveBeenCalled();
-        expect(scopeHelperSpy.calls[0].object).toEqual(scope);
+        expect(scopeHelperSpy.calls.first().object).toEqual(scope);
       });
       it("should cancel the update scheduler for each monitor belonging to the dashboard", function() {
         currentDashboard.monitors = [

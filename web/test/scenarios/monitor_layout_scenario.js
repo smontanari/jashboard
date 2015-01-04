@@ -8,7 +8,7 @@ define(['smocker'], function(smocker) {
       var data = JSON.parse(requestData);
 
       if (data.top === 210 && data.left === 60) {
-        return {};
+        return {status: 204};
       }
       throw "unexpected data in the PUT request: " + requestData;
     });
@@ -16,7 +16,7 @@ define(['smocker'], function(smocker) {
       var data = JSON.parse(requestData);
 
       if (data.width === 295 && data.height === 340) {
-        return {};
+        return {status: 204};
       }
       throw "unexpected data in the PUT request: " + requestData;
     });
@@ -25,7 +25,7 @@ define(['smocker'], function(smocker) {
       var data = JSON.parse(requestData);
 
       if (data.top === 0 && data.left === 200) {
-        return {};
+        return {status: 204};
       }
       throw "unexpected data in the PUT request: " + requestData;
     });
@@ -33,7 +33,7 @@ define(['smocker'], function(smocker) {
       var data = JSON.parse(requestData);
 
       if (data.width === 270 && data.height === 350) {
-        return {};
+        return {status: 204};
       }
       throw "unexpected data in the PUT request: " + requestData;
     });

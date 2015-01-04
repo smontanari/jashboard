@@ -1,4 +1,5 @@
 define(["smocker", "test/scenarios/display_dashboards_data_scenario"], function(smocker) {
+  smocker.config({ verbose: true });
   smocker.scenario('monitor_write_operations', function() {
     this.delete('/ajax/dashboard/dashboard_2/monitor/monitor_2').respondWith({
       status: 204
@@ -7,7 +8,7 @@ define(["smocker", "test/scenarios/display_dashboards_data_scenario"], function(
     this.put('/ajax/monitor/monitor_1/configuration').respondWith(function(url, requestData) {
       var data = JSON.parse(requestData);
       if ("New Zombie build" === data.name && 20000 === data.refreshInterval) {
-        return [204, "success", {}, {} ];
+        return {status: 204};
       }
       throw "unexpected data in the POST request: " + requestData;
     });

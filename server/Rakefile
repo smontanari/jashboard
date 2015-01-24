@@ -27,6 +27,6 @@ desc 'Open FuncUnit tests page with Selenium and run tests'
 task :selenium_funcunit, [:test_suite] do |task, args|
   test_suite = args.with_defaults(test_suite: "")[:test_suite]
   suite_param = "?suite=#{test_suite}" unless test_suite.empty?
-
-  sh %Q(qunit-selenium --timeout=300 --screenshot=funcunit.png http://localhost:8001/funcunit.html#{suite_param})
+  funcunit_file = File.absolute_path(File.join(File.dirname(__FILE__), '..', 'web', 'funcunit.html'))
+  sh %Q(qunit-selenium --timeout=300 --screenshot=funcunit.png file://#{funcunit_file}#{suite_param})
 end

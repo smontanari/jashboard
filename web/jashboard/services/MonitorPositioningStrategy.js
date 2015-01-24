@@ -38,7 +38,7 @@
           if (_.isObject(candidatePosition)) {
             availablePositions.push(candidatePosition);
           }
-        });          
+        });
         return availablePositions;
       };
     }

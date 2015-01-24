@@ -1,20 +1,7 @@
 (function(module) {
   jashboard = _.extend(module, {
-    MonitorController: function(rootScope, scope, repository, alertService, timeoutService) {
-      var scheduleNextUpdate = function scheduleNextUpdate() {
-        if (_.isFinite(scope.monitor.refreshInterval) && scope.monitor.refreshInterval > 0) {
-          var interval = scope.monitor.refreshInterval * 1000;
-          scope.monitor.runtimeUpdateScheduler = timeoutService(function() {
-            updateMonitorRuntimeInfo(true);
-          }, interval);
-        }
-      };
-      var cancelUpdateSchedule = function() {
-        if (_.isObject(scope.monitor.runtimeUpdateScheduler)) {
-          timeoutService.cancel(scope.monitor.runtimeUpdateScheduler);
-        }
-      };
-      var updateMonitorRuntimeInfo = function(scheduleNext) {
+    MonitorController: function(rootScope, scope, repository, alertService, monitorScheduler) {
+      var updateMonitorRuntimeInfo = function() {
         var monitor = scope.monitor;
         monitor.loadingStatus = jashboard.model.loadingStatus.waiting;
         repository.loadMonitorRuntimeInfo(
@@ -25,9 +12,6 @@
               monitor.runtimeInfo = data;
               monitor.loadingStatus = jashboard.model.loadingStatus.completed;
               scope.$apply();
-              if (scheduleNext) {
-                scheduleNextUpdate();
-              }
             },
             error: function(status, statusMessage, errorDetails) {
               monitor.loadingStatus = jashboard.model.loadingStatus.error;
@@ -36,9 +20,6 @@
                 scope.errorMessage += " [" + jashboard.stringUtils.ellipsis(errorDetails, 30) + "]";
               }
               scope.$apply();
-              if (scheduleNext) {
-                scheduleNextUpdate();
-              }
             }
           }
         );
@@ -46,8 +27,9 @@
 
       scope.$watch("monitor.configuration", function(newValue, oldValue) {
         if (newValue) {
-          cancelUpdateSchedule();
-          updateMonitorRuntimeInfo(true);
+          monitorScheduler.cancelUpdateSchedule(scope.monitor);
+          updateMonitorRuntimeInfo();
+          monitorScheduler.scheduleUpdate(scope.monitor, updateMonitorRuntimeInfo);
         }
       });
 
@@ -85,10 +67,10 @@
             scope.$emit("MonitorDeleteStart");
             repository.deleteMonitor(currentDashboard.id, currentMonitor.id, {
               success: function() {
+                monitorScheduler.cancelUpdateSchedule(currentMonitor);
                 currentDashboard.monitors = _.without(currentDashboard.monitors, currentMonitor);
                 scope.$emit("MonitorDeleteComplete");
                 scope.$apply();
-                cancelUpdateSchedule();
               },
               error: function() {
                 scope.$emit("AjaxError");
@@ -99,7 +81,7 @@
       };
 
       scope.refreshRuntimeInfo = function() {
-        updateMonitorRuntimeInfo(false);
+        updateMonitorRuntimeInfo();
       };
     }
   });
@@ -108,7 +90,7 @@
     '$scope',
     'Repository',
     'AlertService',
-    '$timeout',
+    'MonitorScheduler',
     jashboard.MonitorController])
   .run(['$log', function(log) {
     log.info("MonitorController initialized");

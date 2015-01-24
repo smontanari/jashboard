@@ -33,6 +33,7 @@ define(['underscore'], function(_) {
       'IntersectionDetector',
       'MonitorPositioningStrategy',
       'MonitorLayoutManager',
+      'MonitorScheduler',
       'DashboardActionsHandler',
       'MenuActionsHandler'
     ],

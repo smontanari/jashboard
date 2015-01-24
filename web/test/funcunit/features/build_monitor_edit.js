@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions", function() {
-  this.createTest("should update the jenkins monitor properties", function() {
+  this.createTest("it updates the jenkins monitor properties", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
 
     F("#configuration-next").visible().click();
@@ -26,7 +26,7 @@ funcunitHelper.testFeature("Edit a build monitor", "build_monitor_actions", func
     });
   });
 
-  this.createTest("should update the go monitor properties", function() {
+  this.createTest("it updates the go monitor properties", function() {
     F("#tab-dashboard_2").visible().click();
     jashboardFeatureHelper.triggerMonitorAction("#monitor_2", "edit");
 

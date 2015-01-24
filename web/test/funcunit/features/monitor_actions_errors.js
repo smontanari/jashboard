@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", function() {
-  this.createTest("should display an error when failing to create a monitor", function() {
+  this.createTest("it displays an error when failing to create a monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test monitor",
@@ -17,17 +17,17 @@ funcunitHelper.testFeature("Monitor actions error handling", "monitor_errors", f
     jashboardFeatureHelper.checkOverlayMessage(/an error occurred/, true);
   });
 
-  this.createTest("should display a warning icon with a tooltip when failing to refresh runtime information", function() {
+  this.createTest("it displays a warning icon with a tooltip when failing to refresh runtime information", function() {
     F("#monitor_1 .monitor-title .monitor-icon-ajax-loader").visible("the ajax loader is shown");
     F("#monitor_1 .monitor-title .monitor-icon-ajax-loader").invisible("the ajax loader is hidden");
     F("#monitor_1 .monitor-title .monitor-icon-ajax-error").visible("the ajax error is shown");
     F("#monitor_1 .monitor-title .monitor-icon-ajax-error").mouseover();
     F(".html-tooltip-error").visible(function() {
-      ok(F(".html-tooltip-error").text().match(/something went very wrong/), "tooltip content should contain expected text");
+      ok(F(".html-tooltip-error").text().match(/something went very wrong/), "tooltip content contains expected text");
     });
   });
 
-  this.createTest("should display an error when failing to delete a monitor", function() {
+  this.createTest("it displays an error when failing to delete a monitor", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_3", "delete");
 
     jashboardFeatureHelper.confirmAlert();

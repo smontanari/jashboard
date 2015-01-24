@@ -1,13 +1,13 @@
 funcunitHelper.testFeature("Tabs display", "display_dashboards_data", function() {
-  this.createTest("should load dashboards data and display the navigation tabs", function() {
+  this.createTest("it loads dashboards data and display the navigation tabs", function() {
     var expectedTabs = ["first dashboard", "second dashboard", "another dashboard"];
     F(".dashboard-tab").size(3, function() {
       F(this).each(function(index, element) {
-        equal(F(element).text().trim(), expectedTabs[index], "tab text should match the tab name");
+        equal(F(element).text().trim(), expectedTabs[index], "tab text matches the tab name");
       });
     });
   });
-  this.createTest("should show the content of the corresponding dashboard when selecting a tab", function() {
+  this.createTest("it shows the content of the corresponding dashboard when selecting a tab", function() {
     var expected_dashboard_ids = ["dashboard_1", "dashboard_2", "dashboard_3"];
     _.each(expected_dashboard_ids, function(dashboard_id) {
       F("#tab-" + dashboard_id).visible(function() {

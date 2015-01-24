@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Ajax loader display", "delayed_response", function() {
-  this.createTest("should show ajax loaders until ajax response completes", function() {
+  this.createTest("it shows the ajax loader until response completes", function() {
     F(".overlay-msg").visible("the overlay message is shown");
     F(".overlay-msg").invisible(2000, null, "the overlay message is hidden");
     F("#monitor_1 .monitor-title .monitor-icon-ajax-loader").visible("the ajax loader is shown");

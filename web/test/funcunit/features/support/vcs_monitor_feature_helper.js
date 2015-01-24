@@ -1,8 +1,6 @@
 var vcsMonitorFeatureHelper = (function(helper) {
   var monitorTypeConfigurationInput = {
-    git: function(data) {
-      
-    }
+    git: function(data) {}
   };
   helper.inputVcsMonitorData = function(newMonitor, data) {
     pageHelper.inputText("vcsWorkingDir", data.vcsWorkingDir);
@@ -51,7 +49,7 @@ var vcsMonitorFeatureHelper = (function(helper) {
     //     );
     //   }
     // };
-    
+
     // pageHelper.verifyInputError(
     //   {inputName: "buildServerName", inputValue: ""},
     //   {errorSelector: "#buildServerNameRequiredError", errorMessage: "You must provide a CI server name."},

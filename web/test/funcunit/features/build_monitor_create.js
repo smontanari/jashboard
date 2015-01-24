@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions", function() {
-  this.createTest("should create a new jenkins build monitor", function() {
+  this.createTest("it creates a new jenkins build monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test jenkins-monitor",
@@ -33,7 +33,7 @@ funcunitHelper.testFeature("Create a new build monitor", "build_monitor_actions"
       });
     });
   });
-  this.createTest("should create a new go build monitor", function() {
+  this.createTest("it creates a new go build monitor", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test go-monitor",

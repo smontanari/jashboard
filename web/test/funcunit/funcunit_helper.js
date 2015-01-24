@@ -7,6 +7,9 @@ var FuncunitFeature = function(name, scenario) {
 FuncunitFeature.prototype.scheduleAllTests = function() {
   var self = this;
   module("Feature: " +  this.name, {
+    setup: function() {
+      F.open('index.html?smocker_scenario=' + self.scenario);
+    },
     teardown: function() {
       self.completed = true;
     }
@@ -14,7 +17,6 @@ FuncunitFeature.prototype.scheduleAllTests = function() {
   var self = this;
   _.each(this.testRuns, function(testRun) {
     test(testRun.description, function() {
-      F.open('index.html?test_scenario=' + self.scenario);
       testRun.execute();
     });
   });

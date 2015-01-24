@@ -50,24 +50,24 @@ var pageHelper = (function(helper) {
   helper.verifyElementPosition = function(selector, expectedPosition) {
     F(selector).visible(function() {
       var actualPosition = F(selector).position();
-      equal(actualPosition.top, expectedPosition.top, "should have Y coordinate: " + expectedPosition.top);
-      equal(actualPosition.left, expectedPosition.left, "should have X coordinate: " + expectedPosition.left);
+      equal(actualPosition.top, expectedPosition.top, "has Y coordinate: " + expectedPosition.top);
+      equal(actualPosition.left, expectedPosition.left, "has X coordinate: " + expectedPosition.left);
     });
   };
   helper.verifyElementSize = function(selector, expectedSize) {
     F(selector).visible(function() {
       var actualWidth = F(selector).width();
       var actualHeight = F(selector).height();
-      ok((expectedSize.width - 10) < actualWidth && actualWidth < (expectedSize.width + 10), 
-        "Element width should be == " + expectedSize.width);
+      ok((expectedSize.width - 10) < actualWidth && actualWidth < (expectedSize.width + 10),
+        "Element width is == " + expectedSize.width);
       ok((expectedSize.height - 10) < actualHeight && actualHeight < (expectedSize.height + 10),
-        "Element height should be == " + expectedSize.height);
+        "Element height is == " + expectedSize.height);
     });
   };
   helper.verifyElementContent = function(selector, expectedData) {
     F(selector).visible(function() {
       _.each(_.keys(expectedData), function(propertySelector) {
-        equal(F(selector + " " + propertySelector).text().trim(), expectedData[propertySelector], "should have content: " + expectedData[propertySelector]);
+        equal(F(selector + " " + propertySelector).text().trim(), expectedData[propertySelector], "has content: " + expectedData[propertySelector]);
       });
     });
   };
@@ -76,7 +76,7 @@ var pageHelper = (function(helper) {
       pageHelper.inputText(input.inputName, input.inputValue);
       F(expectedError.errorSelector).visible(function() {
         equal(F(expectedError.errorSelector).text().trim(), expectedError.errorMessage, "The error message is equal to " + expectedError.message);
-      }, "should display error");
+      }, "displays error");
       if (_.isFunction(callback)) {
         callback();
       }

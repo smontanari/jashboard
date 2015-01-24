@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Edit a monitor", "monitor_actions", function() {
-  this.createTest("should update the monitor basic properties", function() {
+  this.createTest("it updates the monitor basic properties", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
     pageHelper.verifyInputValue("monitorName", "Zombie-Dash build", "display the existing name");
     pageHelper.verifyInputValue("monitorRefresh", "10000", "display the existing interval");

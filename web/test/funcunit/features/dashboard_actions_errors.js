@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Dashboard actions error handling", "dashboard_errors", function() {
-  this.createTest("should display an error overlay when failing to create a dashboard", function() {
+  this.createTest("it displays an error overlay when failing to create a dashboard", function() {
     jashboardFeatureHelper.openDashboardDialog();
     FuncUnit.wait(500, function() {
       pageHelper.inputText("dashboardName", "test new-dashboard");
@@ -12,7 +12,7 @@ funcunitHelper.testFeature("Dashboard actions error handling", "dashboard_errors
     jashboardFeatureHelper.checkOverlayMessage(/an error occurred/, true);
   });
 
-  this.createTest("should display an error overlay when failing to modify a dashboard", function() {
+  this.createTest("it displays an error overlay when failing to modify a dashboard", function() {
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_1", "edit");
 
     pageHelper.inputText("dashboardName", "another dashboard");
@@ -29,7 +29,7 @@ funcunitHelper.testFeature("Dashboard actions error handling", "dashboard_errors
     });
   });
 
-  this.createTest("should display an error overlay when failing to delete a dashboard", function() {
+  this.createTest("it displays an error overlay when failing to delete a dashboard", function() {
     F("#tab-dashboard_2").visible().click();
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_2", "delete");
 

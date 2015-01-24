@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", function() {
-  this.createTest("should validate build monitor fields on creation", function() {
+  this.createTest("it validates build monitor fields on creation", function() {
     jashboardFeatureHelper.openMonitorDialog("dashboard_1");
     jashboardFeatureHelper.inputGenericMonitorData({
       monitorName: "Test jenkins-monitor",
@@ -8,11 +8,11 @@ funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", 
     });
     F("#configuration-next").visible().click();
 
-    pageHelper.verifyElementDisabled("#configuration-save", "the Save button should be disabled");
+    pageHelper.verifyElementDisabled("#configuration-save", "the Save button is disabled");
 
-    F("#buildServerNameRequiredError").invisible("should not display error");
-    F("#buildServerPortRequiredError").invisible("should not display error");
-    F("#buildServerPortNumberError").invisible("should not display error");
+    F("#buildServerNameRequiredError").invisible("does not display error");
+    F("#buildServerPortRequiredError").invisible("does not display error");
+    F("#buildServerPortNumberError").invisible("does not display error");
     pageHelper.inputText("buildServerName", "test name");
     pageHelper.inputText("buildServerPort", "123");
     F("#ciServerType-go-tab").visible().click();
@@ -21,7 +21,7 @@ funcunitHelper.testFeature("Build monitor validation", "build_monitor_actions", 
     buildMonitorFeatureHelper.verifyBuildFormValidationErrors("jenkins");
   });
 
-  this.createTest("should validate build monitor fields on modification", function() {
+  this.createTest("it validates build monitor fields on modification", function() {
     jashboardFeatureHelper.triggerMonitorAction("#monitor_1", "edit");
 
     F("#configuration-next").visible().click();

@@ -1,5 +1,5 @@
 funcunitHelper.testFeature("Create a dashboard", "dashboard_actions", function() {
-  this.createTest("should create a new dashboard and display the new tab", function() {
+  this.createTest("it creates a new dashboard and display the new tab", function() {
     jashboardFeatureHelper.openDashboardDialog();
     var name = "test new-dashboard";
     pageHelper.inputText("dashboardName", name);
@@ -11,7 +11,7 @@ funcunitHelper.testFeature("Create a dashboard", "dashboard_actions", function()
     });
   });
 
-  this.createTest("should reset the input fields on opening", function() {
+  this.createTest("it resets the input fields on opening", function() {
     jashboardFeatureHelper.openDashboardDialog();
     pageHelper.inputText("dashboardName", "some text");
 

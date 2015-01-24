@@ -6,7 +6,7 @@ require.config({
 });
 
 define(['smocker', 'sinon'], function(smocker) {
-  var regexp = /\?test_scenario=(\w+)/;
+  var regexp = /\?smocker_scenario=(\w+)/;
   var match = regexp.exec(window.location.search);
   if (match) {
     var scenarioName = match[1];

@@ -6,27 +6,27 @@ funcunitHelper.testFeature("Dashboard validation", "dashboard_actions", function
       {inputName: "dashboardName", inputValue: ""},
       {errorSelector: errorMessageSelector, errorMessage: "You must provide a dashboard name."},
       function() {
-        pageHelper.verifyElementDisabled(saveButton, "the Save button should be disabled");
+        pageHelper.verifyElementDisabled(saveButton, "the Save button is disabled");
       }
     );
   };
-  this.createTest("should validate the name when creating a dashboard", function() {
+  this.createTest("it validates the name when creating a dashboard", function() {
     jashboardFeatureHelper.openDashboardDialog();
 
-    pageHelper.verifyElementDisabled("#saveDashboard", "the Save button should be disabled");
-    F(errorMessageSelector).invisible("should not display error");
+    pageHelper.verifyElementDisabled("#saveDashboard", "the Save button is disabled");
+    F(errorMessageSelector).invisible("does not display error");
 
     pageHelper.inputText("dashboardName", "test name");
-    pageHelper.verifyElementEnabled(saveButton, "the Save button should be enabled");
+    pageHelper.verifyElementEnabled(saveButton, "the Save button is enabled");
 
     verifyDashboardNameError();
   });
 
-  this.createTest("should validate the name when editing a dashboard", function() {
+  this.createTest("it validates the name when editing a dashboard", function() {
     jashboardFeatureHelper.triggerDashboardAction("#dashboard_1", "edit");
 
-    F(errorMessageSelector).invisible("should not display error");
-    pageHelper.verifyElementEnabled(saveButton, "the Save button should be enabled");
+    F(errorMessageSelector).invisible("does not display error");
+    pageHelper.verifyElementEnabled(saveButton, "the Save button is enabled");
 
     verifyDashboardNameError();
   });

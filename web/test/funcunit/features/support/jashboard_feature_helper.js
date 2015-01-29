@@ -1,6 +1,5 @@
 var jashboardFeatureHelper = (function(helper) {
   helper.openDashboardDialog = function() {
-    F("#menuActions").click();
     F("#navbarMenu .menuAction-new-dashboard").visible("display new dashboard menu action link").click();
     F("#dashboard-form").visible("show new dashboard input dialog");
   };

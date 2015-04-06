@@ -85,13 +85,13 @@ The application is pretty straightforward to use.
 You can try out the application without starting the server and just by running the javascript client it in your browser.
 You only have to open the `web/index.html` file directly in your browser passing a particular parameter in the url, as in:
 
-    file:///<path-to-the-repo>/web/index.html?test_scenario=demo
+    file:///<path-to-the-repo>/web/index.html?smocker_scenario=demo
     
 This way the application runs only on the browser, with simulated ajax responses from the server, and you can create/delete dashboards, monitors and get a glance of what the actual functionality would be like.
 
-In order for this to work your browser needs to allow popups from your file:// domain and have permission to load files from the local file system. This should be fine for **Firefox** and **Safari**, but it might not work in Chrome. In that case you can try and start **Chrome** with a couple of special flags, like this:
+In order for this to work your browser needs to allow popups from your file:// domain and have permission to load files from the local file system. This should be fine for **Firefox** and **Safari**, but it might not work in Chrome. In that case you want to launch **Chrome** from the command line with a special flag:
     
-    chrome --args --allow-file-access-from-files --incognito
+    chrome --args --allow-file-access-from-files
 
 # Developing your own monitor type
 This is just a brief guide. More details will be put in the wiki (when I have the time).
@@ -125,7 +125,33 @@ Of course if you want to do things properly you should add tests for your monito
 
 The **ipsum** monitor plugin is a very simple example that you can look at as a starting point for adding a new monitor plugin. Have fun!
 
+## Executing tests
+Jashboard consists of a RESTful backend communicating with a JavaScript client running in the browser. The two parts are thoroughly, independently tested, but I haven't bothered to write end-to-end tests to exercise the entire flow, because so far I haven't seen the necessity to do that.
+
+### Backend
+The backend is a ruby application written in Sinatra. 
+
+Execute the tests from a terminal opened in the `/server` folder:
+
+	bundle exec rspec # unit tests
+
+	bundle exec cucumber # integration tests
+
+### Frontend
+
+Execute the unit tests from a terminal opened in the `/web` folder:
+
+	grunt jasmine # unit tests
+	
+Alternatively, the Jasmine specs can be executed directly in the browser by opening the file `_SpecRunner.html`.
+
+Execute the unit tests from a terminal opened in the `/server` folder:
+
+	rake selenium_funcunit # selenium functional tests
+	
+Alternatively the functional tests can be executed directly in the browser by opening the file `/web/funcunit.html` (remember to disable any pop-up blockers). 
+
 # Copyright
 
-Copyright &copy; 2013 Silvio Montanari. See LICENSE for details.
+Copyright &copy; 2013-2015 Silvio Montanari. See LICENSE for details.
 
